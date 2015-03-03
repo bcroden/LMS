@@ -185,7 +185,7 @@ public class RSACipher {
 	}
 	
 	/**
-	 * 
+	 * This method will decrypt a byte[] using the RSA decryption algorithm.
 	 * 
 	 * @param encryptedBytes - The byte[] to be decrypted
 	 * @return A byte[] containing the decrypted bytes
@@ -218,6 +218,14 @@ public class RSACipher {
 		}
 		
 		return message;
+	}
+	
+	public PublicKey getPublicKey() {
+		return this.publicKey;
+	}
+	
+	public PrivateKey getPrivateKey() {
+		return this.privateKey;
 	}
 	
 	//TODO Be able to load keys from a file
