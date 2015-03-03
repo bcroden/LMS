@@ -23,8 +23,10 @@ import javax.crypto.spec.SecretKeySpec;
  *
  */
 
-//TODO: Remove error messages to help prevent security breaches from error logs,
-//		to be done after thorough testing of the cipher.
+/*
+ * TODO: Remove error messages to help prevent security breaches from error logs,
+ *       to be done after thorough testing of the cipher.
+ */
 public class AESCipher {
 	public static final int IV_SIZE = 16;	
 	public static final int KEY_SIZE = 128;
@@ -56,10 +58,12 @@ public class AESCipher {
 		}
 		catch (NoSuchAlgorithmException e) {
 			//Thrown if AES is not a supported encryption algorithm
+			//Will never occur since it is guaranteed to be implemented by all JREs
 			e.printStackTrace();
 		}
 		catch (NoSuchPaddingException e) {
 			//Thrown if PKCS5 is not a supported padding system
+			//Will never occur since it is guaranteed to be implemented by all JREs
 			e.printStackTrace();
 		}
 	}
@@ -75,10 +79,12 @@ public class AESCipher {
 		}
 		catch (NoSuchAlgorithmException e) {
 			//Thrown if AES is not a supported encryption algorithm
+			//Will never occur since it is guaranteed to be implemented by all JREs
 			e.printStackTrace();
 		}
 		catch (NoSuchPaddingException e) {
 			//Thrown if PKCS5 is not a supported padding system
+			//Will never occur since it is guaranteed to be implemented by all JREs
 			e.printStackTrace();
 		}
 		
@@ -96,10 +102,12 @@ public class AESCipher {
 		}
 		catch (NoSuchAlgorithmException e) {
 			//Thrown if AES is not a supported encryption algorithm
+			//Will never occur since it is guaranteed to be implemented by all JREs
 			e.printStackTrace();
 		}
 		catch (NoSuchPaddingException e) {
 			//Thrown if PKCS5 is not a supported padding system
+			//Will never occur since it is guaranteed to be implemented by all JREs
 			e.printStackTrace();
 		}
 		
@@ -155,10 +163,7 @@ public class AESCipher {
 		}
 		
 		//Append encryptedBytes to iv for transmission
-		int len = iv.length + encryptedBytes.length;
-		byte[] encryptedMessage = new byte[len];
-		for(int i = 0; i < len; i++)
-			encryptedMessage[i] = (i < IV_SIZE) ? iv[i] : encryptedBytes[i - IV_SIZE];
+		byte[] encryptedMessage = Util.concatenateArrays(iv, encryptedBytes);
 		
 		//Transmit
 		return encryptedMessage;
@@ -173,14 +178,8 @@ public class AESCipher {
 	 */
 	public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
 		//Separate initialization vector from encrypted message
-		byte[] iv = new byte[IV_SIZE];
-		for(int i = 0; i < IV_SIZE; i++)
-			iv[i] = encryptedMessage[i];
-		
-		int len = encryptedMessage.length - IV_SIZE;
-		byte[] encryptedBytes = new byte[len];
-		for(int i = 0; i < len; i++)
-			encryptedBytes[i] = encryptedMessage[i + IV_SIZE];
+		byte[] iv = Util.getSubArray(encryptedMessage, 0, IV_SIZE);
+		byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);
 		
 		//Initialize cipher
 		try {
