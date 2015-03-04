@@ -107,10 +107,10 @@ public class RSACipher {
 	 * Create a RSACipher object. This will use the provided public key to encrypt messages.
 	 * This cipher will be unable to decrypt messages, since it has no private key.
 	 */
-	public RSACipher(PublicKey publicKey) {
+	public RSACipher(byte[] publicKey) {
 		try {
 			this.cipher = Cipher.getInstance(TRANSFORMATION);
-			this.publicKey = publicKey;
+			this.publicKey = generatePublicKey(publicKey);
 			this.privateKey = null;
 		}
 		catch (NoSuchAlgorithmException e) {
@@ -228,16 +228,16 @@ public class RSACipher {
 		return this.privateKey;
 	}
 	
-	//TODO Be able to load keys from a file
+	//TODO Be able to load keys from a file?
 	public void loadKeysFromFile() {
 	}
 		
-	//TODO Be able to save keys to a file
+	//TODO Be able to save keys to a file?
 	public void saveKeysToFile() {
 	}
 	
 	//Basic main for testing purposes
-	public static void main(String args[]) throws Exception {
+	public static void main2(String args[]) throws Exception {
 		//Create new cipher
 		RSACipher cipher = new RSACipher();
 		
@@ -271,5 +271,88 @@ public class RSACipher {
 		
 		System.out.println("Encryption Took: " + enTime + " nanoseconds");
 		System.out.println("Decryption Took: " + deTime + " nanoseconds");
+	}
+	
+	//Test Networking Protocol
+	public static void main(String[] args) throws Exception {
+		//Establish TCP Connection
+		
+		//Client: Creates a new RSACipher.
+		RSACipher clientRSACipher = new RSACipher();
+		
+		//Client: Sends a message containing their unencrypted Public RSA key to the server.
+		byte[] clientPublicKey = clientRSACipher.getPublicKey().getEncoded();
+		int size = clientPublicKey.length;
+		
+		//Send message over network
+		
+		//Server: Creates a new RSACipher using the client's key.
+		RSACipher serverRSACipher = new RSACipher(clientPublicKey);
+		
+		//Server: Creates a new AESCipher.
+		AESCipher serverAESCipher = new AESCipher();
+		
+		//Server: Encrypts the AES key from the AESCipher with the RSACipher.
+		//Server: Sends a message containing the encrypted AES Key.
+		byte[] aesKey = serverAESCipher.getKey().getEncoded();
+		byte[] encryptedAESKey = serverRSACipher.encrypt(aesKey);
+		int size2 = encryptedAESKey.length;
+		
+		//Send message over network
+		
+		//Client: Decrypts the AES key with their RSACipher.
+		byte[] decryptedAESKey = clientRSACipher.decrypt(encryptedAESKey);
+		
+		//Client: Creates a new AESCipher using the decrypted AES key.
+		AESCipher clientAESCipher = new AESCipher(decryptedAESKey);
+		
+		/*
+		 * Client needs to send a message to the server
+		 */
+		
+		//Sender: Generates a message in the form of a String.
+		String message = "Hello";
+		
+		//Sender: Encrypts the message with their AESCipher.
+		//Sender: Sends the encrypted message.
+		byte[] encryptedMessage = clientAESCipher.encrypt(message);
+		int size3 = encryptedMessage.length;
+		
+		//Send message over network
+		
+		//Receiver: Decrypts the message with their AESCipher.
+		String decryptedMessage = serverAESCipher.decrypt(encryptedMessage);
+		
+		//Receiver: Processes the decrypted message.
+		
+		/*
+		 * Server needs to send a message to the client
+		 */
+		
+		//Sender: Generates a message in the form of a String.
+		String message2 = "Goodbye";
+		
+		//Sender: Encrypts the message with their AESCipher.
+		//Sender: Sends the encrypted message.
+		byte[] encryptedMessage2 = serverAESCipher.encrypt(message2);
+		int size4 = encryptedMessage.length;
+		
+		//Send message over network
+		
+		//Receiver: Decrypts the message with their AESCipher.
+		String decryptedMessage2 = clientAESCipher.decrypt(encryptedMessage2);
+		
+		//Receiver: Processes the decrypted message.
+		
+		//Test if it worked
+		System.out.println("Client -> Server");
+		System.out.println("Original Message:  " + message);
+		System.out.println("Encrypted Message: " + new String(encryptedMessage, "UTF-8"));
+		System.out.println("Decrypted Message: " + decryptedMessage);
+		
+		System.out.println("\nServer -> Client");
+		System.out.println("Original Message:  " + message2);
+		System.out.println("Encrypted Message: " + new String(encryptedMessage2, "UTF-8"));
+		System.out.println("Decrypted Message: " + decryptedMessage2);
 	}
 }
