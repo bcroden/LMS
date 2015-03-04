@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.security.InvalidKeyException;
 import java.util.LinkedList;
 
 /**
@@ -31,8 +32,6 @@ public class TCPServer implements Runnable
 			//keep looking for clients until this thread is interrupted
 			while(true)
 			{
-				System.out.printf("# of client threads = %d\r", clients.size());
-				
 				try
 				{
 					Socket client = ss.accept();
@@ -43,6 +42,10 @@ public class TCPServer implements Runnable
 				catch(SocketTimeoutException e)
 				{
 					//No connections have occurred in the last 1ms
+				}
+				catch(InvalidKeyException | InterruptedException e)
+				{
+					// TODO: There isn't much to do for this except place it in a log file
 				}
 				
 				try

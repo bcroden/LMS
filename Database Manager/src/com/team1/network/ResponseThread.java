@@ -1,23 +1,37 @@
 package com.team1.network;
 
-import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.security.InvalidKeyException;
+
+import com.team1.encryption.AESCipher;
+import com.team1.encryption.RSACipher;
 
 /**
- * Represents a thread which will read a message from a client.
+ * Represents a thread running on the server which will communicate with a client.
+ * This class is designed to interface with com.team1.network.TCPClient and handles
+ * all encryption needed to successfully communicate over the network.
+ * 
  * @author Alex Anderson
  */
 
-//NOTE: This class assumes that the newline character is the delimiter for network messages
 public class ResponseThread extends Thread
 {
-	public ResponseThread(Socket socket, TCPServer boss)
+	public ResponseThread(Socket socket, TCPServer boss) throws IOException, InterruptedException, InvalidKeyException
 	{
 		this.socket = socket;
 		this.boss = boss;
+		
+		this.socket.setSoTimeout(1); //read time out is 1ms
+		
+		//setup streams to talk to client
+		toClient = new DataOutputStream(socket.getOutputStream());
+		fromClient = socket.getInputStream();
+		
+		setupAESCipher();
 	}
 	
 	@Override
@@ -25,57 +39,116 @@ public class ResponseThread extends Thread
 	{
 		try
 		{
-			socket.setSoTimeout(1);	//read time out is 1ms
+			//get the request string from the client
+			String cliRequest = readClientRequest();
 			
-			//setup stream to read client's message
-			BufferedReader bf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			//TODO: Pass request to Authentication
 			
-			//read message
-			String message = null;
-			while(message == null || message.equalsIgnoreCase(""))
-			{
-				try
-				{
-					if(Thread.interrupted())
-						break;
-					
-					message = bf.readLine();
-				}
-				catch(SocketTimeoutException e)
-				{
-					continue;
-				}
-			}
+			//TODO: Wait for Formatting to send reply for client
 			
-			if(Thread.interrupted())
-			{
-				bf.close();
-				socket.close();
-				return;
-			}
-			
-			// TODO: Pass the message to the cryptography objects
-			
-			// TODO: Sleep until response is given from cryptography objects
-			
-			//setup stream to send reply to client
+			//send reply string to the client
+			sendReplyToClient(cliRequest);	//echo what was sent by the client
 			
 			//clean up my mess
-			
-			// TODO: Close stream used to send information to clients
-			bf.close();
-			socket.close();
-			boss.requestClientRemoval(this);
+			close();
 		}
-		catch (IOException e)
+		catch(Exception e)
 		{
-			//Something really bad has happened...
-			//Probable cause is that the client has closed its connection.
-			// TODO: Are we going to have a log file for dropped connections etc?
-			e.printStackTrace();
+			//Something bad has happened
+			//notify the main server thread that we are terminating
+			leaveBoss();
 		}
 	}
 	
+	//decrypts and returns the bytes sent by the client
+	private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
+	{
+		byte[] encRequest = readBytes();
+		return cipher.decrypt(encRequest);
+	}
+	//encrypts and sends a message to the client
+	private void sendReplyToClient(String reply) throws InvalidKeyException, IOException
+	{
+		sendBytes(cipher.encrypt(reply));
+	}
+	
+	//reads the raw bytes sent by the client
+	//if no bytes are sent, the thread will sleep until they arrive
+	private byte[] readBytes() throws IOException, InterruptedException
+	{
+		/* Get Message Size */
+		int msgSize = 0;
+		while(msgSize == 0)
+		{
+			try
+			{
+				//Note: this seems to return 0 instead
+				//of throwing a SocketTimeoutException
+				msgSize = fromClient.read();
+			}
+			catch(SocketTimeoutException e)
+			{
+			}
+			
+			Thread.sleep(2);
+		}
+					
+		/* Read Message */
+		byte[] request = new byte[msgSize];
+		while(true)
+		{
+			try
+			{
+				//keep attempting to read until it is successful
+				fromClient.read(request);
+				break;
+			}
+			catch(SocketTimeoutException e)
+			{
+			}
+			
+			Thread.sleep(2);
+		}
+
+		return request;
+	}
+	//sends an array of raw bytes to the client
+	private void sendBytes(byte[] bytes) throws IOException
+	{
+		toClient.writeInt(bytes.length);
+		toClient.write(bytes);
+	}
+	
+	//initialize encryption ciphers according to an agreed protocol
+	private void setupAESCipher() throws IOException, InterruptedException, InvalidKeyException
+	{
+		//create cipher using client's public key
+		RSACipher publicCipher = new RSACipher(readBytes());
+		
+		//create private cipher
+		cipher = new AESCipher();
+		
+		//send client encrypted private key
+		byte[] privateKey = cipher.getKey().getEncoded();
+		sendBytes(publicCipher.encrypt(privateKey));
+	}
+	//notify the main thread running the server that this thread is finished.
+	private void leaveBoss()
+	{
+		boss.requestClientRemoval(this);
+	}
+	//notify the server thread that we are closing all streams and sockets
+	private void close() throws IOException
+	{
+		fromClient.close();
+		toClient.close();
+		socket.close();
+		leaveBoss();
+	}
+	
+	private AESCipher cipher;
+	private DataOutputStream toClient;
+	private InputStream fromClient;
 	private Socket socket;
 	private TCPServer boss;
 }
