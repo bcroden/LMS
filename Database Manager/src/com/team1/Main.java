@@ -8,18 +8,16 @@ public class Main
 {
 	public static void main(String args[]) throws Exception
 	{
-		System.out.println("Hello World!");
+		final int PORT = 3612;
 		
-		//setup TCP server on port 3612
-		Thread thread = new Thread(new TCPServer(3612));
+		//setup TCP server on the specified port
+		Thread thread = new Thread(new TCPServer(PORT));
 		thread.start();
 		
-		System.out.println("Enter anything to interrupt the server");
+		System.out.println("Server has started.\nPress enter to stop the server");
 		
-		//wait for the user to enter anything
-		Scanner scanner = new Scanner(System.in);
-		scanner.nextLine();
-		scanner.close();
+		//wait for the user to press enter
+		new Scanner(System.in).nextLine();
 		
 		//stop the server
 		thread.interrupt();
