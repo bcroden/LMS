@@ -8,102 +8,103 @@ import java.security.InvalidKeyException;
 import java.util.LinkedList;
 
 /**
- * Represents a TCP server.
- * This class will listen for connections on a given port. Once a client connects
- * to this port, the server will create a new thread to handle the client's requests.
- *  
+ * Represents a TCP server. This class will listen for connections on a given
+ * port. Once a client connects to this port, the server will create a new
+ * thread to handle the client's requests.
+ * 
  * @author Alex Anderson
  */
 
 public class TCPServer implements Runnable
 {
-	public TCPServer(int port) throws IOException
-	{
-		ss = new ServerSocket(port);
-	}
-	
-	@Override
-	public void run()
-	{
-		try
-		{
-			ss.setSoTimeout(1);	//wait for clients for 1ms
-			
-			//keep looking for clients until this thread is interrupted
-			while(true)
-			{
-				try
-				{
-					Socket client = ss.accept();
-					Thread t = new ResponseThread(client, this);
-					t.start();
-					clients.add(t);
-				}
-				catch(SocketTimeoutException e)
-				{
-					//No connections have occurred in the last 1ms
-				}
-				catch(InvalidKeyException | InterruptedException e)
-				{
-					// TODO: There isn't much to do for this except place it in a log file
-				}
-				
-				try
-				{
-					Thread.sleep(10);	//sleep for 10ms
-				}
-				catch(InterruptedException e)
-				{
-					break;	//Time to stop listening for clients
-				}
-				
-				//remove any old threads which were handling clients
-				cleanClientThreads();
-			}
-			
-			//clean up my mess
-			ss.close();
-			stopClientThreads();
-		}
-		catch (IOException e)
-		{
-			//Something really bad must have happened...
-			e.printStackTrace();
-		}
-	}
-	
-	//called by client threads after they have finished
-	protected void requestClientRemoval(Thread client)
-	{
-		synchronized(remCli)
-		{
-			remCli.add(client);
-		}
-	}
-	
-	//removes old client threads from the server's list
-	private void cleanClientThreads()
-	{
-		synchronized(remCli)
-		{
-			if(remCli.size() > 0)
-			{
-				for(Thread t : remCli)
-				{
-					clients.remove(t);
-				}
-			}
-		}
-	}
-	
-	//interrupts all active client threads
-	private void stopClientThreads()
-	{
-		cleanClientThreads();
-		clients.stream().forEach((Thread t) -> t.interrupt());
-	}
-	
-	private ServerSocket ss;
-	private LinkedList<Thread> clients = new LinkedList<>();
-	private LinkedList<Thread> remCli = new LinkedList<>();
+    public TCPServer(int port) throws IOException
+    {
+        ss = new ServerSocket(port);
+    }
+
+    @Override
+    public void run()
+    {
+        try
+        {
+            ss.setSoTimeout(1); // wait for clients for 1ms
+
+            // keep looking for clients until this thread is interrupted
+            while(true)
+            {
+                try
+                {
+                    Socket client = ss.accept();
+                    Thread t = new ResponseThread(client, this);
+                    t.start();
+                    clients.add(t);
+                }
+                catch(SocketTimeoutException e)
+                {
+                    // No connections have occurred in the last 1ms
+                }
+                catch(InvalidKeyException | InterruptedException e)
+                {
+                    // TODO: There isn't much to do for this except place it in
+                    // a log file
+                }
+
+                try
+                {
+                    Thread.sleep(10); // sleep for 10ms
+                }
+                catch(InterruptedException e)
+                {
+                    break; // Time to stop listening for clients
+                }
+
+                // remove any old threads which were handling clients
+                cleanClientThreads();
+            }
+
+            // clean up my mess
+            ss.close();
+            stopClientThreads();
+        }
+        catch(IOException e)
+        {
+            // Something really bad must have happened...
+            e.printStackTrace();
+        }
+    }
+
+    // called by client threads after they have finished
+    protected void requestClientRemoval(Thread client)
+    {
+        synchronized(remCli)
+        {
+            remCli.add(client);
+        }
+    }
+
+    // removes old client threads from the server's list
+    private void cleanClientThreads()
+    {
+        synchronized(remCli)
+        {
+            if(remCli.size() > 0)
+            {
+                for(Thread t : remCli)
+                {
+                    clients.remove(t);
+                }
+            }
+        }
+    }
+
+    // interrupts all active client threads
+    private void stopClientThreads()
+    {
+        cleanClientThreads();
+        clients.stream().forEach((Thread t) -> t.interrupt());
+    }
+
+    private ServerSocket ss;
+    private LinkedList<Thread> clients = new LinkedList<>();
+    private LinkedList<Thread> remCli = new LinkedList<>();
 }
