@@ -22,13 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Brandon Roden
  *
  */
-
-/*
- * TODO: Remove error messages to help prevent security breaches from error
- * logs, to be done after thorough testing of the cipher.
- */
-public class AESCipher
-{
+public class AESCipher {
     public static final int IV_SIZE = 16;
     public static final int KEY_SIZE = 128;
 
@@ -36,15 +30,13 @@ public class AESCipher
     public static final String DEFAULT_CHARSET = "UTF-8";
     public static final String TRANSFORMATION = "AES/CBC/PKCS5PADDING";
 
-    public static SecretKey generateKey() throws NoSuchAlgorithmException
-    {
+    public static SecretKey generateKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
         keyGen.init(KEY_SIZE);
         return keyGen.generateKey();
     }
 
-    public static SecretKey generateKey(byte[] key)
-    {
+    public static SecretKey generateKey(byte[] key) {
         return new SecretKeySpec(key, ALGORITHM);
     }
 
@@ -54,26 +46,18 @@ public class AESCipher
     /**
      * Create an AESCipher object. This will generate a new AES key.
      */
-    public AESCipher()
-    {
-        try
-        {
+    public AESCipher() {
+        try {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
             this.key = generateKey();
-        }
-        catch(NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             // Thrown if AES is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-            e.printStackTrace();
-        }
-        catch(NoSuchPaddingException e)
-        {
+        } catch (NoSuchPaddingException e) {
             // Thrown if PKCS5 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-            e.printStackTrace();
         }
     }
 
@@ -84,25 +68,17 @@ public class AESCipher
      * @param key
      *            - A byte[] representing a SecretKey.
      */
-    public AESCipher(byte[] key)
-    {
-        try
-        {
+    public AESCipher(byte[] key) {
+        try {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
-        }
-        catch(NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             // Thrown if AES is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-            e.printStackTrace();
-        }
-        catch(NoSuchPaddingException e)
-        {
+        } catch (NoSuchPaddingException e) {
             // Thrown if PKCS5 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-            e.printStackTrace();
         }
 
         this.key = new SecretKeySpec(key, ALGORITHM);
@@ -115,28 +91,20 @@ public class AESCipher
      * @param key
      *            - A valid AES SecretKey
      */
-    public AESCipher(SecretKey key) throws InvalidKeyException
-    {
-        try
-        {
+    public AESCipher(SecretKey key) throws InvalidKeyException {
+        try {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
-        }
-        catch(NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             // Thrown if AES is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-            e.printStackTrace();
-        }
-        catch(NoSuchPaddingException e)
-        {
+        } catch (NoSuchPaddingException e) {
             // Thrown if PKCS5 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-            e.printStackTrace();
         }
 
-        if(!key.getAlgorithm().equals(ALGORITHM))
+        if (!key.getAlgorithm().equals(ALGORITHM))
             throw new InvalidKeyException();
         else
             this.key = key;
@@ -152,16 +120,12 @@ public class AESCipher
      * @throws InvalidKeyException
      *             If the current key is invalid
      */
-    public byte[] encrypt(String message) throws InvalidKeyException
-    {
+    public byte[] encrypt(String message) throws InvalidKeyException {
         // Convert message to byte[]
         byte[] messageBytes;
-        try
-        {
+        try {
             messageBytes = message.getBytes(DEFAULT_CHARSET);
-        }
-        catch(UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             // Use system default charset
             messageBytes = message.getBytes();
         }
@@ -171,30 +135,22 @@ public class AESCipher
         new SecureRandom().nextBytes(iv);
 
         // Initialize cipher
-        try
-        {
+        try {
             this.cipher.init(Cipher.ENCRYPT_MODE, this.key,
                     new IvParameterSpec(iv));
-        }
-        catch(InvalidAlgorithmParameterException e)
-        {
+        } catch (InvalidAlgorithmParameterException e) {
             // Occurs if iv is not specified or is invalid
             e.printStackTrace();
         }
 
         // Encrypt message
         byte[] encryptedBytes = { 0 };
-        try
-        {
+        try {
             encryptedBytes = this.cipher.doFinal(messageBytes);
-        }
-        catch(IllegalBlockSizeException e)
-        {
+        } catch (IllegalBlockSizeException e) {
             // Occurs if block size is not multiple of 16
             e.printStackTrace();
-        }
-        catch(BadPaddingException e)
-        {
+        } catch (BadPaddingException e) {
             // Occurs if message padding is not correct as per PKCS5 standards
             e.printStackTrace();
         }
@@ -215,70 +171,55 @@ public class AESCipher
      * @throws InvalidKeyException
      *             If the current key is invalid
      */
-    public String decrypt(byte[] encryptedMessage) throws InvalidKeyException
-    {
+    public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
         // Separate initialization vector from encrypted message
         byte[] iv = Util.getSubArray(encryptedMessage, 0, IV_SIZE);
         byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE,
                 encryptedMessage.length - IV_SIZE);
 
         // Initialize cipher
-        try
-        {
+        try {
             this.cipher.init(Cipher.DECRYPT_MODE, this.key,
                     new IvParameterSpec(iv));
-        }
-        catch(InvalidAlgorithmParameterException e)
-        {
+        } catch (InvalidAlgorithmParameterException e) {
             // Occurs if iv is not specified or is invalid
             e.printStackTrace();
         }
 
         // Decrypt message
         byte[] message = { 0 };
-        try
-        {
+        try {
             message = this.cipher.doFinal(encryptedBytes);
-        }
-        catch(IllegalBlockSizeException e)
-        {
+        } catch (IllegalBlockSizeException e) {
             // Occurs if block size is not multiple of 16
             e.printStackTrace();
-        }
-        catch(BadPaddingException e)
-        {
+        } catch (BadPaddingException e) {
             // Occurs if message padding is not correct as per PKCS5 standards
             e.printStackTrace();
         }
 
         // Convert message to String
-        try
-        {
+        try {
             return new String(message, DEFAULT_CHARSET);
-        }
-        catch(UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             // Use system default charset
             return new String(message);
         }
     }
 
-    public SecretKey getKey()
-    {
+    public SecretKey getKey() {
         return this.key;
     }
 
-    public void setKey(SecretKey key) throws InvalidKeyException
-    {
-        if(!key.getAlgorithm().equals(ALGORITHM))
+    public void setKey(SecretKey key) throws InvalidKeyException {
+        if (!key.getAlgorithm().equals(ALGORITHM))
             throw new InvalidKeyException();
         else
             this.key = key;
     }
 
     // Basic main for testing purposes
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         String message = "GabeN!";
         System.out.println("Original Message:  " + message);
 
