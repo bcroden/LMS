@@ -45,8 +45,7 @@ public class TCPServer implements Runnable
                 }
                 catch(InvalidKeyException | InterruptedException e)
                 {
-                    // TODO: There isn't much to do for this except place it in
-                    // a log file
+                    // TODO: There isn't much to do for this except place it in a log file
                 }
 
                 try
@@ -101,7 +100,8 @@ public class TCPServer implements Runnable
     private void stopClientThreads()
     {
         cleanClientThreads();
-        clients.stream().forEach((Thread t) -> t.interrupt());
+        for(Thread thread : clients)
+            thread.interrupt();
     }
 
     private ServerSocket ss;

@@ -63,16 +63,14 @@ public class ResponseThread extends Thread
     }
 
     // decrypts and returns the bytes sent by the client
-    private String readClientRequest() throws IOException,
-            InterruptedException, InvalidKeyException
+    private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
     {
         byte[] encRequest = readBytes();
         return cipher.decrypt(encRequest);
     }
 
     // encrypts and sends a message to the client
-    private void sendReplyToClient(String reply) throws InvalidKeyException,
-            IOException
+    private void sendReplyToClient(String reply) throws InvalidKeyException, IOException
     {
         sendBytes(cipher.encrypt(reply));
     }
@@ -126,8 +124,7 @@ public class ResponseThread extends Thread
     }
 
     // initialize encryption ciphers according to an agreed protocol
-    private void setupAESCipher() throws IOException, InterruptedException,
-            InvalidKeyException
+    private void setupAESCipher() throws IOException, InterruptedException, InvalidKeyException
     {
         // create cipher using client's public key
         RSACipher publicCipher = new RSACipher(readBytes());

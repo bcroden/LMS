@@ -21,8 +21,7 @@ import static org.junit.Assert.assertThat;
 public class NetworkTEST
 {
     @Test
-    public void encryptionTestEchoServer() throws IOException,
-            InterruptedException, InvalidKeyException
+    public void encryptionTestEchoServer() throws IOException, InterruptedException, InvalidKeyException
     {
         final int PORT = 3612;
 
@@ -36,8 +35,7 @@ public class NetworkTEST
 
         String reply = client.requestAndWait(request);
 
-        assertThat("Reply from echo server does not match request", request,
-                is(reply));
+        assertThat("Reply from echo server does not match request", request, is(reply));
 
         // stop the server
         thread.interrupt();
