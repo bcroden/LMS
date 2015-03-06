@@ -14,8 +14,7 @@ public class Main
         Thread thread = new Thread(new TCPServer(PORT));
         thread.start();
 
-        System.out
-                .println("Server has started.\nPress enter to stop the server");
+        System.out.println("Server has started.\nPress enter to stop the server");
 
         // wait for the user to press enter
         new Scanner(System.in).nextLine();
