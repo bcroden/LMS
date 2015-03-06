@@ -1,3 +1,5 @@
+package com.team1.formatting;
+
 public class Query
 {
     //Variable for other functions to see what kind of query they are being given
@@ -19,7 +21,7 @@ public class Query
     //method to return the object information in the form of a string
     public static String format()
     {
-        String msg;
+        String msg = "";
         //build the msg from query info
         return msg;
     }

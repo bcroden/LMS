@@ -1,5 +1,11 @@
-public class LoginQuery extends LoginQuery
+package com.team1.formatting;
+
+public class LoginQuery extends Query
 {
-    public static final String userName;
-    public static final String password;
+    public LoginQuery(String msg) {
+        super(msg);
+        // TODO Auto-generated constructor stub
+    }
+    public String userName;
+    public String password;
 }
