@@ -1,4 +1,4 @@
-public class AdminQuery extends Query
+public class AdminQuery extends LibrarianQuery
 {
     
 }

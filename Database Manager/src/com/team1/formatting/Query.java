@@ -1,10 +1,18 @@
 public class Query
 {
-    //method to take a msg and turn it into a query object
-    public static void parse(String msg)
+    //Variable for other functions to see what kind of query they are being given
+    public static String queryType;
+    
+    //Constructor to take a msg and turn it into a query object
+    public Query(String msg)
     {
-        //get the first piece (deliminated by ;)
+        //split the msg into each piece (deliminated by ;)
+        String[] str = msg.split(";");
+        
+        //get the first piece
         //first piece determines request type
+        queryType = str[0];
+        
         
     }
     
