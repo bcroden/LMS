@@ -16,9 +16,17 @@
     
     echo "Pre query" . "<br>";
     
-    $sql = "SELECT id, isbn, title FROM book";
+    
+    //This is how queries are performed in PHP
+    //We can just concatonate which variables we want to search
+    //This will accomplish the search for books by title or whatever
+    $sql = "SELECT id, isbn, title FROM book WHERE title = '" . $_POST['search'] . "'";
     $result = $connection->query($sql);
     
+    
+    
+    
+    //Printing results
     if($result->num_rows > 0){
         //output data
         while($row = $result->fetch_assoc()){
@@ -29,6 +37,4 @@
         echo "Error or something...I don't know <br>";
     }
     //adjust query for testing
-    
-
 ?>
