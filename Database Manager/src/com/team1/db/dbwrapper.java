@@ -8,7 +8,7 @@ public class dbwrapper {
 	Connection con;
 	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql//cadeg-lms-1330962:3306/LMS";
+	static final String DB_URL = "jdbc:mysql//localhost:3306/LMS";
 	
 	static final String username = "cadeg";
 	static final String pass = "";
