@@ -40,14 +40,18 @@ public class RSACipher {
 
     public static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORITHM);
-        kpg.initialize(KEY_SIZE);
-        return kpg.generateKeyPair();
+        synchronized (kpg) {
+            kpg.initialize(KEY_SIZE);
+            return kpg.generateKeyPair();
+        }
     }
 
     public static PublicKey generatePublicKey(byte[] keyBytes) {
         try {
-            return KeyFactory.getInstance("RSA").generatePublic(
-                    new X509EncodedKeySpec(keyBytes));
+            KeyFactory kf = KeyFactory.getInstance(ALGORITHM);
+            synchronized (kf) {
+                return kf.generatePublic(new X509EncodedKeySpec(keyBytes));
+            }
         } catch (InvalidKeySpecException e) {
             // Thrown if keyBytes are invalid
             e.printStackTrace();
@@ -61,8 +65,10 @@ public class RSACipher {
 
     public static PrivateKey generatePrivateKey(byte[] keyBytes) {
         try {
-            return KeyFactory.getInstance("RSA").generatePrivate(
-                    new PKCS8EncodedKeySpec(keyBytes));
+            KeyFactory kf = KeyFactory.getInstance(ALGORITHM);
+            synchronized (kf) {
+                return kf.generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
+            }
         } catch (InvalidKeySpecException e) {
             // Thrown if keyBytes are invalid
             e.printStackTrace();
@@ -154,7 +160,9 @@ public class RSACipher {
         int passes = (int) Math.ceil(((double) message.length / BLOCK_SIZE));
 
         // Initialize the cipher
-        this.cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);
+        synchronized (this.cipher) {
+            this.cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);
+        }
 
         // Encrypt every block separately
         byte[] encryptedBytes = null;
@@ -163,8 +171,9 @@ public class RSACipher {
             byte[] temp = Util.getSubArray(message, i * BLOCK_SIZE, BLOCK_SIZE);
             try {
                 // Add newly encrypted bytes to total
-                encryptedBytes = Util.concatenateArrays(encryptedBytes,
-                        this.cipher.doFinal(temp));
+                synchronized (this.cipher) {
+                    encryptedBytes = Util.concatenateArrays(encryptedBytes, this.cipher.doFinal(temp));
+                }
             } catch (IllegalBlockSizeException e) {
                 // Occurs if block size is not multiple of 128
                 e.printStackTrace();
@@ -188,23 +197,28 @@ public class RSACipher {
      *             If the current key is invalid
      */
     public byte[] decrypt(byte[] encryptedBytes) throws InvalidKeyException {
+        // Make sure private key exists
+        if (this.privateKey == null)
+            throw new InvalidKeyException("No private key defined for this cipher.");
+
         // Calculate the number of passes required to decrypt entire message
-        int passes = (int) Math
-                .ceil(((double) encryptedBytes.length / ENCRYPTED_BLOCK_LENGTH));
+        int passes = (int) Math.ceil(((double) encryptedBytes.length / ENCRYPTED_BLOCK_LENGTH));
 
         // Initialize the cipher
-        this.cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
+        synchronized (this.cipher) {
+            this.cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
+        }
 
         // Decrypt every block separately
         byte[] message = null;
         for (int i = 0; i < passes; i++) {
             // Get current encrypted bytes to decrypt
-            byte[] temp = Util.getSubArray(encryptedBytes, i
-                    * ENCRYPTED_BLOCK_LENGTH, ENCRYPTED_BLOCK_LENGTH);
+            byte[] temp = Util.getSubArray(encryptedBytes, i * ENCRYPTED_BLOCK_LENGTH, ENCRYPTED_BLOCK_LENGTH);
             try {
                 // Add newly decrypted bytes to total
-                message = Util.concatenateArrays(message,
-                        this.cipher.doFinal(temp));
+                synchronized (this.cipher) {
+                    message = Util.concatenateArrays(message, this.cipher.doFinal(temp));
+                }
             } catch (IllegalBlockSizeException e) {
                 // Occurs if block size is not multiple of 128
                 e.printStackTrace();
@@ -258,8 +272,7 @@ public class RSACipher {
         byte[] enbytes = cipher.encrypt(bytes);
         long enTime = System.nanoTime() - timer;
 
-        System.out
-                .println("Encrypted Message: " + new String(enbytes, "UTF-8"));
+        System.out.println("Encrypted Message: " + new String(enbytes, "UTF-8"));
 
         // Decrypt message
         timer = System.nanoTime();
@@ -282,7 +295,6 @@ public class RSACipher {
         // Client: Sends a message containing their unencrypted Public RSA key
         // to the server.
         byte[] clientPublicKey = clientRSACipher.getPublicKey().getEncoded();
-        int size = clientPublicKey.length;
 
         // Send message over network
 
@@ -296,7 +308,6 @@ public class RSACipher {
         // Server: Sends a message containing the encrypted AES Key.
         byte[] aesKey = serverAESCipher.getKey().getEncoded();
         byte[] encryptedAESKey = serverRSACipher.encrypt(aesKey);
-        int size2 = encryptedAESKey.length;
 
         // Send message over network
 
@@ -316,7 +327,6 @@ public class RSACipher {
         // Sender: Encrypts the message with their AESCipher.
         // Sender: Sends the encrypted message.
         byte[] encryptedMessage = clientAESCipher.encrypt(message);
-        int size3 = encryptedMessage.length;
 
         // Send message over network
 
@@ -335,7 +345,6 @@ public class RSACipher {
         // Sender: Encrypts the message with their AESCipher.
         // Sender: Sends the encrypted message.
         byte[] encryptedMessage2 = serverAESCipher.encrypt(message2);
-        int size4 = encryptedMessage.length;
 
         // Send message over network
 
@@ -347,14 +356,12 @@ public class RSACipher {
         // Test if it worked
         System.out.println("Client -> Server");
         System.out.println("Original Message:  " + message);
-        System.out.println("Encrypted Message: "
-                + new String(encryptedMessage, "UTF-8"));
+        System.out.println("Encrypted Message: " + new String(encryptedMessage, "UTF-8"));
         System.out.println("Decrypted Message: " + decryptedMessage);
 
         System.out.println("\nServer -> Client");
         System.out.println("Original Message:  " + message2);
-        System.out.println("Encrypted Message: "
-                + new String(encryptedMessage2, "UTF-8"));
+        System.out.println("Encrypted Message: " + new String(encryptedMessage2, "UTF-8"));
         System.out.println("Decrypted Message: " + decryptedMessage2);
     }
 }
