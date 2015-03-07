@@ -6,7 +6,7 @@ public class Query
     public static String queryType;
     
     //Constructor to take a msg and turn it into a query object
-    public Query(String msg)
+    public static Query buildRequest(String msg)
     {
         //split the msg into each piece (deliminated by ;)
         String[] str = msg.split(";");

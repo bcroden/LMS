@@ -32,7 +32,9 @@ public class AESCipher {
 
     public static SecretKey generateKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
-        keyGen.init(KEY_SIZE);
+        synchronized (keyGen) {
+            keyGen.init(KEY_SIZE);
+        }
         return keyGen.generateKey();
     }
 
@@ -136,8 +138,9 @@ public class AESCipher {
 
         // Initialize cipher
         try {
-            this.cipher.init(Cipher.ENCRYPT_MODE, this.key,
-                    new IvParameterSpec(iv));
+            synchronized (this.cipher) {
+                this.cipher.init(Cipher.ENCRYPT_MODE, this.key, new IvParameterSpec(iv));
+            }
         } catch (InvalidAlgorithmParameterException e) {
             // Occurs if iv is not specified or is invalid
             e.printStackTrace();
@@ -146,7 +149,9 @@ public class AESCipher {
         // Encrypt message
         byte[] encryptedBytes = { 0 };
         try {
-            encryptedBytes = this.cipher.doFinal(messageBytes);
+            synchronized (this.cipher) {
+                encryptedBytes = this.cipher.doFinal(messageBytes);
+            }
         } catch (IllegalBlockSizeException e) {
             // Occurs if block size is not multiple of 16
             e.printStackTrace();
@@ -174,13 +179,13 @@ public class AESCipher {
     public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
         // Separate initialization vector from encrypted message
         byte[] iv = Util.getSubArray(encryptedMessage, 0, IV_SIZE);
-        byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE,
-                encryptedMessage.length - IV_SIZE);
+        byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);
 
         // Initialize cipher
         try {
-            this.cipher.init(Cipher.DECRYPT_MODE, this.key,
-                    new IvParameterSpec(iv));
+            synchronized (this.cipher) {
+                this.cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(iv));
+            }
         } catch (InvalidAlgorithmParameterException e) {
             // Occurs if iv is not specified or is invalid
             e.printStackTrace();
@@ -189,7 +194,9 @@ public class AESCipher {
         // Decrypt message
         byte[] message = { 0 };
         try {
-            message = this.cipher.doFinal(encryptedBytes);
+            synchronized (this.cipher) {
+                message = this.cipher.doFinal(encryptedBytes);
+            }
         } catch (IllegalBlockSizeException e) {
             // Occurs if block size is not multiple of 16
             e.printStackTrace();
@@ -231,8 +238,7 @@ public class AESCipher {
         byte[] encryptedBytes = cipher.encrypt(message);
         long enTime = System.nanoTime() - timer;
 
-        System.out.println("Encrypted message: "
-                + new String(encryptedBytes, DEFAULT_CHARSET));
+        System.out.println("Encrypted message: " + new String(encryptedBytes, DEFAULT_CHARSET));
 
         // Test key deconstruction and reconstruction
         // Convert original key to byte[]
