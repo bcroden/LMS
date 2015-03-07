@@ -1,3 +1,9 @@
+
+<!-- We don't need this because I redirected home.php to reference my page that queries
+     the db.  
+     User story 1.1 completed!
+     -->
+
 <headh>
     <body>
         <p>Search page.</p>
