@@ -17,6 +17,9 @@ public class Dbwrapper {
 	//and return the result to the request
 	//from authentication
 	
+	//I'm thinking we should return arraylists filled with book objects
+	//Then presenting lists of data will be really easy in keeping stuff together
+	
 	private Dbwrapper(){
 		//get driver and connection
 		try{
