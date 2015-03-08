@@ -1,6 +1,12 @@
 package com.team1.db;       //Alex changed 3-7-15 this to get everything to compile
 
 import java.sql.*;
+import java.util.ArrayList;
+
+//get book objects
+import com.team1.books.Book;
+
+
 
 public class Dbwrapper {
 
@@ -25,7 +31,7 @@ public class Dbwrapper {
 		try{
 			Class.forName(JDBC_DRIVER).newInstance();
 			//connect
-			con = DriverManager.getConnection("jdbc:mysql://localhost/LMS", "root", "LMS");
+			con = DriverManager.getConnection("jdbc:mysql://localhost/LMS", "cadeg", "");
 			System.out.println("Connected if we get here");
 		}
 		catch(Exception e){
@@ -42,7 +48,7 @@ public class Dbwrapper {
 	public void query() throws SQLException
 	{
 		Statement stmt = con.createStatement();
-		String sql = "Select * From book ISBN WHERE id = 2";
+		String sql = "Select * From book ISBN";
                 ResultSet result =  stmt.executeQuery(sql);
                 while(result.next()){
                 String isbn = result.getString("ISBN");
@@ -50,7 +56,52 @@ public class Dbwrapper {
                 }
 	}
 	
-        
+	public void addBook(Book book)throws SQLException
+	{
+		Statement stmt = con.createStatement();
+		
+	}
+	
+	//These functions should return all books that match the criteria
+    public ArrayList<Book> SearchAuthor(String author)throws SQLException
+    {
+    	Statement stmt = con.createStatement();
+    	String sql = "SELECT * FROM book WHERE author = '" + author + "'";
+    	ResultSet result = stmt.executeQuery(sql);
+    	ArrayList list = new ArrayList<Book>();
+    	while(result.next()){
+    		Book book = new Book(
+    			result.getString("ISBN"),
+    			result.getString("title"),
+    			result.getString("author"),
+    			result.getString("publisher"),
+    			result.getString("publishdate"),
+    			result.getString("genre"));
+    			
+    		list.add(book);
+    	}
+    	return list;
+    }
+    
+    public ArrayList<Book> SearchTitle(String title)throws SQLException
+    {
+    	Statement stmt = con.createStatement();
+    	String sql = "SELECT * FROM book WHERE title = '" + title + "'";
+    	ResultSet result = stmt.executeQuery(sql);
+    	ArrayList list = new ArrayList<Book>();
+    	while(result.next()){
+    		Book book = new Book(
+    			result.getString("ISBN"),
+    			result.getString("title"),
+    			result.getString("author"),
+    			result.getString("publisher"),
+    			result.getString("publishdate"),
+    			result.getString("genre"));
+    			
+    		list.add(book);
+    	}
+    	return list;
+    }
         
         //Static testing - won't actually be here for final product
 	public static void main(String args[]) throws SQLException

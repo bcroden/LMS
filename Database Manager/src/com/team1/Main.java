@@ -1,8 +1,11 @@
 package com.team1;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import com.team1.network.TCPServer;
+
+import com.team1.db.Dbwrapper;
 
 public class Main
 {
@@ -22,5 +25,14 @@ public class Main
         // stop the server
         thread.interrupt();
         thread.join();
+        
+        //testing for database connection
+        Dbwrapper db = Dbwrapper.getInstance();
+        ArrayList list = new ArrayList();
+        list = db.SearchAuthor("Me");
+        int size = list.size();
+        for(int i = 0; i < size; i++){
+            System.out.println(list.get(i).toString());
+        }
     }
 }
