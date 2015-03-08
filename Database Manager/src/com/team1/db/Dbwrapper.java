@@ -1,4 +1,4 @@
-package dbwrapper;
+package com.team1.db;       //Alex changed 3-7-15 this to get everything to compile
 
 import java.sql.*;
 
