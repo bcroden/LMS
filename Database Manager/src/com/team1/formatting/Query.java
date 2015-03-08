@@ -29,11 +29,13 @@ public class Query
         }
         else if (queryType == "CheckOutBookQuery")
         {
-            //CheckOutBookQuery request = new CheckOutBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            CheckOutBookQuery request = new CheckOutBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            return request;
         }
         else if (queryType == "CheckInBookQuery")
         {
-            //CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            return request;
         }
         return new Query("error");
     }
