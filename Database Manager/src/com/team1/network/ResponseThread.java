@@ -9,6 +9,7 @@ import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
+import com.team1.formatting.Query;
 
 /**
  * Represents a thread running on the server which will communicate with a
@@ -21,8 +22,7 @@ import com.team1.encryption.RSACipher;
 
 public class ResponseThread extends Thread
 {
-    public ResponseThread(Socket socket, TCPServer boss) throws IOException,
-            InterruptedException, InvalidKeyException
+    public ResponseThread(Socket socket, TCPServer boss) throws IOException, InterruptedException, InvalidKeyException
     {
         this.socket = socket;
         this.boss = boss;
@@ -44,9 +44,15 @@ public class ResponseThread extends Thread
             // get the request string from the client
             String cliRequest = readClientRequest();
 
-            // TODO: Pass request to Authentication
+            Query query = Query.buildRequest(cliRequest);
+            
+            // TODO: Pass Query object to Authentication
 
-            // TODO: Wait for Formatting to send reply for client
+            // TODO: If Authentication disapproves, send client Denial Response object
+            
+            // TODO: If the authentication approves, give Query object to DB Connector and get a Response object
+            
+            // TODO: Send the client the Response object returned by the DB Connector
 
             // send reply string to the client
             sendReplyToClient(cliRequest); // echo what was sent by the client
