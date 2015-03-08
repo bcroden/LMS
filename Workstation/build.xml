@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- Created on 3-7-15 -->
+
+<project basedir="." default="build-source" name="Workstation">
+
+	<!-- Get access to JAVA_HOME etc -->
+	<property environment="env" />
+
+	<!-- Java versions for source code and binaries -->
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+
+	<!-- Key directories -->
+	<property name="src.dir" value="src" />
+	<property name="bin.dir" value="bin" />
+	<property name="lib.dir" value="lib" />
+	<property name="test.dir" value="tests" />
+
+	<!-- Binary files for executing application  -->
+	<path id="Workstation.classpath">
+		<pathelement location="${bin.dir}"/>
+	</path>
+
+	<!-- Delete all old compiled files-->
+	<target name="clean">
+		<delete dir="${bin.dir}" />
+	</target>
+
+	<!-- Create needed directories and copy any non-source files -->
+	<target name="init" depends="clean">
+		<mkdir dir="${bin.dir}"/>
+        <copy includeemptydirs="false" todir="${bin.dir}">
+            <fileset dir="${src.dir}">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+	</target>
+
+	<!-- Compile all source files -->
+	<target name="build-source" depends="init">
+        <javac destdir="${bin.dir}" includeantruntime="false" source="${source}" target="${target}" fork="true">
+            <src path="${src.dir}"/>
+            <classpath>
+				<path refid="Workstation.classpath"/>
+			</classpath>
+        </javac>
+	</target>
+
+	<!-- Execute Workstation application -->
+	<target name="Main" depends="build-source">
+        <java classname="com.team1.Main" failonerror="true" fork="yes">
+            <classpath>
+				<path refid="Workstation.classpath"/>
+			</classpath>
+        </java>
+	</target>
+
+</project>
