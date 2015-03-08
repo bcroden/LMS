@@ -2,15 +2,15 @@
 
 //query types: 
 
-                               Query
-                                |
-                          LibrarianQuery          
-                                |
-        ------------------------------------------
-        |           |           |                |
-    BookQuery   LoginQuery  PatronInfoQuery   AdminQuery
-                                                 |
-                                            LibrarianInfoQuery
+Query
+    LibrarianQuery          
+        BookInfoQuery
+        CheckInBookQuery
+        CheckOutBookQuery
+        LoginQuery
+        PatronInfoQuery   
+        AdminQuery
+            LibrarianInfoQuery
 
 
 //----------------------------------------------------------

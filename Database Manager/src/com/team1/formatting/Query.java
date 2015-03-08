@@ -21,14 +21,27 @@ public class Query
         //first piece determines request type
         queryType = str[0];
         
-        return new Query("");   //Alex added 3-7-15 this to get everything to compile
+        //build a new request from the rest of the msg.split, checking the queryType to determine which kind of request to build
+        if (queryType == "BookInfoQuery")
+        {
+            BookInfoQuery request = new BookInfoQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            return request;
+        }
+        else if (queryType == "CheckOutBookQuery")
+        {
+            //CheckOutBookQuery request = new CheckOutBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+        }
+        else if (queryType == "CheckInBookQuery")
+        {
+            //CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+        }
+        return new Query("error");
     }
     
-    //method to return the object information in the form of a string
-    public static String format()
-    {
-        String msg = "";
-        //build the msg from query info
+    //Override of toString. Method to return the object information in the form of a string.
+    @Override
+    public String toString() {
+        String msg = "Query request toString return message.";
         return msg;
     }
         
