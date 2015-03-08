@@ -34,7 +34,7 @@
     
 	<!-- Delete all non-source files -->
 	<target name="clean">
-        <delete dir="bin"/>
+        <delete dir="${bin.dir}"/>
     </target>
 
 	<!-- Setup needed directories and copy necessary files -->
@@ -85,7 +85,7 @@
 	</target>
 	
 	<!-- Execute Database Manager application -->
-	<target name="Main">
+	<target name="Main" depends="build-source">
         <java classname="com.team1.Main" failonerror="true" fork="yes">
             <classpath>
 				<path refid="DatabaseManager.classpath"/>

@@ -5,7 +5,7 @@ import java.security.InvalidKeyException;
 
 import org.junit.Test;
 
-import com.team1.network.TCPClient;
+import com.team1.network.MockTCPClient;
 import com.team1.network.TCPServer;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -29,7 +29,7 @@ public class NetworkTEST
         Thread thread = new Thread(new TCPServer(PORT));
         thread.start();
 
-        TCPClient client = new TCPClient("localhost", PORT);
+        MockTCPClient client = new MockTCPClient("localhost", PORT);
 
         String request = "What is in my pocket?";
 
