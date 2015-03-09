@@ -271,7 +271,7 @@ public class Dbwrapper {
 		stmt.executeUpdate(sql);
     	}
     	
-    	public String getPass(String user){
+    	public String getPass(String user)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT password FROM user WHERE username = '" + user + "'";
     		ResultSet result = stmt.executeQuery(sql);
