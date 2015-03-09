@@ -43,8 +43,8 @@ public class Book {
 
     @Override
     public String toString() {
-        return HEADER + "\nISBN:" + isbn + "\nTitle: " + title + "\nAuthor: " + author + "\nPublisher: " 
-        + publisher + "\nDate published: " + datePublished + "\nGenre: " + genre;
+        return HEADER + DELIMITER + isbn + DELIMITER + title + DELIMITER + author + DELIMITER 
+        + publisher + DELIMITER + datePublished + DELIMITER + genre;
     }
 
     // Basic main for testing purposes
