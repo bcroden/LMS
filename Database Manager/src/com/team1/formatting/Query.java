@@ -37,6 +37,11 @@ public class Query
             CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
             return request;
         }
+        else if (query == "LoginQuery")
+        {
+            LoginQuery request = new LoginQuery(str[1],str[2]);
+            return request;
+        }
         return new Query("error");
     }
     
