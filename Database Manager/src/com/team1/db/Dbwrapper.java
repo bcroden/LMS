@@ -277,7 +277,7 @@ public class Dbwrapper {
     		ResultSet result = stmt.executeQuery(sql);
     		String pass;
     		while(result.next()){
-    			pass = result.getString(password);
+    			pass = result.getString("password");
     		}
     		return pass;
     	}
@@ -322,7 +322,7 @@ public class Dbwrapper {
     
      public void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
-    	sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
+    	String sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     }
     //--------------------------------------------------------------------------
