@@ -27,6 +27,7 @@ public class Book {
         this.publisher = publisher;
         this.datePublished = datePublished;
         this.genre = genre;
+        System.out.println(datePublished);
     }
 
     public Book(String serializedString) {
@@ -42,8 +43,8 @@ public class Book {
 
     @Override
     public String toString() {
-        return HEADER + DELIMITER + isbn + DELIMITER + title + DELIMITER + author + DELIMITER + publisher + DELIMITER + datePublished
-                + DELIMITER + genre;
+        return HEADER + "\nISBN:" + isbn + "\nTitle: " + title + "\nAuthor: " + author + "\nPublisher: " 
+        + publisher + "\nDate published: " + datePublished + "\nGenre: " + genre;
     }
 
     // Basic main for testing purposes

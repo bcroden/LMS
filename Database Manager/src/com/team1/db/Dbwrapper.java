@@ -3,7 +3,6 @@ package com.team1.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 //get book objects
 import com.team1.books.*;
 
@@ -272,7 +271,7 @@ public class Dbwrapper {
 		stmt.executeUpdate(sql);
     	}
     	
-    	public String getPass(String user) throws SQLException{
+    	public String getPass(String user)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT password FROM user WHERE username = '" + user + "'";
     		ResultSet result = stmt.executeQuery(sql);
@@ -323,7 +322,6 @@ public class Dbwrapper {
     
      public void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
-    	
     	String sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     }
