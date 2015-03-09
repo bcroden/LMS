@@ -27,7 +27,7 @@ public class Main
         thread.interrupt();
         thread.join();
         
-        
+        //----------------------------------------------------------------------
         //This section is TO DELETE for later
         //for now: testing for database connection
         Dbwrapper db = Dbwrapper.getInstance();
@@ -51,12 +51,12 @@ public class Main
         
         
         //ISBNs are unique ids so you can't input these more than once
-        Adding a new book to the repo
-        Book bookthing = BookFinder.getBookFromGoogle("054792822X");
-        db.addBook(bookthing);
+        //Adding a new book to the repo
+        //Book bookthing = BookFinder.getBookFromGoogle("054792822X");
+        //db.addBook(bookthing);
         
-        Book book2 = BookFinder.getBookFromGoogle("0439136369");
-        db.addBook(book2);
-        
+        //Book book2 = BookFinder.getBookFromGoogle("0439136369");
+        //db.addBook(book2);
+        //----------------------------------------------------------------------
     }
 }

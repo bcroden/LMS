@@ -42,6 +42,7 @@ public class Dbwrapper {
 			
 		}
 		
+		//Test function
 	public void query() throws SQLException{
 		Statement stmt = con.createStatement();
 		String sql = "Select * From book ISBN";
@@ -287,7 +288,7 @@ public class Dbwrapper {
     
     //Librarian related queries
     //--------------------------------------------------------------------------
-    public void CheckOut(String isbn){
+    public void CheckOut(String isbn)throws SQLException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -303,7 +304,7 @@ public class Dbwrapper {
     	
     }
     
-     public void CheckIn(String isbn){
+     public void CheckIn(String isbn)throws SQLException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -319,7 +320,7 @@ public class Dbwrapper {
     	//and added to user history
     }
     
-     public void SetCopies(String isbn, int copies){
+     public void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
     	sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
