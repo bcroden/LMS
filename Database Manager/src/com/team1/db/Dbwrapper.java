@@ -262,12 +262,12 @@ public class Dbwrapper {
     
     //User related queries
     //--------------------------------------------------------------------------
-    	public void addUser(String user, String pass, String email, String firstname, String lastname, int enotify)throws SQLException{
+    	public void addUser(String user, String pass, String email, String firstname, String lastname, int enotify, int auth)throws SQLException{
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO user " +
-					 "(username, password, fname, lname, email, notify) " + 
+					 "(username, password, fname, lname, email, notify, auth) " + 
 					 "VALUES ('" + user + "', '" + pass + "', '" + firstname +
-					 "', '" + lastname + "', '" + email + "', '" + enotify + "')";
+					 "', '" + lastname + "', '" + email + "', '" + enotify + "', '" + auth + "')";
 		stmt.executeUpdate(sql);
     	}
     	
@@ -283,6 +283,16 @@ public class Dbwrapper {
     	}
     	
     	
+    	public int getAuthorization(String user, String pass)throws SQLException{
+    		Statement stmt = con.createStatement();
+    		String sql = "SELECT auth FROM user WHERE username = '" + user + "' and password = '"+ pass +"'";
+    		ResultSet result = stmt.executeQuery(sql);
+    		int auth = 0;
+    		while(result.next()){
+    				auth = result.getInt("auth");
+    		}
+    		return auth;
+    	}
     
     //--------------------------------------------------------------------------
     
