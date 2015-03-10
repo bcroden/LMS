@@ -48,6 +48,20 @@ public class Main
         }
         System.out.println(book.toString());
         
+        //add a user to db
+        //db.addUser("CadeG", "test", "no@fake.com", "Cade", "Gatewood", -1,1);
+        
+        //Getting user authentification from database
+        //0 is no entry
+        //1 is regular user
+        //2 is librarian
+        //3 is admin
+        int temp = db.getAuthorization("bob", "pass");
+        System.out.println("Auth: " + temp);
+        
+        //failcase
+        temp = db.getAuthorization("noone", "nothing");
+        System.out.println("Auth: "+ temp);
         
         
         //ISBNs are unique ids so you can't input these more than once
