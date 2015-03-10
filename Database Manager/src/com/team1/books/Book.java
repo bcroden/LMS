@@ -10,8 +10,8 @@ package com.team1.books;
 public class Book {
     // Any string will do for a delimiter, but it should probably be different
     // from the Query Delimiter
-    public static final String DELIMITER = "@@@";
-    public static final String HEADER = "BOOK_DATA";
+    private static final String DELIMITER = "@@@";
+    private static final String HEADER = "BOOK_DATA";
 
     public final String isbn;
     public final String title;
@@ -20,6 +20,9 @@ public class Book {
     public final String datePublished;
     public final String genre;
 
+    /**
+     * Creates a book;
+     */
     public Book(String isbn, String title, String author, String publisher, String datePublished, String genre) {
         this.isbn = isbn;
         this.title = title;
@@ -27,9 +30,14 @@ public class Book {
         this.publisher = publisher;
         this.datePublished = datePublished;
         this.genre = genre;
-        System.out.println(datePublished);
     }
 
+    /**
+     * Creates a book from a serialized String.
+     * 
+     * @param serializedString
+     *            - The String returned by the getSerialized() method.
+     */
     public Book(String serializedString) {
         String[] data = serializedString.split(DELIMITER);
 
@@ -41,10 +49,15 @@ public class Book {
         this.genre = data[6];
     }
 
-    @Override
-    public String toString() {
-        return HEADER + DELIMITER + isbn + DELIMITER + title + DELIMITER + author + DELIMITER 
-        + publisher + DELIMITER + datePublished + DELIMITER + genre;
+    /**
+     * Serialized the book object into a format that can be recreated by the
+     * constructor.
+     * 
+     * @return A String representing the serialized form of a book.
+     */
+    public String getSerialized() {
+        return HEADER + DELIMITER + isbn + DELIMITER + title + DELIMITER + author + DELIMITER + publisher + DELIMITER + datePublished
+                + DELIMITER + genre;
     }
 
     // Basic main for testing purposes
@@ -58,7 +71,7 @@ public class Book {
         System.out.println("Publisher:      " + book.publisher);
         System.out.println("Date Published: " + book.datePublished + "\n");
 
-        String serializedBook = book.toString();
+        String serializedBook = book.getSerialized();
 
         System.out.println("Serialized Book: " + serializedBook + "\n");
 
