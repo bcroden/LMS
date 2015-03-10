@@ -22,19 +22,23 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class View extends JFrame {
     private static final long serialVersionUID = 1L;
     
-    private Model model;
+    protected JTextField usernameField;
+    protected JPasswordField passwordField;
+    protected JTextField isbnField;
+    protected JTextField isbnField2;
+    protected JTextField patronField;
+    protected JTextField isbnField3;
+    protected JTextField patronField2;
+    protected JButton submitButton;
+    protected JButton searchButton;
+    protected JButton checkOutButton;
+    protected JButton checkInButton;
+    protected JTextArea loginResponse;
+    protected JTextArea getBookResponse;
+    protected JTextArea checkOutResponse;
+    protected JTextArea checkInResponse;
     
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JTextField isbnField;
-    private JTextField isbnField2;
-    private JTextField patronField;
-    private JTextField isbnField3;
-    private JTextField patronField2;
-    
-    public View(Model model) {
-        this.model = model;
-        
+    public View() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -81,12 +85,7 @@ public class View extends JFrame {
         passwordField.setBounds(75, 58, 125, 20);
         loginPanel.add(passwordField);
         
-        JButton submitButton = new JButton("Submit");
-        submitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //TODO: Grab info from username and password fields, send LoginQuery to Networking Module
-            }
-        });
+        submitButton = new JButton("Submit");
         submitButton.setBounds(111, 89, 89, 23);
         loginPanel.add(submitButton);
         
@@ -112,12 +111,7 @@ public class View extends JFrame {
         bookSearchPanel.add(isbnField);
         isbnField.setColumns(10);
         
-        JButton searchButton = new JButton("Search");
-        searchButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                //TODO: Grab info from ISBN Field, create Query, send via networking
-            }
-        });
+        searchButton = new JButton("Search");
         searchButton.setBounds(100, 64, 89, 23);
         bookSearchPanel.add(searchButton);
         
@@ -152,12 +146,7 @@ public class View extends JFrame {
         checkOutPanel.add(patronField);
         patronField.setColumns(10);
         
-        JButton checkOutButton = new JButton("Check Out");
-        checkOutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //TODO: Grab info from ISBN and patron Fields, create Query, send via networking
-            }
-        });
+        checkOutButton = new JButton("Check Out");
         checkOutButton.setBounds(100, 89, 89, 23);
         checkOutPanel.add(checkOutButton);
         
@@ -192,12 +181,7 @@ public class View extends JFrame {
         checkInPanel.add(patronField2);
         patronField2.setColumns(10);
         
-        JButton checkInButton = new JButton("Check In");
-        checkInButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              //TODO: Grab info from ISBN and patron Fields, create Query, send via networking
-            }
-        });
+        checkInButton = new JButton("Check In");
         checkInButton.setBounds(100, 89, 89, 23);
         checkInPanel.add(checkInButton);
         
@@ -205,19 +189,19 @@ public class View extends JFrame {
          * These text areas are designed to display the responses to the user.
          */
         
-        JTextArea loginResponse = new JTextArea();
+        loginResponse = new JTextArea();
         loginResponse.setBounds(233, 11, 217, 127);
         getContentPane().add(loginResponse);
         
-        JTextArea getBookResponse = new JTextArea();
+        getBookResponse = new JTextArea();
         getBookResponse.setBounds(10, 282, 217, 270);
         getContentPane().add(getBookResponse);
         
-        JTextArea checkOutResponse = new JTextArea();
+        checkOutResponse = new JTextArea();
         checkOutResponse.setBounds(237, 282, 217, 270);
         getContentPane().add(checkOutResponse);
         
-        JTextArea checkInResponse = new JTextArea();
+        checkInResponse = new JTextArea();
         checkInResponse.setBounds(464, 282, 217, 270);
         getContentPane().add(checkInResponse);
         
