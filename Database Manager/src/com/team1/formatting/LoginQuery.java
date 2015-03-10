@@ -2,8 +2,10 @@ package com.team1.formatting;
 
 public class LoginQuery extends Query
 {
+    public String d = ";";
+    
     public LoginQuery(String userName, String password) {
-        super(""");
+        super("");
         // TODO Auto-generated constructor stub
         this.userName = userName;
         this.password = password;

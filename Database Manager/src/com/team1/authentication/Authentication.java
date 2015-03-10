@@ -1,4 +1,9 @@
-public class authentication {
+package com.team1.authentication;
+
+import com.team1.formatting.LoginQuery;
+import com.team1.formatting.Query;
+
+public class Authentication {
 
 	public static String queryType;
 	public static String type;
@@ -9,7 +14,7 @@ public class authentication {
 	private static int Id; 
 	
 	//Constructor
-	public authentication(Query query) 
+	public Authentication(Query query) 
 	{
 		// TODO
 	}
@@ -17,10 +22,10 @@ public class authentication {
 	public static boolean authenticate(Query query)
 	{
 		type = query.queryType;
-		if(type == "LoginQuery")
+		if(type == "LoginQuery") //Consider using query instanceof LoginQuery -Brandon
 		{
-			password = query.password;
-			username = query.username;
+			password = ((LoginQuery)query).password; //Modified to make it compile -Brandon
+			username = ((LoginQuery)query).userName;
 			// Id = however I am getting the ID
 			Id = 12345678;
 			if(searchMap(Id) == true)
@@ -44,11 +49,12 @@ public class authentication {
 				return permission;
 			}
 		}
-		else{return false;}
+//		else{return false;}
 		
-		if(type == "PatronInfoQuery")
+		else if(type == "PatronInfoQuery")
 		{
 			//TODO if ID is found, return true
+		    return false;
 		}
 		else{return false;}
 	
