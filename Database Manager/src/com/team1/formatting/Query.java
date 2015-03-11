@@ -24,22 +24,22 @@ public class Query
         //build a new request from the rest of the msg.split, checking the queryType to determine which kind of request to build
         if (queryType == "BookInfoQuery")
         {
-            BookInfoQuery request = new BookInfoQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            BookInfoQuery request = new BookInfoQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
             return request;
         }
         else if (queryType == "CheckOutBookQuery")
         {
-            CheckOutBookQuery request = new CheckOutBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            CheckOutBookQuery request = new CheckOutBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
             return request;
         }
         else if (queryType == "CheckInBookQuery")
         {
-            CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7]);
+            CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
             return request;
         }
         else if (queryType == "LoginQuery")
         {
-            LoginQuery request = new LoginQuery(str[1],str[2]);
+            LoginQuery request = new LoginQuery(str[1],str[2],str[3]);
             return request;
         }
         return new Query("error");

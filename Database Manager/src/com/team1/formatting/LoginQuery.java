@@ -4,8 +4,8 @@ public class LoginQuery extends Query
 {
     public String d = ";";
     
-    public LoginQuery(String userName, String password) {
-        super("");
+    public LoginQuery(String sessionID,String userName, String password) {
+        super(sessionID);
         // TODO Auto-generated constructor stub
         this.userName = userName;
         this.password = password;
@@ -17,7 +17,7 @@ public class LoginQuery extends Query
     @Override
     public String toString()
     {
-        String msg = "LoginQuery;"+userName+d+password;
+        String msg = "LoginQuery;"+sessionID+d+userName+d+password;
         return msg;
     }
 }
