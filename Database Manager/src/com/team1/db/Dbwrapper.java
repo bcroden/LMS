@@ -74,7 +74,7 @@ public class Dbwrapper {
 	
 	//Function for adding a new book to the repo
 	//--------------------------------------------------------------------------
-	public void addBook(Book book)throws SQLException{
+	public synchronized void addBook(Book book)throws SQLException{
 		String tempp = book.publisher;
 		String temppd = book.datePublished;
 		String tempt = book.title;
@@ -123,7 +123,7 @@ public class Dbwrapper {
 	
 	//These functions should return all books that match the criteria
 	//--------------------------------------------------------------------------
-    public ArrayList<Book> SearchAuthor(String author)throws SQLException
+    public synchronized ArrayList<Book> SearchAuthor(String author)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE author = '" + author + "'";
@@ -143,7 +143,7 @@ public class Dbwrapper {
     	return list;
     }
     
-    public ArrayList<Book> SearchTitle(String title)throws SQLException
+    public synchronized ArrayList<Book> SearchTitle(String title)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE title = '" + title + "'";
@@ -163,7 +163,7 @@ public class Dbwrapper {
     	return list;
     }
     
-    public ArrayList<Book> SearchPublisher(String publisher)throws SQLException
+    public synchronized ArrayList<Book> SearchPublisher(String publisher)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE publisher = '" + publisher + "'";
@@ -206,7 +206,7 @@ public class Dbwrapper {
     	return list;
     }
     
-    public ArrayList<Book> SearchGenre(String genre)throws SQLException
+    public synchronized ArrayList<Book> SearchGenre(String genre)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE genre = '" + genre + "'";
@@ -229,7 +229,7 @@ public class Dbwrapper {
     //--------------------------------------------------------------------------
 	//These functions should return singlar books
 	//--------------------------------------------------------------------------
-	public Book SearchISBN(String ISBN)throws SQLException
+	public synchronized Book SearchISBN(String ISBN)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE isbn = '" + ISBN + "'";
@@ -252,7 +252,8 @@ public class Dbwrapper {
     	return book;
     }
     
-    public Book SearchID(int id)throws SQLException
+    //data for our purposes
+    public synchronized Book SearchID(int id)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE id = '" + id + "'";
@@ -279,7 +280,7 @@ public class Dbwrapper {
     
     //User related queries
     //--------------------------------------------------------------------------
-    	public void addUser(String user, String pass, String email, String firstname, String lastname, int enotify, int auth)throws SQLException{
+    	public synchronized void addUser(String user, String pass, String email, String firstname, String lastname, int enotify, int auth)throws SQLException{
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO user " +
 					 "(username, password, fname, lname, email, notify, auth) " + 
@@ -300,7 +301,7 @@ public class Dbwrapper {
     	}
     	
     	
-    	public int getAuthorization(String user, String pass)throws SQLException{
+    	public synchronized int getAuthorization(String user, String pass)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT auth FROM user WHERE BINARY username = '" + user + "' and BINARY password = '"+ pass +"'";
     		ResultSet result = stmt.executeQuery(sql);
@@ -315,7 +316,7 @@ public class Dbwrapper {
     
     //Librarian related queries
     //--------------------------------------------------------------------------
-    public void CheckOut(String isbn)throws SQLException{
+    public synchronized void CheckOut(String isbn)throws SQLException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -331,7 +332,7 @@ public class Dbwrapper {
     	
     }
     
-     public void CheckIn(String isbn)throws SQLException{
+     public synchronized void CheckIn(String isbn)throws SQLException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -347,7 +348,7 @@ public class Dbwrapper {
     	//and added to user history
     }
     
-     public void SetCopies(String isbn, int copies)throws SQLException{
+     public synchronized void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
     	String sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
