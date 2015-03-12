@@ -60,7 +60,7 @@ public class Authentication {
                       LocalId = n.nextInt(89999999) + 10000000;
                       System.out.println(LocalId + " " + userLevel);
                       map.put(LocalId, userLevel);
-                      System.out.println(" Well: " + map.get(99544685));
+                      System.out.println(" Well: " + map.get(LocalId));
                       Return = LocalId;
                       return Return;
 				   }
