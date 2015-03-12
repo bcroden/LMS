@@ -47,37 +47,37 @@ public class Controller implements ActionListener {
              */
             String password = new String(this.view.passwordField.getPassword());
 
-            LoginQuery query = new LoginQuery(false, username, password);
-            System.out.println(query);
+            //LoginQuery query = new LoginQuery(false, username, password);
+            //System.out.println(query);
             /*
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
-//            try {
-//                this.model.client.sendRequest(query.toString());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            //try {
+            //    this.model.client.sendRequest(query.toString());
+            //}
+            //catch (InvalidKeyException e1) {
+              //  e1.printStackTrace();
+            //}
+            //catch (IOException e1) {
+            //    e1.printStackTrace();
+            //}
 
             Query response = null;
-//            try {
-//                response = Query.buildRequest(this.model.client.getReply());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                response = Query.buildRequest(this.model.client.getReply());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             // I don't have the db on my machine...
             // For now... 
             // TODO: use response from DBM
             // TODO: don't just cast things
-            response = new LoginQuery(true, username, password);
+            //response = new LoginQuery(true, username, password);
             if (response.wasSuccessful)
                 this.view.loginResponse.setText("You were successfully logged in as: " + ((LoginQuery)response).userName);
             else
@@ -90,30 +90,30 @@ public class Controller implements ActionListener {
             /*
              * TODO: Uncomment code for sending and receiving to/from DB manager since it is not on my machine...
              */
-//            try {
-//                this.model.client.sendRequest(query.toString());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                this.model.client.sendRequest(query.toString());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             Query response = null;
-//            try {
-//                response = Query.buildRequest(this.model.client.getReply());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                response = Query.buildRequest(this.model.client.getReply());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             // I don't have the db on my machine...
             // For now... TODO: Fix
-            response = new BookInfoQuery(true, model.sessionId, isbn, "a", "b", "c", "d", "e", "f");
+            //response = new BookInfoQuery(true, model.sessionId, isbn, "a", "b", "c", "d", "e", "f");
             if (response.wasSuccessful)
                 this.view.getBookResponse.setText("Title:  " + ((BookInfoQuery)response).title + 
                                                   "\nAuthor: " + ((BookInfoQuery)response).author + 
@@ -130,30 +130,30 @@ public class Controller implements ActionListener {
             /*
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
-//            try {
-//                this.model.client.sendRequest(query.toString());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                this.model.client.sendRequest(query.toString());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             Query response = null;
-//            try {
-//                response = Query.buildRequest(this.model.client.getReply());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                response = Query.buildRequest(this.model.client.getReply());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
             
             // I don't have the db on my machine...
             // For now... TODO: Fix
-            response = new CheckOutBookQuery(true, model.sessionId, isbn, "a", "b", "c", "d", "e", userID);
+            //response = new CheckOutBookQuery(true, model.sessionId, isbn, "a", "b", "c", "d", "e", userID);
             if(response.wasSuccessful)
                 this.view.checkOutResponse.setText("The book " + ((CheckOutBookQuery)response).title + " was successfully checked out to " + ((CheckOutBookQuery)response).userID);
             else
@@ -168,30 +168,30 @@ public class Controller implements ActionListener {
             /*
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
-//            try {
-//                this.model.client.sendRequest(query.toString());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                this.model.client.sendRequest(query.toString());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             Query response = null;
-//            try {
-//                response = Query.buildRequest(this.model.client.getReply());
-//            }
-//            catch (InvalidKeyException e1) {
-//                e1.printStackTrace();
-//            }
-//            catch (IOException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                response = Query.buildRequest(this.model.client.getReply());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             // I don't have the db on my machine...
             // For now... TODO: Fix
-            response = new CheckInBookQuery(true, model.sessionId, isbn, "a", "b", "c", "d", "e", userID);
+            //response = new CheckInBookQuery(true, model.sessionId, isbn, "a", "b", "c", "d", "e", userID);
             if(response.wasSuccessful)
                 this.view.checkInResponse.setText("The book " + ((CheckInBookQuery)response).title + " was successfully checked in from " + ((CheckInBookQuery)response).userID);
             else

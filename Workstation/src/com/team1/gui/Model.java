@@ -7,7 +7,7 @@ import com.team1.network.TCPClient;
 
 public class Model {
     // Maybe read these from files in the future?
-    public static final String HOST = "localhost";
+    public static final String HOST = "172.17.25.222";
     public static final int PORT = 3612;
 
     public TCPClient client;
@@ -22,16 +22,16 @@ public class Model {
         /*
          * TODO: Uncomment once the DBM is up and running
          */
-//        try {
-//            this.client = new TCPClient(HOST, PORT);
-//        }
-//        catch (InvalidKeyException e) {
-//            // Should never occur...
-//            e.printStackTrace();
-//        }
-//        catch (IOException e) {
-//            // Oh noes...
-//            e.printStackTrace();
-//        }
+        try {
+            this.client = new TCPClient(HOST, PORT);
+        }
+        catch (InvalidKeyException e) {
+            // Should never occur...
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            // Oh noes...
+            e.printStackTrace();
+        }
     }
 }
