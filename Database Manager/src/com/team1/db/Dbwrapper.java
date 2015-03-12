@@ -320,14 +320,26 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	int copies = 0;
+    	int copiesin = 0;
+    	int copiesout = 0;
     	while(result.next()){
-    		copies = result.getInt(copies);
+    		copiesin = result.getInt("copiesin");
+    		copiesout = result.getInt("copiesout");
     	}
-    	copies--;
-    	sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
+    	
+    	if(copiesin != 0){
+    	copiesin--;
+    	copiesout++;
+    	
+    	sql = "UPDATE book copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     	
+    	sql = "UPDATE book copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
+    	stmt.executeUpdate(sql);
+    	}
+    	else{
+    		System.out.println("Problem checking in");
+    	}
     	//Book related to isbn will be added to user who checked it out
     	
     }
@@ -352,6 +364,19 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
+    }
+    
+    public synchronized int GetAvailable(String isbn)throws SQLException{
+    	Statement stmt = con.createStament();
+    	String sql = "SELECT copiesin FROM book WHERE isbn = '" + isbn + "'";
+    	ResultSet result = stmt.executeQuery(sql);
+    	int copies = 0;
+    	while(result.next()){
+    		copies = result.getInt("copiesin");
+    	}
+    	
+    	return copies;
+    	
     }
     //--------------------------------------------------------------------------
     
