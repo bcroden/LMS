@@ -52,11 +52,13 @@ public class AESCipher {
         try {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
             this.key = generateKey();
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if AES is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-        } catch (NoSuchPaddingException e) {
+        }
+        catch (NoSuchPaddingException e) {
             // Thrown if PKCS5 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -73,11 +75,13 @@ public class AESCipher {
     public AESCipher(byte[] key) {
         try {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if AES is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-        } catch (NoSuchPaddingException e) {
+        }
+        catch (NoSuchPaddingException e) {
             // Thrown if PKCS5 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -96,11 +100,13 @@ public class AESCipher {
     public AESCipher(SecretKey key) throws InvalidKeyException {
         try {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if AES is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-        } catch (NoSuchPaddingException e) {
+        }
+        catch (NoSuchPaddingException e) {
             // Thrown if PKCS5 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -127,7 +133,8 @@ public class AESCipher {
         byte[] messageBytes;
         try {
             messageBytes = message.getBytes(DEFAULT_CHARSET);
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             // Use system default charset
             messageBytes = message.getBytes();
         }
@@ -141,7 +148,8 @@ public class AESCipher {
             synchronized (this.cipher) {
                 this.cipher.init(Cipher.ENCRYPT_MODE, this.key, new IvParameterSpec(iv));
             }
-        } catch (InvalidAlgorithmParameterException e) {
+        }
+        catch (InvalidAlgorithmParameterException e) {
             // Occurs if iv is not specified or is invalid
             e.printStackTrace();
         }
@@ -152,10 +160,12 @@ public class AESCipher {
             synchronized (this.cipher) {
                 encryptedBytes = this.cipher.doFinal(messageBytes);
             }
-        } catch (IllegalBlockSizeException e) {
+        }
+        catch (IllegalBlockSizeException e) {
             // Occurs if block size is not multiple of 16
             e.printStackTrace();
-        } catch (BadPaddingException e) {
+        }
+        catch (BadPaddingException e) {
             // Occurs if message padding is not correct as per PKCS5 standards
             e.printStackTrace();
         }
@@ -186,7 +196,8 @@ public class AESCipher {
             synchronized (this.cipher) {
                 this.cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(iv));
             }
-        } catch (InvalidAlgorithmParameterException e) {
+        }
+        catch (InvalidAlgorithmParameterException e) {
             // Occurs if iv is not specified or is invalid
             e.printStackTrace();
         }
@@ -197,10 +208,12 @@ public class AESCipher {
             synchronized (this.cipher) {
                 message = this.cipher.doFinal(encryptedBytes);
             }
-        } catch (IllegalBlockSizeException e) {
+        }
+        catch (IllegalBlockSizeException e) {
             // Occurs if block size is not multiple of 16
             e.printStackTrace();
-        } catch (BadPaddingException e) {
+        }
+        catch (BadPaddingException e) {
             // Occurs if message padding is not correct as per PKCS5 standards
             e.printStackTrace();
         }
@@ -208,7 +221,8 @@ public class AESCipher {
         // Convert message to String
         try {
             return new String(message, DEFAULT_CHARSET);
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             // Use system default charset
             return new String(message);
         }

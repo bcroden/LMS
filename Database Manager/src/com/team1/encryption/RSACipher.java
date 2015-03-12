@@ -52,10 +52,12 @@ public class RSACipher {
             synchronized (kf) {
                 return kf.generatePublic(new X509EncodedKeySpec(keyBytes));
             }
-        } catch (InvalidKeySpecException e) {
+        }
+        catch (InvalidKeySpecException e) {
             // Thrown if keyBytes are invalid
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if RSA is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -69,10 +71,12 @@ public class RSACipher {
             synchronized (kf) {
                 return kf.generatePrivate(new PKCS8EncodedKeySpec(keyBytes));
             }
-        } catch (InvalidKeySpecException e) {
+        }
+        catch (InvalidKeySpecException e) {
             // Thrown if keyBytes are invalid
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if RSA is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -93,11 +97,13 @@ public class RSACipher {
             KeyPair kp = generateKeyPair();
             this.publicKey = kp.getPublic();
             this.privateKey = kp.getPrivate();
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if RSA is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-        } catch (NoSuchPaddingException e) {
+        }
+        catch (NoSuchPaddingException e) {
             // Thrown if PKCS1 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -114,11 +120,13 @@ public class RSACipher {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
             this.publicKey = generatePublicKey(publicKey);
             this.privateKey = null;
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if RSA is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-        } catch (NoSuchPaddingException e) {
+        }
+        catch (NoSuchPaddingException e) {
             // Thrown if PKCS1 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -134,11 +142,13 @@ public class RSACipher {
             this.cipher = Cipher.getInstance(TRANSFORMATION);
             this.publicKey = publicKey;
             this.privateKey = privateKey;
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             // Thrown if RSA is not a supported encryption algorithm
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
-        } catch (NoSuchPaddingException e) {
+        }
+        catch (NoSuchPaddingException e) {
             // Thrown if PKCS1 is not a supported padding system
             // Will never occur since it is guaranteed to be implemented by all
             // JREs
@@ -174,10 +184,12 @@ public class RSACipher {
                 synchronized (this.cipher) {
                     encryptedBytes = Util.concatenateArrays(encryptedBytes, this.cipher.doFinal(temp));
                 }
-            } catch (IllegalBlockSizeException e) {
+            }
+            catch (IllegalBlockSizeException e) {
                 // Occurs if block size is not multiple of 128
                 e.printStackTrace();
-            } catch (BadPaddingException e) {
+            }
+            catch (BadPaddingException e) {
                 // Occurs if message padding is not correct as per PKCS1
                 // standards
                 e.printStackTrace();
@@ -219,10 +231,12 @@ public class RSACipher {
                 synchronized (this.cipher) {
                     message = Util.concatenateArrays(message, this.cipher.doFinal(temp));
                 }
-            } catch (IllegalBlockSizeException e) {
+            }
+            catch (IllegalBlockSizeException e) {
                 // Occurs if block size is not multiple of 128
                 e.printStackTrace();
-            } catch (BadPaddingException e) {
+            }
+            catch (BadPaddingException e) {
                 // Occurs if message padding is not correct as per PKCS1
                 // standards
                 e.printStackTrace();

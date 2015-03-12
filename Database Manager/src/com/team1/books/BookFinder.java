@@ -38,7 +38,8 @@ public class BookFinder {
         JSONObject jsonBook = null;
         try {
             jsonBook = getJSONObjectFromGoogle(isbn);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -103,13 +104,15 @@ public class BookFinder {
         // Test if exception is thrown for ISBNs of improper length
         try {
             book = BookFinder.getBookFromGoogle("123456789");
-        } catch (InvalidISBNException e) {
+        }
+        catch (InvalidISBNException e) {
             e.printStackTrace();
         }
         // Test if exception is thrown for invalid ISBNs
         try {
             book = BookFinder.getBookFromGoogle("1234567890");
-        } catch (InvalidISBNException e) {
+        }
+        catch (InvalidISBNException e) {
             e.printStackTrace();
         }
     }

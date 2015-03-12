@@ -35,8 +35,8 @@ public class Book {
     /**
      * Creates a book from a serialized String.
      * 
-     * NOTE: This is not yet smart enough to check if the string is valid. I will add this
-     * when the specification for this class is "finalized".
+     * NOTE: This is not yet smart enough to check if the string is valid. I
+     * will add this when the specification for this class is "finalized".
      * 
      * @param serializedString
      *            - The String returned by the getSerialized() method.
