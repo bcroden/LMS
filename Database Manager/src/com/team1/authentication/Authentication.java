@@ -41,20 +41,20 @@ public class Authentication {
 		//If the query is a Long in request
 		if(query instanceof LoginQuery) 
 		{
-			//Dbwrapper myDatabase = Dbwrapper.getInstance();
+			Dbwrapper myDatabase = Dbwrapper.getInstance();
 			//Get the username, password, and userlevel from the query object
 			password = ((LoginQuery)query).password; //Modified to make it compile -Brandon
 			username = ((LoginQuery)query).userName;
-			userLevel = 2;
+			//userLevel = 2;
 			//Query the DB with the username and password
-		/*	try {
+			try {
 				System.out.println(username);
-				//userLevel = myDatabase.getAuthorization(username, password);
+				userLevel = myDatabase.getAuthorization(username, password);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		*/	
+			
 			//0, 1, 2, or 3 is returned from the DB. 
 			
 			//0 means that the user was not found
