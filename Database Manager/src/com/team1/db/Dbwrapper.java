@@ -316,7 +316,7 @@ public class Dbwrapper {
     
     //Librarian related queries
     //--------------------------------------------------------------------------
-    public synchronized void CheckOut(String isbn)throws SQLException{
+    public synchronized void CheckOut(String isbn)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -345,7 +345,7 @@ public class Dbwrapper {
     	
     }
     
-     public synchronized void CheckIn(String isbn)throws SQLException{
+     public synchronized void CheckIn(String isbn)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copiesin, copiesout FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -379,7 +379,7 @@ public class Dbwrapper {
     }
     
     public synchronized int GetAvailable(String isbn)throws SQLException{
-    	Statement stmt = con.createStament();
+    	Statement stmt = con.createStatement();
     	String sql = "SELECT copiesin FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	int copies = 0;
