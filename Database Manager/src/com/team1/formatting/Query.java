@@ -27,22 +27,22 @@ public class Query
         else success = false;
         
         //build a new request from the rest of the msg.split, checking the queryType to determine which kind of request to build
-        if (queryType == "BookInfoQuery")
+        if (queryType.equals("BookInfoQuery"))
         {
             BookInfoQuery request = new BookInfoQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }
-        else if (queryType == "CheckOutBookQuery")
+        else if (queryType.equals("CheckOutBookQuery"))
         {
             CheckOutBookQuery request = new CheckOutBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }
-        else if (queryType == "CheckInBookQuery")
+        else if (queryType.equals("CheckInBookQuery"))
         {
             CheckInBookQuery request = new CheckInBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }
-        else if (queryType == "LoginQuery")
+        else if (queryType.equals("LoginQuery"))
         {
             LoginQuery request = new LoginQuery(success,str[3], str[4]);    //sessionID is not required
             return request;
