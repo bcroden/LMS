@@ -34,7 +34,11 @@ public class NetworkTEST
 
         Query query = new CheckOutBookQuery(false, "", "054792822X", "", "", "", "", "", "");
         
+        System.out.println("About to send " + query + " to server.");
+        
         String reply = client.requestAndWait(query.toString());
+        
+        System.out.println("Just got " + reply + " from server");
         
         Query response = Query.buildRequest(reply);
 

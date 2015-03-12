@@ -44,6 +44,8 @@ public class ResponseThread extends Thread
             // get the request string from the client
             String cliRequest = readClientRequest();
 
+            System.out.println("Request string from client: " + cliRequest);
+            
             Query query = Query.buildRequest(cliRequest);
             
             // TODO: Pass Query object to Authentication
@@ -54,6 +56,8 @@ public class ResponseThread extends Thread
             query = QueryUtils.executeQuery(query);
             // TODO: Send the client the Response object returned by the DB Connector
 
+            System.out.println("Response from database to client " + query);
+            
             // send reply string to the client
             sendReplyToClient(query.toString()); // echo what was sent by the client
 
