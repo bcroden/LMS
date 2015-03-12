@@ -4,7 +4,7 @@ public class AdminQuery extends LibrarianQuery
 {
 
     public AdminQuery(String msg) {
-        super(msg);
+        super(false);
         // TODO Auto-generated constructor stub
     }
     
