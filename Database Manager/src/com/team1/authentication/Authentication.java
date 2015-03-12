@@ -20,17 +20,17 @@ public class Authentication {
 	private static int Id; 
 	private static int Return;
 	static String temp77;
+	HashMap<Integer, Integer> map;
 	
 	//Constructor
 	public Authentication(Query query) 
 	{
-		// TODO
+		  map = new HashMap<>();
 	}
 	
 	//Returns 0 if an ID is not found. Returns an ID if it is
 	public int authenticate(Query query)
 	{
-		 HashMap<Integer, Integer> map = new HashMap<>();
 		
 		type = Query.queryType;
 		if(query instanceof LoginQuery) 
@@ -56,14 +56,11 @@ public class Authentication {
 				else if (userLevel == 1 || userLevel == 2 || userLevel == 3)
 				   {
 					  int LocalId = 0;
-					//  int temp99 = map.get(62045572);
-					 // System.out.println("The key should be: " + temp99);
                       Random n = new Random();
                       LocalId = n.nextInt(89999999) + 10000000;
-      //I comented out this line the 2nd time I ran the code and it gave me a null pointer exception
-                      map.put(11111111, userLevel);
-                      int temp99 = map.get(11111111);
-                      System.out.println("this is: temp99: " + LocalId);
+                      System.out.println(LocalId + " " + userLevel);
+                      map.put(LocalId, userLevel);
+                      System.out.println(" Well: " + map.get(99544685));
                       Return = LocalId;
                       return Return;
 				   }
@@ -97,7 +94,7 @@ public class Authentication {
 
 		public static void main(String[] args)
 		{
-			LoginQuery dummy = new LoginQuery("11111111", "bob", "pass");
+			LoginQuery dummy = new LoginQuery(true, "bob", "pass");
 			System.out.println("Hello there");
 			Authentication person = new Authentication(dummy);
 			int temp88;
