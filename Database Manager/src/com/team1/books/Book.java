@@ -21,7 +21,7 @@ public class Book {
     public final String genre;
 
     /**
-     * Creates a book;
+     * Creates a book.
      */
     public Book(String isbn, String title, String author, String publisher, String datePublished, String genre) {
         this.isbn = isbn;
@@ -34,6 +34,9 @@ public class Book {
 
     /**
      * Creates a book from a serialized String.
+     * 
+     * NOTE: This is not yet smart enough to check if the string is valid. I will add this
+     * when the specification for this class is "finalized".
      * 
      * @param serializedString
      *            - The String returned by the getSerialized() method.
@@ -50,7 +53,7 @@ public class Book {
     }
 
     /**
-     * Serialized the book object into a format that can be recreated by the
+     * Serializes the book object into a format that can be recreated by the
      * constructor.
      * 
      * @return A String representing the serialized form of a book.
@@ -58,6 +61,12 @@ public class Book {
     public String getSerialized() {
         return HEADER + DELIMITER + isbn + DELIMITER + title + DELIMITER + author + DELIMITER + publisher + DELIMITER + datePublished
                 + DELIMITER + genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Book data:" + "\nISBN: " + isbn + "\nTitle: " + title + "\nAuthor: " + author + "\nPublisher: " + publisher
+                + "\nPublish Date: " + datePublished + "\nGenre: " + genre;
     }
 
     // Basic main for testing purposes
@@ -84,14 +93,4 @@ public class Book {
         System.out.println("Publisher:      " + book2.publisher);
         System.out.println("Date Published: " + book2.datePublished);
     }
-    
-    
-    //Sorry need a debuging method for database
-    @Override
-    public String toString()
-    {
-        String str = "Book data:" + "\nISBN: " + isbn + "\nTitle: " + title + "\nAuthor: " + author + "\nPublisher: " + publisher + "\nPublish Date: " + datePublished + "\nGenre: " + genre;
-        return str;
-    }
-    
 }
