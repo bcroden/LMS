@@ -339,7 +339,7 @@ public class Dbwrapper {
     	}
     	else{
     		System.out.println("Problem checking in");
-    		throw new ISBNException("Error checkout");
+    		throw new InvalidISBNException("Error checkout");
     	}
     	//Book related to isbn will be added to user who checked it out
     	
@@ -365,7 +365,7 @@ public class Dbwrapper {
     	}
     	else{
     		System.out.println("Problem on checkin");
-    		throw new ISBNException("Error on checkin");
+    		throw new InvalidISBNException("Error on checkin");
     	}
     	
     	//book will be removed from user checked out list
