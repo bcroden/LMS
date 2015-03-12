@@ -3,15 +3,18 @@ package com.team1;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import com.team1.network.MockTCPClient;
 import com.team1.network.TCPServer;
-
 import com.team1.db.Dbwrapper;
+import com.team1.formatting.CheckOutBookQuery;
+import com.team1.formatting.Query;
 import com.team1.books.*;
 
 public class Main
 {
     public static void main(String args[]) throws Exception
     {
+        /*
         final int PORT = 3612;
 
         // setup TCP server on the specified port
@@ -26,6 +29,31 @@ public class Main
         // stop the server
         thread.interrupt();
         thread.join();
+        */
+        
+        final int PORT = 3612;
+        final String hostname = "localhost";
+
+        // setup TCP server on the specified port
+        Thread thread = new Thread(new TCPServer(PORT));
+        thread.start();
+        
+        MockTCPClient client = new MockTCPClient(hostname, PORT);
+
+        Query query = new CheckOutBookQuery(false, "", "054792822X", "", "", "", "", "", "");
+        
+        System.out.println("About to send " + query + " to server.");
+        
+        String reply = client.requestAndWait(query.toString());
+        
+        System.out.println("Just got " + reply + " from server");
+        
+        Query response = Query.buildRequest(reply);
+
+        // stop the server
+        thread.interrupt();
+        thread.join();
+
         
         /*
         //----------------------------------------------------------------------
