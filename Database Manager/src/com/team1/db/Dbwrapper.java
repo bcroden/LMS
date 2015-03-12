@@ -318,7 +318,7 @@ public class Dbwrapper {
     //--------------------------------------------------------------------------
     public synchronized void CheckOut(String isbn)throws SQLException{
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
+    	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	int copiesin = 0;
     	int copiesout = 0;
@@ -327,7 +327,7 @@ public class Dbwrapper {
     		copiesout = result.getInt("copiesout");
     	}
     	
-    	if(copiesin != 0){
+    	if(copiesin > 0){
     	copiesin--;
     	copiesout++;
     	
@@ -339,6 +339,7 @@ public class Dbwrapper {
     	}
     	else{
     		System.out.println("Problem checking in");
+    		throw new ISBNException("Error checkout");
     	}
     	//Book related to isbn will be added to user who checked it out
     	
@@ -346,15 +347,26 @@ public class Dbwrapper {
     
      public synchronized void CheckIn(String isbn)throws SQLException{
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT copies FROM BOOK WHERE isbn = '" + isbn + "'";
+    	String sql = "SELECT copiesin, copiesout FROM BOOK WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	int copies = 0;
+    	int copiesin = 0;
+    	int copiesout = 0;
     	while(result.next()){
-    		copies = result.getInt(copies);
+    		copiesin = result.getInt("copiesin");
+    		copiesout = result.getInt("copiesout");
     	}
-    	copies++;
-    	sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
+    	if(copiesout > 0){
+    	copiesin++;
+    	copiesout--;
+    	sql = "UPDATE book copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
+    	sql = "UPDATE book copiesout = '" + copiesout + "' WHEREisbn = '" + isbn + "'";
+    	stmt.executeUpdate(sql);
+    	}
+    	else{
+    		System.out.println("Problem on checkin");
+    		throw new ISBNException("Error on checkin");
+    	}
     	
     	//book will be removed from user checked out list
     	//and added to user history
@@ -362,7 +374,7 @@ public class Dbwrapper {
     
      public synchronized void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
-    	String sql = "UPDATE BOOK copies = '" + copies + "' WHERE isbn = '" + isbn + "'";
+    	String sql = "UPDATE BOOK copiesin = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     }
     
