@@ -42,6 +42,23 @@ public class Dbwrapper {
 			
 		}
 		
+		//----------------------------------------------------------------------
+		//Encode and decode for insertions
+		public String encode(String str){
+			if(str.indexOf("'")!=-1){
+				str = new StringBuilder(str).insert((str.indexOf("'")), "\\").toString();
+			}
+			return str;
+		}
+		
+		public String decode(String str){
+			if(str.indexOf("\\")!=-1){
+				str = str.replaceAll("\\", "").toString();	
+			}
+			
+			return str;
+		}
+		
 		//Test function
 	public void query() throws SQLException{
 		Statement stmt = con.createStatement();
@@ -62,7 +79,7 @@ public class Dbwrapper {
 		String temppd = book.datePublished;
 		String tempt = book.title;
 		
-		System.out.println("Contents: " + book.isbn + "', '" + book.title + "', '" + book.author +
+		System.out.println("Contents: " + book.isbn + "', '" + encode(book.title) + "', '" + book.author +
 					 "', ' Genre: " + book.genre + "', ' Publisher: " + book.publisher + "', '" + book.datePublished);
 		
 		if(tempp == null || tempp.equals("")){
@@ -70,8 +87,8 @@ public class Dbwrapper {
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO book " +
 					 "(isbn, title, author, genre, publishdate, likes, dislikes, copies) " + 
-					 "VALUES ('" + book.isbn + "', '" + book.title + "', '" + book.author +
-					 "', '" + book.genre + "', '" + book.datePublished + 
+					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
+					 "', '" + encode(book.genre) + "', '" + book.datePublished + 
 					 "', '" + 0 + "', '" + 0 + "', '" + 0 + "')";
 		stmt.executeUpdate(sql);
 		}
@@ -93,8 +110,8 @@ public class Dbwrapper {
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO book " +
 					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copies) " + 
-					 "VALUES ('" + book.isbn + "', '" + book.title + "', '" + book.author +
-					 "', '" + book.genre + "', '" + book.publisher + "', '" + book.datePublished + 
+					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
+					 "', '" + encode(book.genre) + "', '" + encode(book.publisher) + "', '" + book.datePublished + 
 					 "', '" + 0 + "', '" + 0 + "', '" + 0 + "')";
 		stmt.executeUpdate(sql);
 		}
@@ -285,7 +302,7 @@ public class Dbwrapper {
     	
     	public int getAuthorization(String user, String pass)throws SQLException{
     		Statement stmt = con.createStatement();
-    		String sql = "SELECT auth FROM user WHERE username = '" + user + "' and password = '"+ pass +"'";
+    		String sql = "SELECT auth FROM user WHERE BINARY username = '" + user + "' and BINARY password = '"+ pass +"'";
     		ResultSet result = stmt.executeQuery(sql);
     		int auth = 0;
     		while(result.next()){

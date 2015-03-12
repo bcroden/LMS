@@ -84,4 +84,14 @@ public class Book {
         System.out.println("Publisher:      " + book2.publisher);
         System.out.println("Date Published: " + book2.datePublished);
     }
+    
+    
+    //Sorry need a debuging method for database
+    @Override
+    public String toString()
+    {
+        String str = "Book data:" + "\nISBN: " + isbn + "\nTitle: " + title + "\nAuthor: " + author + "\nPublisher: " + publisher + "\nPublish Date: " + datePublished + "\nGenre: " + genre;
+        return str;
+    }
+    
 }

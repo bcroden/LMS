@@ -35,18 +35,17 @@ public class Main
         //Example of getting query results and printing them
         //Single result
         System.out.println("\nSearch for book with ISBN: 1234\n");
-        Book book = db.SearchISBN("1234");
+        Book book = db.SearchISBN("9780345453747");
         System.out.println(book.toString());
         
         //Multiple results
-        System.out.println("\nSearch for all books with Author: Me\n");
+        System.out.println("\nSearch for all books with Author: Douglas Adams\n");
         ArrayList list = new ArrayList();
-        list = db.SearchAuthor("Me");
+        list = db.SearchAuthor("Douglas Adams");
         int size = list.size();
         for(int i = 0; i < size; i++){
-            System.out.println(list.get(i).toString());
+            list.get(i).toString();
         }
-        System.out.println(book.toString());
         
         //add a user to db
         //db.addUser("CadeG", "test", "no@fake.com", "Cade", "Gatewood", -1,1);
@@ -57,16 +56,23 @@ public class Main
         //2 is librarian
         //3 is admin
         int temp = db.getAuthorization("bob", "pass");
-        System.out.println("Auth: " + temp);
+        System.out.println("bob Auth: " + temp);
+        
+        //bob is in the db, Bob is not.  Lets see what happens
+        //2 (the authorization of bob) is printed twice
+        //This means that database queries appear not to be case sensitive
+        //Which is a real security issue for passwords
+        temp = db.getAuthorization("Bob", "pass");
+        System.out.println("Bob Auth: " + temp);
         
         //failcase
         temp = db.getAuthorization("noone", "nothing");
-        System.out.println("Auth: "+ temp);
+        System.out.println("no one Auth: "+ temp);
         
         
         //ISBNs are unique ids so you can't input these more than once
         //Adding a new book to the repo
-        //Book bookthing = BookFinder.getBookFromGoogle("054792822X");
+        //Book bookthing = BookFinder.getBookFromGoogle("9780345453747");
         //db.addBook(bookthing);
         
         //Book book2 = BookFinder.getBookFromGoogle("0439136369");
