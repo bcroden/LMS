@@ -34,7 +34,7 @@ public class BookInfoQuery extends LibrarianQuery
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "BookInfoQuery;"s+d+sessionID+d+isbn+d+title+d+author+d+publisher+d+datePublished+d+genre+d+availability;
+        String msg = "BookInfoQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+publisher+d+datePublished+d+genre+d+availability;
         return msg;
     }
 

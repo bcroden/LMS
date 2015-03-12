@@ -2,8 +2,8 @@ package com.team1.formatting;
 
 public class PatronInfoQuery extends LibrarianQuery
 {
-    public PatronInfoQuery(String msg) {
-        super(msg);
+    public PatronInfoQuery(String sessionID) {
+        super(false, sessionID);
         // TODO Auto-generated constructor stub
     }
     //Temporary value for now...

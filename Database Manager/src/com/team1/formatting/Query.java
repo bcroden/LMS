@@ -3,7 +3,7 @@ package com.team1.formatting;
 public class Query
 {
     //Variable for other functions to see what kind of query they are being given
-    public String queryType;
+    public static String queryType;
     public boolean wasSuccessful;
     
     //Alex added 3-7-15 this to get everything to compile 
@@ -23,7 +23,7 @@ public class Query
         //first piece determines request type
         queryType = str[0];
         boolean success;
-        if(str[1].compareTo("true") success = true;
+        if(str[1].equalsIgnoreCase("true")) success = true;
         else success = false;
         
         //build a new request from the rest of the msg.split, checking the queryType to determine which kind of request to build
@@ -34,20 +34,20 @@ public class Query
         }
         else if (queryType == "CheckOutBookQuery")
         {
-            CheckOutBookQuery request = new CheckOutBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
+            CheckOutBookQuery request = new CheckOutBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }
         else if (queryType == "CheckInBookQuery")
         {
-            CheckInBookQuery request = new CheckInBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
+            CheckInBookQuery request = new CheckInBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }
         else if (queryType == "LoginQuery")
         {
-            LoginQuery request = new LoginQuery(success,str[2],str[3]);
+            LoginQuery request = new LoginQuery(success,str[3], str[4]);    //sessionID is not required
             return request;
         }
-        return new Query("error");
+        return new Query(false);
     }
     
     //Override of toString. Method to return the object information in the form of a string.

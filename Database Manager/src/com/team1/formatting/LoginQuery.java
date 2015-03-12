@@ -4,8 +4,8 @@ public class LoginQuery extends Query
 {
     private String d = ";";
     
-    public LoginQuery(boolean wasSuccessful, String sessionID,String userName, String password) {
-        super(wasSuccessful, sessionID);
+    public LoginQuery(boolean wasSuccessful, String userName, String password) {
+        super(wasSuccessful);
         // TODO Auto-generated constructor stub
         this.userName = userName;
         this.password = password;
@@ -13,6 +13,8 @@ public class LoginQuery extends Query
     //Login Info
     public String userName;
     public String password;
+    //make session ID optional
+    public String sessionID = "";
     
     @Override
     public String toString()

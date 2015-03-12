@@ -27,6 +27,7 @@ public class Main
         thread.interrupt();
         thread.join();
         
+        /*
         //----------------------------------------------------------------------
         //This section is TO DELETE for later
         //for now: testing for database connection
@@ -78,5 +79,7 @@ public class Main
         //Book book2 = BookFinder.getBookFromGoogle("0439136369");
         //db.addBook(book2);
         //----------------------------------------------------------------------
+         * 
+         */
     }
 }
