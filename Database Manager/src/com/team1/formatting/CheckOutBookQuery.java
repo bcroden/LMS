@@ -2,9 +2,9 @@ package com.team1.formatting;
 
 public class CheckOutBookQuery extends LibrarianQuery
 {
-    public CheckOutBookQuery(String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
+    public CheckOutBookQuery(boolean wasSuccessful, String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
     {
-        super(sessionID);
+        super(wasSuccessful,sessionID);
         // TODO Auto-generated constructor stub
         this.isbn = isbn;
         this.title = title;
@@ -16,7 +16,7 @@ public class CheckOutBookQuery extends LibrarianQuery
     }
     
     //delimeter for building toString
-    public String d = ";";
+    private String d = ";";
 
     //book information for either a look up or book add in. 
     public String isbn,title,author;
@@ -29,7 +29,10 @@ public class CheckOutBookQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String msg = "BookInfoQuery;"+sessionID+d+isbn+d+title+d+author+d+availability+d+fName+d+lName+d+userID;
+        String s;
+        if (wasSuccessful) s = "true";
+        else s = "false";
+        String msg = "BookInfoQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+availability+d+fName+d+lName+d+userID;
         return msg;
     }
 }
