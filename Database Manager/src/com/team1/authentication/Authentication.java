@@ -174,8 +174,8 @@ public class Authentication {
 		{
 			stringID = ((LibrarianQuery)query).sessionID;
 			Id = Integer.parseInt(stringID);
-			System.out.println("The id is: " + Id);
-			map.put(11111111, 2);
+			//System.out.println("The id is: " + Id);
+			//map.put(11111111, 2);
 			tempLevel = map.get(Id);
 			if(tempLevel > 1)
 			{
