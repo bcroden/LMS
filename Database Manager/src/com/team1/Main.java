@@ -40,7 +40,7 @@ public class Main
         
         MockTCPClient client = new MockTCPClient(hostname, PORT);
 
-        Query query = new CheckOutBookQuery(false, "", "054792822X", "", "", "", "", "", "");
+        Query query = new CheckOutBookQuery(false, " ", "054792822X", " ", " ", " ", " ", " ", " ");
         
         System.out.println("About to send " + query + " to server.");
         

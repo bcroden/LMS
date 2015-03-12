@@ -10,12 +10,14 @@ public class Query
     public Query(boolean wasSuccessful)
     {
         // TODO Auto-generated constructor stub
+        System.out.println("Query constructor");
         this.wasSuccessful = wasSuccessful;
     }
 
     //Constructor to take a msg and turn it into a query object
     public static Query buildRequest(String msg)
     {
+        System.out.println("Entered build");
         //split the msg into each piece (deliminated by ;)
         String[] str = msg.split(";");
         
@@ -29,16 +31,20 @@ public class Query
         //build a new request from the rest of the msg.split, checking the queryType to determine which kind of request to build
         if (queryType.equals("BookInfoQuery"))
         {
+            System.out.println("Info");
             BookInfoQuery request = new BookInfoQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }
         else if (queryType.equals("CheckOutBookQuery"))
         {
+            System.out.println("Checkout");
             CheckOutBookQuery request = new CheckOutBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
+            System.out.println("Post checkout request");
             return request;
         }
         else if (queryType.equals("CheckInBookQuery"))
         {
+            System.out.println("Checkin");
             CheckInBookQuery request = new CheckInBookQuery(success, str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9]);
             return request;
         }

@@ -81,11 +81,14 @@ class QueryUtils
     {
         try
         {
+            System.out.println("Pre call");
             Dbwrapper.getInstance().CheckOut(query.isbn);
             query.wasSuccessful = true;
+            System.out.println("Post call");
         }
         catch(SQLException | InvalidISBNException e)
         {
+            e.printStackTrace();
             query.wasSuccessful = false;
         }
         

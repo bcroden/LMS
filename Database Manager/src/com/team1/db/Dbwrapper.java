@@ -27,6 +27,7 @@ public class Dbwrapper {
 	private Dbwrapper(){
 		//get driver and connection
 		try{
+		System.out.println("Dbwrapper");
 			Class.forName(JDBC_DRIVER).newInstance();
 			//connect
 			con = DriverManager.getConnection("jdbc:mysql://localhost/LMS", "cadeg", "");
@@ -331,10 +332,10 @@ public class Dbwrapper {
     	copiesin--;
     	copiesout++;
     	
-    	sql = "UPDATE book copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
+    	sql = "UPDATE book set copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     	
-    	sql = "UPDATE book copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
+    	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     	}
     	else{

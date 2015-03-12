@@ -5,6 +5,7 @@ public class CheckOutBookQuery extends LibrarianQuery
     public CheckOutBookQuery(boolean wasSuccessful, String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
     {
         super(wasSuccessful,sessionID);
+        System.out.println("Checkout constructor");
         // TODO Auto-generated constructor stub
         this.isbn = isbn;
         this.title = title;
@@ -32,7 +33,7 @@ public class CheckOutBookQuery extends LibrarianQuery
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "BookInfoQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+availability+d+fName+d+lName+d+userID;
+        String msg = "CheckOutBookQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+availability+d+fName+d+lName+d+userID;
         return msg;
     }
 }

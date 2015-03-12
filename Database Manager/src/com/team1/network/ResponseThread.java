@@ -45,9 +45,10 @@ public class ResponseThread extends Thread
             String cliRequest = readClientRequest();
 
             System.out.println("Request string from client: " + cliRequest);
-            
+            System.out.println("Crash at build request");
             Query query = Query.buildRequest(cliRequest);
-            
+            System.out.println("Got out of build");
+            System.out.println("Result of build request: "+ query);
             // TODO: Pass Query object to Authentication
 
             // TODO: If Authentication disapproves, send client Denial Response object
