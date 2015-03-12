@@ -38,6 +38,7 @@ public class TCPServer implements Runnable
                     Thread t = new ResponseThread(client, this);
                     t.start();
                     clients.add(t);
+                    System.out.println("Spawned client thread");
                 }
                 catch(SocketTimeoutException e)
                 {
