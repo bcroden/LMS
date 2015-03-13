@@ -57,7 +57,7 @@ class QueryUtils
         }
         catch(SQLException e)
         {
-            
+            e.printStackTrace();
         }
         
         query.wasSuccessful = false;
@@ -72,6 +72,7 @@ class QueryUtils
         }
         catch(SQLException | InvalidISBNException e)
         {
+            e.printStackTrace();
             query.wasSuccessful = false;
         }
         
