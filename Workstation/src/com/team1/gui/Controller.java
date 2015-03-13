@@ -133,11 +133,12 @@ public class Controller implements ActionListener {
                 this.view.getBookResponse.setText("Incorrect ISBN");
         }
         else if (e.getSource() == this.view.checkOutButton) {
-            String isbn = this.view.isbnField.getText();
+            String isbn = this.view.isbnField2.getText();
             String userID = this.view.patronField.getText();
+            System.out.println(isbn);
 
             CheckOutBookQuery query = new CheckOutBookQuery(false, model.sessionId, isbn, " ", " ", " ", " ", " ", userID);
-            System.out.println(query);
+            System.out.println(query.toString());
             /*
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
@@ -181,8 +182,8 @@ public class Controller implements ActionListener {
                 this.view.checkOutResponse.setText("Invalid ISBN or User ID");
         }
         else if (e.getSource() == this.view.checkInButton) {
-            String isbn = this.view.isbnField.getText();
-            String userID = this.view.patronField.getText();
+            String isbn = this.view.isbnField3.getText();
+            String userID = this.view.patronField2.getText();
 
             CheckInBookQuery query = new CheckInBookQuery(false, model.sessionId, isbn, " ", " ", " ", " ", " ", userID);
             System.out.println(query);

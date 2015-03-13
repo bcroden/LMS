@@ -323,9 +323,11 @@ public class Dbwrapper {
     	ResultSet result = stmt.executeQuery(sql);
     	int copiesin = 0;
     	int copiesout = 0;
+    	System.out.println("ISBN: " + isbn);
     	while(result.next()){
     		copiesin = result.getInt("copiesin");
     		copiesout = result.getInt("copiesout");
+    		System.out.println("ISBN: " + isbn + " copiesin: " + copiesin + " copiesout: " + copiesout);
     	}
     	
     	if(copiesin > 0){
@@ -348,7 +350,7 @@ public class Dbwrapper {
     
      public synchronized void CheckIn(String isbn)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT copiesin, copiesout FROM BOOK WHERE isbn = '" + isbn + "'";
+    	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	int copiesin = 0;
     	int copiesout = 0;
@@ -359,9 +361,9 @@ public class Dbwrapper {
     	if(copiesout > 0){
     	copiesin++;
     	copiesout--;
-    	sql = "UPDATE book copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
+    	sql = "UPDATE book set copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
-    	sql = "UPDATE book copiesout = '" + copiesout + "' WHEREisbn = '" + isbn + "'";
+    	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     	}
     	else{
@@ -375,7 +377,7 @@ public class Dbwrapper {
     
      public synchronized void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
-    	String sql = "UPDATE BOOK copiesin = '" + copies + "' WHERE isbn = '" + isbn + "'";
+    	String sql = "UPDATE book copiesin = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     }
     
