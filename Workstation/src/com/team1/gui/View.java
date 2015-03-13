@@ -1,5 +1,8 @@
 package com.team1.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,6 +12,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import com.team1.network.TCPClient;
 
 /**
  * Extremely temporary GUI designed look absolutely terrible, and help fulfill
@@ -37,6 +42,9 @@ public class View extends JFrame {
     protected JTextArea checkInResponse;
 
     public View() {
+    	
+//    	TCPClient client = new TCPClient(title, defaultCloseOperation);
+    	
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
@@ -118,6 +126,16 @@ public class View extends JFrame {
 
         searchButton = new JButton("Search");
         searchButton.setBounds(100, 64, 89, 23);
+        searchButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Hello");
+				
+			}
+        	
+        });
         bookSearchPanel.add(searchButton);
 
         /*

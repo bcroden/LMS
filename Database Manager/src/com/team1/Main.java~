@@ -14,7 +14,7 @@ public class Main
 {
     public static void main(String args[]) throws Exception
     {
-        
+        /*
         final int PORT = 3612;
 
         // setup TCP server on the specified port
@@ -29,8 +29,8 @@ public class Main
         // stop the server
         thread.interrupt();
         thread.join();
+        */
         
-        /*
         final int PORT = 3612;
         final String hostname = "localhost";
 
@@ -54,7 +54,7 @@ public class Main
         // stop the server
         thread.interrupt();
         thread.join();
-*/
+
 /*        
         //----------------------------------------------------------------------
         //This section is TO DELETE for later

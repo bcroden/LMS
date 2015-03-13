@@ -10,7 +10,6 @@ import com.team1.formatting.CheckInBookQuery;
 import com.team1.formatting.CheckOutBookQuery;
 import com.team1.formatting.LoginQuery;
 import com.team1.formatting.Query;
-import com.team1.network.TCPClient;
 
 /**
  * This class creates a controller object for the GUI. All of the code is
@@ -53,15 +52,15 @@ public class Controller implements ActionListener {
             /*
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
-            //try {
-            //    this.model.client.sendRequest(query.toString());
-            //}
-            //catch (InvalidKeyException e1) {
-              //  e1.printStackTrace();
-            //}
-            //catch (IOException e1) {
-            //    e1.printStackTrace();
-            //}
+            try {
+                this.model.client.sendRequest(query.toString());
+            }
+            catch (InvalidKeyException e1) {
+                e1.printStackTrace();
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             Query response = null;
             try {
@@ -91,16 +90,6 @@ public class Controller implements ActionListener {
             /*
              * TODO: Uncomment code for sending and receiving to/from DB manager since it is not on my machine...
              */
-            try {
-				this.model.client = new TCPClient(model.HOST, model.PORT);
-			} catch (InvalidKeyException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-            
             try {
                 this.model.client.sendRequest(query.toString());
             }
@@ -142,16 +131,6 @@ public class Controller implements ActionListener {
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
             try {
-				this.model.client = new TCPClient(model.HOST, model.PORT);
-			} catch (InvalidKeyException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-            
-            try {
                 this.model.client.sendRequest(query.toString());
             }
             catch (InvalidKeyException e1) {
@@ -189,16 +168,6 @@ public class Controller implements ActionListener {
             /*
              * TODO: Uncomment code for connecting to DB manager since it is not on my machine...
              */
-            try {
-				this.model.client = new TCPClient(model.HOST, model.PORT);
-			} catch (InvalidKeyException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-            
             try {
                 this.model.client.sendRequest(query.toString());
             }

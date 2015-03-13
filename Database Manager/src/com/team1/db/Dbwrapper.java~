@@ -113,7 +113,7 @@ public class Dbwrapper {
 					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout) " + 
 					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
 					 "', '" + encode(book.genre) + "', '" + encode(book.publisher) + "', '" + book.datePublished + 
-					 "', '" + 0 + "', '" + 0 + "', '" + 0 + "', '" + 0 +"')";
+					 "', '" + 0 + "', '" + 0 + "', '" + 0 + "', " + 0 +"')";
 		stmt.executeUpdate(sql);
 		}
 	}
