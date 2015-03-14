@@ -12,14 +12,20 @@
 	<property name="source" value="1.7" />
 
 	<!-- Key directories -->
-	<property name="src.dir" value="src" />
+	<property name="src.dir" value="src/main/java" />
 	<property name="bin.dir" value="bin" />
 	<property name="lib.dir" value="lib" />
-	<property name="test.dir" value="tests" />
+	<property name="test.dir" value="src/test/java" />
 
 	<!-- Binary files for executing application  -->
 	<path id="Workstation.classpath">
 		<pathelement location="${bin.dir}"/>
+	</path>
+
+	<!-- Location of jar files for various libraries -->
+	<path id="JUnit.classpath">
+		<pathelement location="${lib.dir}/junit/junit-4.12.jar"/>
+		<pathelement location="${lib.dir}/junit/hamcrest-core-1.3.jar"/>
 	</path>
 
 	<!-- Delete all old compiled files-->
@@ -48,8 +54,33 @@
         </javac>
 	</target>
 
+	<!-- Compile all tests -->
+	<target name="build-tests" depends="build-source">
+		<javac srcdir="${test.dir}" destdir="${bin.dir}" includeantruntime="false" source="${source}" target="${target}" fork="true">
+			<classpath>
+				<pathelement location="${bin.dir}"/>
+				<path refid="JUnit.classpath"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Execute all tests -->
+	<target name="exec-tests" depends="build-tests">
+		<junit fork="yes" dir="${bin.dir}" printsummary="yes">
+			<classpath>
+				<pathelement location="${bin.dir}"/>
+				<path refid="JUnit.classpath"/>
+			</classpath>
+			
+			<!-- Execute all tests which end with *TEST.java that are in the test directory -->
+			<batchtest>
+				<fileset dir="${test.dir}" includes="**/*TEST.java"/>
+			</batchtest>
+		</junit>
+	</target>
+
 	<!-- Execute Workstation application -->
-	<target name="Main" depends="build-source">
+	<target name="Main" depends="exec-tests">
         <java classname="com.team1.Main" failonerror="true" fork="yes">
             <classpath>
 				<path refid="Workstation.classpath"/>

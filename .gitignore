@@ -22,6 +22,7 @@ hs_err_pid*
 .gradle
 .recommenders
 bin/
+build/
 tmp/
 *.tmp
 *.bak

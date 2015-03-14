@@ -12,10 +12,10 @@
     <property name="source" value="1.7"/>
 	
 	<!-- Key directories -->
-	<property name="src.dir" value="src"/>
+	<property name="src.dir" value="src/main/java"/>
 	<property name="bin.dir" value="bin"/>
 	<property name="lib.dir" value="lib"/>
-	<property name="test.dir" value="tests"/>
+	<property name="test.dir" value="test/main/java"/>
 	
 	<!-- Binary files for executing application  -->
     <path id="DatabaseManager.classpath">
@@ -30,6 +30,10 @@
 	
 	<path id="MySQL.classpath">
 		<pathelement location="${lib.dir}/mysql-connector-java-5.0.8-bin.jar"/>
+	</path>
+
+	<path id="JSON.classpath">
+		<pathelement location="${lib.dir}/json-20141113.jar"/>
 	</path>
     
 	<!-- Delete all non-source files -->
@@ -55,6 +59,7 @@
             <classpath>
 				<path refid="DatabaseManager.classpath"/>
 				<path refid="MySQL.classpath"/>
+				<path refid="JSON.classpath"/>
 			</classpath>
         </javac>
     </target>
@@ -90,6 +95,7 @@
             <classpath>
 				<path refid="DatabaseManager.classpath"/>
 				<path refid="MySQL.classpath"/>
+				<path refid="JSON.classpath"/>
 			</classpath>
         </java>
     </target>
