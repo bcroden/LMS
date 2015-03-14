@@ -62,6 +62,23 @@ Name the 1st one "Database Manager" and press Finish
 Name the 2nd one "Workstation" and press Finish
 There appears to be a slight bug in the current version of Eclipse where the first project you create does not display its Git information, but the second one does. This bug is purely visual. If this happens to you, just delete the Database Manager project and remake it, this will not affect the contents of the Database Manager folder on your machine.
 
+7. Run Gradle to generate Eclipse files
+Windows:
+Navigate to the Database Manager Folder.
+Right click and select Git Bash or shift right click and select open command window here.
+Type: "gradlew cleanEclipse eclipse"
+
+Navigate to the Workstation Folder.
+Right click and select Git Bash or shift right click and select open command window here.
+Type: "gradlew cleanEclipse eclipse"
+
+Linux:
+Open terminal.
+Navigate to the Database Manager Folder.
+Type: "./gradlew cleanEclipse eclipse"
+Navigate to the Workstation Folder.
+Type: "./gradlew cleanEclipse eclipse"
+
 Setting up this workspace on Cloud9:
 
 1. Log in to Cloud9 with your Github account.
