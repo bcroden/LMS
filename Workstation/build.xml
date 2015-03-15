@@ -80,7 +80,7 @@
 	</target>
 
 	<!-- Execute Workstation application -->
-	<target name="Main" depends="exec-tests">
+	<target name="Main" depends="build-source">
         <java classname="com.team1.Main" failonerror="true" fork="yes">
             <classpath>
 				<path refid="Workstation.classpath"/>
