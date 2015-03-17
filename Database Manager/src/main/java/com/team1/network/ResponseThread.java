@@ -49,15 +49,25 @@ public class ResponseThread extends Thread
             Query query = Query.buildRequest(cliRequest);
             System.out.println("Got out of build");
             System.out.println("Result of build request: "+ query);
+
             // TODO: Pass Query object to Authentication
 
-            // TODO: If Authentication disapproves, send client Denial Response object
-            
-            // TODO: If the authentication approves, give Query object to DB Connector and get a Response object
-            query = QueryUtils.executeQuery(query);
-            // TODO: Send the client the Response object returned by the DB Connector
+            if(!TCPServer.isAuthorized(query))
+            {
+                //Authentication disapproved the query
+                query.wasSuccessful = false;
 
-            System.out.println("Response from database to client " + query);
+                // TODO: Send client Denial Response object
+            }
+            else
+            {
+                //Authentication approves, give Query object to DB Connector
+                query = QueryUtils.executeQuery(query);
+                
+                // TODO: Get a Response object from the DB
+
+                System.out.println("Response from database to client " + query);
+            }
             
             // send reply string to the client
             sendReplyToClient(query.toString()); // echo what was sent by the client

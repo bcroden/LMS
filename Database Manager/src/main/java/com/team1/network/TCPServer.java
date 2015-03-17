@@ -7,6 +7,9 @@ import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
 import java.util.LinkedList;
 
+import com.team1.authentication.Authentication;
+import com.team1.formatting.Query;
+
 /**
  * Represents a TCP server. This class will listen for connections on a given
  * port. Once a client connects to this port, the server will create a new
@@ -17,6 +20,14 @@ import java.util.LinkedList;
 
 public class TCPServer implements Runnable
 {
+    protected static boolean isAuthorized(Query query)
+    {
+        synchronized(authen)
+        {
+            return authen.authenticate(query) != 0;
+        }
+    }
+    
     public TCPServer(int port) throws IOException
     {
         ss = new ServerSocket(port);
@@ -108,4 +119,6 @@ public class TCPServer implements Runnable
     private ServerSocket ss;
     private LinkedList<Thread> clients = new LinkedList<>();
     private LinkedList<Thread> remCli = new LinkedList<>();
+    
+    private static Authentication authen = new Authentication(null);
 }
