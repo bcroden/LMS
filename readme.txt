@@ -95,3 +95,27 @@ Press Create
 
 *  other distro's are availabe.
 ** other IDE's are available.
+
+Creating the database:
+1. you're going to want a virtual machine of Ubuntu 12.04
+    64 bit version: http://releases.ubuntu.com/12.04/ubuntu-12.04.5-desktop-amd64.iso
+    32 bit version: http://releases.ubuntu.com/12.04/ubuntu-12.04.5-desktop-i386.iso
+  
+2. install java 8, in your terminal type
+    sudo add-apt-repository ppa:webupd8team/java
+    sudo apt-get update
+    sudo apt-get install oracle-java8-installer
+      2(a). download eclipse (whichever version your os is)
+        download: https://eclipse.org/downloads/
+        
+3. Install git and clone to wherever you like.
+   Navigate to this directory
+
+4. Give permissions to run.sh
+    sudo chmod u+x run.sh
+    
+5. ./run.sh
+
+6. Follow the directions that are provided by the bash script (there is some interaciton)
+
+7. From your prefered IDE run BuildDB.java (should have no problems finding the installed mysql server)
