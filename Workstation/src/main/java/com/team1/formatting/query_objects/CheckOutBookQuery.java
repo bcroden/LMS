@@ -16,7 +16,7 @@ public class CheckOutBookQuery extends LibrarianQuery
     }
     
     //delimeter for building toString
-    private String d = ";";
+//    private String d = ";";
 
     //book information for either a look up or book add in. 
     public String isbn,title,author;
@@ -32,7 +32,7 @@ public class CheckOutBookQuery extends LibrarianQuery
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckOutBookQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+availability+d+fName+d+lName+d+userID;
+        String msg = "CheckOutBookQuery;"+s+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
         return msg;
     }
     

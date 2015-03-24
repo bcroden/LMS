@@ -6,7 +6,7 @@ import com.team1.books.Book;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
 
-public class BookInfoResponse
+public class BookInfoResponse extends Response
 {
     public ArrayList<Book> books = null;
     public boolean filled = false;

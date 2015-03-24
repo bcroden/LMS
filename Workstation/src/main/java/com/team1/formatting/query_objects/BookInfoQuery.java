@@ -14,8 +14,47 @@ public class BookInfoQuery extends LibrarianQuery
         this.availability = availability;
     }
     
+    
+    //Methods to set single variables
+    public Query searchByISBN(String isbn) {
+        this.isbn = isbn;
+        return this;
+    }
+    
+    public Query searchByTitle(String title) {
+        this.title = title;
+        return this;
+    }
+    
+    public Query searchByAuthor(String author) {
+        this.author = author;
+        return this;
+    }
+    
+    public Query searchByPublisher(String publisher) {
+        this.publisher = publisher;
+        return this;
+    }
+    
+    public Query searchByDatePublished(String datePublished) {
+        this.datePublished = datePublished;
+        return this;
+    }
+    
+    public Query searchByGenre(String genre) {
+        this.genre = genre;
+        return this;
+    }
+    
+    public Query searchByAvailability(String availability) {
+        this.availability = availability;
+        return this;
+    }
+    
+    
+    
     //delimeter for building toString
-    private String d = ";";
+//    private String d = ";";
 
     //book information
     public String isbn;
@@ -34,7 +73,7 @@ public class BookInfoQuery extends LibrarianQuery
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "BookInfoQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+publisher+d+datePublished+d+genre+d+availability;
+        String msg = "BookInfoQuery;"+s+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+publisher+DELIMITER+datePublished+DELIMITER+genre+DELIMITER+availability;
         return msg;
     }
     
