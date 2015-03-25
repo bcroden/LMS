@@ -1,8 +1,8 @@
-package com.team1.formatting;
+package com.team1.formatting.queries;
 
 public class Query
 {
-    private static final String DELIMITER = ";";
+    public static final String DELIMITER = ";";
     //Variable for other functions to see what kind of query they are being given
     public static String queryType;
     public boolean wasSuccessful;

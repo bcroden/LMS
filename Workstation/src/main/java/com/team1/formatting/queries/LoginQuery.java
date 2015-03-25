@@ -1,4 +1,4 @@
-package com.team1.formatting;
+package com.team1.formatting.queries;
 
 public class LoginQuery extends Query
 {
