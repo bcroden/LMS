@@ -1,21 +1,18 @@
+<?php
 
-<!-- We don't need this because I redirected home.php to reference my page that queries
-     the db.  
-     User story 1.1 completed!
-     -->
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
-<headh>
-    <body>
-        <p>Search page.</p>
-        <p>
-            <p>You searched for <?php echo $_POST['search']; ?></p>
-            <form method="post" action="https://lms-ctr002.c9.io/Website/home.php">
-        		<input type="submit" value="Return to home page.">
-        	</form>
-        	<form method="post" action="https://lms-ctr002.c9.io/Website/search.php">
-        		Search for a book: <input type="text" name="search">
-        		<input type="submit" value="Search">
-        	</form>
-	    </p>
-    </body>
-</headh>
+include 'DBwrapper.php';
+
+echo "Connecting to database <br>";
+connect();
+echo "Searching by title<br>";
+	$result = queryTitle($_POST['search']);
+
+	while($row = mysqli_fetch_array($result)){
+		echo "id: " . $row["id"] . "<br>";
+	}
+
+?>
+
