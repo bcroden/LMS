@@ -9,19 +9,19 @@ import com.team1.db.Dbwrapper;
 public class CheckInBookResponse extends Response
 {
     
-    public static Query executeCheckInBookQuery(CheckInBookQuery query)
+    public static void executeCheckInBookQuery(CheckInBookQuery query)
     {
         try
         {
             Dbwrapper.getInstance().CheckIn(query.isbn);
-            query.wasSuccessful = true;
+            this.wasSuccessful = true;
         }
         catch(SQLException | InvalidISBNException e)
         {
             e.printStackTrace();
-            query.wasSuccessful = false;
+            this.wasSuccessful = false;
         }
         
-        return query;
+        return;
     }
 }

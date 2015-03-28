@@ -54,7 +54,8 @@ public class BookInfoResponse extends Response
             }
             
             if(books != null)
-                filled = true;
+                this.wasSuccessful = true;
+            
         }
         catch(SQLException e)
         {

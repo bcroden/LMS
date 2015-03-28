@@ -4,23 +4,36 @@ public class Response
 {
     public boolean wasSuccessful;
     
-    
-    
-    public static void executeQuery()
+    public Response(boolean wasSuccessful)
     {
-        
-        /*
+        this.wasSuccessful = wasSuccessful;
+    }
+    
+    
+    public static Response executeQuery(Query query)
+    {
+
         if(query instanceof BookInfoQuery)
-            return executeBookInfoQuery((BookInfoQuery) query);
+        {
+            BookInfoResponse response = new BookInfoResponse();
+            response.buildResponse(query);
+            return response;
+        }
         if(query instanceof CheckInBookQuery)
-            return executeCheckInBookQuery((CheckInBookQuery) query);
+        {
+            CheckInBookResponse response = new CheckInBookResponse();
+            response.executeCheckInBookQuery(query)
+            return response;
+        }
         if(query instanceof CheckOutBookQuery)
-            return executeCheckOutBookQuery((CheckOutBookQuery) query);
-        */
+        {
+            CheckOutBookResponse response = new CheckOutBookResponse();
+            response.executeCheckOutBookQuery(query)
+            return response;
+        }
         
-        this.buildResponse();
-        
-        return new Query(false);
+        Response response = new Response(false);
+        return response;
     }
 
 }
