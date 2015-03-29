@@ -17,10 +17,7 @@
 	//return multiple books
 	function queryTitle($title){
 		global $connection;
-		//----------
-		//Not sure if we need to call connect here or from the actual page
-		//connect();
-		//----------
+
 		$sql = "SELECT * FROM book WHERE title = '" . $title . "'";
 		$result = $connection->query($sql);
 		//check to see if empty
@@ -28,7 +25,7 @@
 			return $result;
 			//The result object deal should have all the entries related
 			//this can be retrieved with a while loop
-			//while($row = $result->fetchassoc()){//do stuff}
+			//while($row = mysqli_fetch_array($result)){//do stuff}
 		}
 		else{
 			//return a value showing that the query is empty
