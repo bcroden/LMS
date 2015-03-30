@@ -16,37 +16,37 @@ public class BookInfoQuery extends LibrarianQuery
     
     
     //Methods to set single variables
-    public Query searchByISBN(String isbn) {
+    public BookInfoQuery searchByISBN(String isbn) {
         this.isbn = isbn;
         return this;
     }
     
-    public Query searchByTitle(String title) {
+    public BookInfoQuery searchByTitle(String title) {
         this.title = title;
         return this;
     }
     
-    public Query searchByAuthor(String author) {
+    public BookInfoQuery searchByAuthor(String author) {
         this.author = author;
         return this;
     }
     
-    public Query searchByPublisher(String publisher) {
+    public BookInfoQuery searchByPublisher(String publisher) {
         this.publisher = publisher;
         return this;
     }
     
-    public Query searchByDatePublished(String datePublished) {
+    public BookInfoQuery searchByDatePublished(String datePublished) {
         this.datePublished = datePublished;
         return this;
     }
     
-    public Query searchByGenre(String genre) {
+    public BookInfoQuery searchByGenre(String genre) {
         this.genre = genre;
         return this;
     }
     
-    public Query searchByAvailability(String availability) {
+    public BookInfoQuery searchByAvailability(String availability) {
         this.availability = availability;
         return this;
     }
@@ -71,9 +71,9 @@ public class BookInfoQuery extends LibrarianQuery
     @Override
     public String toString() {
         String s;
-        if (wasSuccessful) s = "true";
+        if (this.wasSuccessful) s = "true";
         else s = "false";
-        String msg = "BookInfoQuery;"+s+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+publisher+DELIMITER+datePublished+DELIMITER+genre+DELIMITER+availability;
+        String msg = "BookInfoQuery;"+s+this.DELIMITER+sessionID+this.DELIMITER+isbn+this.DELIMITER+title+this.DELIMITER+author+this.DELIMITER+publisher+this.DELIMITER+datePublished+this.DELIMITER+genre+this.DELIMITER+availability;
         return msg;
     }
     

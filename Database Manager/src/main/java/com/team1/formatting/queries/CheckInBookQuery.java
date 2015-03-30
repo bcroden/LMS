@@ -16,22 +16,22 @@ public class CheckInBookQuery extends LibrarianQuery
     }
     
     //Methods to set single variables
-    public Query searchByISBN(String isbn) {
+    public CheckInBookQuery searchByISBN(String isbn) {
         this.isbn = isbn;
         return this;
     }
     
-    public Query logByfName(String fName) {
+    public CheckInBookQuery logByfName(String fName) {
         this.fName = fName;
         return this;
     }
     
-    public Query logBylName(String lName) {
+    public CheckInBookQuery logBylName(String lName) {
         this.lName = lName;
         return this;
     }
     
-    public Query logByuserID(String userID) {
+    public CheckInBookQuery logByuserID(String userID) {
         this.userID = userID;
         return this;
     }
@@ -51,9 +51,9 @@ public class CheckInBookQuery extends LibrarianQuery
     @Override
     public String toString() {
         String s;
-        if (wasSuccessful) s = "true";
+        if (this.wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckInBookQuery;"+s+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
+        String msg = "CheckInBookQuery;"+s+this.DELIMITER+sessionID+this.DELIMITER+isbn+this.DELIMITER+title+this.DELIMITER+author+this.DELIMITER+availability+this.DELIMITER+fName+this.DELIMITER+lName+this.DELIMITER+userID;
         return msg;
     }
     

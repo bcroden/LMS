@@ -1,12 +1,3 @@
-
- /* I commented this out for now since it references the Database Manager classes and was not compiling.
- * I would suggest developing these classes in the Database Manager project first and then port them to the workstation
- * after they are finalized.
- * 
- * -Brandon
- * 
- */
-
 package com.team1.formatting.responses;
 
 package com.team1.formatting;
@@ -20,11 +11,21 @@ import com.team1.db.Dbwrapper;
 public class BookInfoResponse extends Response
 {
     public ArrayList<Book> books = null;
-    public boolean filled = false;
+    public static final String bookBreak = ";#;";
+
+//  public boolean filled = false;
     
-    public BookInfoResponse()
+    
+    public BookInfoResponse(boolean wasSuccessful, int numBooks, String strBooks)
     {
-//        this.books = books;
+        this.wasSuccessful = wasSuccessful;
+        
+        String[] bookList = strBooks.split(bookBreak);
+        for (int i = 0; i < numBooks; i++)
+        {
+            books.add(new Book(bookList[i]));
+        }
+        
     }
     
     public static void buildResponse(BookInfoQuery query)
@@ -33,7 +34,6 @@ public class BookInfoResponse extends Response
         {
             if(isValid(query.isbn))
             {
-                books = new ArrayList<Book>();
                 books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
             }
             else if(isValid(query.title))
@@ -63,6 +63,27 @@ public class BookInfoResponse extends Response
         }
     }
     
-    
+    //Override of toString. Method to return the object information in the form of a string.
+    @Override
+    public String toString() {
+        String s, sBooks;
+        int numBooks;
+        if (books.isEmpty()) printf("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
+        else numBooks = books.size();
+        
+        if (this.wasSuccessful) s = "true";
+        else s = "false";
+        
+        
+        String msg = "BookInfoResponse" + this.DELIMITER + s + this.DELIMITER + numBooks;
+        
+        for (int i = 0; i < numBooks; i++)
+        {
+            msg.concat(books.get(i).getSerialized());
+            msg.concat(this.bookBreak);
+        }
+        
+        return msg;
+    }
     
 }
