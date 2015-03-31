@@ -1,4 +1,4 @@
-package com.team1.formatting;
+package com.team1.formatting.queries;
 
 public class CheckInBookQuery extends LibrarianQuery
 {
@@ -15,8 +15,29 @@ public class CheckInBookQuery extends LibrarianQuery
         this.userID = userID;
     }
     
+    //Methods to set single variables
+    public CheckInBookQuery searchByISBN(String isbn) {
+        this.isbn = isbn;
+        return this;
+    }
+    
+    public CheckInBookQuery logByfName(String fName) {
+        this.fName = fName;
+        return this;
+    }
+    
+    public CheckInBookQuery logBylName(String lName) {
+        this.lName = lName;
+        return this;
+    }
+    
+    public CheckInBookQuery logByuserID(String userID) {
+        this.userID = userID;
+        return this;
+    }
+    
     //delimeter for building toString
-    private String d = ";";
+//    private String d = ";";
 
     //book information for either a look up or book add in. 
     public String isbn,title,author;
@@ -30,9 +51,9 @@ public class CheckInBookQuery extends LibrarianQuery
     @Override
     public String toString() {
         String s;
-        if (wasSuccessful) s = "true";
+        if (this.wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckInBookQuery;"+s+d+sessionID+d+isbn+d+title+d+author+d+availability+d+fName+d+lName+d+userID;
+        String msg = "CheckInBookQuery;"+s+this.DELIMITER+sessionID+this.DELIMITER+isbn+this.DELIMITER+title+this.DELIMITER+author+this.DELIMITER+availability+this.DELIMITER+fName+this.DELIMITER+lName+this.DELIMITER+userID;
         return msg;
     }
     

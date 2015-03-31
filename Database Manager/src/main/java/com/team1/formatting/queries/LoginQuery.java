@@ -1,8 +1,7 @@
-package com.team1.formatting;
+package com.team1.formatting.queries;
 
 public class LoginQuery extends Query
 {
-    private String d = ";";
     
     public LoginQuery(boolean wasSuccessful, String userName, String password) {
         super(wasSuccessful);
@@ -22,7 +21,7 @@ public class LoginQuery extends Query
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "LoginQuery;"+s+d+sessionID+d+userName+d+password;
+        String msg = "LoginQuery;"+s+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+password;
         return msg;
     }
     

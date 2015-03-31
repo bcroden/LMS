@@ -1,7 +1,8 @@
-package com.team1.formatting;
+package com.team1.formatting.queries;
 
 public class Query
 {
+    public static final String DELIMITER = ";";
     //Variable for other functions to see what kind of query they are being given
     public static String queryType;
     public boolean wasSuccessful;
@@ -17,7 +18,7 @@ public class Query
     public static Query buildRequest(String msg)
     {
         //split the msg into each piece (deliminated by ;)
-        String[] str = msg.split(";");
+        String[] str = msg.split(DELIMITER);
         
         //get the first piece
         //first piece determines request type
