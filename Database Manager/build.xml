@@ -99,5 +99,15 @@
 			</classpath>
         </java>
     </target>
+
+    <target name="BuildDB" depends="build-source">
+         <java classname="com.team1.db.BuildDB" failonerror="true" fork="yes">
+             <classpath>
+                 <path refid="DatabaseManager.classpath"/>
+                 <path refid="MySQL.classpath"/>
+                 <path refid="JSON.classpath"/>
+             </classpath>
+         </java>
+    </target>
 	
 </project>
