@@ -81,4 +81,15 @@
 		else
 			return -1;
 	}
+
+	function getPass($user){
+        global $connection;
+        $sql = "SELECT password FROM user WHERE username = '" . $user . "'";
+        $result = $connection->query($sql);
+        if($result->num_rows > 0){
+            return $result;
+        }
+        else
+            return -1;
+    }
 ?>
