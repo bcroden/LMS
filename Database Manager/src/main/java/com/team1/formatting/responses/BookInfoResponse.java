@@ -28,7 +28,7 @@ public class BookInfoResponse extends Response
         
     }
     
-    public static void buildResponse(BookInfoQuery query)
+    public static void executeBookInfoQuery(BookInfoQuery query)
     {
         try
         {

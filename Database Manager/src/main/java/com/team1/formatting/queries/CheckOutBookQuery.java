@@ -2,9 +2,9 @@ package com.team1.formatting.queries;
 
 public class CheckOutBookQuery extends LibrarianQuery
 {
-    public CheckOutBookQuery(boolean wasSuccessful, String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
+    public CheckOutBookQuery(String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
     {
-        super(wasSuccessful,sessionID);
+        super(sessionID);
         // TODO Auto-generated constructor stub
         this.isbn = isbn;
         this.title = title;
@@ -36,8 +36,6 @@ public class CheckOutBookQuery extends LibrarianQuery
         return this;
     }
     
-    //delimeter for building toString
-//    private String d = ";";
 
     //book information for either a look up or book add in. 
     public String isbn,title,author;
@@ -50,15 +48,12 @@ public class CheckOutBookQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String s;
-        if (this.wasSuccessful) s = "true";
-        else s = "false";
-        String msg = "CheckOutBookQuery;"+s+this.DELIMITER+sessionID+this.DELIMITER+isbn+this.DELIMITER+title+this.DELIMITER+author+this.DELIMITER+availability+this.DELIMITER+fName+this.DELIMITER+lName+this.DELIMITER+userID;
+        String msg = "CheckOutBookQuery"+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
         return msg;
     }
     
     public static void main(String[] args) {
-        CheckOutBookQuery query = new CheckOutBookQuery(false, "0", "054792822X", " ", " ", " ", " ", " ", " ");
+        CheckOutBookQuery query = new CheckOutBookQuery("0", "054792822X", " ", " ", " ", " ", " ", " ");
         System.out.println(query);
         String toString = query.toString();
         Query query2 = Query.buildRequest(toString);

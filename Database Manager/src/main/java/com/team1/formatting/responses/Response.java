@@ -65,7 +65,7 @@ public class Response
         if(query instanceof BookInfoQuery)
         {
             BookInfoResponse response = new BookInfoResponse();
-            response.buildResponse(query);
+            response.executeBookInfoQuery(query);
             return response;
         }
         if(query instanceof CheckInBookQuery)

@@ -9,6 +9,8 @@ public class AddBookResponse extends LibrarianResponse
     
     public static void executeAddBookQuery(AddBookQuery query)
     {
+        //build book object from isbn
+        Book book = 
         Dbwrapper.getInstance().addBook(query.book);
         return;
     }

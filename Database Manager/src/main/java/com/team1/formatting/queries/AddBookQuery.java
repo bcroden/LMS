@@ -2,18 +2,22 @@ package com.team1.formatting.queries;
 
 public class AddBookQuery extends LibrarianQuery
 {
-    public Book book;
+    public int numCopies;
     public String isbn;
     
-    public AddBookQuery(Book book)
-    {
-        this.book = book;
-    }
     
-    public AddBookQuery(String isbn)
+    public AddBookQuery(String sessionID,String isbn, int numCopies)
     {
+        super(sessionID);
         this.isbn = isbn;
+        this.numCopies = numCopies;
     }
     
-    //Add toString method
+    //Override of toString. Method to return the object information in the form of a string.
+    @Override
+    public String toString() {
+        //toString for isbn
+        String msg = "AddBookQuery"+ DELIMITER + sessionID + DELIMITER + isbn + DELIMITER + numCopiess;
+        return msg;
+    }
 }

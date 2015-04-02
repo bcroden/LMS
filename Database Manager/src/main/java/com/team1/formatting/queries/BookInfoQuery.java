@@ -2,9 +2,13 @@ package com.team1.formatting.queries;
 
 public class BookInfoQuery extends LibrarianQuery
 {
-    public BookInfoQuery(Boolean wasSuccessful, String sessionID, String isbn, String title, String author, String publisher, String datePublished, String genre, String availability) {
+    public BookInfoQuery(String sessionID) {
+		this(sessionID, " ", " ", " ", " ", " ", " ", " ");
+	}
+    
+    public BookInfoQuery(String sessionID, String isbn, String title, String author, String publisher, String datePublished, String genre, String availability) {
         // TODO Auto-generated constructor stub
-        super(wasSuccessful, sessionID);
+        super(sessionID);
         this.isbn = isbn;
         this.title = title;
         this.author = author;
@@ -51,10 +55,6 @@ public class BookInfoQuery extends LibrarianQuery
         return this;
     }
     
-    
-    
-    //delimeter for building toString
-//    private String d = ";";
 
     //book information
     public String isbn;
@@ -70,10 +70,7 @@ public class BookInfoQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String s;
-        if (this.wasSuccessful) s = "true";
-        else s = "false";
-        String msg = "BookInfoQuery;"+s+this.DELIMITER+sessionID+this.DELIMITER+isbn+this.DELIMITER+title+this.DELIMITER+author+this.DELIMITER+publisher+this.DELIMITER+datePublished+this.DELIMITER+genre+this.DELIMITER+availability;
+        String msg = "BookInfoQuery"+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+publisher+DELIMITER+datePublished+DELIMITER+genre+DELIMITER+availability;
         return msg;
     }
     

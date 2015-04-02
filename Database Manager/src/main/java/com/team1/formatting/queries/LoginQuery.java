@@ -3,8 +3,8 @@ package com.team1.formatting.queries;
 public class LoginQuery extends Query
 {
     
-    public LoginQuery(boolean wasSuccessful, String userName, String password) {
-        super(wasSuccessful);
+    public LoginQuery(String sessionID, String userName, String password) {
+        super(sessionID);
         // TODO Auto-generated constructor stub
         this.userName = userName;
         this.password = password;
@@ -12,21 +12,16 @@ public class LoginQuery extends Query
     //Login Info
     public String userName;
     public String password;
-    //make session ID optional
-    public String sessionID = " ";
     
     @Override
     public String toString()
     {
-        String s;
-        if (wasSuccessful) s = "true";
-        else s = "false";
-        String msg = "LoginQuery;"+s+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+password;
+        String msg = "LoginQuery"+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+password;
         return msg;
     }
     
     public static void main(String[] args) {
-        LoginQuery query = new LoginQuery(false, " ", " ");
+        LoginQuery query = new LoginQuery(0, " ", " ");
         System.out.println(query);
         String toString = query.toString();
         Query query2 = Query.buildRequest(toString);
