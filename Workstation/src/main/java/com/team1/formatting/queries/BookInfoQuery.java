@@ -2,6 +2,10 @@ package com.team1.formatting.queries;
 
 public class BookInfoQuery extends LibrarianQuery
 {
+	public BookInfoQuery(Boolean wasSuccessfull, String sessionID) {
+		this(wasSuccessfull, sessionID, " ", " ", " ", " ", " ", " ", " ");
+	}
+	
     public BookInfoQuery(Boolean wasSuccessful, String sessionID, String isbn, String title, String author, String publisher, String datePublished, String genre, String availability) {
         // TODO Auto-generated constructor stub
         super(wasSuccessful, sessionID);

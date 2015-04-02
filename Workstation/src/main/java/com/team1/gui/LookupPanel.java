@@ -3,12 +3,18 @@ package com.team1.gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.team1.formatting.queries.BookInfoQuery;
 
 public class LookupPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -51,6 +57,27 @@ public class LookupPanel extends JPanel {
         searchField.setColumns(10);
         
         submitButton = new JButton(SUBMIT_BUTTON_TEXT);
+        submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Create new BookInfoQuery TODO: Get latest formatting packages and modify accordingly
+				BookInfoQuery q = new BookInfoQuery(false, "!");
+				
+				//Reflect the query and invoke the correct searchBy method
+				for(Method m : q.getClass().getMethods())
+					if (m.getName().contains("searchBy") && m.getName().contains((String)comboBox.getSelectedItem()))
+						try {
+							m.invoke(q, searchField.getText());
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+							e1.printStackTrace();
+						}
+				
+				//Testing print
+				System.out.println(q);
+				
+				//TODO: Send to DBM
+			}
+        });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();
         gbc_submitButton.insets = new Insets(0, 0, 5, 5);
         gbc_submitButton.gridx = 4;
