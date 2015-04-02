@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -91,6 +95,34 @@ public class MainWindow extends LMSWindow {
         tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(this.controller), 	TOOLTIP_CHECKOUT);
         tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(this.controller), 	TOOLTIP_CKECKIN);
         tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(this.controller), 	TOOLTIP_PAYMENT);
+        
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        
+        JMenu optionsMenu = new JMenu("Options");
+        menuBar.add(optionsMenu);
+        
+        JMenuItem changePassword = new JMenuItem("Change Password");
+        changePassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showInputDialog("Enter Current Password");
+				JOptionPane.showInputDialog("Enter New Password");
+				JOptionPane.showInputDialog("Re-enter New Password");
+				JOptionPane.showMessageDialog(null, "Done!");
+			}
+        });
+        optionsMenu.add(changePassword);
+        
+        JMenuItem addLibrarianAccount = new JMenuItem("Add Librarian Account");
+        optionsMenu.add(addLibrarianAccount);
+        addLibrarianAccount.setEnabled(false);
+        
+        JMenuItem removeLibrarianAccount = new JMenuItem("Remove Librarian Account");
+        optionsMenu.add(removeLibrarianAccount);
+        
+        JMenuItem feesFines = new JMenuItem("Fees/Fines");
+        optionsMenu.add(feesFines);
         
         this.setVisible(true);
     }
