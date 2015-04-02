@@ -53,7 +53,7 @@ public class Response
         }
         else if (responseType.equals("LoginResponse"))
         {
-            LogInResponse response = new LogInResponse(success, str[2]);
+            LogInResponse response = new LogInResponse(success, str[2], Integer.getInteger(str[3]));
             return response;
         }
         else if (responseType.equals("AddBookResponse"))
