@@ -38,7 +38,7 @@ public class LoginWindow extends LMSWindow {
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	
-	public LoginWindow(Controller controller, Model model) {
+	public LoginWindow(final Controller controller, Model model) {
 		super(controller, model);
 		
 		this.setSize(WIDTH, HEIGHT);
@@ -105,7 +105,7 @@ public class LoginWindow extends LMSWindow {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO
+				controller.showMainWindow();
 			}
 		});
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();

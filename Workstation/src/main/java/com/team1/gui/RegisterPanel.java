@@ -19,13 +19,17 @@ public class RegisterPanel extends JPanel {
 	private static final String ISBN_LABEL_TEXT = "ISBN";
 	private static final String SUBMIT_BUTTON_TEXT = "Register";
 	
+	public Controller controller;
+	
     private JTextField isbnField;
     private JSpinner countSpinner;
     private JButton submitButton;
     private JTextArea returnTextArea;
     
-	public RegisterPanel() {
+	public RegisterPanel(final Controller controller) {
 		super();
+		
+		this.controller = controller;
 		
         GridBagLayout gbl_registerPanel = new GridBagLayout();
         gbl_registerPanel.columnWidths = new int[]{10, 0, 0, 0, 40, 24, 0, 10, 0};

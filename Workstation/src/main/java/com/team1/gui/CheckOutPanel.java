@@ -19,13 +19,17 @@ public class CheckOutPanel extends JPanel {
 	private static final String ISBN_LABEL_TEXT = "ISBN";
 	private static final String SUBMIT_BUTTON_TEXT = "Check Out";
 	
+	public Controller controller;
+	
 	private JTextField patronField;
     private JTextField isbnField;
     private JButton submitButton;
     private JTextArea returnTextArea;
     
-	public CheckOutPanel() {
+	public CheckOutPanel(final Controller controller) {
 		super();
+		
+		this.controller = controller;
 		
 		GridBagLayout gbl_checkOutPanel = new GridBagLayout();
         gbl_checkOutPanel.columnWidths = new int[]{10, 0, 0, 0, 0, 0, 0, 0, 10, 0};

@@ -22,13 +22,17 @@ public class LookupPanel extends JPanel {
 	private static final String SUBMIT_BUTTON_TEXT = "Search";
 	private static final String[] COMBO_BOX_OPTIONS = {	"ISBN", "Title", "Author", "Publisher", "Genre", "Date"};
 	
+	public Controller controller;
+	
 	private JComboBox<String> comboBox;
 	private JTextField searchField;
 	private JButton submitButton;
 	private JTextArea returnTextArea;
 	
-	public LookupPanel() {
+	public LookupPanel(final Controller controller) {
 		super();
+		
+		this.controller = controller;
 		
         GridBagLayout gbl_lookupPanel = new GridBagLayout();
         gbl_lookupPanel.columnWidths = new int[]{10, 10, 0, 0, 0, 0, 10, 0};
@@ -76,6 +80,7 @@ public class LookupPanel extends JPanel {
 				System.out.println(q);
 				
 				//TODO: Send to DBM
+				controller.sendMessage(q);
 			}
         });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();

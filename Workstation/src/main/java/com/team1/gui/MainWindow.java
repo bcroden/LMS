@@ -86,11 +86,11 @@ public class MainWindow extends LMSWindow {
         gbc_tabbedPane.gridy = 1;
         getContentPane().add(tabbedPane, gbc_tabbedPane);
         
-        tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(), 	TOOLTIP_LOOKUP);
-        tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(), TOOLTIP_REGISTER);
-        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(), TOOLTIP_CHECKOUT);
-        tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(), 	TOOLTIP_CKECKIN);
-        tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(), 	TOOLTIP_PAYMENT);
+        tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(this.controller), 	TOOLTIP_LOOKUP);
+        tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(this.controller), 	TOOLTIP_REGISTER);
+        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(this.controller), 	TOOLTIP_CHECKOUT);
+        tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(this.controller), 	TOOLTIP_CKECKIN);
+        tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(this.controller), 	TOOLTIP_PAYMENT);
         
         this.setVisible(true);
     }

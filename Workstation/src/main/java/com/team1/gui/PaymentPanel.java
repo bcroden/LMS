@@ -19,13 +19,17 @@ public class PaymentPanel extends JPanel {
 	private static final String AMOUNT_LABEL_TEXT = "Amount";
 	private static final String SUBMIT_BUTTON_TEXT = "Submit";
 	
+	public Controller controller;
+	
     private JTextField patronField;
     private JTextField amountField;
     private JButton submitButton;
     private JTextArea returnTextArea;
 	
-	public PaymentPanel() {
+	public PaymentPanel(final Controller controller) {
 		super();
+		
+		this.controller = controller;
 		
         GridBagLayout gbl_paymentPanel = new GridBagLayout();
         gbl_paymentPanel.columnWidths = new int[]{10, 0, 0, 0, 0, 0, 0, 0, 10, 0};

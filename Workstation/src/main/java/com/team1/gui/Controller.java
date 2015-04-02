@@ -3,7 +3,7 @@ package com.team1.gui;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 
-import com.team1.formatting.queries.LoginQuery;
+import com.team1.formatting.queries.Query;
 import com.team1.network.TCPClient;
 
 public class Controller {
@@ -20,26 +20,27 @@ public class Controller {
     	this.currentWindow = new MainWindow(this, this.model);
     }
     
-    public void handleLogin(String username, String password) {
-    	this.model.username = username;
-    	
+    //TODO: more fixing
+    public String sendMessage(Query q) {
     	try {
     		//TODO: less magic numbers
 			TCPClient client = new TCPClient(Model.HOST, Model.PORT, 1000);
-			
-			//TODO: update formatting package
-			LoginQuery q = new LoginQuery(false, model.username, password);
 			
 			client.sendRequest(q.toString());
 			String reply = client.getReply();
 			
 			//TODO build reply and handle result
 			
-			client.close();
+			client.close();	
+			
+			//Return request
+			return reply;
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	
+    	return " ";
     }
 }

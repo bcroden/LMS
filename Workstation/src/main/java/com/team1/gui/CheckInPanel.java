@@ -19,13 +19,17 @@ public class CheckInPanel extends JPanel {
 	private static final String ISBN_LABEL_TEXT = "ISBN";
 	private static final String SUBMIT_BUTTON_TEXT = "Check In";
 	
+	public Controller controller;
+	
 	private JTextField patronField;
     private JTextField isbnField;
     private JButton submitButton;
     private JTextArea returnTextArea;
     
-	public CheckInPanel() {
+	public CheckInPanel(final Controller controller) {
 		super();
+		
+		this.controller = controller;
 		
 		GridBagLayout gbl_checkInPanel = new GridBagLayout();
         gbl_checkInPanel.columnWidths = new int[]{10, 0, 0, 0, 0, 0, 0, 0, 10, 0};
