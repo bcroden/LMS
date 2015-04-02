@@ -41,7 +41,7 @@ public class Query
         }
         else if (queryType.equals("LoginQuery"))
         {
-            LoginQuery request = new LoginQuery(str[1], str[2], str[3]);    //sessionID is not required (included sessionID parameter)
+            LoginQuery request = new LoginQuery(str[1], str[2]);    //sessionID is not required (included sessionID parameter)
             return request;
         }
         else if (queryType.equals("AddBookQuery"))

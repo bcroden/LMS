@@ -26,7 +26,7 @@ public class LoginQuery extends Query
     }
     
     public static void main(String[] args) {
-        LoginQuery query = new LoginQuery("0", " ", " ");
+        LoginQuery query = new LoginQuery(" ", " ");
         System.out.println(query);
         String toString = query.toString();
         Query query2 = Query.buildRequest(toString);

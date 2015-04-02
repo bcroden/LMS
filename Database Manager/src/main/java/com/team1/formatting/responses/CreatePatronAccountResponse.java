@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class CreatePatronAccountResponse extends Response
 {
-    public CreatePatronAccountResponse(boolean wasSuccessful)
+    public CreatePatronAccountResponse(boolean wasSuccessful, String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }

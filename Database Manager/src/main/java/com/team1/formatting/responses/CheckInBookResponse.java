@@ -10,14 +10,14 @@ import com.team1.formatting.queries.*;
 public class CheckInBookResponse extends Response
 {
     
-    public CheckInBookResponse(boolean wasSuccessful)
+    public CheckInBookResponse(boolean wasSuccessful, String sessionID)
     {
-        super(wasSuccessful);
+        super(wasSuccessful, sessionID);
     }
     
     public CheckInBookResponse() 
     {
-		super(false);
+		super(false, "0");
 	}
 
 	public void executeCheckInBookQuery(CheckInBookQuery query)
@@ -25,7 +25,7 @@ public class CheckInBookResponse extends Response
         try
         {
             Dbwrapper.getInstance().CheckIn(query.isbn);
-            this.wasSuccessful = true;
+            wasSuccessful = true;
         }
         catch(SQLException | InvalidISBNException e)
         {
@@ -33,6 +33,7 @@ public class CheckInBookResponse extends Response
             wasSuccessful = false;
         }
         
+        sessionID = query.sessionID;
         return;
     }
     
@@ -42,7 +43,7 @@ public class CheckInBookResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckInBookResponse" + DELIMITER + s;
+        String msg = "CheckInBookResponse" + DELIMITER + s + DELIMITER + sessionID;
         return msg;
     }
 }

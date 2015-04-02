@@ -17,13 +17,13 @@ public class BookInfoResponse extends Response
     
     public BookInfoResponse()
     {
-    	super(false);
+    	super(false,"0");
     	books = null;
     }
     
-    public BookInfoResponse(boolean wasSuccessful, int numBooks, String strBooks)
+    public BookInfoResponse(boolean wasSuccessful, String sessionID, int numBooks, String strBooks)
     {
-        super(wasSuccessful);
+        super(wasSuccessful, sessionID);
         
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
@@ -59,13 +59,14 @@ public class BookInfoResponse extends Response
             }
             
             if(books != null)
-                this.wasSuccessful = true;
-            
+                wasSuccessful = true;  
         }
         catch(SQLException e)
         {
             e.printStackTrace();
         }
+        sessionID = query.sessionID;
+        return;
     }
     
     
@@ -86,7 +87,7 @@ public class BookInfoResponse extends Response
         else s = "false";
         
         
-        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + numBooks;
+        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks;
         
         for (int i = 0; i < numBooks; i++)
         {

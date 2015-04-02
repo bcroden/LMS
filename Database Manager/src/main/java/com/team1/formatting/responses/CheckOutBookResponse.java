@@ -10,14 +10,14 @@ import com.team1.formatting.queries.*;
 public class CheckOutBookResponse extends Response
 {
     
-    public CheckOutBookResponse(boolean wasSuccessful)
+    public CheckOutBookResponse(boolean wasSuccessful, String sessionID)
     {
-        super(wasSuccessful);
+        super(wasSuccessful, sessionID);
     }
     
     public CheckOutBookResponse() 
     {
-		super(false);
+		super(false, "0");
 	}
 
 	public void executeCheckOutBookQuery(CheckOutBookQuery query)
@@ -34,6 +34,8 @@ public class CheckOutBookResponse extends Response
             e.printStackTrace();
             wasSuccessful = false;
         }
+        
+        sessionID = query.sessionID;
         return;
     }
     
@@ -43,7 +45,7 @@ public class CheckOutBookResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckOutBookResponse" + DELIMITER + s;
+        String msg = "CheckOutBookResponse" + DELIMITER + s + DELIMITER + sessionID;
         return msg;
     }
 }

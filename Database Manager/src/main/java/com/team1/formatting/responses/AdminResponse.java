@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class AdminResponse extends LibrarianResponse
 {
-    public AdminResponse(boolean wasSuccessful)
+    public AdminResponse(boolean wasSuccessful,String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }
