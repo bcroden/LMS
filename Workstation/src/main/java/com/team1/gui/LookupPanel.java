@@ -65,7 +65,7 @@ public class LookupPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				//Create new BookInfoQuery TODO: Get latest formatting packages and modify accordingly
-				BookInfoQuery q = new BookInfoQuery(false, "!");
+				BookInfoQuery q = new BookInfoQuery(controller.model.sessionId);
 				
 				//Reflect the query and invoke the correct searchBy method
 				for(Method m : q.getClass().getMethods())

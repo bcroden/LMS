@@ -14,6 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.team1.formatting.queries.LoginQuery;
+import com.team1.formatting.responses.LogInResponse;
+import com.team1.formatting.responses.Response;
 
 /**
  * A class representing a login window. This class will create and display a new frame
@@ -111,8 +113,10 @@ public class LoginWindow extends LMSWindow {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent action) {
-				LoginQuery q = new LoginQuery(false, usernameField.getText(), new String(passwordField.getPassword()));
-				String response = controller.sendMessage(q.toString());
+				LoginQuery query = new LoginQuery(usernameField.getText(), new String(passwordField.getPassword()));
+				String r = controller.sendMessage(query.toString());
+				Response response = Response.stringToResponse(r);
+				if(response instanceof LogInResponse);
 				//errorMessage.setText(ERROR_MESSAGE_TEXT);
 				
 				controller.showMainWindow();

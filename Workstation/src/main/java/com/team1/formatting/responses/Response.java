@@ -1,22 +1,11 @@
 package com.team1.formatting.responses;
 
-import java.sql.SQLException;
-
-import com.team1.books.InvalidISBNException;
-import com.team1.formatting.queries.AddBookQuery;
-import com.team1.formatting.queries.BookInfoQuery;
-import com.team1.formatting.queries.CheckInBookQuery;
-import com.team1.formatting.queries.CheckOutBookQuery;
-import com.team1.formatting.queries.LoginQuery;
-import com.team1.formatting.queries.PasswordChangeQuery;
-import com.team1.formatting.queries.PayFinesQuery;
-import com.team1.formatting.queries.Query;
 
 public class Response
 {
     public boolean wasSuccessful;
     public static final String DELIMITER = ";&;";
-    public String responseType;
+    public static String responseType;
     public String sessionID;
 
     
@@ -26,10 +15,8 @@ public class Response
         this.sessionID = sessionID;
     }
     
-    
-    
     //Constructor to take a msg and turn it into a query object
-    public Response stringToResponse(String msg)
+    public static Response stringToResponse(String msg)
     {
         //split the msg into each piece (deliminated by ;)
         String[] str = msg.split(DELIMITER);

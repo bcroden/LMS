@@ -21,7 +21,11 @@ public class CheckOutBookQuery extends LibrarianQuery
         return this;
     }*/
     
-    public CheckOutBookQuery logByfName(String fName, String ISBN) {
+    public CheckOutBookQuery(String sessionId) {
+    	this(sessionId, " ", " ", " ", " ", " ", " ", " ");
+	}
+
+	public CheckOutBookQuery logByfName(String fName, String ISBN) {
         this.fName = fName;
         this.isbn = ISBN;
         return this;
