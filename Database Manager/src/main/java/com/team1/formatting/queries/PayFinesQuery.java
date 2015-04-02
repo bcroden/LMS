@@ -5,6 +5,11 @@ public class PayFinesQuery extends LibrarianQuery
     public int paymentAmount;
     public String userName;
     
+    public PayFinesQuery(String sessionID)
+    {
+    	this(sessionID, " ", 0);
+    }
+    
     public PayFinesQuery(String sessionID, String userName, int paymentAmount)
     {
         super(sessionID);

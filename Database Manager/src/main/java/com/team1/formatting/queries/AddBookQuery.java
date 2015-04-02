@@ -5,6 +5,10 @@ public class AddBookQuery extends LibrarianQuery
     public int numCopies;
     public String isbn;
     
+    public AddBookQuery(String sessionID)
+    {
+    	this(sessionID, " ", 0);
+    }
     
     public AddBookQuery(String sessionID,String isbn, int numCopies)
     {

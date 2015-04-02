@@ -1,8 +1,7 @@
 package com.team1.formatting.queries;
 
 public class LoginQuery extends Query
-{
-    
+{	
 	public LoginQuery()
 	{
 		super("0");
