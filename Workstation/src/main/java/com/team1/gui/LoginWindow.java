@@ -114,12 +114,20 @@ public class LoginWindow extends LMSWindow {
 			@Override
 			public void actionPerformed(ActionEvent action) {
 				LoginQuery query = new LoginQuery(usernameField.getText(), new String(passwordField.getPassword()));
-				String r = controller.sendMessage(query.toString());
-				Response response = Response.stringToResponse(r);
-				if(response instanceof LogInResponse);
-				//errorMessage.setText(ERROR_MESSAGE_TEXT);
 				
-				controller.showMainWindow();
+				String r = controller.sendMessage(query.toString());
+				
+				if(r == null) {
+					errorMessage.setText(ERROR_MESSAGE_TEXT);
+					controller.showMainWindow();
+					return;
+				}
+				
+				Response response = Response.stringToResponse(r);
+				if(response.wasSuccessful) {
+					controller.model.sessionId = ((LogInResponse)response).sessionID;
+					controller.showMainWindow();
+				}
 			}
 		});
 		
