@@ -13,8 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.team1.network.TCPClient;
-
 /**
  * Extremely temporary GUI designed look absolutely terrible, and help fulfill
  * User Stories 2.1 - 2.3 for release 1.

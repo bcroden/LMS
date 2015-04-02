@@ -1,8 +1,5 @@
 package com.team1.gui;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-
 import com.team1.network.TCPClient;
 
 public class Model {
