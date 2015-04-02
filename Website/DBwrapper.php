@@ -13,6 +13,7 @@
 	function connect(){
 		global $host, $user, $pass, $db, $port, $connection;
 		$connection = mysqli_connect($host, $user, $pass, $db, $port)or die("Error: " . $connection->connect_error);
+		echo "<br> debug in DBwrapper, Successfully connected to database <br>"; //TODO: remove line
 	}
 	//return multiple books
 	function queryTitle($title){

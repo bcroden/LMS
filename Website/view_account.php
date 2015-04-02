@@ -4,7 +4,7 @@
    ini_set('display_errors', 'On');
 
    connect();
-
+	
    if(isset($_POST["form_type"]) && !empty($_POST["form_type"])) {
 		//The bug that was causing no response was here
 		//You are hard coding any searches to be empty strings right here
