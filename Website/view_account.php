@@ -3,27 +3,46 @@
    error_reporting(E_ALL);
    ini_set('display_errors', 'On');
 
-   echo "Hello";
-
    connect();
 
    if(isset($_POST["form_type"]) && !empty($_POST["form_type"])) {
-      $usrnm = "";
-      $pswd = "";
+		//The bug that was causing no response was here
+		//You are hard coding any searches to be empty strings right here
+		//you need to be retreiving them from $_POST like other values
+	//--------------
+     // $usrnm = "";
+     // $pswd = "";
+	//--------------
+		//fix is here
+		$usrnm = $_POST["user_name"];
+		$pswd = $_POST["password"];
       $okay = false;
 
-      if($_POST["form_type"] == "creation") {
+      if($_POST["form_type"] === "creation") {
          /* Attempt to create a new patron account */
          $err = "";
-//         $err = create_account($usrnm, $pswd);
+         $err = create_account($usrnm, $pswd);
          if(!empty($err))
             creation_fail($err);
          else
             $okay = true;
       }
-      elseif($_POST["form_type"] == "login") {
+      elseif($_POST["form_type"] === "login") {
          /* Attempt to log the user into an existing patron's account */
-         $db_pass = getPass($usrnm);
+         $result = getPass($usrnm);
+		if($result === -1){
+		echo "<br>No matching account found<br>";
+		}
+		else{
+			while($row = mysqli_fetch_array($result)){
+				if($pswd === $row["password"]){
+					echo "The passwords match and you may log in<br>";
+				}
+				else{
+					echo "Passwords don't match<br>";
+				}
+			}
+		}
       }
 
       if($okay)
@@ -74,33 +93,31 @@
    }//end create_account
 
    function display_account($usrnm, $pswd) {
-?>
-<!DOCTYPE html>
-<html>
-   <body>
-      <p>Displaying account</p>
-   </body>
-</html>
-<?php
+
+echo "<html>";
+echo "<body>";
+echo "<p>Displaying account</p>";
+echo "</body>";
+echo "</html>";
    } //end of display_account
 
    function creation_fail($err) {
-?>
+echo <<< EOT
 <!DOCTYPE html>
 <html>
    <body>
       <p>Account Creation Failed</p>
-      <?= $err ?>
+      $err
       <form action="create_account.php">
          <input type="submit" value="Try Again"/>
       </form>
    </body>
 </html>
-<?php
+EOT;
    } //end of creation_fail
 
    function login_fail() {
-?>
+echo <<< EOT
 <!DOCTYPE html>
 <html>
    <body>
@@ -111,6 +128,7 @@
       </form>
    </body>
 </html>
-<?php
+EOT;
    } //end of login_fail
+
 ?>
