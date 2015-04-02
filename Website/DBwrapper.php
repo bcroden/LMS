@@ -13,7 +13,7 @@
 	function connect(){
 		global $host, $user, $pass, $db, $port, $connection;
 		$connection = mysqli_connect($host, $user, $pass, $db, $port)or die("Error: " . $connection->connect_error);
-		echo "<br> debug in DBwrapper, Successfully connected to database <br>"; //TODO: remove line
+		echo "<br>Connected to database<br>"; //debug line
 	}
 	//return multiple books
 	function queryTitle($title){
@@ -76,21 +76,35 @@
 			   "', '" . $pass . "', '" . $fname . "', '" . $lname . 
                "', '" . $email . "', '" . $notify . "', '" . $auth . "')";
 		$result = $connection->query($sql);
-		if($result->num_rows > 0){
-			return $result;
-		}
-		else
-			return -1;
+		//if($result->num_rows > 0){
+		//	return $result;
+		//}
+		//else
+		//	return -1;
+	}
+
+	function getUserInfo($user){
+		global $connection;
+		$sql = "SELECT * FROM user WHERE username = '" . $user . "'";
+		$result = $connection->query($sql);
+        if($result->num_rows > 0){
+          return $result;
+        }
+        else
+          return -1;
+
 	}
 
 	function getPass($user){
-        global $connection;
-        $sql = "SELECT password FROM user WHERE username = '" . $user . "'";
-        $result = $connection->query($sql);
-        if($result->num_rows > 0){
-            return $result;
-        }
-        else
-            return -1;
-    }
+		global $connection;
+		$sql = "SELECT password FROM user WHERE username = '" . $user . "'";
+		$result = $connection->query($sql);
+		if($result->num_rows > 0){
+			return $result;
+		}
+		else{
+			return -1;
+		}
+	}
 ?>
+

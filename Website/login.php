@@ -5,5 +5,7 @@
       <input type="submit" value="Log In"/>
       <input type="hidden" name="form_type" value="login"/>
    </form>
-   <a href="create_account.php">Create New Account</a>
+   <form action="create_account.php">
+		<input type="submit" value="Create new account">
+   </form>
 </html>

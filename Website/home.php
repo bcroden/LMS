@@ -1,9 +1,21 @@
 <html>
     <head>
         <title>LMS</title>
+		<style>
+
+		#button{
+			position:absolute;
+			top:10;
+			right:10;
+		}
+
+		</style>
     </head>
     <body>
         <p>Welcome to the Library Management System</p>
+		<form id="button" action="/login.php">
+			<input type="submit" value="Go to Login">
+		</form>
         <p>
             <form method="post" action="/search.php">
 				<select name="type">
@@ -18,3 +30,4 @@
         </p>
     </body>
 </html>
+

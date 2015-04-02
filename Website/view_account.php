@@ -4,7 +4,7 @@
    ini_set('display_errors', 'On');
 
    connect();
-	
+
    if(isset($_POST["form_type"]) && !empty($_POST["form_type"])) {
 		//The bug that was causing no response was here
 		//You are hard coding any searches to be empty strings right here
@@ -35,13 +35,14 @@
 		}
 		else{
 			while($row = mysqli_fetch_array($result)){
-				if($pswd === $row["password"]){
-					echo "The passwords match and you may log in<br>";
-				}
-				else{
-					echo "Passwords don't match<br>";
-				}
-			}
+                if($pswd === $row["password"]){
+                    echo "The passwords match and you may log in<br>";
+					display_account($usrnm, $pswd);
+                }
+                else{
+                    echo "Passwords don't match<br>";
+                }
+            }
 		}
       }
 
@@ -84,6 +85,10 @@
 
          if(empty($s_err)) {
             //TODO: DB call to add patron to tables
+			//echo "Parts: " .$_POST["user_name"]. " and ". $_POST["notify"] . "<br>"; 
+			addUser($_POST["user_name"], $_POST["password"], $_POST["email"], $_POST["first_name"], $_POST["last_name"], -1, 1);
+			//you can check if result is empty perhaps to see if the user name is taken
+			//not totally sure how to handle that yet
          }
 
          return $s_err;
@@ -93,12 +98,21 @@
    }//end create_account
 
    function display_account($usrnm, $pswd) {
+echo <<< EOT
+<html>
+	<body>
+		<p>Displaying account</p>
+	</body>
+</html>
+EOT;
+	$result = getUserInfo($_POST["user_name"]); //this is debug and actually a security problem
+	while($row = mysqli_fetch_array($result)){
+                    echo "Username: " . $row["username"] . "<br>" .
+                        "Email: " . $row["email"] . "<br>" .
+                        "First name: " . $row["fname"] . "<br>" . 
+                        "Last name: " . $row["lname"] ."<br>";
+                }
 
-echo "<html>";
-echo "<body>";
-echo "<p>Displaying account</p>";
-echo "</body>";
-echo "</html>";
    } //end of display_account
 
    function creation_fail($err) {
