@@ -6,6 +6,7 @@ public class Query
     //Variable for other functions to see what kind of query they are being given
     public static String queryType;
     public boolean wasSuccessful;
+    public String sessionID;
     
     //Alex added 3-7-15 this to get everything to compile 
     public Query(boolean wasSuccessful)

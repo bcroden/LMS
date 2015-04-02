@@ -45,7 +45,7 @@ public class Response
         }
         else if (responseType.equals("LoginResponse"))
         {
-            LoginResponse response = new LoginResponse();
+            LoginResponse response = new LoginResponse(success);
             return response;
         }
         return new Response(false);
@@ -65,13 +65,19 @@ public class Response
         if(query instanceof CheckInBookQuery)
         {
             CheckInBookResponse response = new CheckInBookResponse();
-            response.executeCheckInBookQuery(query)
+            response.executeCheckInBookQuery(query);
             return response;
         }
         if(query instanceof CheckOutBookQuery)
         {
             CheckOutBookResponse response = new CheckOutBookResponse();
-            response.executeCheckOutBookQuery(query)
+            response.executeCheckOutBookQuery(query);
+            return response;
+        }
+        if(query instanceof LoginQuery)
+        {
+            LogInResponse response = new LogInResponse();
+            response.executeLogInResponse(query);
             return response;
         }
         
