@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.team1.formatting.queries.CheckInBookQuery;
+
 public class CheckInPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -75,7 +77,13 @@ public class CheckInPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				CheckInBookQuery q	= new CheckInBookQuery(controller.model.sessionId);
+				q.userID = patronField.getText();
+				q.isbn = isbnField.getText();
+				
+				String response = controller.sendMessage(q.toString());
+				
+				//TODO: Build response
 			}
         });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();

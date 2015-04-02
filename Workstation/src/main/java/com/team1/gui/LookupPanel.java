@@ -80,7 +80,7 @@ public class LookupPanel extends JPanel {
 				System.out.println(q);
 				
 				//TODO: Send to DBM
-				controller.sendMessage(q);
+				controller.sendMessage(q.toString());
 			}
         });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();

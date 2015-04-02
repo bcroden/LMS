@@ -2,6 +2,10 @@ package com.team1.formatting.queries;
 
 public class CheckOutBookQuery extends LibrarianQuery
 {
+	public CheckOutBookQuery(String sessionID) {
+		this(false, sessionID, " ", " ", " ", " ", " ", " ", " ");
+	}
+	
     public CheckOutBookQuery(boolean wasSuccessful, String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
     {
         super(wasSuccessful,sessionID);

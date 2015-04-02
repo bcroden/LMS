@@ -2,6 +2,10 @@ package com.team1.formatting.queries;
 
 public class CheckInBookQuery extends LibrarianQuery
 {
+	public CheckInBookQuery(String sessionId) {
+		this(false, sessionId, " ", " ", " ", " ", " ", " ", " ");
+	}
+	
     public CheckInBookQuery(boolean wasSuccessful, String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
     {
         super(wasSuccessful, sessionID);
@@ -18,7 +22,9 @@ public class CheckInBookQuery extends LibrarianQuery
     //delimeter for building toString
 //    private String d = ";";
 
-    //book information for either a look up or book add in. 
+
+
+	//book information for either a look up or book add in. 
     public String isbn,title,author;
     
     //variable for if a book is checked out/in

@@ -104,7 +104,9 @@ public class LoginWindow extends LMSWindow {
 		loginButton = new JButton(LOGIN_BUTTON_TEXT);
 		loginButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent action) {
+				
+				
 				controller.showMainWindow();
 			}
 		});
