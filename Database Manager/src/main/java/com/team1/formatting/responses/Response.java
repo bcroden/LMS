@@ -10,7 +10,7 @@ public class Response
 {
     public boolean wasSuccessful;
     public static final String DELIMITER = ";&;";
-    public String responseType;
+    public static String responseType;
     public String sessionID;
 
     
