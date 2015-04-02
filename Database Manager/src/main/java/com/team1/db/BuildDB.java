@@ -63,7 +63,7 @@ public class BuildDB {
 						+ "(id INT NOT NULL AUTO_INCREMENT, username VARCHAR(100) UNIQUE, "
 						+ "password VARCHAR(100), fname VARCHAR(100), lname VARCHAR(100), "
 						+ "email VARCHAR(100), balance INT, notify INT, booksout VARCHAR(1000), "
-						+ "history VARCHAR(3000), auth INT, PRIMARY KEY(id))";
+						+ "dateout VARCHAR(1000), history VARCHAR(3000), auth INT, PRIMARY KEY(id))";
 			stmt.executeUpdate(sql);
 			
 		}

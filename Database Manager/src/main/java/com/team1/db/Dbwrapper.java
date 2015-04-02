@@ -3,6 +3,7 @@ package com.team1.db;
 import java.sql.*;
 import java.util.ArrayList;
 
+
 //get book objects
 import com.team1.books.*;
 
@@ -301,7 +302,6 @@ public class Dbwrapper {
     		return pass;
     	}
     	
-    	
     	public synchronized int getAuthorization(String user, String pass)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT auth FROM user WHERE BINARY username = '" + user + "' and BINARY password = '"+ pass +"'";
@@ -392,6 +392,48 @@ public class Dbwrapper {
     	
     	return copies;
     	
+    }
+    
+    public synchronized float getBalance(String username) throws SQLException {
+    	Statement stmt = con.createStatement();
+    	String sql = "SELECT balance FROM user WHERE username = '" + username + "'";
+    	ResultSet result = stmt.executeQuery(sql);
+    	int balance = 0;
+    	while(result.next()){
+    		balance = result.getInt("copiesin");
+    	}
+    	
+    	return balance;
+    }
+    
+    public synchronized void updateBalance(String username, float cost) throws SQLException {
+    	Statement stmt = con.createStatement();
+    	
+    	String sql = "SELECT balance FROM user WHERE username = '" + username + "'";
+    	ResultSet result = stmt.executeQuery(sql);
+    	float temp = 0;
+    	while(result.next()){
+    		temp = result.getInt("copiesin");
+    	}
+    	
+    	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
+    	result = stmt.executeQuery(sql);
+    	while(result.next()){
+    		
+    	}
+    	
+    	sql = "UPDATE user balance = '" + "" + "' WHERE username = '" + username + "'";
+    	stmt.executeUpdate(sql);
+    	int balance = 0;
+    	
+    	
+    }
+    
+    public float calculateCost(String date){
+    	float cost = 0;
+    	
+    	
+    	return cost;
     }
     //--------------------------------------------------------------------------
     
