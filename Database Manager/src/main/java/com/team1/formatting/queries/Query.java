@@ -8,7 +8,7 @@ public class Query
     public String sessionID;
     
     //Alex added 3-7-15 this to get everything to compile 
-    public Query(sessionID)
+    public Query(String sessionID)
     {
         this.sessionID = sessionID;
     }

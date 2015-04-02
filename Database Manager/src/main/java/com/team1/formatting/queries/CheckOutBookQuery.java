@@ -15,24 +15,27 @@ public class CheckOutBookQuery extends LibrarianQuery
         this.userID = userID;
     }
     
-    //Methods to set single variables
+/*    //Methods to set single variables
     public CheckOutBookQuery searchByISBN(String isbn) {
         this.isbn = isbn;
         return this;
-    }
+    }*/
     
-    public CheckOutBookQuery logByfName(String fName) {
+    public CheckOutBookQuery logByfName(String fName, String ISBN) {
         this.fName = fName;
+        this.isbn = ISBN;
         return this;
     }
     
-    public CheckOutBookQuery logBylName(String lName) {
+    public CheckOutBookQuery logBylName(String lName, String ISBN) {
         this.lName = lName;
+        this.isbn = ISBN;
         return this;
     }
     
-    public CheckOutBookQuery logByuserID(String userID) {
+    public CheckOutBookQuery logByuserID(String userID, String ISBN) {
         this.userID = userID;
+        this.isbn = ISBN;
         return this;
     }
     
