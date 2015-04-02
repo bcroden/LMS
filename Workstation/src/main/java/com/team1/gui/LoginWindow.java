@@ -12,13 +12,20 @@ import javax.swing.JTextField;
 
 public class LoginWindow extends LMSWindow {
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JPasswordField passwordField;
 	
 	private static final int HEIGHT = 400;
 	private static final int WIDTH = 300;
 	private static final boolean IS_RESIZABLE = false;
-
+	
+	private static final String LMS_LABEL_TEXT = "Library Management System";
+	private static final String USERNAME_LABEL_TEXT = "Username";
+	private static final String PASSWORD_LABEL_TEXT = "Password";
+	private static final String LOGIN_BUTTON_TEXT = "Login";
+	
+	private JTextField usernameField;
+	private JPasswordField passwordField;
+	private JButton loginButton;
+	
 	public LoginWindow() {
 		super();
 		
@@ -42,35 +49,35 @@ public class LoginWindow extends LMSWindow {
 		gbc_panel.gridy = 1;
 		getContentPane().add(panel, gbc_panel);
 
-		JLabel lblLibrary = new JLabel("Library Management System");
-		panel.add(lblLibrary);
+		JLabel lmsLabel = new JLabel(LMS_LABEL_TEXT);
+		panel.add(lmsLabel);
 
-		JLabel lblUsername = new JLabel("Username");
-		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
-		gbc_lblUsername.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUsername.gridx = 1;
-		gbc_lblUsername.gridy = 3;
-		getContentPane().add(lblUsername, gbc_lblUsername);
+		JLabel usernameLabel = new JLabel(USERNAME_LABEL_TEXT);
+		GridBagConstraints gbc_usernameLabel = new GridBagConstraints();
+		gbc_usernameLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_usernameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_usernameLabel.gridx = 1;
+		gbc_usernameLabel.gridy = 3;
+		getContentPane().add(usernameLabel, gbc_usernameLabel);
 
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.anchor = GridBagConstraints.NORTH;
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridwidth = 3;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 4;
-		getContentPane().add(textField, gbc_textField);
-		textField.setColumns(10);
+		usernameField = new JTextField();
+		GridBagConstraints gbc_usernameField = new GridBagConstraints();
+		gbc_usernameField.anchor = GridBagConstraints.NORTH;
+		gbc_usernameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_usernameField.insets = new Insets(0, 0, 5, 5);
+		gbc_usernameField.gridwidth = 3;
+		gbc_usernameField.gridx = 1;
+		gbc_usernameField.gridy = 4;
+		getContentPane().add(usernameField, gbc_usernameField);
+		usernameField.setColumns(10);
 
-		JLabel lblPassword = new JLabel("Password");
-		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
-		gbc_lblPassword.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPassword.gridx = 1;
-		gbc_lblPassword.gridy = 5;
-		getContentPane().add(lblPassword, gbc_lblPassword);
+		JLabel passwordLabel = new JLabel(PASSWORD_LABEL_TEXT);
+		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
+		gbc_passwordLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_passwordLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_passwordLabel.gridx = 1;
+		gbc_passwordLabel.gridy = 5;
+		getContentPane().add(passwordLabel, gbc_passwordLabel);
 
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
@@ -82,13 +89,13 @@ public class LoginWindow extends LMSWindow {
 		gbc_passwordField.gridy = 6;
 		getContentPane().add(passwordField, gbc_passwordField);
 
-		JButton btnNewButton = new JButton("Login");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 7;
-		getContentPane().add(btnNewButton, gbc_btnNewButton);
+		loginButton = new JButton(LOGIN_BUTTON_TEXT);
+		GridBagConstraints gbc_loginButton = new GridBagConstraints();
+		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
+		gbc_loginButton.anchor = GridBagConstraints.NORTHWEST;
+		gbc_loginButton.gridx = 3;
+		gbc_loginButton.gridy = 7;
+		getContentPane().add(loginButton, gbc_loginButton);
 
 		this.setVisible(true);
 	}

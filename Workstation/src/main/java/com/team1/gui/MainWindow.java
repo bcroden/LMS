@@ -18,17 +18,17 @@ public class MainWindow extends LMSWindow {
     private static final int WIDTH = 800;
     private static final boolean IS_RESIZABLE = true;
     
-    private static final String TAB_NAME_LOOKUP = "Book Lookup";
+    private static final String TAB_NAME_LOOKUP = 	"Book Lookup";
     private static final String TAB_NAME_REGISTER = "Register New Book";
     private static final String TAB_NAME_CKECKOUT = "Check Out Book";
-    private static final String TAB_NAME_CKECKIN = "Check In Book";
-    private static final String TAB_NAME_PAYMENT = "Handle Payment";
+    private static final String TAB_NAME_CKECKIN = 	"Check In Book";
+    private static final String TAB_NAME_PAYMENT = 	"Handle Payment";
     
-    private static final String TOOLTIP_LOOKUP = null;
-    private static final String TOOLTIP_REGISTER = null;
-    private static final String TOOLTIP_CHECKOUT = null;
-    private static final String TOOLTIP_CKECKIN = null;
-    private static final String TOOLTIP_PAYMENT = null;
+    private static final String TOOLTIP_LOOKUP = 	null;
+    private static final String TOOLTIP_REGISTER = 	null;
+    private static final String TOOLTIP_CHECKOUT = 	null;
+    private static final String TOOLTIP_CKECKIN = 	null;
+    private static final String TOOLTIP_PAYMENT = 	null;
     
     public MainWindow() {
         super();
@@ -71,20 +71,11 @@ public class MainWindow extends LMSWindow {
         gbc_tabbedPane.gridy = 1;
         getContentPane().add(tabbedPane, gbc_tabbedPane);
         
-        JPanel lookupPanel = new LookupPanel();
-        tabbedPane.addTab(TAB_NAME_LOOKUP, null, lookupPanel, TOOLTIP_LOOKUP);
-        
-        JPanel registerPanel = new JPanel();
-        tabbedPane.addTab(TAB_NAME_REGISTER, null, registerPanel, TOOLTIP_REGISTER);
-        
-        JPanel checkOutPanel = new JPanel();
-        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, checkOutPanel, TOOLTIP_CHECKOUT);
-        
-        JPanel checkInPanel = new JPanel();
-        tabbedPane.addTab(TAB_NAME_CKECKIN, null, checkInPanel, TOOLTIP_CKECKIN);
-        
-        JPanel paymentPanel = new JPanel();
-        tabbedPane.addTab(TAB_NAME_PAYMENT, null, paymentPanel, TOOLTIP_PAYMENT);
+        tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(), 	TOOLTIP_LOOKUP);
+        tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(), TOOLTIP_REGISTER);
+        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(), TOOLTIP_CHECKOUT);
+        tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(), 	TOOLTIP_CKECKIN);
+        tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(), 	TOOLTIP_PAYMENT);
         
         this.setVisible(true);
     }
