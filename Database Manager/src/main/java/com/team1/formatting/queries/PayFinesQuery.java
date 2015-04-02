@@ -2,7 +2,7 @@ package com.team1.formatting.queries;
 
 public class PayFinesQuery extends LibrarianQuery
 {
-    public int paymentAmount;
+    public float paymentAmount;
     public String userName;
     
     public PayFinesQuery(String sessionID)
@@ -10,7 +10,7 @@ public class PayFinesQuery extends LibrarianQuery
     	this(sessionID, " ", 0);
     }
     
-    public PayFinesQuery(String sessionID, String userName, int paymentAmount)
+    public PayFinesQuery(String sessionID, String userName, float paymentAmount)
     {
         super(sessionID);
         this.userName = userName;

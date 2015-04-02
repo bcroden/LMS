@@ -2,6 +2,8 @@ package com.team1.formatting.responses;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.team1.authentication.Authentication;
 import com.team1.books.Book;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
@@ -22,20 +24,34 @@ public class CheckOutBookResponse extends Response
 
 	public void executeCheckOutBookQuery(CheckOutBookQuery query)
     {
-        try
+		//Check users authentication
+		int status = Authentication.getInstance().authenticate(query);
+        
+        if (status == 0 || status == 1) wasSuccessful = false;
+        else if (status == 2 || status == 3)
         {
-            System.out.println("Pre call");
-            Dbwrapper.getInstance().CheckOut(query.isbn);
-            wasSuccessful = true;
-            System.out.println("Post call");
+            try
+            {
+                System.out.println("Pre call");
+                Dbwrapper.getInstance().CheckOut(query.isbn,query.userID);
+                wasSuccessful = true;
+                System.out.println("Post call");
+            }
+            catch(SQLException | InvalidISBNException e)
+            {
+                e.printStackTrace();
+                wasSuccessful = false;
+            }
+            
+            sessionID = query.sessionID;
         }
-        catch(SQLException | InvalidISBNException e)
+        else
         {
-            e.printStackTrace();
             wasSuccessful = false;
+            sessionID = query.sessionID;
+            System.out.print("unexpected return value from authenticate...\n");
         }
         
-        sessionID = query.sessionID;
         return;
     }
     

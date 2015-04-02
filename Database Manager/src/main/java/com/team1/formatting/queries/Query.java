@@ -56,7 +56,7 @@ public class Query
         }
         else if (queryType.equals("PayFinesQuery"))
         {
-            PayFinesQuery request = new PayFinesQuery(str[1],str[2],Integer.getInteger(str[3]));    //sessionID is not required
+            PayFinesQuery request = new PayFinesQuery(str[1],str[2],Float.valueOf(str[3]));    //sessionID is not required
             return request;
         }
         return new Query("0");

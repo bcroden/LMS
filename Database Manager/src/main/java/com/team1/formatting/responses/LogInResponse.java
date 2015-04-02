@@ -9,9 +9,8 @@ import com.team1.authentication.Authentication;
 import com.team1.formatting.queries.*;
 
 public class LogInResponse extends Response
-{
-    public static int status;
-    
+{    
+	public int status = 0;
     public LogInResponse()
     {
     	super(false,"0");

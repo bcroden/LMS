@@ -3,6 +3,7 @@ package com.team1.formatting.responses;
 import java.sql.SQLException;
 
 import com.team1.formatting.queries.*;
+import com.team1.authentication.Authentication;
 import com.team1.books.*;
 import com.team1.db.Dbwrapper;
 
@@ -20,30 +21,45 @@ public class PasswordChangeResponse extends Response
     
     public void executePasswordChangeQuery(PasswordChangeQuery query)
     {
-    	//execute a password change
-    	int success = 0;
-    	try {
-			success = Dbwrapper.getInstance().setNewPass(query.userName,query.oldPassword,query.newPassword);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//Check users authentication
+		int status = Authentication.getInstance().authenticate(query);
+        
+        if (status == 0) wasSuccessful = false;
+        else if (status == 1 || status == 2 || status == 3)
+        {
+        	//execute a password change
+        	int success = 0;
+        	try {
+    			success = Dbwrapper.getInstance().setNewPass(query.userName,query.oldPassword,query.newPassword);
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        	
+        	if(success == 1)
+        	{
+        		wasSuccessful = true;
+        	}
+        	else if(success == -1)
+        	{
+        		wasSuccessful = false;
+        	}
+        	else
+        	{
+        		wasSuccessful = false;
+        		System.out.print("Unexpected return value from setNewPass\n");
+        	}
+        		
+        	sessionID = query.sessionID;
+        }
+        else
+        {
+            wasSuccessful = false;
+            sessionID = query.sessionID;
+            System.out.print("unexpected return value from authenticate...\n");
+        }
     	
-    	if(success == 1)
-    	{
-    		wasSuccessful = true;
-    	}
-    	else if(success == -1)
-    	{
-    		wasSuccessful = false;
-    	}
-    	else
-    	{
-    		wasSuccessful = false;
-    		System.out.print("Unexpected return value from setNewPass\n");
-    	}
-    		
-    	sessionID = query.sessionID;
+
     	return;
     }
     
