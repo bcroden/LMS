@@ -3,6 +3,8 @@ package com.team1.gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,6 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+/**
+ * A class representing a login window. This class will create and display a new frame
+ * that allows a user to enter a username and password and submit those values to the
+ * LMS. If the values match a user in the database, the user will be allowed to continue.
+ * If the values do not match a user in the database the user will be prompted with an error
+ * message and asked to try again.
+ * 
+ * @author Brandon
+ *
+ */
 public class LoginWindow extends LMSWindow {
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +44,7 @@ public class LoginWindow extends LMSWindow {
 		this.setSize(WIDTH, HEIGHT);
         this.setResizable(IS_RESIZABLE);
 		this.setLocationRelativeTo(null);
-
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 40, 57, 113, 57, 40, 0 };
 		gridBagLayout.rowHeights = new int[] { 36, 61, 33, 14, 20, 14, 20, 33, 23, 0 };
@@ -90,6 +102,14 @@ public class LoginWindow extends LMSWindow {
 		getContentPane().add(passwordField, gbc_passwordField);
 
 		loginButton = new JButton(LOGIN_BUTTON_TEXT);
+		loginButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO
+				new MainWindow();
+				close();
+			}
+		});
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
 		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
 		gbc_loginButton.anchor = GridBagConstraints.NORTHWEST;

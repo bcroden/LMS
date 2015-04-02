@@ -7,28 +7,12 @@ public class Model {
     public static final String HOST = "localhost";
     public static final int PORT = 3612;
 
-    public TCPClient client;
-
     // Temp Fields for release 1...
     protected String username;
-    protected char[] password;
     protected String sessionId;
+	public TCPClient client;
 
     public Model() {
-        this.sessionId = "10000000";
-        /*
-         * TODO: Uncomment once the DBM is up and running
-         */
-//        try {
-//            this.client = new TCPClient(HOST, PORT);
-//        }
-//        catch (InvalidKeyException e) {
-//            // Should never occur...
-//            e.printStackTrace();
-//        }
-//        catch (IOException e) {
-//            // Oh noes...
-//            e.printStackTrace();
-//        }
+    	
     }
 }

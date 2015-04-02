@@ -36,7 +36,7 @@ public class LMSWindow extends JFrame {
 		}
 		
         this.setTitle(WINDOW_TITLE);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
 	/**

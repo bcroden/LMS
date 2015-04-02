@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -11,6 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+/**
+ * The main window for the workstation. Allows a user to perform librarian activities
+ * as specified in the Formal Requirements Specification Document.
+ * 
+ * @author Brandon
+ *
+ */
 public class MainWindow extends LMSWindow {
     private static final long serialVersionUID = 1L;
     
@@ -58,6 +67,12 @@ public class MainWindow extends LMSWindow {
         topPanel.add(horizontalGlue);
         
         JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+        });
         topPanel.add(logoutButton);
         
         Component horizontalStrut = Box.createHorizontalStrut(20);

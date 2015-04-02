@@ -3,6 +3,8 @@ package com.team1.gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -67,6 +69,12 @@ public class PaymentPanel extends JPanel {
         amountField.setColumns(10);
         
         submitButton = new JButton(SUBMIT_BUTTON_TEXT);
+        submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+        });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();
         gbc_submitButton.insets = new Insets(0, 0, 5, 5);
         gbc_submitButton.gridx = 6;
