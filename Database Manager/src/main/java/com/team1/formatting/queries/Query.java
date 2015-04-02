@@ -46,7 +46,7 @@ public class Query
         }
         else if (queryType.equals("AddBookQuery"))
         {
-            AddBookQuery request = new AddBookQuery(str[1],str[2],str[3]);    //sessionID is not required
+            AddBookQuery request = new AddBookQuery(str[1],str[2],Integer.getInteger(str[3]));    //sessionID is not required
             return request;
         }
         else if (queryType.equals("PasswordChangeQuery"))
@@ -56,10 +56,10 @@ public class Query
         }
         else if (queryType.equals("PayFinesQuery"))
         {
-            PayFinesQuery request = new PayFinesQuery(str[1],str[2],str[3]);    //sessionID is not required
+            PayFinesQuery request = new PayFinesQuery(str[1],str[2],Integer.getInteger(str[3]));    //sessionID is not required
             return request;
         }
-        return new Query(false);
+        return new Query("0");
     }
     
     //Override of toString. Method to return the object information in the form of a string.

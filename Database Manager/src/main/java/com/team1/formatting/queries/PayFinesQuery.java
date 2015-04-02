@@ -2,7 +2,7 @@ package com.team1.formatting.queries;
 
 public class PayFinesQuery extends LibrarianQuery
 {
-    public int paymentAmount
+    public int paymentAmount;
     public String userName;
     
     public PayFinesQuery(String sessionID, String userName, int paymentAmount)
