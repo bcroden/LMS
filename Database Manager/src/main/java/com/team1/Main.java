@@ -14,7 +14,6 @@ public class Main
 {
     public static void main(String args[]) throws Exception
     {
-        
         final int PORT = 3612;
 
         // setup TCP server on the specified port

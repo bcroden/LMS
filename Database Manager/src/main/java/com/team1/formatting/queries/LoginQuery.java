@@ -8,8 +8,8 @@ public class LoginQuery extends Query
 		super("0");
 	}
 	
-    public LoginQuery(String sessionID, String userName, String password) {
-        super(sessionID);
+    public LoginQuery(String userName, String password) {
+        super("0");
         // TODO Auto-generated constructor stub
         this.userName = userName;
         this.password = password;

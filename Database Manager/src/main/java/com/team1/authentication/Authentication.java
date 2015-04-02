@@ -5,14 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.team1.db.Dbwrapper;
-import com.team1.formatting.AdminQuery;
-import com.team1.formatting.CheckInBookQuery;
-import com.team1.formatting.CheckOutBookQuery;
-import com.team1.formatting.LibrarianInfoQuery;
-import com.team1.formatting.LibrarianQuery;
-import com.team1.formatting.LoginQuery;
-import com.team1.formatting.PatronInfoQuery;
-import com.team1.formatting.Query;
+import com.team1.formatting.queries.*;
 
 public class Authentication {
 
@@ -48,7 +41,6 @@ public class Authentication {
 			//userLevel = 2;
 			//Query the DB with the username and password
 			try {
-				System.out.println(username);
 				userLevel = myDatabase.getAuthorization(username, password);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -70,10 +62,12 @@ public class Authentication {
 					  //Randomly generate the ID
                       Random n = new Random();
                       LocalId = n.nextInt(89999999) + 10000000;
-                      System.out.println(LocalId + " " + userLevel);
+                      //Print testing the input to the map
+                      //System.out.println("ID and user level stored is" + LocalId + " " + userLevel);
                       //Store it in the hash map
                       map.put(LocalId, userLevel);
-                      System.out.println(" Well: " + map.get(LocalId));
+                      //Print testing the output from the map
+                      // System.out.println(" User level from hash map is: " + map.get(LocalId));
                       Return = LocalId;
                       return Return;
 				   }
@@ -87,7 +81,7 @@ public class Authentication {
 			}
 		
 		//If a patron (and only a patron) is requesting their information, verify their session
-		else if(query instanceof PatronInfoQuery)
+		else if(query instanceof ViewPatronInfoQuery)
 		{
 			//Get the ID from the Librarian Query 
 			stringID = ((LibrarianQuery)query).sessionID;
@@ -154,20 +148,20 @@ public class Authentication {
 		}
 		
 		//if a Librarian or Admin wants to look up the information of a Librarian
-		else if(query instanceof LibrarianInfoQuery)
-		{
-			stringID = ((LibrarianQuery)query).sessionID;
-			Id = Integer.parseInt(stringID);
-			tempLevel = map.get(Id);
-			if(tempLevel > 2)
-			{
-				return Id;
-			}
-			else
-			{
-		    return 0;
-			}
-		}
+		//else if(query instanceof LibrarianInfoQuery)
+		//{
+		//	stringID = ((LibrarianQuery)query).sessionID;
+		//	Id = Integer.parseInt(stringID);
+		//	tempLevel = map.get(Id);
+		//	if(tempLevel > 2)
+		//	{
+		//		return Id;
+		//	}
+		//	else
+		//	{
+		 //   return 0;
+		//	}
+		//}
 		
 		//If a Librarian has a query or an Admin makes a Librarian level query
 		else if(query instanceof LibrarianQuery)
@@ -175,7 +169,7 @@ public class Authentication {
 			stringID = ((LibrarianQuery)query).sessionID;
 			Id = Integer.parseInt(stringID);
 			//System.out.println("The id is: " + Id);
-			//map.put(11111111, 2);
+			map.put(11111111, 2);
 			tempLevel = map.get(Id);
 			if(tempLevel > 1)
 			{
@@ -191,13 +185,17 @@ public class Authentication {
 		else{return 0;}
 		}
 	
-/*		public static void main(String[] args)
+		public static void main(String[] args)
 		{
-			LibrarianQuery dummy = new LibrarianQuery(true, "11111111");
-			Authentication person = new Authentication(dummy);
+			
+			//Authentication person = new Authentication(dummy);
 			int temp88;
-			temp88 = person.authenticate(dummy);
+			LoginQuery login = new LoginQuery("you", "this");
+			Authentication person = new Authentication(login);
+			//LibrarianQuery dummy = new LibrarianQuery("11111111");
+			
+			temp88 = person.authenticate(login);
 			System.out.println("temp 88 is: " + temp88);
 			
-		} */
+		} 
 }
