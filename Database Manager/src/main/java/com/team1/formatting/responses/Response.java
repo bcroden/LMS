@@ -5,6 +5,7 @@ public class Response
     public boolean wasSuccessful;
     public static final String DELIMITER = ";&;";
     public static String responseType;
+    public String sessionID;
 
     
     public Response(boolean wasSuccessful)
@@ -45,7 +46,12 @@ public class Response
         }
         else if (responseType.equals("LoginResponse"))
         {
-            LoginResponse response = new LoginResponse(success);
+            LoginResponse response = new LoginResponse(success, str[2]);
+            return response;
+        }
+        else if (responseType.equals("AddBookResponse"))
+        {
+            AddBookResponse response = new AddBookResponse(success);
             return response;
         }
         return new Response(false);
@@ -77,7 +83,13 @@ public class Response
         if(query instanceof LoginQuery)
         {
             LogInResponse response = new LogInResponse();
-            response.executeLogInResponse(query);
+            response.executeLogInQuery(query);
+            return response;
+        }
+        if(query instanceof AddBookQuery)
+        {
+            AddBookResponse response = new AddBookResponse();
+            response.executeAddBookQuery(query);
             return response;
         }
         
