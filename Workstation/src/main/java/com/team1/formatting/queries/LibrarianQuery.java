@@ -3,10 +3,8 @@ package com.team1.formatting.queries;
 public class LibrarianQuery extends Query
 {
 
-    public LibrarianQuery(boolean wasSuccessful, String sessionID) {
-        super(wasSuccessful);
-        // TODO Auto-generated constructor stub
-        this.sessionID = sessionID;
+    public LibrarianQuery(String sessionID) {
+        super(sessionID);
     }
-    public String sessionID;
+
 }

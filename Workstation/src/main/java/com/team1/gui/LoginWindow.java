@@ -112,7 +112,7 @@ public class LoginWindow extends LMSWindow {
 			@Override
 			public void actionPerformed(ActionEvent action) {
 				LoginQuery q = new LoginQuery(false, usernameField.getText(), new String(passwordField.getPassword()));
-				controller.sendMessage(q.toString());
+				String response = controller.sendMessage(q.toString());
 				//errorMessage.setText(ERROR_MESSAGE_TEXT);
 				
 				controller.showMainWindow();
