@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
+
+
 //get book objects
 import com.team1.books.*;
 
@@ -291,7 +293,7 @@ public class Dbwrapper {
 		stmt.executeUpdate(sql);
     	}
     	
-    	public String getPass(String user)throws SQLException{
+    	public synchronized String getPass(String user)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT password FROM user WHERE username = '" + user + "'";
     		ResultSet result = stmt.executeQuery(sql);
@@ -313,6 +315,26 @@ public class Dbwrapper {
     		return auth;
     	}
     
+    	public synchronized int setNewPass(String user, String oldPass, String newPass) throws SQLException{
+    		Statement stmt = con.createStatement();
+    		String sql = "SELECT password FROM user WHERE username = '" + user + "'";
+    		ResultSet result = stmt.executeQuery(sql);
+    		String tempPass = null;
+    		while(result.next()){
+    				tempPass = result.getString("password");
+    		}
+    		if(oldPass.equals(tempPass)){
+    			//here is where we set the new pass word
+    			sql = "UPDATE user SET password = '" + newPass + "'";
+    			stmt.executeUpdate(sql);
+    			return 1;
+    		}
+    		else{
+    			//notify that the password
+    			return -1;
+    		}
+    	}
+    	
     //--------------------------------------------------------------------------
     
     //Librarian related queries
@@ -415,25 +437,52 @@ public class Dbwrapper {
     	while(result.next()){
     		temp = result.getInt("copiesin");
     	}
-    	
+    	float costs = 0;
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
-    		
+    		String[] dates = result.getString("dateout").split(",");
+    		costs = calculateCost(dates);
     	}
-    	
-    	sql = "UPDATE user balance = '" + "" + "' WHERE username = '" + username + "'";
+    	temp += costs;
+    	sql = "UPDATE user balance = '" + temp + "' WHERE username = '" + username + "'";
     	stmt.executeUpdate(sql);
     	int balance = 0;
-    	
-    	
     }
     
-    public float calculateCost(String date){
+    //Check for any late fees of the user
+    public synchronized float calculateCost(String[] dates){
     	float cost = 0;
-    	
+    	long time = System.currentTimeMillis();
+    	for(int i = 0; i < dates.length; i++){
+    		long then = Long.getLong(dates[i]);
+    		int elapsed = (int) ((time - then)/86400000);
+    		
+    		if(elapsed > 90){
+    			elapsed -= 90;
+    			cost += (elapsed * 0.05);
+    		}
+    		else{
+    			//nothing to do
+    		}
+    	}
     	
     	return cost;
+    }
+    
+    public synchronized void payBalance(String username, float payment) throws SQLException{
+    	Statement stmt = con.createStatement();
+    	String sql = "SELECT balance FROM user WHERE username = '" + username + "'";
+    	ResultSet result = stmt.executeQuery(sql);
+    	String temp = "0.0";
+    	while(result.next()){
+    		temp = result.getString("balance");
+    	}
+    	float balance = Float.valueOf(temp);
+    	balance -= payment;
+    	sql = "UPDATE user balance = '" + balance + "' WHERE username = '" + username + "'"; 
+    	
+    	stmt.executeUpdate(sql);
     }
     //--------------------------------------------------------------------------
     
