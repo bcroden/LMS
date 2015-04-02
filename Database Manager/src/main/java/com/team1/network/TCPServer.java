@@ -8,7 +8,7 @@ import java.security.InvalidKeyException;
 import java.util.LinkedList;
 
 import com.team1.authentication.Authentication;
-import com.team1.formatting.Query;
+import com.team1.formatting.queries.Query;
 
 /**
  * Represents a TCP server. This class will listen for connections on a given

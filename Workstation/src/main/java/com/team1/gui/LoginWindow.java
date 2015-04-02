@@ -1,5 +1,6 @@
 package com.team1.gui;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.team1.formatting.queries.LoginQuery;
 
 /**
  * A class representing a login window. This class will create and display a new frame
@@ -33,10 +36,13 @@ public class LoginWindow extends LMSWindow {
 	private static final String USERNAME_LABEL_TEXT = "Username";
 	private static final String PASSWORD_LABEL_TEXT = "Password";
 	private static final String LOGIN_BUTTON_TEXT = "Login";
+	private static final String ERROR_MESSAGE_TEXT = "Invalid Username/Password";
+	private static final String ERROR_MESSAGE_INITIAL_TEXT = "";
 	
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private JButton loginButton;
+	private JLabel errorMessage;
 	
 	public LoginWindow(final Controller controller, Model model) {
 		super(controller, model);
@@ -105,18 +111,21 @@ public class LoginWindow extends LMSWindow {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent action) {
-				
+				LoginQuery q = new LoginQuery(false, usernameField.getText(), new String(passwordField.getPassword()));
+				controller.sendMessage(q.toString());
+				//errorMessage.setText(ERROR_MESSAGE_TEXT);
 				
 				controller.showMainWindow();
 			}
 		});
 		
-		JLabel label = new JLabel("");
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 2;
-		gbc_label.gridy = 7;
-		getContentPane().add(label, gbc_label);
+		errorMessage = new JLabel(ERROR_MESSAGE_INITIAL_TEXT);
+		errorMessage.setForeground(Color.RED);
+		GridBagConstraints gbc_errorMessage = new GridBagConstraints();
+		gbc_errorMessage.insets = new Insets(0, 0, 5, 5);
+		gbc_errorMessage.gridx = 2;
+		gbc_errorMessage.gridy = 7;
+		getContentPane().add(errorMessage, gbc_errorMessage);
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
 		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
 		gbc_loginButton.anchor = GridBagConstraints.NORTHWEST;
