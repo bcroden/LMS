@@ -75,7 +75,7 @@ public class BookInfoQuery extends LibrarianQuery
     }
     
     public static void main(String[] args) {
-        BookInfoQuery query = new BookInfoQuery(false, "0", "054792822X", " ", " ", " ", " ", " ", " ");
+        BookInfoQuery query = new BookInfoQuery("0", "054792822X", " ", " ", " ", " ", " ", " ");
         System.out.println(query);
         String toString = query.toString();
         Query query2 = Query.buildRequest(toString);

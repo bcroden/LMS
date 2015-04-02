@@ -5,16 +5,22 @@ import java.util.ArrayList;
 import com.team1.books.Book;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
+import com.team1.formatting.queries.*;
 
 public class CheckInBookResponse extends Response
 {
     
     public CheckInBookResponse(boolean wasSuccessful)
     {
-        this.wasSuccessful = wasSuccessful;
+        super(wasSuccessful);
     }
     
-    public static void executeCheckInBookQuery(CheckInBookQuery query)
+    public CheckInBookResponse() 
+    {
+		super(false);
+	}
+
+	public void executeCheckInBookQuery(CheckInBookQuery query)
     {
         try
         {
@@ -24,7 +30,7 @@ public class CheckInBookResponse extends Response
         catch(SQLException | InvalidISBNException e)
         {
             e.printStackTrace();
-            this.wasSuccessful = false;
+            wasSuccessful = false;
         }
         
         return;
@@ -34,9 +40,9 @@ public class CheckInBookResponse extends Response
     @Override
     public String toString() {
         String s;
-        if (this.wasSuccessful) s = "true";
+        if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckInBookResponse" + this.DELIMITER + s;
+        String msg = "CheckInBookResponse" + DELIMITER + s;
         return msg;
     }
 }

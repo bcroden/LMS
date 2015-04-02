@@ -6,18 +6,24 @@ import com.team1.books.Book;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
 import com.team1.authentication.Authentication;
+import com.team1.formatting.queries.*;
 
 public class LogInResponse extends Response
 {
-    public int status;
+    public static int status;
+    
+    public LogInResponse()
+    {
+    	super(false);
+    }
     
     public LogInResponse(boolean wasSuccessful, String sessionID)
     {
-        this.wasSuccessful = wasSuccessful;
+        super(wasSuccessful);
         this.sessionID = sessionID;
     }
     
-    public static void executeLogInQuery(LoginQuery query)
+    public void executeLogInQuery(LoginQuery query)
     {
 
         //execute a login
@@ -27,12 +33,12 @@ public class LogInResponse extends Response
         else if (status >= 1 && status <= 3)
         {
             wasSuccessful = true;
-            this.sessionID = query.sessionID;
+            sessionID = query.sessionID;
         }
         else
         {
             wasSuccessful = false;
-            printf("unexpected return value from authenticate...\n");
+            System.out.print("unexpected return value from authenticate...\n");
         }
     }
     
@@ -40,9 +46,9 @@ public class LogInResponse extends Response
     @Override
     public String toString() {
         String s;
-        if (this.wasSuccessful) s = "true";
+        if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "LogInResponse" + this.DELIMITER + s + sessionID;
+        String msg = "LogInResponse" + DELIMITER + s + sessionID;
         return msg;
     }
 }

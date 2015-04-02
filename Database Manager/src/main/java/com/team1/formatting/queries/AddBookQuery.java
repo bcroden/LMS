@@ -17,7 +17,7 @@ public class AddBookQuery extends LibrarianQuery
     @Override
     public String toString() {
         //toString for isbn
-        String msg = "AddBookQuery"+ DELIMITER + sessionID + DELIMITER + isbn + DELIMITER + numCopiess;
+        String msg = "AddBookQuery"+ DELIMITER + sessionID + DELIMITER + isbn + DELIMITER + numCopies;
         return msg;
     }
 }

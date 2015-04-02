@@ -1,10 +1,16 @@
 package com.team1.formatting.responses;
 
+import java.sql.SQLException;
+
+import com.team1.formatting.queries.*;
+import com.team1.books.*;
+import com.team1.db.Dbwrapper;
+
 public class Response
 {
     public boolean wasSuccessful;
     public static final String DELIMITER = ";&;";
-    public static String responseType;
+    public String responseType;
     public String sessionID;
 
     
@@ -16,7 +22,7 @@ public class Response
     
     
     //Constructor to take a msg and turn it into a query object
-    public static Response stringToResponse(String msg)
+    public Response stringToResponse(String msg)
     {
         //split the msg into each piece (deliminated by ;)
         String[] str = msg.split(DELIMITER);
@@ -31,7 +37,7 @@ public class Response
         //build a new response from the rest of the msg.split, checking the responseType to determine which kind of request to build
         if (responseType.equals("BookInfoQuery"))
         {
-            BookInfoResponse response = new BookInfoResponse(success, str[2], str[3]);
+            BookInfoResponse response = new BookInfoResponse(success, Integer.getInteger(str[2]), str[3]);
             return response;
         }
         else if (responseType.equals("CheckOutBookResponse"))
@@ -46,7 +52,7 @@ public class Response
         }
         else if (responseType.equals("LoginResponse"))
         {
-            LoginResponse response = new LoginResponse(success, str[2]);
+            LogInResponse response = new LogInResponse(success, str[2]);
             return response;
         }
         else if (responseType.equals("AddBookResponse"))
@@ -65,31 +71,39 @@ public class Response
         if(query instanceof BookInfoQuery)
         {
             BookInfoResponse response = new BookInfoResponse();
-            response.executeBookInfoQuery(query);
+            response.executeBookInfoQuery((BookInfoQuery)query);
             return response;
         }
         if(query instanceof CheckInBookQuery)
         {
             CheckInBookResponse response = new CheckInBookResponse();
-            response.executeCheckInBookQuery(query);
+            response.executeCheckInBookQuery((CheckInBookQuery)query);
             return response;
         }
         if(query instanceof CheckOutBookQuery)
         {
             CheckOutBookResponse response = new CheckOutBookResponse();
-            response.executeCheckOutBookQuery(query);
+            response.executeCheckOutBookQuery((CheckOutBookQuery)query);
             return response;
         }
         if(query instanceof LoginQuery)
         {
             LogInResponse response = new LogInResponse();
-            response.executeLogInQuery(query);
+            response.executeLogInQuery((LoginQuery)query);
             return response;
         }
         if(query instanceof AddBookQuery)
         {
             AddBookResponse response = new AddBookResponse();
-            response.executeAddBookQuery(query);
+            try 
+            {
+				response.executeAddBookQuery((AddBookQuery)query);
+			} 
+            catch (InvalidISBNException | SQLException e) 
+            {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             return response;
         }
         
