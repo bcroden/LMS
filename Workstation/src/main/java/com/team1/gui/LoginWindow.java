@@ -38,8 +38,8 @@ public class LoginWindow extends LMSWindow {
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	
-	public LoginWindow() {
-		super();
+	public LoginWindow(Controller controller, Model model) {
+		super(controller, model);
 		
 		this.setSize(WIDTH, HEIGHT);
         this.setResizable(IS_RESIZABLE);
@@ -106,8 +106,6 @@ public class LoginWindow extends LMSWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//TODO
-				new MainWindow();
-				close();
 			}
 		});
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
@@ -118,9 +116,5 @@ public class LoginWindow extends LMSWindow {
 		getContentPane().add(loginButton, gbc_loginButton);
 
 		this.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		new LoginWindow();
 	}
 }

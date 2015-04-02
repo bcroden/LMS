@@ -19,8 +19,14 @@ public class LMSWindow extends JFrame {
 
 	private static final String WINDOW_TITLE = "Workstation";
 	
-	public LMSWindow() {
+	protected Controller controller;
+	protected Model model;
+	
+	public LMSWindow(Controller controller, Model model) {
 		super();
+		
+		this.controller = controller;
+		this.model = model;
 		
 		//Set Look And Feel to the system default L&F.
 		try {

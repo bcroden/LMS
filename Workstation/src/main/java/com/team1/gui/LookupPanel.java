@@ -22,10 +22,10 @@ public class LookupPanel extends JPanel {
 	private static final String SUBMIT_BUTTON_TEXT = "Search";
 	private static final String[] COMBO_BOX_OPTIONS = {	"ISBN", "Title", "Author", "Publisher", "Genre", "Date"};
 	
-	private JTextArea returnTextArea;
+	private JComboBox<String> comboBox;
 	private JTextField searchField;
 	private JButton submitButton;
-	private JComboBox<String> comboBox;
+	private JTextArea returnTextArea;
 	
 	public LookupPanel() {
 		super();
@@ -59,7 +59,7 @@ public class LookupPanel extends JPanel {
         submitButton = new JButton(SUBMIT_BUTTON_TEXT);
         submitButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent a) {
 				//Create new BookInfoQuery TODO: Get latest formatting packages and modify accordingly
 				BookInfoQuery q = new BookInfoQuery(false, "!");
 				
@@ -68,8 +68,8 @@ public class LookupPanel extends JPanel {
 					if (m.getName().contains("searchBy") && m.getName().contains((String)comboBox.getSelectedItem()))
 						try {
 							m.invoke(q, searchField.getText());
-						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
-							e1.printStackTrace();
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+							e.printStackTrace();
 						}
 				
 				//Testing print

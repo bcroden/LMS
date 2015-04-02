@@ -39,8 +39,8 @@ public class MainWindow extends LMSWindow {
     private static final String TOOLTIP_CKECKIN = 	null;
     private static final String TOOLTIP_PAYMENT = 	null;
     
-    public MainWindow() {
-        super();
+    public MainWindow(Controller controller, Model model) {
+        super(controller, model);
         
         this.setSize(WIDTH, HEIGHT);
         this.setResizable(IS_RESIZABLE);
@@ -93,9 +93,5 @@ public class MainWindow extends LMSWindow {
         tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(), 	TOOLTIP_PAYMENT);
         
         this.setVisible(true);
-    }
-    
-    public static void main(String[] args) {
-        new MainWindow();
     }
 }

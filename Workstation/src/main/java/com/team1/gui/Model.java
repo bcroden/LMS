@@ -1,7 +1,5 @@
 package com.team1.gui;
 
-import com.team1.network.TCPClient;
-
 public class Model {
     // Maybe read these from files in the future?
     public static final String HOST = "localhost";
@@ -10,7 +8,6 @@ public class Model {
     // Temp Fields for release 1...
     protected String username;
     protected String sessionId;
-	public TCPClient client;
 
     public Model() {
     	
