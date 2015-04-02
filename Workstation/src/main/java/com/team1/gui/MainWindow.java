@@ -116,7 +116,6 @@ public class MainWindow extends LMSWindow {
         
         JMenuItem addLibrarianAccount = new JMenuItem("Add Librarian Account");
         optionsMenu.add(addLibrarianAccount);
-        addLibrarianAccount.setEnabled(false);
         
         JMenuItem removeLibrarianAccount = new JMenuItem("Remove Librarian Account");
         optionsMenu.add(removeLibrarianAccount);

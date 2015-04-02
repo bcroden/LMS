@@ -26,6 +26,10 @@ public class Authentication {
 		  map = new HashMap<>();
 	}
 	
+	public static Authentication getInstance() {
+		return null;//TODO: do this -Brandon
+	}
+	
 	//Returns 0 if an ID is not found. Returns an ID if it is
 	public int authenticate(Query query)
 	{

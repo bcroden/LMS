@@ -110,6 +110,13 @@ public class LoginWindow extends LMSWindow {
 				controller.showMainWindow();
 			}
 		});
+		
+		JLabel label = new JLabel("");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 2;
+		gbc_label.gridy = 7;
+		getContentPane().add(label, gbc_label);
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
 		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
 		gbc_loginButton.anchor = GridBagConstraints.NORTHWEST;
