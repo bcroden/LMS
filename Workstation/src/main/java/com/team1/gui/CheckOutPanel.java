@@ -93,11 +93,14 @@ public class CheckOutPanel extends JPanel {
 				}
 				
 				Response response = Response.stringToResponse(r);
+				
+				System.out.println("r = " + r);
+				
 				if(response instanceof CheckOutBookResponse) {
 					if(response.wasSuccessful)
-						returnTextArea.setText("Check in successfull");
+						returnTextArea.setText("Check out successfull");
 					else
-						returnTextArea.setText("Check in failed");
+						returnTextArea.setText("Check out failed");
 				}
 			}
         });
