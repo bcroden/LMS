@@ -119,11 +119,15 @@ public class BookInfoResponse extends Response
         
         String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
         
+        System.out.println("numBooks = " + numBooks);
+        
         for (int i = 0; i < numBooks; i++)
         {
             msg.concat(books.get(i).getSerialized());
             msg.concat(bookBreak);
         }
+        
+        System.out.println("msg = " + msg);
         
         return msg;
     }
