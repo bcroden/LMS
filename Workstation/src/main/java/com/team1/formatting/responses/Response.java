@@ -38,7 +38,7 @@ public class Response
         }
         else if (responseType.equals("CheckOutBookResponse"))
         {
-            CheckOutBookResponse response = new CheckOutBookResponse(success, str[2], str[3], str[4], Integer.parseInt(str[5]), str[6]);
+            CheckOutBookResponse response = new CheckOutBookResponse(success, str[2], str[3], str[4], Integer.parseInt(str[5]), (str[6] == null) ? str[6] : " ");
             return response;
         }
         else if (responseType.equals("CheckInBookResponse"))
