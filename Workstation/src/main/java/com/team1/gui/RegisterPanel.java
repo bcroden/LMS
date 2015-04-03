@@ -79,12 +79,18 @@ public class RegisterPanel extends JPanel {
 				
 				String r = controller.sendMessage(q.toString());
 				
+				System.out.println("r = " + r);
+				
 				if(r == null) {
 					returnTextArea.setText("Invalid ISBN");
 					returnTextArea.setForeground(Color.RED);
 				}
 				
+				System.out.println("Before to response");
 				Response response = Response.stringToResponse(r);
+				
+				System.out.println(response.toString());
+				
 				if(response instanceof AddBookResponse) {
 					if(response.wasSuccessful)
 						returnTextArea.setText("Check out successfull");
