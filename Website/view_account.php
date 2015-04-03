@@ -1,4 +1,10 @@
 <?php
+   if(!isset($_SESSION["init"])) { session_start(); }
+   if(isset($_POST["logout"])) {
+session_destroy();
+header("Location: /login.php");
+};
+
    include "DBwrapper.php";
    error_reporting(E_ALL);
    ini_set('display_errors', 'On');
@@ -6,8 +12,8 @@
    connect();
 
    if(isset($_POST["form_type"]) && !empty($_POST["form_type"])) {
-		$usrnm = $_POST["user_name"];
-		$pswd = $_POST["password"];
+      $usrnm = $_POST["user_name"];
+      $pswd = $_POST["password"];
       $okay = false;
 
       if($_POST["form_type"] === "creation") {
@@ -37,8 +43,16 @@
          }
       }
 
-      if($okay)
+      if($okay) {
          display_account($usrnm, $pswd);
+      }
+   }
+   elseif(isset($_SESSION["init"])) {
+      if(isset($_POST["new_email"])) {
+         changeEmail($_SESSION["usernm"], $_POST["new_email"]);
+         $_SESSION["email"] = $_POST["new_email"];
+      }
+      display_account($_SESSION["usernm"], " ");
    }
 
    function create_account(&$usrnm, &$pswd) {
@@ -86,7 +100,21 @@
 
    function display_account($usrnm, $pswd) {
 
-   $usr_inf = mysqli_fetch_array(getUserInfo($usrnm))
+
+      if(!isset($_SESSION["init"])) {
+         $usr_inf = mysqli_fetch_array(getUserInfo($usrnm));
+         $fn = $usr_inf["fname"];
+         $ln = $usr_inf["lname"];
+         $em = $usr_inf["email"];
+         $nt = $usr_inf["notify"];
+         $_SESSION["init"] = true;
+         $_SESSION["fname"] = $fn;
+         $_SESSION["lname"] = $ln;
+         $_SESSION["email"] = $em;
+         $_SESSION["notify"] = $nt;
+         $_SESSION["usernm"] = $usrnm;
+      }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -101,16 +129,16 @@
             <th>Last Name</th>
          </tr>
          <tr>
-            <td><?= $usr_inf["fname"] ?></td>
-            <td><?= $usr_inf["lname"] ?></td>
+            <td><?= $_SESSION["fname"] ?></td>
+            <td><?= $_SESSION["lname"] ?></td>
          </tr>
          <tr>
             <th>Email</th>
             <th>Notificiation</th>
          </tr>
          <tr>
-            <td><?= $usr_inf["email"] ?></td>
-            <td><?php if($usr_inf["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
+            <td><?= $_SESSION["email"] ?></td>
+            <td><?php if($_SESSION["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
          </tr>
       </table>
 
@@ -133,6 +161,16 @@
              }
           ?>
       </table>
+
+      <form action="view_account.php" method="post">
+           <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/>
+           <input type="submit" value="Change Email"/>
+      </form>
+
+      <form action="view_account.php" method="post">
+          <input type="hidden" name="logout" value="yes"/>
+          <input type="submit" value="logout"/>
+      </form>
    </body>
 </html>
 <?php
