@@ -75,13 +75,17 @@ public class BookInfoResponse extends Response
 	        {
 	            e.printStackTrace();
 	        }
+			 System.out.println("before toString");
 	        sessionID = Integer.toString(sessionId);
+	        System.out.println("after bookinfo");
         }
         else
         {
+        	 System.out.println("in else");
             wasSuccessful = false;
             sessionID = Integer.toString(sessionId);
             System.out.print("unexpected return value from authenticate...\n");
+            System.out.println("after else");
         }
         
         return;
