@@ -117,5 +117,28 @@
 		else
 			return -1;
 	}
-?>
 
+	function calcTime($user, $isbn){
+		global $connection;
+		$sql = "SELECT booksout FROM user WHERE username = '" + $user . "'";
+		$result = $connection->query($sql);
+        $row = mysqli_fetch_array($result);
+		$books = explode(",", $row["booksout"]);
+
+		$i = 0;
+		for($i; $i < count($books); $i++){
+			if($books[$i] === $isbn) break;
+		}
+
+		$sql = "SELECT dateout FROM user WHERE username = '" . $user . "'";
+		$result = $connection->query($sql);
+		$row = mysqli_fetch_array($result);
+
+		$times = explode(",", $row["dateout"]);
+		$time = (time() - $times[$i])/86400;
+
+		$timeleft = 90 - $time;
+
+		return $timeleft;
+	}
+?>
