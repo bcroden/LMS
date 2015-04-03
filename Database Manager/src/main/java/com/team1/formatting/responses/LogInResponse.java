@@ -31,11 +31,11 @@ public class LogInResponse extends Response
     	
     	System.out.println("after getInstance");
     	
-    	this.sessionID = Integer.toString(auth.authenticate(query));
+    	int temp = auth.authenticate(query);
     	
-    	System.out.println("after after setting SessionID = " + sessionID);
+    	System.out.println("after after setting SessionID = " + temp);
     	
-    	int temp = Integer.getInteger(sessionID);
+    	this.sessionID = Integer.toString(temp);
     	
     	System.out.println("temp = " + temp);
     	
