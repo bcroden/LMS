@@ -55,6 +55,8 @@ public class ResponseThread extends Thread
 
             Response response = Response.executeQuery(query);
             
+            System.err.println("After execute query");
+            
             // send reply string to the client
             sendReplyToClient(response.toString()); // echo what was sent by the client
 
