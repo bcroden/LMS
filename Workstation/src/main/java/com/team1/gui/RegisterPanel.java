@@ -75,6 +75,8 @@ public class RegisterPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				AddBookQuery q = new AddBookQuery(controller.model.sessionId, isbnField.getText(), (Integer)countSpinner.getValue());
 				
+				System.out.println("Spinner: " + (Integer)countSpinner.getValue());
+				
 				String r = controller.sendMessage(q.toString());
 				
 				if(r == null) {

@@ -50,7 +50,9 @@ public class Query
         }
         else if (queryType.equals("AddBookQuery"))
         {
-            AddBookQuery request = new AddBookQuery(str[1],str[2],Integer.getInteger(str[3]));    //sessionID is not required
+        	System.out.println("At add book q");
+            AddBookQuery request = new AddBookQuery(str[1],str[2],Integer.parseInt(str[3]));    //sessionID is not required
+            System.out.println("after add book q");
             return request;
         }
         else if (queryType.equals("PasswordChangeQuery"))
