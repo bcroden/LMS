@@ -2,17 +2,18 @@ package com.team1.formatting.responses;
 
 
 public class LogInResponse extends Response
-{
-    public int status;
-    
+{    
+	public int status = 0;
     public LogInResponse()
     {
     	super(false,"0");
+    	status = 0;
     }
     
-    public LogInResponse(boolean wasSuccessful, String sessionID)
+    public LogInResponse(boolean wasSuccessful, String sessionID, int status)
     {
         super(wasSuccessful,sessionID);
+        this.status = status;
     }
     
     //Override of toString. Method to return the object information in the form of a string.
@@ -21,7 +22,7 @@ public class LogInResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "LogInResponse" + DELIMITER + s + DELIMITER + sessionID;
+        String msg = "LogInResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + status;
         return msg;
     }
 }
