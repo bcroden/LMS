@@ -123,8 +123,9 @@ public class BookInfoResponse extends Response
         
         for (int i = 0; i < numBooks; i++)
         {
-            msg.concat(books.get(i).getSerialized());
-            msg.concat(bookBreak);
+            msg = msg.concat(books.get(i).getSerialized());
+            System.out.println("Book = " + books.get(i).getSerialized());
+            msg = msg.concat(bookBreak);
         }
         
         System.out.println("msg = " + msg);
