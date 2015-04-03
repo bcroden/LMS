@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import com.team1.network.MockTCPClient;
 import com.team1.network.TCPServer;
 import com.team1.db.Dbwrapper;
-import com.team1.formatting.CheckOutBookQuery;
-import com.team1.formatting.Query;
 import com.team1.books.*;
 
 public class Main

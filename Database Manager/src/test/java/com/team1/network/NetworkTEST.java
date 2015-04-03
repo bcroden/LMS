@@ -1,15 +1,9 @@
 package com.team1.network;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.security.InvalidKeyException;
 
 import org.junit.Test;
-
-import com.team1.formatting.Query;
-import com.team1.formatting.CheckOutBookQuery;
 
 /**
  * Simple JUnit test case to ensure that the client and server operate correctly

@@ -119,13 +119,14 @@ public class LoginWindow extends LMSWindow {
 				
 				if(r == null) {
 					errorMessage.setText(ERROR_MESSAGE_TEXT);
-					controller.showMainWindow();
+					//controller.showMainWindow();
 					return;
 				}
 				
 				Response response = Response.stringToResponse(r);
 				if(response.wasSuccessful) {
 					controller.model.sessionId = ((LogInResponse)response).sessionID;
+					System.out.println(controller.model.sessionId);
 					controller.model.status = ((LogInResponse)response).status;
 					controller.showMainWindow();
 				}

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import com.team1.books.Book;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
-import com.team1.formatting.BookInfoQuery;
-import com.team1.formatting.CheckInBookQuery;
-import com.team1.formatting.CheckOutBookQuery;
-import com.team1.formatting.Query;
+import com.team1.formatting.queries.BookInfoQuery;
+import com.team1.formatting.queries.CheckInBookQuery;
+import com.team1.formatting.queries.CheckOutBookQuery;
+import com.team1.formatting.queries.Query;
 
 class QueryUtils
 {    
@@ -22,7 +22,7 @@ class QueryUtils
         if(query instanceof CheckOutBookQuery)
             return executeCheckOutBookQuery((CheckOutBookQuery) query);
         
-        return new Query(false);
+        return new Query("0");
     }
     
     public static Query executeBookInfoQuery(BookInfoQuery query)
@@ -53,14 +53,13 @@ class QueryUtils
             }
             
             if(books != null)
-                return bookToQuery(books.get(0), query.sessionID);
+                return null;
         }
         catch(SQLException e)
         {
             e.printStackTrace();
         }
         
-        query.wasSuccessful = false;
         return query;
     }
     public static Query executeCheckInBookQuery(CheckInBookQuery query)
@@ -68,12 +67,10 @@ class QueryUtils
         try
         {
             Dbwrapper.getInstance().CheckIn(query.isbn, query.userID);
-            query.wasSuccessful = true;
         }
         catch(SQLException | InvalidISBNException e)
         {
             e.printStackTrace();
-            query.wasSuccessful = false;
         }
         
         return query;
@@ -84,13 +81,11 @@ class QueryUtils
         {
             System.out.println("Pre call");
             Dbwrapper.getInstance().CheckOut(query.isbn, query.userID);
-            query.wasSuccessful = true;
             System.out.println("Post call");
         }
         catch(SQLException | InvalidISBNException e)
         {
             e.printStackTrace();
-            query.wasSuccessful = false;
         }
         
         return query;
@@ -99,14 +94,5 @@ class QueryUtils
     private static boolean isValid(String string)
     {
         return string != null && !string.equals("");
-    }
-    private static Query bookToQuery(Book book, String sessionID) throws SQLException
-    {
-        boolean successful = book != null;
-
-        if(successful)
-            return new BookInfoQuery(successful, sessionID, book.isbn, book.title, book.author, book.publisher, book.datePublished, book.genre, Integer.toString(Dbwrapper.getInstance().GetAvailable(book.isbn)));
-        
-        return new BookInfoQuery(false, sessionID, "", "", "", "", "", "", "");
     }
 }
