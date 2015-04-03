@@ -15,6 +15,18 @@
 		$connection = mysqli_connect($host, $user, $pass, $db, $port)or die("Error: " . $connection->connect_error);
 		echo "<br>Connected to database<br>"; //debug line
 	}
+
+	function getUsers(){
+		global $connection;
+		$sql = "SELECT username FROM user";
+		$result = $connection->query($sql);
+		if($result->num_rows > 0){
+			return $result;
+		}
+		else
+			return -1;
+	}
+
 	//return multiple books
 	function queryTitle($title){
 		global $connection;
