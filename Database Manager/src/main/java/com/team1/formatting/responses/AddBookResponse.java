@@ -23,7 +23,9 @@ public class AddBookResponse extends LibrarianResponse
 	public void executeAddBookQuery(AddBookQuery query) throws InvalidISBNException, SQLException
     {
 		//Check users authentication
-		int status = Authentication.getInstance().authenticate(query);
+		int temp = Authentication.getInstance().authenticate(query);
+		sessionID = Integer.toString(temp);
+		int status = Authentication.getInstance().getLevel(temp);
         
         if (status == 0 || status == 1) wasSuccessful = false;
         else if (status == 2 || status == 3)
@@ -33,12 +35,10 @@ public class AddBookResponse extends LibrarianResponse
             Dbwrapper.getInstance().addBook(book, query.numCopies);
             
             wasSuccessful = true;
-            sessionID = query.sessionID;
         }
         else
         {
             wasSuccessful = false;
-            sessionID = query.sessionID;
             System.out.print("unexpected return value from authenticate...\n");
         }
 		

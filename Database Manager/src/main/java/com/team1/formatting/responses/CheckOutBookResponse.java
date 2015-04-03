@@ -22,6 +22,9 @@ public class CheckOutBookResponse extends Response
         super(wasSuccessful, sessionID);
         this.userName = userName;
         this.fines = fines;
+        
+        books = new ArrayList<Book>();
+        
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
         {
@@ -37,7 +40,11 @@ public class CheckOutBookResponse extends Response
 	public void executeCheckOutBookQuery(CheckOutBookQuery query)
     {
 		//Check users authentication
-		int status = Authentication.getInstance().authenticate(query);
+		int temp = Authentication.getInstance().authenticate(query);
+		sessionID = Integer.toString(temp);
+		int status = Authentication.getInstance().getLevel(temp);
+		
+		books = new ArrayList<Book>();
         
         if (status == 0 || status == 1) wasSuccessful = false;
         else if (status == 2 || status == 3)
@@ -62,13 +69,10 @@ public class CheckOutBookResponse extends Response
                 e.printStackTrace();
                 wasSuccessful = false;
             }
-            
-            sessionID = query.sessionID;
         }
         else
         {
             wasSuccessful = false;
-            sessionID = query.sessionID;
             System.out.print("unexpected return value from authenticate...\n");
         }
         
@@ -89,8 +93,8 @@ public class CheckOutBookResponse extends Response
         
         for (int i = 0; i < numBooks; i++)
         {
-            msg.concat(books.get(i).getSerialized());
-            msg.concat(bookBreak);
+            msg = msg.concat(books.get(i).getSerialized());
+            msg = msg.concat(bookBreak);
         }
         
         return msg;
