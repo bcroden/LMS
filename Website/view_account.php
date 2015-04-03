@@ -79,7 +79,13 @@ header("Location: /login.php");
          if(empty($usrnm))
             $s_err = $s_err . "<p>Please enter a user name</p>";
          //TODO: add code to ensure that the user name is unique with the LMS' database
-
+		 $result = getUsers();
+			while($row = mysqli_fetch_array($result)){
+				if($usrnm === $row["username"]){
+					//return to create due to this stuff
+					header("Location: /create_account.php");
+				}
+			}
          //make sure that passwords are not empty and match
          $pswd = $_POST["password"];
          $pswd2 = $_POST["password2"];

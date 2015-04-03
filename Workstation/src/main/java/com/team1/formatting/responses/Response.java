@@ -28,10 +28,18 @@ public class Response
         if(str[1].equalsIgnoreCase("true")) success = true;
         else success = false;
         
+        System.out.println("str contents");
+        System.out.println("str length" + str.length);
+        for(String s : str)
+        	System.out.println(s);
+        
         //build a new response from the rest of the msg.split, checking the responseType to determine which kind of request to build
-        if (responseType.equals("BookInfoQuery"))
+        if (responseType.equals("BookInfoResponse"))
         {
-            BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.getInteger(str[3]), str[4]);
+        	 System.out.println("before making new response");
+            BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.parseInt(str[3]), str[4]);
+            System.out.println("after making new response");
+            
             return response;
         }
         else if (responseType.equals("CheckOutBookResponse"))
@@ -44,9 +52,14 @@ public class Response
             CheckInBookResponse response = new CheckInBookResponse(success, str[2]);
             return response;
         }
-        else if (responseType.equals("LoginResponse"))
+        else if (responseType.equals("LogInResponse"))
         {
-            LogInResponse response = new LogInResponse(success, str[2]);
+        	System.out.println("In else ifs at login");
+        	
+        	int temp = Integer.parseInt(str[3]);
+        	
+            LogInResponse response = new LogInResponse(success, str[2], temp);
+            System.out.println("after building response");
             return response;
         }
         else if (responseType.equals("AddBookResponse"))

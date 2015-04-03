@@ -127,7 +127,7 @@ public class LoginWindow extends LMSWindow {
 				
 				System.out.println("Before response");
 				Response response = Response.stringToResponse(r);
-				System.out.println("After response" + response.toString());
+				System.out.println("After response" + ((LogInResponse)response).toString());
 				
 				if(response.wasSuccessful) {
 					controller.model.sessionId = ((LogInResponse)response).sessionID;
@@ -151,6 +151,9 @@ public class LoginWindow extends LMSWindow {
 		gbc_loginButton.gridx = 3;
 		gbc_loginButton.gridy = 7;
 		getContentPane().add(loginButton, gbc_loginButton);
+		
+		usernameField.setText("CadeG");
+		passwordField.setText("test");
 
 		this.setVisible(true);
 	}

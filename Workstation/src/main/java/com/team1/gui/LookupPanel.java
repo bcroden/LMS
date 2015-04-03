@@ -89,11 +89,19 @@ public class LookupPanel extends JPanel {
 					returnTextArea.setForeground(Color.RED);
 				}
 				
+				System.out.println("r = " + r);
+				
 				Response response = Response.stringToResponse(r);
 				if(response instanceof BookInfoResponse) {
 					ArrayList<Book> books = ((BookInfoResponse)response).books;
-					for(Book b : books)
+					if(books == null)
+						System.out.println("Books = null");
+					else
+						System.out.println("Books != null");
+					for(Book b : books) {
+						System.out.println(b.toString());
 						returnTextArea.setText(b.toString());
+					}
 				}
 			}
         });

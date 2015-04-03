@@ -82,7 +82,9 @@ public class Response
         if(query instanceof BookInfoQuery)
         {
             BookInfoResponse response = new BookInfoResponse();
+            System.out.println("Before bookinfo");
             response.executeBookInfoQuery((BookInfoQuery)query);
+            System.out.println("after bookinfo");
             return response;
         }
         if(query instanceof CheckInBookQuery)

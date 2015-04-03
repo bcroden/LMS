@@ -39,16 +39,24 @@ public class BookInfoResponse extends Response
     public void executeBookInfoQuery(BookInfoQuery query)
     {
     	//Check users authentication
-		int status = Authentication.getInstance().authenticate(query);
+		int sessionId = Authentication.getInstance().authenticate(query);
+		int status = Authentication.getInstance().getLevel(sessionId);
         
+		System.out.println("status = " + status);
+		
+		books = new ArrayList<Book>();
+		
         if (status == 0) wasSuccessful = false;
         else if (status == 1 || status == 2 || status == 3)
         {
 			try
 	        {
+				System.out.println("start try block");
 	            if(isValid(query.isbn))
 	            {
+	            	System.out.println("in isbn search");
 	                books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
+	                System.out.println("after isbn search");
 	            }
 	            else if(isValid(query.title))
 	            {
@@ -69,18 +77,23 @@ public class BookInfoResponse extends Response
 	            
 	            if(books != null)
 	                wasSuccessful = true;  
+	            System.out.println("end try block");
 	        }
 	        catch(SQLException e)
 	        {
 	            e.printStackTrace();
 	        }
-	        sessionID = query.sessionID;
+			 System.out.println("before toString");
+	        sessionID = Integer.toString(sessionId);
+	        System.out.println("after bookinfo");
         }
         else
         {
+        	 System.out.println("in else");
             wasSuccessful = false;
-            sessionID = query.sessionID;
+            sessionID = Integer.toString(sessionId);
             System.out.print("unexpected return value from authenticate...\n");
+            System.out.println("after else");
         }
         
         return;
@@ -106,11 +119,16 @@ public class BookInfoResponse extends Response
         
         String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
         
+        System.out.println("numBooks = " + numBooks);
+        
         for (int i = 0; i < numBooks; i++)
         {
-            msg.concat(books.get(i).getSerialized());
-            msg.concat(bookBreak);
+            msg = msg.concat(books.get(i).getSerialized());
+            System.out.println("Book = " + books.get(i).getSerialized());
+            msg = msg.concat(bookBreak);
         }
+        
+        System.out.println("msg = " + msg);
         
         return msg;
     }
