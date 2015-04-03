@@ -85,8 +85,9 @@
 
          if(empty($s_err)) {
             //TODO: DB call to add patron to tables
-			//echo "Parts: " .$_POST["user_name"]. " and ". $_POST["notify"] . "<br>"; 
-			addUser($_POST["user_name"], $_POST["password"], $_POST["email"], $_POST["first_name"], $_POST["last_name"], -1, 1);
+			//echo "Parts: " .$_POST["user_name"]. " and ". $_POST["notify"] . "<br>";
+echo $_POST["notify"];
+			addUser($_POST["user_name"], $_POST["password"], $_POST["email"], $_POST["first_name"], $_POST["last_name"], $_POST["notify"], 1);
 			//you can check if result is empty perhaps to see if the user name is taken
 			//not totally sure how to handle that yet
          }
