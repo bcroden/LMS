@@ -22,22 +22,19 @@
       elseif($_POST["form_type"] === "login") {
          /* Attempt to log the user into an existing patron's account */
          $result = getPass($usrnm);
-		if($result === -1){
-		echo "<br>No matching account found<br>";
-			login_fail();
-		}
-		else {
-                   while($row = mysqli_fetch_array($result)){
-                      if($pswd === $row["password"]){
-                    echo "The passwords match and you may log in<br>";
-					display_account($usrnm, $pswd);
-                }
-                else{
-                    echo "Passwords don't match<br>";
-					login_fail();
-               	}
+         if($result === -1){
+            login_fail();
+         }
+         else {
+            while($row = mysqli_fetch_array($result)) {
+               if($pswd === $row["password"]) {
+                  display_account($usrnm, $pswd);
+               }
+               else {
+                  login_fail();
+               }
             }
-		}
+         }
       }
 
       if($okay)
@@ -89,29 +86,52 @@
 
    function display_account($usrnm, $pswd) {
 
-   $info = getUserInfo($usrnm);
-   $arr = mysqli_fetch_array($info)
+   $usr_inf = mysqli_fetch_array(getUserInfo($usrnm))
 ?>
 <!DOCTYPE html>
 <html>
+   <head>
+      <title>LMS</title>
+   </head>
    <body>
+      <h3>Personal and Contact Information</h3>
       <table>
          <tr>
             <th>First Name</th>
             <th>Last Name</th>
          </tr>
          <tr>
-            <td><?= $arr["fname"] ?></td>
-            <td><?= $arr["lname"] ?></td>
+            <td><?= $usr_inf["fname"] ?></td>
+            <td><?= $usr_inf["lname"] ?></td>
          </tr>
          <tr>
             <th>Email</th>
             <th>Notificiation</th>
          </tr>
          <tr>
-            <td><?= $arr["email"] ?></td>
-            <td><?php if($arr["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
+            <td><?= $usr_inf["email"] ?></td>
+            <td><?php if($usr_inf["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
          </tr>
+      </table>
+
+      <h3>Books Currently Checked-Out</h3>
+      <table>
+         <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+         </tr>
+          <?php $books_out_res = mysqli_fetch_array(getBooksOut($usrnm));
+             $books_out = $books_out_res["booksout"];
+             if(!empty($books_out)) {
+                $bk_out_arr = explode(",", $books_out);
+                for($i=0; $i < count($bk_out_arr); $i++) {
+                   if(empty($bk_out_arr[$i])) continue;
+                   $temp = mysqli_fetch_array(queryISBN($bk_out_arr[$i]));
+                   echo "<tr><td>" . $temp["isbn"] . "</td><td>" . $temp["title"] . "</td><td>" . $temp["author"] . "</td><td>" . calcTime($usrnm, $temp["isbn"]) . "</td></tr>";
+                }
+             }
+          ?>
       </table>
    </body>
 </html>
