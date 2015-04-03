@@ -34,7 +34,7 @@ public class Response
         	System.out.println(s);
         
         //build a new response from the rest of the msg.split, checking the responseType to determine which kind of request to build
-        if (responseType.equals("BookInfoQuery"))
+        if (responseType.equals("BookInfoResponse"))
         {
             BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.parseInt(str[3]), str[4]);
             return response;
