@@ -1,5 +1,6 @@
 package com.team1.formatting.responses;
 
+
 import java.util.ArrayList;
 
 import com.team1.books.Book;
@@ -37,7 +38,7 @@ public class BookInfoResponse extends Response
     //Override of toString. Method to return the object information in the form of a string.
     @Override
     public String toString() {
-        String s, sBooks;
+        String s;
         int numBooks = 0;
         if (books.isEmpty()) System.out.print("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
         else numBooks = books.size();
@@ -46,7 +47,7 @@ public class BookInfoResponse extends Response
         else s = "false";
         
         
-        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks;
+        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
         
         for (int i = 0; i < numBooks; i++)
         {
