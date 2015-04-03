@@ -25,6 +25,7 @@ public class BookInfoResponse extends Response
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
         {
+        	System.out.println("Trying to make this a book: " + bookList[i]);
             books.add(new Book(bookList[i]));
         }
         
@@ -51,8 +52,8 @@ public class BookInfoResponse extends Response
         
         for (int i = 0; i < numBooks; i++)
         {
-            msg.concat(books.get(i).getSerialized());
-            msg.concat(bookBreak);
+            msg = msg.concat(books.get(i).getSerialized());
+            msg = msg.concat(bookBreak);
         }
         
         return msg;
