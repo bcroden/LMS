@@ -39,7 +39,8 @@ public class BookInfoResponse extends Response
     public void executeBookInfoQuery(BookInfoQuery query)
     {
     	//Check users authentication
-		int status = Authentication.getInstance().authenticate(query);
+		int sessionId = Authentication.getInstance().authenticate(query);
+		int status = Authentication.getInstance().getLevel(sessionId);
         
         if (status == 0) wasSuccessful = false;
         else if (status == 1 || status == 2 || status == 3)
@@ -74,12 +75,12 @@ public class BookInfoResponse extends Response
 	        {
 	            e.printStackTrace();
 	        }
-	        sessionID = query.sessionID;
+	        sessionID = Integer.toString(sessionId);
         }
         else
         {
             wasSuccessful = false;
-            sessionID = query.sessionID;
+            sessionID = Integer.toString(sessionId);
             System.out.print("unexpected return value from authenticate...\n");
         }
         

@@ -36,7 +36,7 @@ public class Response
         //build a new response from the rest of the msg.split, checking the responseType to determine which kind of request to build
         if (responseType.equals("BookInfoQuery"))
         {
-            BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.getInteger(str[3]), str[4]);
+            BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.parseInt(str[3]), str[4]);
             return response;
         }
         else if (responseType.equals("CheckOutBookResponse"))
