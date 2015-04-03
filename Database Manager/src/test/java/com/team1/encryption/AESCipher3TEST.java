@@ -8,11 +8,13 @@ import javax.crypto.SecretKey;
 
 import org.junit.Test;
 
-public class AESCipherTEST2 {
+//Blank space
+public class AESCipher3TEST {
 
 	@Test
 	public void test() throws InvalidKeyException {
-        String message = "‡ŒË™ 	 ____ © System.out.println('«_') ڈڈڈڈڈڈڈڈڈڈ۞ڲ໇໰׉";
+        String message = "";
+
         // Create cipher
         AESCipher cipher = new AESCipher();
 
@@ -31,6 +33,6 @@ public class AESCipherTEST2 {
         // Decrypt message
         String tmp = cipher.decrypt(encryptedBytes);
         
-        assertTrue("AESCipher2 failed to maintain message integrity", message.equals(tmp));
+        assertTrue("AESCipher failed to maintain message integrity", message.equals(tmp));
 	}
 }
