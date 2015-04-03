@@ -125,7 +125,10 @@ public class LoginWindow extends LMSWindow {
 					return;
 				}
 				
+				System.out.println("Before response");
 				Response response = Response.stringToResponse(r);
+				System.out.println("After response");
+				
 				if(response.wasSuccessful) {
 					controller.model.sessionId = ((LogInResponse)response).sessionID;
 					System.out.println(controller.model.sessionId);
