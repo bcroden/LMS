@@ -67,7 +67,7 @@ class QueryUtils
     {
         try
         {
-            Dbwrapper.getInstance().CheckIn(query.isbn);
+            Dbwrapper.getInstance().CheckIn(query.isbn, query.userID);
             query.wasSuccessful = true;
         }
         catch(SQLException | InvalidISBNException e)
@@ -83,7 +83,7 @@ class QueryUtils
         try
         {
             System.out.println("Pre call");
-            Dbwrapper.getInstance().CheckOut(query.isbn);
+            Dbwrapper.getInstance().CheckOut(query.isbn, query.userID);
             query.wasSuccessful = true;
             System.out.println("Post call");
         }
