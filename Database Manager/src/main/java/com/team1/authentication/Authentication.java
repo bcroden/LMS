@@ -93,6 +93,7 @@ public class Authentication {
                       //Store the ID and the session time in hasmap2
                       map2.put(LocalId, time);
                       Return = LocalId;
+                      System.out.println("LocalId = " + LocalId);
                       return Return;
 				   }
 				   else
