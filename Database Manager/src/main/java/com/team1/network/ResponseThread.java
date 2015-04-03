@@ -56,6 +56,7 @@ public class ResponseThread extends Thread
             Response response = Response.executeQuery(query);
             
             System.out.println("After execute query");
+            System.out.println("From DBM Sending : " + response.toString());
             
             // send reply string to the client
             sendReplyToClient(response.toString()); // echo what was sent by the client
