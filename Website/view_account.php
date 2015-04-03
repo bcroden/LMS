@@ -6,14 +6,6 @@
    connect();
 
    if(isset($_POST["form_type"]) && !empty($_POST["form_type"])) {
-		//The bug that was causing no response was here
-		//You are hard coding any searches to be empty strings right here
-		//you need to be retreiving them from $_POST like other values
-	//--------------
-     // $usrnm = "";
-     // $pswd = "";
-	//--------------
-		//fix is here
 		$usrnm = $_POST["user_name"];
 		$pswd = $_POST["password"];
       $okay = false;
@@ -32,6 +24,7 @@
          $result = getPass($usrnm);
 		if($result === -1){
 		echo "<br>No matching account found<br>";
+			login_fail();
 		}
 		else {
                    while($row = mysqli_fetch_array($result)){
@@ -41,7 +34,8 @@
                 }
                 else{
                     echo "Passwords don't match<br>";
-                }
+					login_fail();
+               	}
             }
 		}
       }
@@ -84,12 +78,7 @@
             $s_err = $s_err . "<p>The passwords entered do not match</p>";
 
          if(empty($s_err)) {
-            //TODO: DB call to add patron to tables
-			//echo "Parts: " .$_POST["user_name"]. " and ". $_POST["notify"] . "<br>";
-echo $_POST["notify"];
 			addUser($_POST["user_name"], $_POST["password"], $_POST["email"], $_POST["first_name"], $_POST["last_name"], $_POST["notify"], 1);
-			//you can check if result is empty perhaps to see if the user name is taken
-			//not totally sure how to handle that yet
          }
 
          return $s_err;
@@ -145,7 +134,8 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
-echo <<< EOT
+header("Location: /login.php");
+/*echo <<< EOT
 <!DOCTYPE html>
 <html>
    <body>
@@ -156,6 +146,6 @@ echo <<< EOT
       </form>
    </body>
 </html>
-EOT;
+EOT;*/
    } //end of login_fail
 ?>
