@@ -44,7 +44,7 @@ public class Response
             CheckInBookResponse response = new CheckInBookResponse(success, str[2]);
             return response;
         }
-        else if (responseType.equals("LoginResponse"))
+        else if (responseType.equals("LogInResponse"))
         {
             LogInResponse response = new LogInResponse(success, str[2], Integer.getInteger(str[3]));
             return response;
