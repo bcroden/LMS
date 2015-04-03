@@ -117,6 +117,8 @@ public class LoginWindow extends LMSWindow {
 				
 				String r = controller.sendMessage(query.toString());
 				
+				System.out.println("Recieved string from login Window: " + r);
+				
 				if(r == null) {
 					errorMessage.setText(ERROR_MESSAGE_TEXT);
 					//controller.showMainWindow();
