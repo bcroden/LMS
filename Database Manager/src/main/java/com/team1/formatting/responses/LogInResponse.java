@@ -35,6 +35,8 @@ public class LogInResponse extends Response
         
     	System.out.println("after authenticate");
         
+    	System.out.println("Status ==" + status);
+    	
         if (status == 0) wasSuccessful = false;
         else if (status >= 1 && status <= 3)
         {
