@@ -1,9 +1,9 @@
 <?php
    if(!isset($_SESSION["init"])) { session_start(); }
    if(isset($_POST["logout"])) {
-session_destroy();
-header("Location: /login.php");
-};
+      session_destroy();
+      header("Location: /login.php");
+   };
 
    include "DBwrapper.php";
    error_reporting(E_ALL);
@@ -52,7 +52,15 @@ header("Location: /login.php");
          changeEmail($_SESSION["usernm"], $_POST["new_email"]);
          $_SESSION["email"] = $_POST["new_email"];
       }
-      display_account($_SESSION["usernm"], " ");
+      if(isset($_POST["new_password"])) {
+         setNewPass($_SESSION["usernm"], $_SESSION["pass"], $_POST["new_password"]);
+         $_SESSION["pass"] = $_POST["new_password"];
+      }
+      if(isset($_POST["notify"])) {
+         setNotification($_SESSION["usernm"], $_POST["notify"]);
+         $_SESSION["notify"] = $_POST["notify"];
+      }
+      display_account($_SESSION["usernm"], $_SESSION["pass"]);
    }
 
    function create_account(&$usrnm, &$pswd) {
@@ -119,6 +127,7 @@ header("Location: /login.php");
          $_SESSION["email"] = $em;
          $_SESSION["notify"] = $nt;
          $_SESSION["usernm"] = $usrnm;
+         $_SESSION["pass"] = $pswd;
       }
 
 ?>
@@ -170,7 +179,18 @@ header("Location: /login.php");
 
       <form action="view_account.php" method="post">
            <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/>
-           <input type="submit" value="Change Email"/>
+           <input type="submit" value="Set Email"/>
+      </form>
+
+      <form action="view_account.php" method="post">
+           <input type="password" name="new_password" value="<?= $_SESSION['pass'] ?>"/>
+           <input type="submit" value="Set Password"/>
+      </form>
+
+      <form action="view_account.php" method="post">
+         <input type="radio" name="notify" value="1">Yes</intput>
+         <input type="radio" name="notify" value="-1">No</intput>
+         <input type="submit" value="Set Email Notification"/>
       </form>
 
       <form action="view_account.php" method="post">

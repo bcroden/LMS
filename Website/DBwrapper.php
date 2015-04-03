@@ -124,11 +124,18 @@
 		$sql = "SELECT password FROM user WHERE username = '" . $user . "'";
 		$result = $connection->query($sql);
 		$row = mysqli_fetch_array($result);
-
-		if($oldPass === $row["password"]){
+		if($oldPass == $row["password"]){
 			$sql = "UPDATE user SET password = '" . $newPass . "' WHERE username = '" . $user . "'";
+                        $connection->query($sql);
 		}
 	}
+
+	function setNotification($user, $notify){
+		global $connection;
+          	$sql = "UPDATE user SET notify = '" . $notify . "' WHERE username = '" . $user . "'";
+                $connection->query($sql);
+	}
+
 
 	function getBooksOut($user){
 		global $connection;
