@@ -33,9 +33,9 @@
 		if($result === -1){
 		echo "<br>No matching account found<br>";
 		}
-		else{
-			while($row = mysqli_fetch_array($result)){
-                if($pswd === $row["password"]){
+		else {
+                   while($row = mysqli_fetch_array($result)){
+                      if($pswd === $row["password"]){
                     echo "The passwords match and you may log in<br>";
 					display_account($usrnm, $pswd);
                 }
@@ -99,21 +99,34 @@ echo $_POST["notify"];
    }//end create_account
 
    function display_account($usrnm, $pswd) {
-echo <<< EOT
-<html>
-	<body>
-		<p>Displaying account</p>
-	</body>
-</html>
-EOT;
-	$result = getUserInfo($_POST["user_name"]); //this is debug and actually a security problem
-	while($row = mysqli_fetch_array($result)){
-                    echo "Username: " . $row["username"] . "<br>" .
-                        "Email: " . $row["email"] . "<br>" .
-                        "First name: " . $row["fname"] . "<br>" . 
-                        "Last name: " . $row["lname"] ."<br>";
-                }
 
+   $info = getUserInfo($usrnm);
+   $arr = mysqli_fetch_array($info)
+?>
+<!DOCTYPE html>
+<html>
+   <body>
+      <table>
+         <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+         </tr>
+         <tr>
+            <td><?= $arr["fname"] ?></td>
+            <td><?= $arr["lname"] ?></td>
+         </tr>
+         <tr>
+            <th>Email</th>
+            <th>Notificiation</th>
+         </tr>
+         <tr>
+            <td><?= $arr["email"] ?></td>
+            <td><?php if($arr["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
+         </tr>
+      </table>
+   </body>
+</html>
+<?php
    } //end of display_account
 
    function creation_fail($err) {
@@ -145,5 +158,4 @@ echo <<< EOT
 </html>
 EOT;
    } //end of login_fail
-
 ?>
