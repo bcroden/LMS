@@ -22,7 +22,9 @@ public class PayFinesResponse extends Response
     public void executePayFinesQuery(PayFinesQuery query)
     {
 		//Check users authentication
-		int status = Authentication.getInstance().authenticate(query);
+    	int temp = Authentication.getInstance().authenticate(query);
+		sessionID = Integer.toString(temp);
+		int status = Authentication.getInstance().getLevel(temp);
         
         if (status == 0 || status == 1) wasSuccessful = false;
         else if (status == 2 || status == 3)
@@ -34,12 +36,10 @@ public class PayFinesResponse extends Response
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-        	sessionID = query.sessionID;
         }
         else
         {
             wasSuccessful = false;
-            sessionID = query.sessionID;
             System.out.print("unexpected return value from authenticate...\n");
         }
     	
