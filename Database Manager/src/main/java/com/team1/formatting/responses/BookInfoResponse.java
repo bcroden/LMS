@@ -42,14 +42,21 @@ public class BookInfoResponse extends Response
 		int sessionId = Authentication.getInstance().authenticate(query);
 		int status = Authentication.getInstance().getLevel(sessionId);
         
+		System.out.println("status = " + status);
+		
+		books = new ArrayList<Book>();
+		
         if (status == 0) wasSuccessful = false;
         else if (status == 1 || status == 2 || status == 3)
         {
 			try
 	        {
+				System.out.println("start try block");
 	            if(isValid(query.isbn))
 	            {
+	            	System.out.println("in isbn search");
 	                books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
+	                System.out.println("after isbn search");
 	            }
 	            else if(isValid(query.title))
 	            {
@@ -70,6 +77,7 @@ public class BookInfoResponse extends Response
 	            
 	            if(books != null)
 	                wasSuccessful = true;  
+	            System.out.println("end try block");
 	        }
 	        catch(SQLException e)
 	        {
