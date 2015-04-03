@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class SetEmailNotificationResponse extends Response
 {
-    public SetEmailNotificationResponse(boolean wasSuccessful)
+    public SetEmailNotificationResponse(boolean wasSuccessful, String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }

@@ -1,62 +1,60 @@
-/*
- * I commented this out for now since it references the Database Manager classes and was not compiling.
- * I would suggest developing these classes in the Database Manager project first and then port them to the workstation
- * after they are finalized.
- * 
- * -Brandon
- * 
- */
+package com.team1.formatting.responses;
 
-//package com.team1.formatting.responses;
-//
-//import java.sql.SQLException;
-//import java.util.ArrayList;
-//import com.team1.books.Book;
-//import com.team1.books.InvalidISBNException;
-//import com.team1.db.Dbwrapper;
-//
-//public class BookInfoResponse extends Response
-//{
-//    public ArrayList<Book> books = null;
-//    public boolean filled = false;
-//    
-//    public BookInfoResponse()
-//    {
-////        this.books = books;
-//    }
-//    
-//    public static void buildResponse(BookInfoQuery query)
-//    {
-//        try
-//        {
-//            if(isValid(query.isbn))
-//            {
-//                books = new ArrayList<Book>();
-//                books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
-//            }
-//            else if(isValid(query.title))
-//            {
-//                books = Dbwrapper.getInstance().SearchTitle(query.title);
-//            }
-//            else if(isValid(query.author))
-//            {
-//                books = Dbwrapper.getInstance().SearchAuthor(query.author);
-//            }
-//            else if(isValid(query.genre))
-//            {
-//                books = Dbwrapper.getInstance().SearchGenre(query.genre);
-//            }
-//            else if(isValid(query.datePublished))
-//            {
-//                books = Dbwrapper.getInstance().SearchPublisher(query.publisher);
-//            }
-//            
-//            if(books != null)
-//                filled = true;
-//        }
-//        catch(SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-//}
+import java.util.ArrayList;
+
+import com.team1.books.Book;
+
+public class BookInfoResponse extends Response
+{
+    public ArrayList<Book> books = null;
+    public static final String bookBreak = ";#;";
+
+//  public boolean filled = false;
+    
+    public BookInfoResponse()
+    {
+    	super(false,"0");
+    	books = null;
+    }
+    
+    public BookInfoResponse(boolean wasSuccessful, String sessionID, int numBooks, String strBooks)
+    {
+        super(wasSuccessful, sessionID);
+        
+        String[] bookList = strBooks.split(bookBreak);
+        for (int i = 0; i < numBooks; i++)
+        {
+            books.add(new Book(bookList[i]));
+        }
+        
+    }
+    
+    private static boolean isValid(String string)
+    {
+        return string != null && !string.equals("");
+    }
+    
+    //Override of toString. Method to return the object information in the form of a string.
+    @Override
+    public String toString() {
+        String s, sBooks;
+        int numBooks = 0;
+        if (books.isEmpty()) System.out.print("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
+        else numBooks = books.size();
+        
+        if (this.wasSuccessful) s = "true";
+        else s = "false";
+        
+        
+        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks;
+        
+        for (int i = 0; i < numBooks; i++)
+        {
+            msg.concat(books.get(i).getSerialized());
+            msg.concat(bookBreak);
+        }
+        
+        return msg;
+    }
+    
+}

@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class AddLibrarianResponse extends AdminResponse
 {
-    public AddLibrarianResponse(boolean wasSuccessful)
+    public AddLibrarianResponse(boolean wasSuccessful, String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }

@@ -3,7 +3,10 @@ package com.team1.formatting.responses;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.team1.authentication.Authentication;
 import com.team1.books.Book;
+import com.team1.books.BookFinder;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
 import com.team1.formatting.queries.*;
@@ -17,13 +20,13 @@ public class BookInfoResponse extends Response
     
     public BookInfoResponse()
     {
-    	super(false);
+    	super(false,"0");
     	books = null;
     }
     
-    public BookInfoResponse(boolean wasSuccessful, int numBooks, String strBooks)
+    public BookInfoResponse(boolean wasSuccessful, String sessionID, int numBooks, String strBooks)
     {
-        super(wasSuccessful);
+        super(wasSuccessful, sessionID);
         
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
@@ -35,37 +38,52 @@ public class BookInfoResponse extends Response
     
     public void executeBookInfoQuery(BookInfoQuery query)
     {
-        try
+    	//Check users authentication
+		int status = Authentication.getInstance().authenticate(query);
+        
+        if (status == 0) wasSuccessful = false;
+        else if (status == 1 || status == 2 || status == 3)
         {
-            if(isValid(query.isbn))
-            {
-                books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
-            }
-            else if(isValid(query.title))
-            {
-                books = Dbwrapper.getInstance().SearchTitle(query.title);
-            }
-            else if(isValid(query.author))
-            {
-                books = Dbwrapper.getInstance().SearchAuthor(query.author);
-            }
-            else if(isValid(query.genre))
-            {
-                books = Dbwrapper.getInstance().SearchGenre(query.genre);
-            }
-            else if(isValid(query.datePublished))
-            {
-                books = Dbwrapper.getInstance().SearchPublisher(query.publisher);
-            }
-            
-            if(books != null)
-                this.wasSuccessful = true;
-            
+			try
+	        {
+	            if(isValid(query.isbn))
+	            {
+	                books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
+	            }
+	            else if(isValid(query.title))
+	            {
+	                books = Dbwrapper.getInstance().SearchTitle(query.title);
+	            }
+	            else if(isValid(query.author))
+	            {
+	                books = Dbwrapper.getInstance().SearchAuthor(query.author);
+	            }
+	            else if(isValid(query.genre))
+	            {
+	                books = Dbwrapper.getInstance().SearchGenre(query.genre);
+	            }
+	            else if(isValid(query.datePublished))
+	            {
+	                books = Dbwrapper.getInstance().SearchPublisher(query.publisher);
+	            }
+	            
+	            if(books != null)
+	                wasSuccessful = true;  
+	        }
+	        catch(SQLException e)
+	        {
+	            e.printStackTrace();
+	        }
+	        sessionID = query.sessionID;
         }
-        catch(SQLException e)
+        else
         {
-            e.printStackTrace();
+            wasSuccessful = false;
+            sessionID = query.sessionID;
+            System.out.print("unexpected return value from authenticate...\n");
         }
+        
+        return;
     }
     
     
@@ -86,7 +104,7 @@ public class BookInfoResponse extends Response
         else s = "false";
         
         
-        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + numBooks;
+        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks;
         
         for (int i = 0; i < numBooks; i++)
         {

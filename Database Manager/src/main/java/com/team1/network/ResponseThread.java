@@ -9,7 +9,8 @@ import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
-import com.team1.formatting.Query;
+import com.team1.formatting.queries.Query;
+import com.team1.formatting.responses.Response;
 
 /**
  * Represents a thread running on the server which will communicate with a
@@ -52,25 +53,10 @@ public class ResponseThread extends Thread
 
             // TODO: Pass Query object to Authentication
 
-            if(!TCPServer.isAuthorized(query))
-            {
-                //Authentication disapproved the query
-                query.wasSuccessful = false;
-
-                // TODO: Send client Denial Response object
-            }
-            else
-            {
-                //Authentication approves, give Query object to DB Connector
-                query = QueryUtils.executeQuery(query);
-                
-                // TODO: Get a Response object from the DB
-
-                System.out.println("Response from database to client " + query);
-            }
+            Response response = Response.executeQuery(query);
             
             // send reply string to the client
-            sendReplyToClient(query.toString()); // echo what was sent by the client
+            sendReplyToClient(response.toString()); // echo what was sent by the client
 
             // clean up my mess
             close();

@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class RemoveLibrarianResponse extends AdminResponse
 {
-    public RemoveLibrarianResponse(boolean wasSuccessful)
+    public RemoveLibrarianResponse(boolean wasSuccessful, String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }

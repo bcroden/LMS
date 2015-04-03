@@ -6,6 +6,11 @@ public class PasswordChangeQuery extends Query
     public String newPassword;
     public String userName;
     
+    public PasswordChangeQuery(String sessionID)
+    {
+    	this(sessionID, " ", " ", " ");
+    }
+    
     public PasswordChangeQuery(String sessionID, String oldPassword, String newPassword, String userName)
     {
         super(sessionID);

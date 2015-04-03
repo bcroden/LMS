@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class ViewPatronInfoResponse extends LibrarianResponse
 {
-    public ViewPatronInfoResponse(boolean wasSuccessful)
+    public ViewPatronInfoResponse(boolean wasSuccessful, String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }

@@ -6,8 +6,8 @@ import com.team1.db.Dbwrapper;
 
 public class SetFineResponse extends AdminResponse
 {
-    public SetFineResponse(boolean wasSuccessful)
+    public SetFineResponse(boolean wasSuccessful, String sessionID)
     {
-    	super(wasSuccessful);
+    	super(wasSuccessful, sessionID);
     }
 }
