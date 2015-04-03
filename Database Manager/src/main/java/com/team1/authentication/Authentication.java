@@ -1,6 +1,7 @@
 package com.team1.authentication;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -17,13 +18,26 @@ public class Authentication {
 	private static int Id; 
 	private static int Return;
 	static int tempLevel;
+	static int isTime;
+	static long tempTime;
 	
 	HashMap<Integer, Integer> map;
+	HashMap<Integer, Long> map2;
 	
 	//Constructor
 	public Authentication(Query query) 
 	{
 		  map = new HashMap<>();
+		  map2 = new HashMap<>();
+	}
+	
+	public int timeout(long time){
+		Date date = new Date();
+		long temptime = date.getTime();
+		if((temptime - time) > 21600000){
+			return 0;
+		}
+		else{return 1;}		
 	}
 	
 	//Returns 0 if an ID is not found. Returns an ID if it is
@@ -64,10 +78,12 @@ public class Authentication {
                       LocalId = n.nextInt(89999999) + 10000000;
                       //Print testing the input to the map
                       //System.out.println("ID and user level stored is" + LocalId + " " + userLevel);
-                      //Store it in the hash map
+                      //Store ID and userlevel in the hash map
                       map.put(LocalId, userLevel);
-                      //Print testing the output from the map
-                      // System.out.println(" User level from hash map is: " + map.get(LocalId));
+                      Date date = new Date();
+                      long time = date.getTime();               
+                      //Store the ID and the session time in hasmap2
+                      map2.put(LocalId, time);
                       Return = LocalId;
                       return Return;
 				   }
@@ -81,32 +97,20 @@ public class Authentication {
 			}
 		
 		//If a patron (and only a patron) is requesting their information, verify their session
-		else if(query instanceof ViewPatronInfoQuery)
-		{
-			//Get the ID from the Librarian Query 
-			stringID = ((LibrarianQuery)query).sessionID;
-			Id = Integer.parseInt(stringID);
-			//Check the hashmap for the Id. Get back their userLevel as an integer
-			tempLevel = map.get(Id);
-			//If the userLevel is exactly 1, the request has been verified
-			if(tempLevel == 1)
-			{
-				return Id;
-			}
-			else
-			{
-		    return 0;
-			}
-		}
-
-		//If an Admin is trying to do something verify their session
 		else if(query instanceof AdminQuery)
 		{
-			stringID = ((LibrarianQuery)query).sessionID;
+			//Get the ID from the Librarian Query 
+			stringID = ((AdminQuery)query).sessionID;
 			Id = Integer.parseInt(stringID);
+			Date date = new Date();
+			//Check the hashmap for the Id. Get back their userLevel as an integer
 			tempLevel = map.get(Id);
-			if(tempLevel > 2)
+			tempTime = map2.get(Id);
+			isTime = timeout(tempTime);
+			//If the userLevel is exactly 3, the request has been verified
+			if((tempLevel == 3) && (isTime == 1))
 			{
+				map2.put(Id, date.getTime());
 				return Id;
 			}
 			else
@@ -114,65 +118,45 @@ public class Authentication {
 		    return 0;
 			}
 		}
-		
-		//If an Admin or a Librarian wants to check in a book
-		else if(query instanceof CheckInBookQuery)
-		{
-			stringID = ((LibrarianQuery)query).sessionID;
-			Id = Integer.parseInt(stringID);
-			tempLevel = map.get(Id);
-			if(tempLevel > 1)
-			{
-				return Id;
-			}
-			else
-			{
-		    return 0;
-			}
-		}
-		
-		//If an Admin or a Librarian wants to check out a book
-		else if(query instanceof CheckOutBookQuery)
-		{
-			stringID = ((LibrarianQuery)query).sessionID;
-			Id = Integer.parseInt(stringID);
-			tempLevel = map.get(Id);
-			if(tempLevel > 1)
-			{
-				return Id;
-			}
-			else
-			{
-		    return 0;
-			}
-		}
-		
-		//if a Librarian or Admin wants to look up the information of a Librarian
-		//else if(query instanceof LibrarianInfoQuery)
-		//{
-		//	stringID = ((LibrarianQuery)query).sessionID;
-		//	Id = Integer.parseInt(stringID);
-		//	tempLevel = map.get(Id);
-		//	if(tempLevel > 2)
-		//	{
-		//		return Id;
-		//	}
-		//	else
-		//	{
-		 //   return 0;
-		//	}
-		//}
 		
 		//If a Librarian has a query or an Admin makes a Librarian level query
 		else if(query instanceof LibrarianQuery)
 		{
 			stringID = ((LibrarianQuery)query).sessionID;
 			Id = Integer.parseInt(stringID);
-			//System.out.println("The id is: " + Id);
-			map.put(11111111, 2);
+			// For testing purposes -> map.put(11111111, 2);
+			Date date = new Date();
+			
 			tempLevel = map.get(Id);
-			if(tempLevel > 1)
+			tempTime = map2.get(Id);
+			//isTime is 1 if valid, 0 if invalid
+			isTime = timeout(tempTime);
+			if((tempLevel > 1) && (isTime == 1))
+			{	
+				//If valid update the session time
+				map2.put(Id, date.getTime());
+				return Id;
+			}
+			else
 			{
+		    return 0;
+			}
+		}
+		
+		else if(query instanceof Query)
+		{
+			//Get the ID from the Librarian Query 
+			stringID = ((Query)query).sessionID;
+			Id = Integer.parseInt(stringID);
+			Date date = new Date();
+			//Check the hashmap for the Id. Get back their userLevel as an integer
+			tempLevel = map.get(Id);
+			tempTime = map2.get(Id);
+			isTime = timeout(tempTime);
+			//If the userLevel is exactly 3, the request has been verified
+			if((tempLevel > 0) && (isTime == 1))
+			{
+				map2.put(Id, date.getTime());
 				return Id;
 			}
 			else
@@ -182,10 +166,11 @@ public class Authentication {
 		}
 		
 		//error handling
-		else{return 0;}
+		else{System.out.println("There was an error in Authentication. No case was found");
+			return 0;}
 		}
 	
-		public static void main(String[] args)
+	/*	public static void main(String[] args)
 		{
 			
 			//Authentication person = new Authentication(dummy);
@@ -194,8 +179,11 @@ public class Authentication {
 			Authentication person = new Authentication(login);
 			//LibrarianQuery dummy = new LibrarianQuery("11111111");
 			
+			LibrarianQuery dummy = new LibrarianQuery("11111111");
+			Authentication person2 = new Authentication(dummy);
+			int temp99 = person2.authenticate(dummy);
 			temp88 = person.authenticate(login);
-			System.out.println("temp 88 is: " + temp88);
-			
-		} 
+			System.out.println("Log in ID is: " + temp88);
+			System.out.println("Librarian Query ID is: " + temp99);
+		} */
 }
