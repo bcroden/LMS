@@ -25,7 +25,7 @@ public class Authentication {
 	HashMap<Integer, Long> map2;
 	
 	//Constructor
-	public Authentication(Query query) 
+	public Authentication() 
 	{
 		  map = new HashMap<>();
 		  map2 = new HashMap<>();
@@ -185,7 +185,7 @@ public class Authentication {
 			
 			LibrarianQuery dummy = new LibrarianQuery("11111111");
 			Authentication person2 = new Authentication(dummy);
-			int temp99 = person2.authenticate(dummy);
+			int- temp99 = person2.authenticate(dummy);
 			temp88 = person.authenticate(login);
 			System.out.println("Log in ID is: " + temp88);
 			System.out.println("Librarian Query ID is: " + temp99);
