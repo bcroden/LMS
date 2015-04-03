@@ -33,9 +33,13 @@ public class LogInResponse extends Response
     	
     	this.sessionID = Integer.toString(auth.authenticate(query));
     	
-    	System.out.println("after after setting SessionID");
+    	System.out.println("after after setting SessionID = " + sessionID);
     	
-    	this.status = auth.getLevel(Integer.getInteger(sessionID));
+    	int temp = Integer.getInteger(sessionID);
+    	
+    	System.out.println("temp = " + temp);
+    	
+    	this.status = auth.getLevel(temp);
     	
     	System.out.println("after authenticate");
         
