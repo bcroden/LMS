@@ -49,13 +49,13 @@ public class ResponseThread extends Thread
             System.out.println("Crash at build request");
             Query query = Query.buildRequest(cliRequest);
             System.out.println("Got out of build");
-            System.out.println("Result of build request: "+ query);
+            System.out.println("Result of build request: "+ query.toString());
 
             // TODO: Pass Query object to Authentication
 
             Response response = Response.executeQuery(query);
             
-            System.err.println("After execute query");
+            System.out.println("After execute query");
             
             // send reply string to the client
             sendReplyToClient(response.toString()); // echo what was sent by the client

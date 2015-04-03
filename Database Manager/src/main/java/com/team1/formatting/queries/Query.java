@@ -41,6 +41,10 @@ public class Query
         }
         else if (queryType.equals("LoginQuery"))
         {
+        	
+        	System.out.println(str[1]);
+        	System.out.println(str[2]);
+        	
             LoginQuery request = new LoginQuery(str[1], str[2]);    //sessionID is not required (included sessionID parameter)
             return request;
         }
