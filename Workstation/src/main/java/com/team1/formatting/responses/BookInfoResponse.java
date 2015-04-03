@@ -22,11 +22,14 @@ public class BookInfoResponse extends Response
     {
         super(wasSuccessful, sessionID);
         
+        books = new ArrayList<Book>();
+        
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
         {
         	System.out.println("Trying to make this a book: " + bookList[i]);
             books.add(new Book(bookList[i]));
+        	System.out.println("after addition");
         }
         
     }
