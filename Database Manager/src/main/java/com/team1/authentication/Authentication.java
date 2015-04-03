@@ -21,6 +21,8 @@ public class Authentication {
 	static int isTime;
 	static long tempTime;
 	
+	private static Authentication auth;
+	
 	HashMap<Integer, Integer> map;
 	HashMap<Integer, Long> map2;
 	
@@ -41,7 +43,9 @@ public class Authentication {
 	}
 	
 	public static Authentication getInstance() {
-		return null;//TODO: do this -Brandon
+		if(auth == null)
+			auth == new Authentication();
+		return auth;
 	}
 	
 	//Returns 0 if an ID is not found. Returns an ID if it is

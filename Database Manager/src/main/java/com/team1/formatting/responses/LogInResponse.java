@@ -27,7 +27,11 @@ public class LogInResponse extends Response
     {
     	System.out.println("before authenticate");
         //execute a login
-        status = Authentication.getInstance().authenticate(query);
+    	Authentication auth = Authentication.getInstance();
+    	
+    	System.out.println("after getInstance");
+    	
+        status = auth.authenticate(query);
         
     	System.out.println("after authenticate");
         
