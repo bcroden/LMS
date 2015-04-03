@@ -68,6 +68,7 @@
 		 $result = getUsers();
 			while($row = mysqli_fetch_array($result)){
 				if($usrnm === $row["username"]){
+					//return to create due to this stuff
 					header("Location: /create_account.php");
 				}
 			}
