@@ -43,12 +43,12 @@ public class Response
         }
         else if (responseType.equals("CheckOutBookResponse"))
         {
-            CheckOutBookResponse response = new CheckOutBookResponse(success, str[2]);
+            CheckOutBookResponse response = new CheckOutBookResponse(success, str[2], str[3], str[4], Integer.getInteger(str[5]), str[6]);
             return response;
         }
         else if (responseType.equals("CheckInBookResponse"))
         {
-            CheckInBookResponse response = new CheckInBookResponse(success, str[2]);
+            CheckInBookResponse response = new CheckInBookResponse(success, str[2], str[3], str[4], Integer.getInteger(str[5]), str[6]);
             return response;
         }
         else if (responseType.equals("LoginResponse"))

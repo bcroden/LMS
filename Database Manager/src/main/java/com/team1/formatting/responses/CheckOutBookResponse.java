@@ -5,16 +5,28 @@ import java.util.ArrayList;
 
 import com.team1.authentication.Authentication;
 import com.team1.books.Book;
+import com.team1.books.BookFinder;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
 import com.team1.formatting.queries.*;
 
 public class CheckOutBookResponse extends Response
 {
+	public static final String bookBreak = ";$;";
+    public String userName;
+    public String fines;
+    public ArrayList<Book> books = null;
     
-    public CheckOutBookResponse(boolean wasSuccessful, String sessionID)
+    public CheckOutBookResponse(boolean wasSuccessful, String sessionID, String userName, String fines, int numBooks, String strBooks)
     {
         super(wasSuccessful, sessionID);
+        this.userName = userName;
+        this.fines = fines;
+        String[] bookList = strBooks.split(bookBreak);
+        for (int i = 0; i < numBooks; i++)
+        {
+            books.add(new Book(bookList[i]));
+        }
     }
     
     public CheckOutBookResponse() 
@@ -34,6 +46,14 @@ public class CheckOutBookResponse extends Response
             {
                 System.out.println("Pre call");
                 Dbwrapper.getInstance().CheckOut(query.isbn,query.userID);
+                userName = query.userID;
+            	fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
+            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
+            	String[] str = msg.split(",");
+            	for(int i = 0; i < str.length; i++)
+            	{
+            		books.add(BookFinder.getBookFromGoogle(str[i]));
+            	}
                 wasSuccessful = true;
                 System.out.println("Post call");
             }
@@ -58,10 +78,21 @@ public class CheckOutBookResponse extends Response
     //Override of toString. Method to return the object information in the form of a string.
     @Override
     public String toString() {
-        String s;
+    	String s;
+        
+        int numBooks = 0;
+        numBooks = books.size();
+        
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckOutBookResponse" + DELIMITER + s + DELIMITER + sessionID;
+        String msg = "CheckOutBookResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        
+        for (int i = 0; i < numBooks; i++)
+        {
+            msg.concat(books.get(i).getSerialized());
+            msg.concat(bookBreak);
+        }
+        
         return msg;
     }
 }

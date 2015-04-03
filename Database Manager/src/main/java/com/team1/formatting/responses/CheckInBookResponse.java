@@ -12,10 +12,21 @@ import com.team1.formatting.queries.*;
 
 public class CheckInBookResponse extends Response
 {
-    
-    public CheckInBookResponse(boolean wasSuccessful, String sessionID)
+	public static final String bookBreak = ";$;";
+    public String userName;
+    public String fines;
+    public ArrayList<Book> books = null;
+	
+    public CheckInBookResponse(boolean wasSuccessful, String sessionID, String userName, String fines, int numBooks, String strBooks)
     {
         super(wasSuccessful, sessionID);
+        this.userName = userName;
+        this.fines = fines;
+        String[] bookList = strBooks.split(bookBreak);
+        for (int i = 0; i < numBooks; i++)
+        {
+            books.add(new Book(bookList[i]));
+        }
     }
     
     public CheckInBookResponse() 
@@ -34,6 +45,14 @@ public class CheckInBookResponse extends Response
             try
             {
                 Dbwrapper.getInstance().CheckIn(query.isbn,query.userID);
+            	userName = query.userID;
+            	fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
+            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
+            	String[] str = msg.split(",");
+            	for(int i = 0; i < str.length; i++)
+            	{
+            		books.add(BookFinder.getBookFromGoogle(str[i]));
+            	}
                 wasSuccessful = true;
             }
             catch(SQLException | InvalidISBNException e)
@@ -57,9 +76,20 @@ public class CheckInBookResponse extends Response
     @Override
     public String toString() {
         String s;
+        
+        int numBooks = 0;
+        numBooks = books.size();
+        
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckInBookResponse" + DELIMITER + s + DELIMITER + sessionID;
+        String msg = "CheckInBookResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        
+        for (int i = 0; i < numBooks; i++)
+        {
+            msg.concat(books.get(i).getSerialized());
+            msg.concat(bookBreak);
+        }
+        
         return msg;
     }
 }
