@@ -100,6 +100,7 @@ public class Response
         if(query instanceof LoginQuery)
         {
             LogInResponse response = new LogInResponse();
+            System.out.println("Before executeLoginQuery");
             response.executeLogInQuery((LoginQuery)query);
             return response;
         }

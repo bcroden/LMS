@@ -25,9 +25,11 @@ public class LogInResponse extends Response
     
     public void executeLogInQuery(LoginQuery query)
     {
-
+    	System.out.println("before authenticate");
         //execute a login
         status = Authentication.getInstance().authenticate(query);
+        
+    	System.out.println("after authenticate");
         
         if (status == 0) wasSuccessful = false;
         else if (status >= 1 && status <= 3)
