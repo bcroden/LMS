@@ -27,7 +27,7 @@ public class Authentication {
 	HashMap<Integer, Long> map2;
 	
 	//Constructor
-	public Authentication() 
+	private Authentication() 
 	{
 		  map = new HashMap<>();
 		  map2 = new HashMap<>();
@@ -44,7 +44,7 @@ public class Authentication {
 	
 	public static Authentication getInstance() {
 		if(auth == null)
-			auth == new Authentication();
+			auth = new Authentication();
 		return auth;
 	}
 	
