@@ -48,7 +48,7 @@ public class Authentication {
 		return auth;
 	}
 	
-	public static int getLevel(int Id){
+	public int getLevel(int Id){
 		int level = map.get(Id);
 		return level;
 	}
