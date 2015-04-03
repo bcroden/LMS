@@ -1,13 +1,16 @@
 package com.team1.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
-
-
 //get book objects
-import com.team1.books.*;
+import com.team1.books.Book;
+import com.team1.books.InvalidISBNException;
 
 
 
@@ -78,22 +81,19 @@ public class Dbwrapper {
 	
 	//Function for adding a new book to the repo
 	//--------------------------------------------------------------------------
-	public synchronized void addBook(Book book)throws SQLException{
+	public synchronized void addBook(Book book, int num)throws SQLException{
 		String tempp = book.publisher;
 		String temppd = book.datePublished;
 		String tempt = book.title;
-		
-		System.out.println("Contents: " + book.isbn + "', '" + encode(book.title) + "', '" + book.author +
-					 "', ' Genre: " + book.genre + "', ' Publisher: " + book.publisher + "', '" + book.datePublished);
 		
 		if(tempp == null || tempp.equals("")){
 			System.out.println("Null publisher");
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO book " +
-					 "(isbn, title, author, genre, publishdate, likes, dislikes, copies) " + 
+					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout) " + 
 					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
-					 "', '" + encode(book.genre) + "', '" + book.datePublished + 
-					 "', '" + 0 + "', '" + 0 + "', '" + 0 + "')";
+					 "', '" + encode(book.genre) + "', '" + book.publisher + "', '" + book.datePublished + 
+					 "', '" + 0 + "', '" + 0 + "', '" + num + "', '" + 0 + "')";
 		stmt.executeUpdate(sql);
 		}
 		else if(temppd == null || temppd.equals("")){
@@ -304,6 +304,17 @@ public class Dbwrapper {
     		return pass;
     	}
     	
+    	public synchronized String getBooksOut(String username) throws SQLException{
+    		Statement stmt = con.createStatement();
+    		String sql = "SELECT books FROM user WHERE username = '" + username + "'";
+    		ResultSet result = stmt.executeQuery(sql);
+    		String books = " ";
+    		while(result.next()){
+    			books = result.getString("booksout");
+    		}
+			return books;
+    	}
+    	
     	public synchronized int getAuthorization(String user, String pass)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT auth FROM user WHERE BINARY username = '" + user + "' and BINARY password = '"+ pass +"'";
@@ -339,7 +350,7 @@ public class Dbwrapper {
     
     //Librarian related queries
     //--------------------------------------------------------------------------
-    public synchronized void CheckOut(String isbn)throws SQLException, InvalidISBNException{
+    public synchronized void CheckOut(String isbn, String username)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -352,6 +363,7 @@ public class Dbwrapper {
     		System.out.println("ISBN: " + isbn + " copiesin: " + copiesin + " copiesout: " + copiesout);
     	}
     	
+    	
     	if(copiesin > 0){
     	copiesin--;
     	copiesout++;
@@ -361,6 +373,28 @@ public class Dbwrapper {
     	
     	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
+    	
+    	//Here we add the ISBN to the end of the users books out
+    	//and the current system time to their dateout
+    	String temp = "";
+    	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
+    	result = stmt.executeQuery(sql);
+    	while(result.next()){
+    		temp = result.getString("booksout");
+    	}
+    	String books = temp + isbn + ",";
+    	String tempTimes = "";
+    	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
+    	result = stmt.executeQuery(sql);
+    	while(result.next()){
+    		tempTimes = result.getString("dateout");
+    	}
+    	long time = System.currentTimeMillis();
+    	String now = String.valueOf(time);
+    	String times = tempTimes + now + ",";
+    	sql = "UPDATE user SET booksout = '" + books + "'";
+    	stmt.executeUpdate(sql);
+    	sql = "UPDATE user SET dateout = '" + times + "'";
     	}
     	else{
     		System.out.println("Problem checking in");
@@ -370,7 +404,7 @@ public class Dbwrapper {
     	
     }
     
-     public synchronized void CheckIn(String isbn)throws SQLException, InvalidISBNException{
+     public synchronized void CheckIn(String isbn, String username)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -387,6 +421,57 @@ public class Dbwrapper {
     	stmt.executeUpdate(sql);
     	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
+    	
+    	//Remove books and time from current books out and add book to history
+    	ArrayList<String> books = new ArrayList<String>();
+    	ArrayList<String> times = new ArrayList<String>();
+    	String[] temp = null;
+    	String[] tempTimes = null;
+    	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
+    	result = stmt.executeQuery(sql);
+    	while(result.next()){
+    		temp = result.getString("booksout").split(",");
+    	}
+    	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
+    	result = stmt.executeQuery(sql);
+    	while(result.next()){
+    		tempTimes = result.getString("dateout").split(",");
+    	}
+    	for(int i = 0; i < temp.length; i++){
+    		books.set(i, temp[i]);
+    	}
+    	for(int k = 0; k < temp.length; k++){
+    		times.set(k, tempTimes[k]);
+    	}
+    	
+    	String totalBooks = null;
+    		int key = books.indexOf(isbn);
+    		books.remove(key);
+    		times.remove(key);
+    		for(int j = 0; j < books.size(); j++){
+    			totalBooks.concat(books.get(j) + ",");
+    		}
+    	String totalTimes = null;
+    		for(int l = 0; l < books.size(); l++){
+    			totalTimes.concat(books.get(l) + ",");
+    		}
+    	//put back whats out and the times
+    		sql = "UPDATE user SET booksout = '" + totalBooks + "' WHERE username = '" + username + "'";
+    		stmt.executeUpdate(sql);
+    		sql = "UPDATE user SET dateout = '" + totalTimes + "' WHERE username = '" + username + "'";
+    		stmt.executeUpdate(sql);
+    		
+    	//update history
+    		String hist = "";
+        	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
+        	result = stmt.executeQuery(sql);
+        	while(result.next()){
+        		hist = result.getString("booksout");
+        	}
+        	String history = hist + isbn + ",";
+        	sql = "UPDATE user SET history = '" + history + "'";
+        	
+        	updateBalance(username);
     	}
     	else{
     		System.out.println("Problem on checkin");
@@ -399,7 +484,8 @@ public class Dbwrapper {
     
      public synchronized void SetCopies(String isbn, int copies)throws SQLException{
     	Statement stmt = con.createStatement();
-    	String sql = "UPDATE book copiesin = '" + copies + "' WHERE isbn = '" + isbn + "'";
+    	//TODO: Set this to add books and not to set the total
+    	String sql = "UPDATE book SET copiesin = '" + copies + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
     }
     
@@ -428,7 +514,7 @@ public class Dbwrapper {
     	return balance;
     }
     
-    public synchronized void updateBalance(String username, float cost) throws SQLException {
+    public synchronized void updateBalance(String username) throws SQLException {
     	Statement stmt = con.createStatement();
     	
     	String sql = "SELECT balance FROM user WHERE username = '" + username + "'";
@@ -445,9 +531,8 @@ public class Dbwrapper {
     		costs = calculateCost(dates);
     	}
     	temp += costs;
-    	sql = "UPDATE user balance = '" + temp + "' WHERE username = '" + username + "'";
+    	sql = "UPDATE user SET balance = '" + temp + "' WHERE username = '" + username + "'";
     	stmt.executeUpdate(sql);
-    	int balance = 0;
     }
     
     //Check for any late fees of the user
