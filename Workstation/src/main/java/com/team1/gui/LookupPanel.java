@@ -96,6 +96,8 @@ public class LookupPanel extends JPanel {
 					ArrayList<Book> books = ((BookInfoResponse)response).books;
 					if(books == null)
 						System.out.println("Books = null");
+					else
+						System.out.println("Books != null");
 					for(Book b : books) {
 						System.out.println(b.toString());
 						returnTextArea.setText(b.toString());
