@@ -49,7 +49,9 @@ public class Authentication {
 	}
 	
 	public int getLevel(int Id){
+		System.out.println("before getlevel");
 		int level = map.get(Id);
+		System.out.println("after getlevel");
 		return level;
 	}
 	
