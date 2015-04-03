@@ -52,7 +52,10 @@ public class Response
         else if (responseType.equals("LogInResponse"))
         {
         	System.out.println("In else ifs at login");
-            LogInResponse response = new LogInResponse(success, str[2], Integer.getInteger(str[3]));
+        	
+        	int temp = Integer.parseInt(str[3]);
+        	
+            LogInResponse response = new LogInResponse(success, str[2], temp);
             System.out.println("after building response");
             return response;
         }
