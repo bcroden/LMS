@@ -107,6 +107,17 @@
 		}
 	}
 
+	function setNewPass($user, $oldPass, $newPass){
+		global $connection;
+		$sql = "SELECT password FROM user WHERE username = '" . $user . "'";
+		$result = $connection->query($sql);
+		$row = mysqli_fetch_array($result);
+
+		if($oldPass === $row["password"]){
+			$sql = "UPDATE user SET password = '" . $newPass . "' WHERE username = '" . $user . "'";
+		}
+	}
+
 	function getBooksOut($user){
 		global $connection;
 		$sql = "SELECT booksout FROM user WHERE username = '" . $user . "'";
@@ -122,6 +133,10 @@
 		global $connection;
 		$sql = "SELECT booksout FROM user WHERE username = '" + $user . "'";
 		$result = $connection->query($sql);
+		if($result->num_rows < 0){
+			//no times
+		}
+		else{
         $row = mysqli_fetch_array($result);
 		$books = explode(",", $row["booksout"]);
 
@@ -140,5 +155,12 @@
 		$timeleft = 90 - $time;
 
 		return $timeleft;
+		}
+	}
+
+	function changeEmail($user, $email){
+		global $connection;
+		$sql = "UPDATE user SET email = '" . $email . "' WHERE username = '" . $user . "'";
+		$connection->query($sql); 
 	}
 ?>

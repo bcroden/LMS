@@ -23,8 +23,8 @@ public class Authentication {
 	
 	private static Authentication auth;
 	
-	HashMap<Integer, Integer> map;
-	HashMap<Integer, Long> map2;
+	static HashMap<Integer, Integer> map;
+	static HashMap<Integer, Long> map2;
 	
 	//Constructor
 	private Authentication() 
@@ -46,6 +46,13 @@ public class Authentication {
 		if(auth == null)
 			auth = new Authentication();
 		return auth;
+	}
+	
+	public int getLevel(int Id){
+		System.out.println("before getlevel");
+		int level = map.get(Id);
+		System.out.println("after getlevel");
+		return level;
 	}
 	
 	//Returns 0 if an ID is not found. Returns an ID if it is
@@ -89,7 +96,7 @@ public class Authentication {
                       //Store ID and userlevel in the hash map
                       map.put(LocalId, userLevel);
                       Date date = new Date();
-                      long time = date.getTime();               
+                      long time = date.getTime(); 
                       //Store the ID and the session time in hasmap2
                       map2.put(LocalId, time);
                       Return = LocalId;

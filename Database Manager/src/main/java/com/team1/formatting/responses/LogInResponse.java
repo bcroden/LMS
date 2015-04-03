@@ -31,8 +31,10 @@ public class LogInResponse extends Response
     	
     	System.out.println("after getInstance");
     	
-        status = auth.authenticate(query);
-        
+    	sessionID = "" + auth.authenticate(query);
+    	//TODO: ADD Ryans thing
+    	status = auth.getLevel(Integer.getInteger(sessionID));
+    	
     	System.out.println("after authenticate");
         
     	System.out.println("Status ==" + status);
@@ -41,7 +43,6 @@ public class LogInResponse extends Response
         else if (status >= 1 && status <= 3)
         {
             wasSuccessful = true;
-            sessionID = query.sessionID;
         }
         else
         {
@@ -49,7 +50,6 @@ public class LogInResponse extends Response
             System.out.print("unexpected return value from authenticate...\n");
         }
         
-        sessionID = query.sessionID;
         return;
     }
     
