@@ -3,7 +3,7 @@ package com.team1.formatting.responses;
 
 public class LogInResponse extends Response
 {
-    public static int status;
+    public int status;
     
     public LogInResponse()
     {

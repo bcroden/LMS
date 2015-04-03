@@ -1,5 +1,6 @@
 package com.team1.gui;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,8 +10,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.team1.formatting.queries.PayFinesQuery;
+import com.team1.formatting.responses.PayFinesResponse;
+import com.team1.formatting.responses.Response;
 
 public class PaymentPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -76,7 +82,19 @@ public class PaymentPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				PayFinesQuery q = new PayFinesQuery(controller.model.sessionId, patronField.getText(), Integer.getInteger(amountField.getText()));
+				
+				String r = controller.sendMessage(q.toString());
+				
+				if(r == null) {
+					returnTextArea.setText("Invalid Entries.");
+					returnTextArea.setForeground(Color.RED);
+				}
+				
+				Response response = Response.stringToResponse(r);
+				if(response instanceof PayFinesResponse) {
+					
+				}
 			}
         });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();
@@ -86,12 +104,18 @@ public class PaymentPanel extends JPanel {
         this.add(submitButton, gbc_submitButton);
         
         returnTextArea = new JTextArea();
+        returnTextArea.setEditable(false);
+        
+        JScrollPane scrollPane = new JScrollPane(returnTextArea,
+        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 7;
         gbc_returnTextArea.insets = new Insets(0, 0, 5, 5);
         gbc_returnTextArea.fill = GridBagConstraints.BOTH;
         gbc_returnTextArea.gridx = 1;
         gbc_returnTextArea.gridy = 3;
-        this.add(returnTextArea, gbc_returnTextArea);
+        this.add(scrollPane, gbc_returnTextArea);
 	}
 }

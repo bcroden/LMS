@@ -8,6 +8,7 @@ public class Model {
     // Temp Fields for release 1...
     protected String username;
     protected String sessionId;
+    protected int status;
 
     public Model() {
     	

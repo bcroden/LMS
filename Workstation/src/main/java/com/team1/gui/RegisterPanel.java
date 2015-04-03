@@ -1,5 +1,6 @@
 package com.team1.gui;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,9 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.team1.formatting.queries.AddBookQuery;
+import com.team1.formatting.responses.AddBookResponse;
+import com.team1.formatting.responses.Response;
 
 public class RegisterPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -67,7 +73,22 @@ public class RegisterPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				AddBookQuery q = new AddBookQuery(controller.model.sessionId, isbnField.getText(), (Integer)countSpinner.getValue());
+				
+				String r = controller.sendMessage(q.toString());
+				
+				if(r == null) {
+					returnTextArea.setText("Invalid ISBN");
+					returnTextArea.setForeground(Color.RED);
+				}
+				
+				Response response = Response.stringToResponse(r);
+				if(response instanceof AddBookResponse) {
+					if(response.wasSuccessful)
+						returnTextArea.setText("Check out successfull");
+					else
+						returnTextArea.setText("Check out failed");
+				}
 			}
         });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();
@@ -78,12 +99,17 @@ public class RegisterPanel extends JPanel {
         
         returnTextArea = new JTextArea();
         returnTextArea.setEditable(false);
+        
+        JScrollPane scrollPane = new JScrollPane(returnTextArea,
+        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 6;
         gbc_returnTextArea.insets = new Insets(0, 0, 5, 5);
         gbc_returnTextArea.fill = GridBagConstraints.BOTH;
         gbc_returnTextArea.gridx = 1;
         gbc_returnTextArea.gridy = 3;
-        this.add(returnTextArea, gbc_returnTextArea);
+        this.add(scrollPane, gbc_returnTextArea);
 	}
 }

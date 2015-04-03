@@ -115,12 +115,24 @@ public class MainWindow extends LMSWindow {
         optionsMenu.add(changePassword);
         
         JMenuItem addLibrarianAccount = new JMenuItem("Add Librarian Account");
+        if(controller.model.status != 3)
+        	addLibrarianAccount.setEnabled(false);
+        addLibrarianAccount.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showInputDialog("New Account Name");
+			}
+		});
         optionsMenu.add(addLibrarianAccount);
         
         JMenuItem removeLibrarianAccount = new JMenuItem("Remove Librarian Account");
+        if(controller.model.status != 3)
+        	removeLibrarianAccount.setEnabled(false);
         optionsMenu.add(removeLibrarianAccount);
         
         JMenuItem feesFines = new JMenuItem("Fees/Fines");
+        if(controller.model.status != 3)
+        	feesFines.setEnabled(false);
         optionsMenu.add(feesFines);
         
         this.setVisible(true);

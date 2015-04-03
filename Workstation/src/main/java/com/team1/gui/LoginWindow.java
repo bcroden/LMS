@@ -126,6 +126,7 @@ public class LoginWindow extends LMSWindow {
 				Response response = Response.stringToResponse(r);
 				if(response.wasSuccessful) {
 					controller.model.sessionId = ((LogInResponse)response).sessionID;
+					controller.model.status = ((LogInResponse)response).status;
 					controller.showMainWindow();
 				}
 			}
