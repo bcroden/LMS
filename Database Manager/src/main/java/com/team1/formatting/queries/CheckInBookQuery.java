@@ -2,6 +2,8 @@ package com.team1.formatting.queries;
 
 public class CheckInBookQuery extends LibrarianQuery
 {
+	public static final String HEADER = "CheckInBookQuery";
+	
 	public CheckInBookQuery(String sessionID)
     {
     	this(sessionID, " ", " ", " ", " ", " ", " ", " ");
@@ -56,7 +58,7 @@ public class CheckInBookQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String msg = "CheckInBookQuery"+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
         return msg;
     }
     

@@ -1,18 +1,17 @@
 package com.team1.formatting.responses;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.team1.authentication.Authentication;
 import com.team1.books.Book;
-import com.team1.books.BookFinder;
-import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
-import com.team1.formatting.queries.*;
+import com.team1.formatting.queries.BookInfoQuery;
 
 public class BookInfoResponse extends Response
 {
+	public static final String HEADER = "BookInfoResponse";
+	
     public ArrayList<Book> books = null;
     public static final String bookBreak = ";#;";
 
@@ -117,7 +116,7 @@ public class BookInfoResponse extends Response
         else s = "false";
         
         
-        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
         
         System.out.println("numBooks = " + numBooks);
         

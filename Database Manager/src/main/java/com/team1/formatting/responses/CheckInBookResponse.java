@@ -12,6 +12,8 @@ import com.team1.formatting.queries.*;
 
 public class CheckInBookResponse extends Response
 {
+	public static final String HEADER = "CheckInBookResponse";
+	
 	public static final String bookBreak = ";$;";
     public String userName;
     public String fines;
@@ -87,7 +89,7 @@ public class CheckInBookResponse extends Response
         
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckInBookResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
         
         for (int i = 0; i < numBooks; i++)
         {

@@ -1,10 +1,10 @@
 package com.team1.db;
 
-import java.sql.*;
-import java.util.ArrayList;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 //get book objects
-import com.team1.books.*;
 
 
 public class BuildDB {

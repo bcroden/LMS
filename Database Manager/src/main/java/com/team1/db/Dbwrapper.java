@@ -132,7 +132,7 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE author = '" + author + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	ArrayList list = new ArrayList<Book>();
+    	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
     		Book book = new Book(
     			result.getString("ISBN"),
@@ -152,7 +152,7 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE title = '" + title + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	ArrayList list = new ArrayList<Book>();
+    	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
     		Book book = new Book(
     			result.getString("ISBN"),
@@ -172,7 +172,7 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE publisher = '" + publisher + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	ArrayList list = new ArrayList<Book>();
+    	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
     		Book book = new Book(
     			result.getString("ISBN"),
@@ -195,7 +195,7 @@ public class Dbwrapper {
     	//This can be handled on front end of searches though
     	String sql = "SELECT * FROM book WHERE publishdate between '" + date + "' and '" + date2 + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	ArrayList list = new ArrayList<Book>();
+    	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
     		Book book = new Book(
     			result.getString("ISBN"),
@@ -215,7 +215,7 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE genre = '" + genre + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	ArrayList list = new ArrayList<Book>();
+    	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
     		Book book = new Book(
     			result.getString("ISBN"),

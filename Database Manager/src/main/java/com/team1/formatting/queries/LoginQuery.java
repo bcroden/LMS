@@ -1,7 +1,9 @@
 package com.team1.formatting.queries;
 
 public class LoginQuery extends Query
-{	
+{
+	public static final String HEADER = "LoginQuery";
+	
 	public LoginQuery()
 	{
 		super("0");
@@ -20,7 +22,7 @@ public class LoginQuery extends Query
     @Override
     public String toString()
     {
-        String msg = "LoginQuery"+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+password;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+password;
         return msg;
     }
     

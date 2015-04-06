@@ -2,6 +2,8 @@ package com.team1.formatting.queries;
 
 public class PayFinesQuery extends LibrarianQuery
 {
+	public static final String HEADER = "PayFinesQuery";
+	
     public float paymentAmount;
     public String userName;
     
@@ -19,7 +21,7 @@ public class PayFinesQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String msg = "PayFinesQuery"+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+paymentAmount;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+paymentAmount;
         return msg;
     }
 }

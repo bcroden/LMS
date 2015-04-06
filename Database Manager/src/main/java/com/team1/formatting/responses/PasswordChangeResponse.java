@@ -2,13 +2,14 @@ package com.team1.formatting.responses;
 
 import java.sql.SQLException;
 
-import com.team1.formatting.queries.*;
 import com.team1.authentication.Authentication;
-import com.team1.books.*;
 import com.team1.db.Dbwrapper;
+import com.team1.formatting.queries.PasswordChangeQuery;
 
 public class PasswordChangeResponse extends Response
 {
+	public static final String HEADER = "PasswordChangeResponse";
+	
 	public PasswordChangeResponse()
 	{
 		super(false,"0");
@@ -68,7 +69,7 @@ public class PasswordChangeResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "PasswordChangeResponse" + DELIMITER + s + DELIMITER + sessionID;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID;
         return msg;
     }
 }

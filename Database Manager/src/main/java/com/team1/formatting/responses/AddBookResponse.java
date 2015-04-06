@@ -7,9 +7,10 @@ import com.team1.authentication.Authentication;
 import com.team1.books.*;
 import com.team1.db.Dbwrapper;
 
-
 public class AddBookResponse extends LibrarianResponse
 {
+	public static final String HEADER = "AddBookResponse";
+	
     public AddBookResponse(boolean wasSuccessful, String sessionID)
     {
         super(wasSuccessful, sessionID);
@@ -51,7 +52,7 @@ public class AddBookResponse extends LibrarianResponse
         String s;
         if (this.wasSuccessful) s = "true";
         else s = "false";
-        String msg = "AddBookResponse"+ DELIMITER + s + DELIMITER + sessionID;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID;
         return msg;
     }
 }

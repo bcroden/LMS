@@ -1,12 +1,8 @@
 package com.team1;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
-import com.team1.network.MockTCPClient;
 import com.team1.network.TCPServer;
-import com.team1.db.Dbwrapper;
-import com.team1.books.*;
 
 public class Main
 {
@@ -21,7 +17,9 @@ public class Main
         System.out.println("Server has started.\nPress enter to stop the server");
 
         // wait for the user to press enter
-        new Scanner(System.in).nextLine();
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+        scanner.close();
 
         // stop the server
         thread.interrupt();

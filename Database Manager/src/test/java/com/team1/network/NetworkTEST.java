@@ -17,9 +17,9 @@ public class NetworkTEST
     @Test
     public void encryptionTestEchoServer() throws IOException, InterruptedException, InvalidKeyException
     {
-        final int PORT = 3612;
-        final String hostname = "localhost";
-
+//        final int PORT = 3612;
+//        final String hostname = "localhost";
+//
 //        // setup TCP server on the specified port
 //        Thread thread = new Thread(new TCPServer(PORT));
 //        thread.start();
