@@ -32,22 +32,22 @@ public class Response
         //build a new response from the rest of the msg.split, checking the responseType to determine which kind of request to build
         if (responseType.equals(BookInfoResponse.HEADER))
         {
-            BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.getInteger(str[3]), str[4]);
+            BookInfoResponse response = new BookInfoResponse(success, str[2], Integer.parseInt(str[3]), str[4]);
             return response;
         }
         else if (responseType.equals(CheckOutBookResponse.HEADER))
         {
-            CheckOutBookResponse response = new CheckOutBookResponse(success, str[2], str[3], str[4], Integer.getInteger(str[5]), str[6]);
+            CheckOutBookResponse response = new CheckOutBookResponse(success, str[2], str[3], str[4], Integer.parseInt(str[5]), str[6]);
             return response;
         }
         else if (responseType.equals(CheckInBookResponse.HEADER))
         {
-            CheckInBookResponse response = new CheckInBookResponse(success, str[2], str[3], str[4], Integer.getInteger(str[5]), str[6]);
+            CheckInBookResponse response = new CheckInBookResponse(success, str[2], str[3], str[4], Integer.parseInt(str[5]), str[6]);
             return response;
         }
         else if (responseType.equals(LogInResponse.HEADER))
         {
-            LogInResponse response = new LogInResponse(success, str[2], Integer.getInteger(str[3]));
+            LogInResponse response = new LogInResponse(success, str[2], Integer.parseInt(str[3]));
             return response;
         }
         else if (responseType.equals(AddBookResponse.HEADER))

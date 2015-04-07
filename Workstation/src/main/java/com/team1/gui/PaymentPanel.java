@@ -82,7 +82,7 @@ public class PaymentPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PayFinesQuery q = new PayFinesQuery(controller.model.sessionId, patronField.getText(), Integer.getInteger(amountField.getText()));
+				PayFinesQuery q = new PayFinesQuery(controller.model.sessionId, patronField.getText(), Integer.parseInt(amountField.getText()));
 				
 				String r = controller.sendMessage(q.toString());
 				
