@@ -35,6 +35,7 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	System.out.println("Returning null from sendMessage in controller");
     	return null;
     }
 }

@@ -86,6 +86,7 @@ public class CheckOutPanel extends JPanel {
 				q.isbn = isbnField.getText();
 				
 				String r = controller.sendMessage(q.toString());
+				returnTextArea.setText(r);
 				
 				if(r == null) {
 					returnTextArea.setText("Invalid Entries.");
