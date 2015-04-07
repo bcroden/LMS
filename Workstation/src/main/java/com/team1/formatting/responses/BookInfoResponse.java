@@ -16,12 +16,14 @@ public class BookInfoResponse extends Response
     public BookInfoResponse()
     {
     	super(false,"0");
-    	books = null;
+    	books = new ArrayList<Book>();
     }
     
     public BookInfoResponse(boolean wasSuccessful, String sessionID, int numBooks, String strBooks)
     {
         super(wasSuccessful, sessionID);
+        
+        books = new ArrayList<Book>();
         
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
