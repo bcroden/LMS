@@ -81,43 +81,41 @@ public class Dbwrapper {
 	
 	//Function for adding a new book to the repo
 	//--------------------------------------------------------------------------
-	public synchronized void addBook(Book book, int num)throws SQLException{
+	public synchronized void addBook(Book book, int num) throws SQLException{
 		String tempp = book.publisher;
 		String temppd = book.datePublished;
 		String tempt = book.title;
-		/*
-		if(tempp == null || tempp.equals("")){
-			System.out.println("Null publisher");
-		Statement stmt = con.createStatement();
-		String sql = "INSERT INTO book " +
-					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout) " + 
-					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
-					 "', '" + encode(book.genre) + "', '" + book.publisher + "', '" + book.datePublished + 
-					 "', '" + 0 + "', '" + 0 + "', '" + num + "', '" + 0 + "')";
-		stmt.executeUpdate(sql);
-		}
-		else if(temppd == null || temppd.equals("")){
-			System.out.println("Null publisherdate");
-		Statement stmt = con.createStatement();
-		String sql = "INSERT INTO book " +
-					 "(isbn, title, author, genre, publisher, likes, dislikes, copies) " + 
-					 "VALUES ('" + book.isbn + "', '" + book.title + "', '" + book.author +
-					 "', '" + book.genre + "', '" + book.publisher + "', '" + 0 + "', '" + 0 + "', '" + 0 + "')";
-		stmt.executeUpdate(sql);
-		}
-		else if(tempt == null || tempt.equals("")){
-			System.out.println("Null title");
-			System.out.println("The ISBN did not provide a title, no database entry created.");
-		}
-		else{*/
+		
 		System.out.println("No null");
-		Statement stmt = con.createStatement();
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			// TODO Auto-generated catch block
 		String sql = "INSERT INTO book " +
 					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout) " + 
 					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
 					 "', '" + encode(book.genre) + "', '" + encode(book.publisher) + "', '" + book.datePublished + 
 					 "', '" + 0 + "', '" + 0 + "', '" + num + "', '" + 0 +"')";
-		stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			System.out.println("Error code: " + e.getErrorCode());
+			if(e.getErrorCode() == 1062){
+				stmt = con.createStatement();
+				String sql = "SELECT copiesin FROM book WHERE isbn = '" + book.isbn + "'";
+				ResultSet result = stmt.executeQuery(sql);
+				int old = 0;
+				while(result.next()){
+					old = result.getInt("copiesin");
+				}
+				int newTotal = old + num;
+				sql = "UPDATE book SET copiesin = '" + newTotal + "' WHERE isbn = '" + book.isbn + "'";
+				stmt.executeUpdate(sql);
+			}
+			else
+				throw e;
+		}
 	//}
 	}
 	//Functions for updating book info (likes dislikes and copies)
