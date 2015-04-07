@@ -35,8 +35,8 @@ public class LogInResponse extends Response
     	this.sessionID = Integer.toString(temp);
     	
     	System.out.println("temp = " + temp);
-    	
-    	this.status = auth.getLevel(temp);
+    	if(temp != 0)
+    		this.status = auth.getLevel(temp);
     	
     	System.out.println("after authenticate");
         
@@ -52,8 +52,6 @@ public class LogInResponse extends Response
             wasSuccessful = false;
             System.out.print("unexpected return value from authenticate...\n");
         }
-        
-        return;
     }
     
     //Override of toString. Method to return the object information in the form of a string.

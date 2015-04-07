@@ -35,6 +35,7 @@ public class PayFinesResponse extends Response
         {
         	//execute a pay fine
         	try {
+        		wasSuccessful = true;
     			Dbwrapper.getInstance().payBalance(query.userName,query.paymentAmount);
     			this.fines = ""+Dbwrapper.getInstance().getBalance(query.userName);
     		} catch (SQLException e) {

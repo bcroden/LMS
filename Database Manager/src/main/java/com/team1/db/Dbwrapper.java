@@ -335,11 +335,13 @@ public class Dbwrapper {
     		if(oldPass.equals(tempPass)){
     			//here is where we set the new pass word
     			sql = "UPDATE user SET password = '" + newPass + "'";
+    			System.out.println("Set to new pass: " + newPass);
     			stmt.executeUpdate(sql);
     			return 1;
     		}
     		else{
     			//notify that the password
+    			System.out.println("Failed");
     			return -1;
     		}
     	}
