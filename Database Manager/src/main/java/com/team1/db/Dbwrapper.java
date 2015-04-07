@@ -407,72 +407,88 @@ public class Dbwrapper {
     
      public synchronized void CheckIn(String isbn, String username)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
+    	System.out.println("Made it in checkin");
     	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	int copiesin = 0;
     	int copiesout = 0;
     	while(result.next()){
+    		System.out.println("Getting copiesin and out");
     		copiesin = result.getInt("copiesin");
     		copiesout = result.getInt("copiesout");
     	}
+    	System.out.println("Copiesin: " + copiesin + " Copiesout: " + copiesout);
     	if(copiesout > 0){
     	copiesin++;
     	copiesout--;
-    	sql = "UPDATE book set copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
+    	sql = "UPDATE book SET copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
-    	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
+    	sql = "UPDATE book SET copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
+    	System.out.println("Updates copiesin: " + copiesin + " copiesout: " + copiesout);
+    	
     	
     	//Remove books and time from current books out and add book to history
     	ArrayList<String> books = new ArrayList<String>();
     	ArrayList<String> times = new ArrayList<String>();
-    	String[] temp = null;
-    	String[] tempTimes = null;
+    	String[] temp = {""};
+    	String[] tempTimes = {""};
     	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
+    		System.out.println("Set books out to array");
     		temp = result.getString("booksout").split(",");
     	}
+    	for(int i = 0; i < temp.length; i++){System.out.println("Temp[i]: " + temp[i]);}
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
+    		System.out.println("Set dateout to array");
     		tempTimes = result.getString("dateout").split(",");
     	}
-    	for(int i = 0; i < temp.length; i++){
-    		books.set(i, temp[i]);
+    	
+    	for(String s : temp){
+    		System.out.println("added " + s + " to books list");
+    		books.add(s);
+    		System.out.println("After setting");
     	}
-    	for(int k = 0; k < temp.length; k++){
-    		times.set(k, tempTimes[k]);
+    	for(String s : tempTimes){
+    		System.out.println("added " + s + " to times list");
+    		times.add(s);
     	}
     	
-    	String totalBooks = null;
+    	String totalBooks = "";
+    		System.out.println("Key: " + books.indexOf(isbn));
     		int key = books.indexOf(isbn);
     		books.remove(key);
     		times.remove(key);
     		for(int j = 0; j < books.size(); j++){
-    			totalBooks.concat(books.get(j) + ",");
+    			totalBooks = totalBooks.concat(books.get(j) + ",");
     		}
-    	String totalTimes = null;
+    	String totalTimes = "";
     		for(int l = 0; l < books.size(); l++){
-    			totalTimes.concat(books.get(l) + ",");
+    			totalTimes = totalTimes.concat(times.get(l) + ",");
     		}
+    		System.out.println(totalBooks);
     	//put back whats out and the times
     		sql = "UPDATE user SET booksout = '" + totalBooks + "' WHERE username = '" + username + "'";
     		stmt.executeUpdate(sql);
     		sql = "UPDATE user SET dateout = '" + totalTimes + "' WHERE username = '" + username + "'";
     		stmt.executeUpdate(sql);
-    		
+    		System.out.println("Updates 2");
     	//update history
     		String hist = "";
-        	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
+        	sql = "SELECT history FROM user WHERE username = '" + username + "'";
         	result = stmt.executeQuery(sql);
         	while(result.next()){
-        		hist = result.getString("booksout");
+        		hist = result.getString("history");
         	}
         	String history = hist + isbn + ",";
         	sql = "UPDATE user SET history = '" + history + "'";
-        	
+        	System.out.println("Updateing Balance");
         	updateBalance(username);
+        	System.out.println("Updated Balance");
+
     	}
     	else{
     		System.out.println("Problem on checkin");
@@ -507,9 +523,9 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT balance FROM user WHERE username = '" + username + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	int balance = 0;
+    	float balance = 0;
     	while(result.next()){
-    		balance = result.getInt("balance");
+    		balance = result.getFloat("balance");
     	}
     	
     	return balance;
@@ -529,6 +545,7 @@ public class Dbwrapper {
     	result = stmt.executeQuery(sql);
     	while(result.next()){
     		String[] dates = result.getString("dateout").split(",");
+    		System.out.println("Calculate Costs");
     		costs = calculateCost(dates);
     	}
     	temp += costs;
@@ -541,15 +558,18 @@ public class Dbwrapper {
     	float cost = 0;
     	long time = System.currentTimeMillis();
     	for(int i = 0; i < dates.length; i++){
-    		long then = Long.getLong(dates[i]);
-    		int elapsed = (int) ((time - then)/86400000);
-    		
-    		if(elapsed > 90){
-    			elapsed -= 90;
-    			cost += (elapsed * 0.05);
+    		System.out.println("Convert to long");
+    		long then = Long.parseLong(dates[i]);
+    		System.out.println("Now: " + time + " Then: " + then);
+    	    float elapsed = ((time - then)/86400000f);
+    		System.out.println("Time out: " + elapsed);
+    		if(elapsed > 90f){
+    			elapsed -= 90f;
+    			cost += (elapsed * 0.05f);
     		}
     		else{
     			//nothing to do
+    			System.out.println("Book not overdue");
     		}
     	}
     	
@@ -566,7 +586,7 @@ public class Dbwrapper {
     	}
     	float balance = Float.valueOf(temp);
     	balance -= payment;
-    	sql = "UPDATE user balance = '" + balance + "' WHERE username = '" + username + "'"; 
+    	sql = "UPDATE user SET balance = '" + balance + "' WHERE username = '" + username + "'"; 
     	
     	stmt.executeUpdate(sql);
     }

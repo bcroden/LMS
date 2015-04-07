@@ -45,7 +45,7 @@ public class CheckInBookResponse extends Response
 		int temp = Authentication.getInstance().authenticate(query);
 		sessionID = Integer.toString(temp);
 		int status = Authentication.getInstance().getLevel(temp);
-		
+		System.out.println("After after get level");
 		books = new ArrayList<Book>();
         
         if (status == 0 || status == 1) wasSuccessful = false;
@@ -53,10 +53,12 @@ public class CheckInBookResponse extends Response
         {
             try
             {
+            	System.out.println("Trying really really hard");
                 Dbwrapper.getInstance().CheckIn(query.isbn,query.userID);
+                System.out.println("Somehow we got through checkin");
             	userName = query.userID;
             	fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
-            	
+            	System.out.println("Fines: " + fines);
 //            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
 //            	String[] str = msg.split(",");
 //            	for(int i = 0; i < str.length; i++)
