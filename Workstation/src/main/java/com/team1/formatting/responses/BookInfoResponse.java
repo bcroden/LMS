@@ -26,6 +26,7 @@ public class BookInfoResponse extends Response
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
         {
+        	System.out.println("In book info response booklist: " + bookList[i]);
             books.add(new Book(bookList[i]));
         }
         

@@ -28,13 +28,14 @@ public class Controller {
 			client.sendRequest(message);
 			String reply = client.getReply();
 			
-			client.close();	
+			client.close();
 			return reply;
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	System.out.println("Returning null from sendMessage in controller");
     	return null;
     }
 }

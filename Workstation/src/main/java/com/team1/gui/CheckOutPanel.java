@@ -87,6 +87,7 @@ public class CheckOutPanel extends JPanel {
 				
 				
 				String r = controller.sendMessage(q.toString());
+				returnTextArea.setText(r);
 				
 				System.out.println("Message received: " + r);
 				
