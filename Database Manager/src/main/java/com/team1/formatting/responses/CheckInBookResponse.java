@@ -27,11 +27,11 @@ public class CheckInBookResponse extends Response
         
         books = new ArrayList<Book>();
         
-        String[] bookList = strBooks.split(bookBreak);
-        for (int i = 0; i < numBooks; i++)
-        {
-            books.add(new Book(bookList[i]));
-        }
+//        String[] bookList = strBooks.split(bookBreak);
+//        for (int i = 0; i < numBooks; i++)
+//        {
+//            books.add(new Book(bookList[i]));
+//        }
     }
     
     public CheckInBookResponse() 
@@ -56,12 +56,14 @@ public class CheckInBookResponse extends Response
                 Dbwrapper.getInstance().CheckIn(query.isbn,query.userID);
             	userName = query.userID;
             	fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
-            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
-            	String[] str = msg.split(",");
-            	for(int i = 0; i < str.length; i++)
-            	{
-            		books.add(BookFinder.getBookFromGoogle(str[i]));
-            	}
+            	
+//            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
+//            	String[] str = msg.split(",");
+//            	for(int i = 0; i < str.length; i++)
+//            	{
+//            		books.add(BookFinder.getBookFromGoogle(str[i]));
+//            	}
+//            	
                 wasSuccessful = true;
             }
             catch(SQLException | InvalidISBNException e)
@@ -89,13 +91,13 @@ public class CheckInBookResponse extends Response
         
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER + " ";
         
-        for (int i = 0; i < numBooks; i++)
-        {
-            msg = msg.concat(books.get(i).getSerialized());
-            msg = msg.concat(bookBreak);
-        }
+//        for (int i = 0; i < numBooks; i++)
+//        {
+//            msg = msg.concat(books.get(i).getSerialized());
+//            msg = msg.concat(bookBreak);
+//        }
         
         return msg;
     }
