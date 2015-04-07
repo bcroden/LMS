@@ -306,7 +306,7 @@ public class Dbwrapper {
     	
     	public synchronized String getBooksOut(String username) throws SQLException{
     		Statement stmt = con.createStatement();
-    		String sql = "SELECT books FROM user WHERE username = '" + username + "'";
+    		String sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
     		ResultSet result = stmt.executeQuery(sql);
     		String books = " ";
     		while(result.next()){
@@ -508,7 +508,7 @@ public class Dbwrapper {
     	ResultSet result = stmt.executeQuery(sql);
     	int balance = 0;
     	while(result.next()){
-    		balance = result.getInt("copiesin");
+    		balance = result.getInt("balance");
     	}
     	
     	return balance;
@@ -521,7 +521,7 @@ public class Dbwrapper {
     	ResultSet result = stmt.executeQuery(sql);
     	float temp = 0;
     	while(result.next()){
-    		temp = result.getInt("copiesin");
+    		temp = result.getInt("balance");
     	}
     	float costs = 0;
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
