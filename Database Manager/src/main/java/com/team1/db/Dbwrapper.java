@@ -392,9 +392,9 @@ public class Dbwrapper {
     	long time = System.currentTimeMillis();
     	String now = String.valueOf(time);
     	String times = tempTimes + now + ",";
-    	sql = "UPDATE user SET booksout = '" + books + "'";
+    	sql = "UPDATE user SET booksout = '" + books + "' WHERE username = '" + username + "'";
     	stmt.executeUpdate(sql);
-    	sql = "UPDATE user SET dateout = '" + times + "'";
+    	sql = "UPDATE user SET dateout = '" + times + "' WHERE username = '" + username + "'";
     	}
     	else{
     		System.out.println("Problem checking in");

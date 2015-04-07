@@ -85,8 +85,11 @@ public class CheckOutPanel extends JPanel {
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();
 				
+				
 				String r = controller.sendMessage(q.toString());
 				returnTextArea.setText(r);
+				
+				System.out.println("Message received: " + r);
 				
 				if(r == null) {
 					returnTextArea.setText("Invalid Entries.");
