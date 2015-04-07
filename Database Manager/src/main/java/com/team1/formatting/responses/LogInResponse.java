@@ -36,7 +36,8 @@ public class LogInResponse extends Response
     	
     	System.out.println("temp = " + temp);
     	
-    	this.status = auth.getLevel(temp);
+    	if(temp != 0)
+    		this.status = auth.getLevel(temp);
     	
     	System.out.println("after authenticate");
         
