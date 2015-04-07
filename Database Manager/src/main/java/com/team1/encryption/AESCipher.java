@@ -174,6 +174,8 @@ public class AESCipher {
         byte[] encryptedMessage = Util.concatenateArrays(iv, encryptedBytes);
 
         // Transmit
+        System.out.println("Encrypted Message = " + new String(encryptedMessage));
+        
         return encryptedMessage;
     }
 

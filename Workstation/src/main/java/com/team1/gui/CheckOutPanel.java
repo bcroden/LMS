@@ -87,7 +87,7 @@ public class CheckOutPanel extends JPanel {
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();
 				
-				
+				System.out.println("Q = " + q.toString());
 				String r = controller.sendMessage(q.toString());
 				returnTextArea.setText(r);
 				
