@@ -34,7 +34,9 @@ public class CheckOutBookResponse extends Response
 //            books.add(new Book(bookList[i]));
 //        }
         
-        books = Util.deserializeBookArrayList(strBooks);
+//        books = Util.deserializeBookArrayList(strBooks);
+        
+//        books.add(new Book(strBooks));
     }
     
     public CheckOutBookResponse() 
@@ -60,12 +62,14 @@ public class CheckOutBookResponse extends Response
                 Dbwrapper.getInstance().CheckOut(query.isbn,query.userID);
                 userName = query.userID;
             	fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
-            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
-            	String[] str = msg.split(",");
-            	for(int i = 0; i < str.length; i++)
-            	{
-            		books.add(BookFinder.getBookFromGoogle(str[i]));
-            	}
+            	
+//            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
+//            	String[] str = msg.split(",");
+//            	for(int i = 0; i < str.length; i++)
+//            	{
+//            		books.add(BookFinder.getBookFromGoogle(str[i]));
+//            	}
+            	
                 wasSuccessful = true;
                 System.out.println("Post call");
             }
@@ -94,7 +98,7 @@ public class CheckOutBookResponse extends Response
         
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER + " ";
         
 //        for (int i = 0; i < numBooks; i++)
 //        {
@@ -102,7 +106,8 @@ public class CheckOutBookResponse extends Response
 //            msg = msg.concat(bookBreak);
 //        }
         
-        msg = msg.concat(Util.serializeBookArrayList(books));
+//        msg = msg.concat(Util.serializeBookArrayList(books));
+        
         
         return msg;
     }

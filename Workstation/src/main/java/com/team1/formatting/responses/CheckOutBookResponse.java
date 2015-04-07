@@ -28,7 +28,7 @@ public class CheckOutBookResponse extends Response
 //            books.add(new Book(bookList[i]));
 //        }
         
-        books = Util.deserializeBookArrayList(strBooks);
+//        books = Util.deserializeBookArrayList(strBooks);
     }
     
     public CheckOutBookResponse() 
@@ -46,7 +46,7 @@ public class CheckOutBookResponse extends Response
         
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER + " ";
         
 //        for (int i = 0; i < numBooks; i++)
 //        {
@@ -54,7 +54,7 @@ public class CheckOutBookResponse extends Response
 //            msg = msg.concat(bookBreak);
 //        }
         
-        msg = msg.concat(Util.serializeBookArrayList(books));
+//        msg = msg.concat(Util.serializeBookArrayList(books));
         
         return msg;
     }
