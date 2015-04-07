@@ -187,8 +187,10 @@ public class AESCipher {
      *             If the current key is invalid
      */
     public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
+    	System.out.println("encrypted message = " + encryptedMessage);
         // Separate initialization vector from encrypted message
         byte[] iv = Util.getSubArray(encryptedMessage, 0, IV_SIZE);
+        System.out.println("Initialization Vector Length = " + iv.length);
         byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);
 
         // Initialize cipher
