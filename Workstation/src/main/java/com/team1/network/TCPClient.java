@@ -165,18 +165,24 @@ public class TCPClient
 
     private void setupAESCipher() throws IOException, InvalidKeyException
     {
+    	System.out.println("setting up cipher");
         //generate public key
         RSACipher publicCipher = new RSACipher();
+        System.out.println("building new cipher");
         byte[] publicKey = publicCipher.getPublicKey().getEncoded();
 
+        System.out.println("received publicKey"+ new String(publicKey));
         //send server public key
         sendBytes(publicKey);
 
+        System.out.println("sent bytes");
         //decrypt private key sent by server
         byte[] privateKey = publicCipher.decrypt(readBytes());
 
+        System.out.println("received privateKey" + new String(privateKey));
         //return cipher based on server's key
         cipher = new AESCipher(privateKey);
+        System.out.println("built new Cipher");
     }
 
     private AESCipher cipher;
