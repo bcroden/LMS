@@ -35,6 +35,7 @@ public class LogInResponse extends Response
     	this.sessionID = Integer.toString(temp);
     	
     	System.out.println("temp = " + temp);
+
     	if(temp != 0)
     		this.status = auth.getLevel(temp);
     	
