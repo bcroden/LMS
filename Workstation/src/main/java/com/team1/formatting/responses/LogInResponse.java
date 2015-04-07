@@ -2,7 +2,9 @@ package com.team1.formatting.responses;
 
 
 public class LogInResponse extends Response
-{    
+{
+	public static final String HEADER = "LogInResponse";
+	
 	public int status = 0;
     public LogInResponse()
     {
@@ -22,7 +24,7 @@ public class LogInResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "LogInResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + status;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + status;
         return msg;
     }
 }

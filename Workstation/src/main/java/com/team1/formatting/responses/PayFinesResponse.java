@@ -3,6 +3,8 @@ package com.team1.formatting.responses;
 
 public class PayFinesResponse extends Response
 {
+	public static final String HEADER = "PayFinesResponse";
+	
 	public PayFinesResponse()
 	{
 		super(false,"0");
@@ -19,7 +21,7 @@ public class PayFinesResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "PayFinesResponse" + DELIMITER + s + DELIMITER + sessionID;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID;
         return msg;
     }
 }

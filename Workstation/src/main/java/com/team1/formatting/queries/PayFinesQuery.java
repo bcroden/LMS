@@ -2,10 +2,17 @@ package com.team1.formatting.queries;
 
 public class PayFinesQuery extends LibrarianQuery
 {
-    public int paymentAmount;
+	public static final String HEADER = "PayFinesQuery";
+	
+    public float paymentAmount;
     public String userName;
     
-    public PayFinesQuery(String sessionID, String userName, int paymentAmount)
+    public PayFinesQuery(String sessionID)
+    {
+    	this(sessionID, " ", 0);
+    }
+    
+    public PayFinesQuery(String sessionID, String userName, float paymentAmount)
     {
         super(sessionID);
         this.userName = userName;
@@ -14,7 +21,7 @@ public class PayFinesQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String msg = "PayFinesQuery"+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+paymentAmount;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+userName+DELIMITER+paymentAmount;
         return msg;
     }
 }

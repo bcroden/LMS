@@ -2,12 +2,13 @@ package com.team1.formatting.queries;
 
 public class BookInfoQuery extends LibrarianQuery
 {
+	public static final String HEADER = "BookInfoQuery";
+	
     public BookInfoQuery(String sessionID) {
 		this(sessionID, " ", " ", " ", " ", " ", " ", " ");
 	}
     
     public BookInfoQuery(String sessionID, String isbn, String title, String author, String publisher, String datePublished, String genre, String availability) {
-        // TODO Auto-generated constructor stub
         super(sessionID);
         this.isbn = isbn;
         this.title = title;
@@ -17,7 +18,6 @@ public class BookInfoQuery extends LibrarianQuery
         this.genre = genre;
         this.availability = availability;
     }
-    
     
     //Methods to set single variables
     public BookInfoQuery searchByISBN(String isbn) {
@@ -55,7 +55,6 @@ public class BookInfoQuery extends LibrarianQuery
         return this;
     }
     
-
     //book information
     public String isbn;
     public String title;
@@ -63,14 +62,13 @@ public class BookInfoQuery extends LibrarianQuery
     public String publisher;
     public String datePublished;
     public String genre;
-
     
     //variable for if a book is checked out/in
     public String availability;
     
     @Override
     public String toString() {
-        String msg = "BookInfoQuery"+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+publisher+DELIMITER+datePublished+DELIMITER+genre+DELIMITER+availability;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+publisher+DELIMITER+datePublished+DELIMITER+genre+DELIMITER+availability;
         return msg;
     }
     

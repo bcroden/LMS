@@ -2,9 +2,16 @@ package com.team1.formatting.queries;
 
 public class PasswordChangeQuery extends Query
 {
+	public static final String HEADER = "PasswordChangeQuery";
+	
     public String oldPassword;
     public String newPassword;
     public String userName;
+    
+    public PasswordChangeQuery(String sessionID)
+    {
+    	this(sessionID, " ", " ", " ");
+    }
     
     public PasswordChangeQuery(String sessionID, String oldPassword, String newPassword, String userName)
     {
@@ -16,7 +23,7 @@ public class PasswordChangeQuery extends Query
     
     @Override
     public String toString() {
-        String msg = "PasswordChangeQuery"+DELIMITER+sessionID+DELIMITER+oldPassword+DELIMITER+newPassword+DELIMITER+userName;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+oldPassword+DELIMITER+newPassword+DELIMITER+userName;
         return msg;
     }
 }

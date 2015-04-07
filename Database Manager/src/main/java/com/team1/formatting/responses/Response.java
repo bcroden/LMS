@@ -28,7 +28,7 @@ public class Response
     
     
     //Constructor to take a msg and turn it into a query object
-    public Response stringToResponse(String msg)
+    public static Response stringToResponse(String msg)
     {
         //split the msg into each piece (deliminated by ;)
         String[] str = msg.split(DELIMITER);

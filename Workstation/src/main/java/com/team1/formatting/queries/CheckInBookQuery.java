@@ -2,9 +2,12 @@ package com.team1.formatting.queries;
 
 public class CheckInBookQuery extends LibrarianQuery
 {
-    public CheckInBookQuery(String sessionId) {
-    	this(sessionId, " ", " ", " ", " ", " ", " ", " ");
-	}
+	public static final String HEADER = "CheckInBookQuery";
+	
+	public CheckInBookQuery(String sessionID)
+    {
+    	this(sessionID, " ", " ", " ", " ", " ", " ", " ");
+    }
 	
     public CheckInBookQuery(String sessionID, String isbn, String title, String author, String availability, String fName, String lName, String userID)
     {
@@ -24,8 +27,8 @@ public class CheckInBookQuery extends LibrarianQuery
         this.isbn = isbn;
         return this;
     }*/
-
-	public CheckInBookQuery logByfName(String fName, String ISBN) {
+    
+    public CheckInBookQuery logByfName(String fName, String ISBN) {
         this.fName = fName;
         this.isbn = ISBN;
         return this;
@@ -55,7 +58,7 @@ public class CheckInBookQuery extends LibrarianQuery
     
     @Override
     public String toString() {
-        String msg = "CheckInBookQuery"+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
+        String msg = HEADER+DELIMITER+sessionID+DELIMITER+isbn+DELIMITER+title+DELIMITER+author+DELIMITER+availability+DELIMITER+fName+DELIMITER+lName+DELIMITER+userID;
         return msg;
     }
     

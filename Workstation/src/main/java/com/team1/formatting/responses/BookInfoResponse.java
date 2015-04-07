@@ -1,12 +1,13 @@
 package com.team1.formatting.responses;
 
-
 import java.util.ArrayList;
 
 import com.team1.books.Book;
 
 public class BookInfoResponse extends Response
 {
+	public static final String HEADER = "BookInfoResponse";
+	
     public ArrayList<Book> books = null;
     public static final String bookBreak = ";#;";
 
@@ -22,14 +23,10 @@ public class BookInfoResponse extends Response
     {
         super(wasSuccessful, sessionID);
         
-        books = new ArrayList<Book>();
-        
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < numBooks; i++)
         {
-        	System.out.println("Trying to make this a book: " + bookList[i]);
             books.add(new Book(bookList[i]));
-        	System.out.println("after addition");
         }
         
     }
@@ -51,13 +48,18 @@ public class BookInfoResponse extends Response
         else s = "false";
         
         
-        String msg = "BookInfoResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
+        
+        System.out.println("numBooks = " + numBooks);
         
         for (int i = 0; i < numBooks; i++)
         {
             msg = msg.concat(books.get(i).getSerialized());
+            System.out.println("Book = " + books.get(i).getSerialized());
             msg = msg.concat(bookBreak);
         }
+        
+        System.out.println("msg = " + msg);
         
         return msg;
     }

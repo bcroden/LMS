@@ -1,7 +1,7 @@
 package com.team1.formatting.queries;
 
 public class Query
-{
+{	
     public static final String DELIMITER = ";";
     //Variable for other functions to see what kind of query they are being given
     public static String queryType;
@@ -24,39 +24,45 @@ public class Query
         queryType = str[0];
         
         //build a new request from the rest of the msg.split, checking the queryType to determine which kind of request to build
-        if (queryType.equals("BookInfoQuery"))
+        if (queryType.equals(BookInfoQuery.HEADER))
         {
             BookInfoQuery request = new BookInfoQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
             return request;
         }
-        else if (queryType.equals("CheckOutBookQuery"))
+        else if (queryType.equals(CheckOutBookQuery.HEADER))
         {
             CheckOutBookQuery request = new CheckOutBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
             return request;
         }
-        else if (queryType.equals("CheckInBookQuery"))
+        else if (queryType.equals(CheckInBookQuery.HEADER))
         {
             CheckInBookQuery request = new CheckInBookQuery(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
             return request;
         }
-        else if (queryType.equals("LoginQuery"))
+        else if (queryType.equals(LoginQuery.HEADER))
         {
-            LoginQuery request = new LoginQuery(str[1], str[2]);    //sessionID is not required (included sessionID parameter)
+        	
+        	System.out.println(str[1]);
+        	System.out.println(str[2]);
+        	
+            LoginQuery request = new LoginQuery(str[2], str[3]);    //sessionID is not required (included sessionID parameter)
             return request;
         }
-        else if (queryType.equals("AddBookQuery"))
+        else if (queryType.equals(AddBookQuery.HEADER))
         {
-            AddBookQuery request = new AddBookQuery(str[1],str[2],Integer.getInteger(str[3]));    //sessionID is not required
+        	System.out.println("At add book q");
+            AddBookQuery request = new AddBookQuery(str[1],str[2],Integer.parseInt(str[3]));    //sessionID is not required
+            System.out.println("after add book q");
             return request;
         }
-        else if (queryType.equals("PasswordChangeQuery"))
+        else if (queryType.equals(PasswordChangeQuery.HEADER))
         {
             PasswordChangeQuery request = new PasswordChangeQuery(str[1],str[2],str[3],str[4]);    //sessionID is not required
             return request;
         }
-        else if (queryType.equals("PayFinesQuery"))
+        else if (queryType.equals(PayFinesQuery.HEADER))
         {
-            PayFinesQuery request = new PayFinesQuery(str[1],str[2],Integer.getInteger(str[3]));    //sessionID is not required
+            PayFinesQuery request = new PayFinesQuery(str[1],str[2],Float.valueOf(str[3]));    //sessionID is not required
             return request;
         }
         return new Query("0");

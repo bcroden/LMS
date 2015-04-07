@@ -6,6 +6,8 @@ import com.team1.books.Book;
 
 public class CheckOutBookResponse extends Response
 {
+	public static final String HEADER = "CheckOutBookResponse";
+	
 	public static final String bookBreak = ";$;";
     public String userName;
     public String fines;
@@ -41,7 +43,7 @@ public class CheckOutBookResponse extends Response
         
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = "CheckOutBookResponse" + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
         
         for (int i = 0; i < numBooks; i++)
         {
