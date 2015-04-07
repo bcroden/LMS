@@ -3,6 +3,7 @@ package com.team1.formatting.responses;
 import java.util.ArrayList;
 
 import com.team1.books.Book;
+import com.team1.formatting.Util;
 
 public class CheckOutBookResponse extends Response
 {
@@ -21,11 +22,13 @@ public class CheckOutBookResponse extends Response
         
         books = new ArrayList<Book>();
         
-        String[] bookList = strBooks.split(bookBreak);
-        for (int i = 0; i < numBooks; i++)
-        {
-            books.add(new Book(bookList[i]));
-        }
+//        String[] bookList = strBooks.split(bookBreak);
+//        for (int i = 0; i < numBooks; i++)
+//        {
+//            books.add(new Book(bookList[i]));
+//        }
+        
+        books = Util.deserializeBookArrayList(strBooks);
     }
     
     public CheckOutBookResponse() 
@@ -45,11 +48,13 @@ public class CheckOutBookResponse extends Response
         else s = "false";
         String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
         
-        for (int i = 0; i < numBooks; i++)
-        {
-            msg = msg.concat(books.get(i).getSerialized());
-            msg = msg.concat(bookBreak);
-        }
+//        for (int i = 0; i < numBooks; i++)
+//        {
+//            msg = msg.concat(books.get(i).getSerialized());
+//            msg = msg.concat(bookBreak);
+//        }
+        
+        msg = msg.concat(Util.serializeBookArrayList(books));
         
         return msg;
     }

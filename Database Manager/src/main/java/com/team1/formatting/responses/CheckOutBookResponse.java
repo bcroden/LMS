@@ -9,6 +9,7 @@ import com.team1.books.BookFinder;
 import com.team1.books.InvalidISBNException;
 import com.team1.db.Dbwrapper;
 import com.team1.formatting.queries.*;
+import com.team1.formatting.Util;
 
 public class CheckOutBookResponse extends Response
 {
@@ -26,12 +27,14 @@ public class CheckOutBookResponse extends Response
         this.fines = fines;
         
         books = new ArrayList<Book>();
+//        
+//        String[] bookList = strBooks.split(bookBreak);
+//        for (int i = 0; i < numBooks; i++)
+//        {
+//            books.add(new Book(bookList[i]));
+//        }
         
-        String[] bookList = strBooks.split(bookBreak);
-        for (int i = 0; i < numBooks; i++)
-        {
-            books.add(new Book(bookList[i]));
-        }
+        books = Util.deserializeBookArrayList(strBooks);
     }
     
     public CheckOutBookResponse() 
@@ -93,11 +96,13 @@ public class CheckOutBookResponse extends Response
         else s = "false";
         String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER;
         
-        for (int i = 0; i < numBooks; i++)
-        {
-            msg = msg.concat(books.get(i).getSerialized());
-            msg = msg.concat(bookBreak);
-        }
+//        for (int i = 0; i < numBooks; i++)
+//        {
+//            msg = msg.concat(books.get(i).getSerialized());
+//            msg = msg.concat(bookBreak);
+//        }
+        
+        msg = msg.concat(Util.serializeBookArrayList(books));
         
         return msg;
     }
