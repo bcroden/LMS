@@ -54,11 +54,11 @@ public class BookFinder {
 
         // Get the data from the JSON object, If an entry does not exist, return
         // ""
-        String title = (volumeInfo != null && volumeInfo.has("title")) ? volumeInfo.getString("title") : "";
+        String title = (volumeInfo != null && volumeInfo.has("title")) ? volumeInfo.getString("title") : " ";
         String author = (authors != null && authors.length() != 0) ? authors.getString(0) : "";
-        String publisher = (volumeInfo != null && volumeInfo.has("publisher")) ? volumeInfo.getString("publisher") : "";
-        String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : "";
-        String genre = (categories != null & categories.length() != 0) ? categories.getString(0) : "";
+        String publisher = (volumeInfo != null && volumeInfo.has("publisher")) ? volumeInfo.getString("publisher") : " ";
+        String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : " ";
+        String genre = (categories != null & categories.length() != 0) ? categories.getString(0) : " ";
 
         // Return the book
         return new Book(isbn, title, author, publisher, datePublished, genre);

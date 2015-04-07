@@ -28,7 +28,7 @@ public class Controller {
 			client.sendRequest(message);
 			String reply = client.getReply();
 			
-			client.close();	
+			client.close();
 			return reply;
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();

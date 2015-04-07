@@ -84,12 +84,12 @@ public class LookupPanel extends JPanel {
 				
 				String r = controller.sendMessage(q.toString());
 				
+				System.out.println("Response string = " + r);
+				
 				if(r == null) {
 					returnTextArea.setText("Invalid search field.");
 					returnTextArea.setForeground(Color.RED);
 				}
-				
-				System.out.println("r = " + r);
 				
 				Response response = Response.stringToResponse(r);
 				if(response instanceof BookInfoResponse) {
