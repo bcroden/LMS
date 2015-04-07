@@ -82,7 +82,6 @@ public class CheckInPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CheckInBookQuery q	= new CheckInBookQuery(controller.model.sessionId);
-				
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();
 				

@@ -81,6 +81,8 @@ public class CheckOutPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				returnTextArea.setText(" ");
+				
 				CheckOutBookQuery q	= new CheckOutBookQuery(controller.model.sessionId);
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();

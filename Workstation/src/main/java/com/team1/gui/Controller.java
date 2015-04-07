@@ -22,7 +22,6 @@ public class Controller {
     //TODO: more fixing
     public String sendMessage(String message) {
     	try {
-    		//TODO: less magic numbers
 			TCPClient client = new TCPClient(Model.HOST, Model.PORT);
 			
 			client.sendRequest(message);
