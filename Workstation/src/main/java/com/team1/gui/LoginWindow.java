@@ -133,6 +133,7 @@ public class LoginWindow extends LMSWindow {
 					controller.model.sessionId = ((LogInResponse)response).sessionID;
 					System.out.println(controller.model.sessionId);
 					controller.model.status = ((LogInResponse)response).status;
+					controller.model.username = usernameField.getText();
 					controller.showMainWindow();
 				}
 			}
