@@ -17,6 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import com.team1.formatting.queries.AddLibrarianQuery;
+import com.team1.formatting.queries.PasswordChangeQuery;
+import com.team1.formatting.responses.Response;
+
 /**
  * The main window for the workstation. Allows a user to perform librarian activities
  * as specified in the Formal Requirements Specification Document.
@@ -43,7 +47,7 @@ public class MainWindow extends LMSWindow {
     private static final String TOOLTIP_CKECKIN = 	null;
     private static final String TOOLTIP_PAYMENT = 	null;
     
-    public MainWindow(Controller controller, Model model) {
+    public MainWindow(final Controller controller, Model model) {
         super(controller, model);
         
         this.setSize(WIDTH, HEIGHT);
@@ -74,7 +78,7 @@ public class MainWindow extends LMSWindow {
         logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				close();
 			}
         });
         topPanel.add(logoutButton);
@@ -106,10 +110,28 @@ public class MainWindow extends LMSWindow {
         changePassword.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showInputDialog("Enter Current Password");
-				JOptionPane.showInputDialog("Enter New Password");
-				JOptionPane.showInputDialog("Re-enter New Password");
-				JOptionPane.showMessageDialog(null, "Done!");
+				String password = JOptionPane.showInputDialog("Enter Current Password");
+				String newPassword = JOptionPane.showInputDialog("Enter New Password");
+				String newPassword2 = JOptionPane.showInputDialog("Re-enter New Password");
+				
+				if(newPassword.equals(newPassword2)) {
+					PasswordChangeQuery query = new PasswordChangeQuery(controller.model.sessionId, password, newPassword, controller.model.username);
+					
+					String r = controller.sendMessage(query.toString());
+					
+					if(r == null) {
+						JOptionPane.showMessageDialog(null, "Failed");
+						return;
+					}
+					
+					Response response = Response.stringToResponse(r);
+					if(response.wasSuccessful)
+						JOptionPane.showMessageDialog(null, "Done!");
+					else
+						JOptionPane.showMessageDialog(null, "Failed");
+				}
+				else
+					JOptionPane.showMessageDialog(null, "Failed");
 			}
         });
         optionsMenu.add(changePassword);
@@ -120,7 +142,9 @@ public class MainWindow extends LMSWindow {
         addLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showInputDialog("New Account Name");
+				String newName = JOptionPane.showInputDialog("New Account Name");
+				
+//				AddLibrarianQuery q = new AddLibrarianQuery(controller.model.sessionId);
 			}
 		});
         optionsMenu.add(addLibrarianAccount);

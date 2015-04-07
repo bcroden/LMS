@@ -10,14 +10,17 @@ public class PayFinesResponse extends Response
 {
 	public static final String HEADER = "PayFinesResponse";
 	
+	public String fines;
+	
 	public PayFinesResponse()
 	{
 		super(false,"0");
 	}
 	
-    public PayFinesResponse(boolean wasSuccessful, String sessionID)
+    public PayFinesResponse(boolean wasSuccessful, String sessionID, String fines)
     {
     	super(wasSuccessful,sessionID);
+    	this.fines = fines;
     }
     
     public void executePayFinesQuery(PayFinesQuery query)
@@ -33,6 +36,7 @@ public class PayFinesResponse extends Response
         	//execute a pay fine
         	try {
     			Dbwrapper.getInstance().payBalance(query.userName,query.paymentAmount);
+    			this.fines = ""+Dbwrapper.getInstance().getBalance(query.userName);
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -54,7 +58,7 @@ public class PayFinesResponse extends Response
         String s;
         if (wasSuccessful) s = "true";
         else s = "false";
-        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID;
+        String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + this.fines;
         return msg;
     }
 }

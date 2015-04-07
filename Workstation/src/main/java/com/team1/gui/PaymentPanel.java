@@ -92,8 +92,11 @@ public class PaymentPanel extends JPanel {
 				}
 				
 				Response response = Response.stringToResponse(r);
-				if(response instanceof PayFinesResponse) {
-					
+				if(response instanceof PayFinesResponse && response.wasSuccessful) {
+					returnTextArea.setText("Remaining Balance = " + ((PayFinesResponse)response).fines);
+				}
+				else {
+					returnTextArea.setText("Failed to pay fine.");
 				}
 			}
         });

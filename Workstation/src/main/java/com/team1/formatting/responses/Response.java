@@ -69,7 +69,7 @@ public class Response
         }
         else if (responseType.equals(PayFinesResponse.HEADER))
         {
-            PayFinesResponse response = new PayFinesResponse(success, str[2]);
+            PayFinesResponse response = new PayFinesResponse(success, str[2], str[3]);
             return response;
         }
         return new Response(false, "0");
