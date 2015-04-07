@@ -93,9 +93,9 @@ public class RegisterPanel extends JPanel {
 				
 				if(response instanceof AddBookResponse) {
 					if(response.wasSuccessful)
-						returnTextArea.setText("Check out successfull");
+						returnTextArea.setText("Register succeded");
 					else
-						returnTextArea.setText("Check out failed");
+						returnTextArea.setText("Register failed");
 				}
 			}
         });

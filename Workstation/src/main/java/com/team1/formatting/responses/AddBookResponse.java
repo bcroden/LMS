@@ -1,10 +1,5 @@
 package com.team1.formatting.responses;
 
-import java.sql.SQLException;
-
-import com.team1.books.Book;
-import com.team1.books.InvalidISBNException;
-import com.team1.formatting.queries.AddBookQuery;
 
 public class AddBookResponse extends LibrarianResponse
 {
