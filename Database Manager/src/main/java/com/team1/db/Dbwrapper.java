@@ -85,7 +85,7 @@ public class Dbwrapper {
 		String tempp = book.publisher;
 		String temppd = book.datePublished;
 		String tempt = book.title;
-		
+		/*
 		if(tempp == null || tempp.equals("")){
 			System.out.println("Null publisher");
 		Statement stmt = con.createStatement();
@@ -109,16 +109,16 @@ public class Dbwrapper {
 			System.out.println("Null title");
 			System.out.println("The ISBN did not provide a title, no database entry created.");
 		}
-		else{
-			System.out.println("No null");
+		else{*/
+		System.out.println("No null");
 		Statement stmt = con.createStatement();
 		String sql = "INSERT INTO book " +
 					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout) " + 
 					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
 					 "', '" + encode(book.genre) + "', '" + encode(book.publisher) + "', '" + book.datePublished + 
-					 "', '" + 0 + "', '" + 0 + "', '" + 0 + "', '" + 0 +"')";
+					 "', '" + 0 + "', '" + 0 + "', '" + num + "', '" + 0 +"')";
 		stmt.executeUpdate(sql);
-		}
+	//}
 	}
 	//Functions for updating book info (likes dislikes and copies)
 	
@@ -392,9 +392,12 @@ public class Dbwrapper {
     	long time = System.currentTimeMillis();
     	String now = String.valueOf(time);
     	String times = tempTimes + now + ",";
+    	System.out.println("Times: " + times);
     	sql = "UPDATE user SET booksout = '" + books + "' WHERE username = '" + username + "'";
     	stmt.executeUpdate(sql);
     	sql = "UPDATE user SET dateout = '" + times + "' WHERE username = '" + username + "'";
+    	stmt.executeUpdate(sql);
+    	//might want to execute queries
     	}
     	else{
     		System.out.println("Problem checking in");
