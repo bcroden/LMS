@@ -19,15 +19,20 @@ public class Response
     //Constructor to take a msg and turn it into a query object
     public static Response stringToResponse(String msg)
     {
+    	System.out.println("begining stringToResponse");
         //split the msg into each piece (deliminated by ;)
         String[] str = msg.split(DELIMITER);
+        
+        System.out.println("after split");
         
         //get the first piece
         //first piece determines response type
         responseType = str[0];
+        System.out.println("after setting response type");
         boolean success;
         if(str[1].equalsIgnoreCase("true")) success = true;
         else success = false;
+        System.out.println("after setting success");
         
         //build a new response from the rest of the msg.split, checking the responseType to determine which kind of request to build
         if (responseType.equals(BookInfoResponse.HEADER))
