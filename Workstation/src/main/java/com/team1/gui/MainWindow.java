@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import com.team1.formatting.queries.AddLibrarianQuery;
 import com.team1.formatting.queries.PasswordChangeQuery;
 import com.team1.formatting.responses.Response;
 
@@ -142,7 +141,7 @@ public class MainWindow extends LMSWindow {
         addLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String newName = JOptionPane.showInputDialog("New Account Name");
+//				String newName = JOptionPane.showInputDialog("New Account Name");
 				
 //				AddLibrarianQuery q = new AddLibrarianQuery(controller.model.sessionId);
 			}
