@@ -128,7 +128,7 @@ public class Dbwrapper {
     public synchronized ArrayList<Book> SearchAuthor(String author)throws SQLException
     {
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT * FROM book WHERE author = '" + author + "'";
+    	String sql = "SELECT * FROM book WHERE author LIKE '%" + author + "%'";
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
@@ -148,7 +148,7 @@ public class Dbwrapper {
     public synchronized ArrayList<Book> SearchTitle(String title)throws SQLException
     {
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT * FROM book WHERE title = '" + title + "'";
+    	String sql = "SELECT * FROM book WHERE title LIKE '%" + title + "%'";
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
@@ -168,7 +168,7 @@ public class Dbwrapper {
     public synchronized ArrayList<Book> SearchPublisher(String publisher)throws SQLException
     {
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT * FROM book WHERE publisher = '" + publisher + "'";
+    	String sql = "SELECT * FROM book WHERE publisher LIKE '%" + publisher + "%'";
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
@@ -211,7 +211,7 @@ public class Dbwrapper {
     public synchronized ArrayList<Book> SearchGenre(String genre)throws SQLException
     {
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT * FROM book WHERE genre = '" + genre + "'";
+    	String sql = "SELECT * FROM book WHERE genre LIKE '%" + genre + "%'";
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
@@ -293,7 +293,7 @@ public class Dbwrapper {
     	
     	public synchronized String getPass(String user)throws SQLException{
     		Statement stmt = con.createStatement();
-    		String sql = "SELECT password FROM user WHERE username = '" + user + "'";
+    		String sql = "SELECT password FROM user WHERE BINARY username = '" + user + "'";
     		ResultSet result = stmt.executeQuery(sql);
     		String pass = "";
     		while(result.next()){

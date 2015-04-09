@@ -56,7 +56,8 @@ public class BuildDB {
 						+ "(id INT NOT NULL AUTO_INCREMENT, isbn VARCHAR(13) UNIQUE, "
 						+ "title VARCHAR(100), author VARCHAR(100), genre VARCHAR(50), "
 						+ "likes INT, dislikes INT, publisher VARCHAR(100), publishdate YEAR, "
-						+ "copiesin INT, copiesout INT, PRIMARY KEY(id))";
+						+ "copiesin INT, copiesout INT, copiesreserved INT, usersreserved VARCHAR(1500)"
+						+ ", PRIMARY KEY(id))";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE IF NOT EXISTS user "
