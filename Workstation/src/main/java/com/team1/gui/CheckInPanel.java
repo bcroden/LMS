@@ -82,17 +82,19 @@ public class CheckInPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CheckInBookQuery q	= new CheckInBookQuery(controller.model.sessionId);
+				
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();
-				
+				System.out.println("Q = " + q.toString());
 				String r = controller.sendMessage(q.toString());
-				
+				System.out.println("R = " + r);
 				if(r == null) {
 					returnTextArea.setText("Invalid Entries.");
 					returnTextArea.setForeground(Color.RED);
 				}
-				
+				System.out.println("Before checkin response");
 				Response response = Response.stringToResponse(r);
+				System.out.println("After checkin response");
 				if(response instanceof CheckInBookResponse) {
 					if(response.wasSuccessful)
 						returnTextArea.setText("Check in successfull");

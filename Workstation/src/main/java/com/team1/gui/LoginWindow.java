@@ -136,6 +136,9 @@ public class LoginWindow extends LMSWindow {
 					controller.model.username = usernameField.getText();
 					controller.showMainWindow();
 				}
+				else{
+					errorMessage.setText(ERROR_MESSAGE_TEXT);
+				}
 			}
 		});
 		
