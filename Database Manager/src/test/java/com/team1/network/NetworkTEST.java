@@ -24,7 +24,28 @@ public class NetworkTEST
         final int PORT = 3612;
         final String hostname = "localhost";
 
-        String str = "Hello";
+        String str = "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello"
+        		+ "HelloHelloHelloHelloHelloHelloHelloHelloHello";
         
         // setup TCP server on the specified port
         Thread thread = new Thread(new TCPServer(PORT));
@@ -43,6 +64,6 @@ public class NetworkTEST
         
         Response r = new Response(false, "");
         
-        assertTrue("Failed", str2.equals(r.toString()));
+        assertTrue("Failed", str2.equals(str));
     }
 }

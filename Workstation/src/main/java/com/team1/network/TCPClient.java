@@ -1,8 +1,8 @@
 package com.team1.network;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
@@ -59,7 +59,7 @@ public class TCPClient
         // create streams for sending and
         // receiving information to/from server
         toServer = new DataOutputStream(socket.getOutputStream());
-        fromServer = socket.getInputStream();
+        fromServer = new DataInputStream(socket.getInputStream());
 
         // initiate encryption
         setupAESCipher();
@@ -155,7 +155,7 @@ public class TCPClient
     {
         int size = 0;
         while(size == 0)
-            size = fromServer.read(); // Seems to return zero even when nothing has been sent
+            size = fromServer.readInt(); // Seems to return zero even when nothing has been sent
 
         byte[] msg = new byte[size];
         fromServer.read(msg);
@@ -187,6 +187,6 @@ public class TCPClient
 
     private AESCipher cipher;
     private DataOutputStream toServer;
-    private InputStream fromServer;
+    private DataInputStream fromServer;
     private Socket socket;
 }

@@ -1,8 +1,8 @@
 package com.team1.network;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
@@ -59,7 +59,7 @@ public class MockTCPClient
         // create streams for sending and
         // receiving information to/from server
         toServer = new DataOutputStream(socket.getOutputStream());
-        fromServer = socket.getInputStream();
+        fromServer = new DataInputStream(socket.getInputStream());
 
         // initiate encryption
         setupAESCipher();
@@ -93,9 +93,12 @@ public class MockTCPClient
      */
     public String getReply() throws InvalidKeyException, IOException
     {
+    	System.out.println("in getReply before try");
         try
         {
             byte[] encReply = readBytes();
+            System.out.println("in getReply encReply = " + new String(encReply, "UTF-8"));
+            System.out.println("encReply length = " + encReply.length);
             close();
             return cipher.decrypt(encReply);
         }
@@ -119,13 +122,15 @@ public class MockTCPClient
     public String requestAndWait(String request) throws InvalidKeyException, IOException
     {
         sendRequest(request);
-
+        System.out.println("before do");
         String reply;
         do
         {
+        	System.out.println("in do");
             reply = getReply();
         }
         while(reply == null || reply == "");
+        System.out.println("after do");
 
         return reply;
     }
@@ -155,10 +160,13 @@ public class MockTCPClient
     {
         int size = 0;
         while(size == 0)
-            size = fromServer.read(); // Seems to return zero even when nothing has been sent
+            size = fromServer.readInt(); // Seems to return zero even when nothing has been sent
 
         byte[] msg = new byte[size];
         fromServer.read(msg);
+        
+        System.out.println("Received these bytes from server: " + new String(msg, "UTF-8"));
+        System.out.println("Received Message Length = " + msg.length);
 
         return msg;
     }
@@ -181,6 +189,6 @@ public class MockTCPClient
 
     private AESCipher cipher;
     private DataOutputStream toServer;
-    private InputStream fromServer;
+    private DataInputStream fromServer;
     private Socket socket;
 }

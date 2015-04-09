@@ -1,16 +1,14 @@
 package com.team1.network;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
-import com.team1.formatting.queries.Query;
-import com.team1.formatting.responses.Response;
 
 /**
  * Represents a thread running on the server which will communicate with a
@@ -32,7 +30,7 @@ public class ResponseThread extends Thread
 
         // setup streams to talk to client
         toClient = new DataOutputStream(socket.getOutputStream());
-        fromClient = socket.getInputStream();
+        fromClient = new DataInputStream(socket.getInputStream());
 
         setupAESCipher();
     }
@@ -44,22 +42,9 @@ public class ResponseThread extends Thread
         {
             // get the request string from the client
             String cliRequest = readClientRequest();
-
-            System.out.println("Request string from client: " + cliRequest);
-            System.out.println("Crash at build request");
-            Query query = Query.buildRequest(cliRequest);
-            System.out.println("Got out of build");
-            System.out.println("Result of build request: "+ query.toString());
-
-            // TODO: Pass Query object to Authentication
-
-            Response response = Response.executeQuery(query);
-            
-            System.out.println("After execute query");
-            System.out.println("From DBM Sending : " + response.toString());
             
             // send reply string to the client
-            sendReplyToClient(response.toString()); // echo what was sent by the client
+            sendReplyToClient(cliRequest); // echo what was sent by the client
 
             // clean up my mess
             close();
@@ -76,6 +61,7 @@ public class ResponseThread extends Thread
     private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
     {
         byte[] encRequest = readBytes();
+        System.out.println("Trying to decrypt: " + new String(encRequest, "UTF-8"));
         return cipher.decrypt(encRequest);
     }
 
@@ -97,7 +83,7 @@ public class ResponseThread extends Thread
             {
                 // Note: this seems to return 0 instead
                 // of throwing a SocketTimeoutException
-                msgSize = fromClient.read();
+                msgSize = fromClient.readInt();
             }
             catch(SocketTimeoutException e)
             {
@@ -130,6 +116,8 @@ public class ResponseThread extends Thread
     private void sendBytes(byte[] bytes) throws IOException
     {
         toClient.writeInt(bytes.length);
+        System.out.println("Sending these bytes from Server: " + new String(bytes, "UTF-8"));
+        System.out.println("Sending message lengh: " + bytes.length);
         toClient.write(bytes);
     }
 
@@ -164,7 +152,7 @@ public class ResponseThread extends Thread
 
     private AESCipher cipher;
     private DataOutputStream toClient;
-    private InputStream fromClient;
+    private DataInputStream fromClient;
     private Socket socket;
     private TCPServer boss;
 }
