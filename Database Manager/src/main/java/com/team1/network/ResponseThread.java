@@ -9,6 +9,8 @@ import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
+import com.team1.formatting.queries.Query;
+import com.team1.formatting.responses.Response;
 
 /**
  * Represents a thread running on the server which will communicate with a
@@ -40,14 +42,24 @@ public class ResponseThread extends Thread
     {
         try
         {
-            // get the request string from the client
-            String cliRequest = readClientRequest();
-            
-            // send reply string to the client
-            sendReplyToClient(cliRequest); // echo what was sent by the client
-
-            // clean up my mess
-            close();
+        	 // get the request string from the client
+        	String cliRequest = readClientRequest();
+        	
+        	System.out.println("Request string from client: " + cliRequest);
+        	System.out.println("Crash at build request");
+        	Query query = Query.buildRequest(cliRequest);
+        	
+        	System.out.println("Got out of build");
+        	System.out.println("Result of build request: "+ query.toString());
+        	
+        	// TODO: Pass Query object to Authentication
+        	Response response = Response.executeQuery(query);
+        	System.out.println("After execute query");
+        	System.out.println("From DBM Sending : " + response.toString());
+        	// send reply string to the client
+        	sendReplyToClient(response.toString()); // echo what was sent by the client
+        	// clean up my mess
+        	close();
         }
         catch(Exception e)
         {
