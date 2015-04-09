@@ -159,7 +159,7 @@ public class TCPClient
 
         byte[] msg = new byte[size];
         fromServer.read(msg);
-
+        System.out.println("Message: " + new String(msg));
         return msg;
     }
 
