@@ -1,7 +1,7 @@
 <?php
 
-	error_reporting(E_ALL);
-	ini_set('display_errors', 'On');
+//	error_reporting(E_ALL);
+//	ini_set('display_errors', 'On');
 
 	$host = "localhost";
 	$user = "root";
@@ -13,7 +13,7 @@
 	function connect(){
 		global $host, $user, $pass, $db, $port, $connection;
 		$connection = mysqli_connect($host, $user, $pass, $db, $port)or die("Error: " . $connection->connect_error);
-		echo "<br>Connected to database<br>"; //debug line
+//		echo "<br>Connected to database<br>"; //debug line
 	}
 
 	function getUsers(){
