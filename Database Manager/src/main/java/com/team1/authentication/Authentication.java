@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.team1.db.Dbwrapper;
-import com.team1.formatting.queries.*;
+import com.team1.formatting.queries.AdminQuery;
+import com.team1.formatting.queries.LibrarianQuery;
+import com.team1.formatting.queries.LoginQuery;
+import com.team1.formatting.queries.Query;
 
 public class Authentication {
 

@@ -11,6 +11,7 @@ import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
 import com.team1.formatting.queries.Query;
 import com.team1.formatting.responses.Response;
+import com.team1.formatting.QueryUtils;
 
 /**
  * Represents a thread running on the server which will communicate with a
@@ -53,7 +54,7 @@ public class ResponseThread extends Thread
         	System.out.println("Result of build request: "+ query.toString());
         	
         	// TODO: Pass Query object to Authentication
-        	Response response = Response.executeQuery(query);
+        	Response response = QueryUtils.executeQuery(query);
         	System.out.println("After execute query");
         	System.out.println("From DBM Sending : " + response.toString());
         	// send reply string to the client

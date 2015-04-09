@@ -1,0 +1,2 @@
+include 'LMSCommon'
+project(':LMSCommon').projectDir = new File(settingsDir, '../LMSCommon')
