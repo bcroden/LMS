@@ -1,6 +1,6 @@
 package com.team1.network;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;

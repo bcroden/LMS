@@ -15,15 +15,14 @@ eclipse {
 
 //List all dependencies for the project
 dependencies {
-	compile files("lib/mysql-connector-java-5.0.8-bin.jar",
-				  "lib/json-20141113.jar")
+	compile project(':LMSCommon')
+	compile files("lib/mysql-connector-java-5.0.8-bin.jar",)
 	testCompile files("lib/junit/junit-4.12.jar",
 					  "lib/junit/hamcrest-core-1.3.jar")
 }
 
 //Build an executable jar containing all dependencies
 jar {
-	version = '0.1.0'
 	manifest {
 		attributes 'Main-Class': 'com.team1.Main'
 	}
