@@ -9,9 +9,10 @@ import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
+import com.team1.formatting.QueryUtils;
 import com.team1.formatting.queries.Query;
 import com.team1.formatting.responses.Response;
-
+	
 /**
  * Represents a thread running on the server which will communicate with a
  * client. This class is designed to interface with com.team1.network.TCPClient
@@ -53,7 +54,7 @@ public class ResponseThread extends Thread
         	System.out.println("Result of build request: "+ query.toString());
         	
         	// TODO: Pass Query object to Authentication
-        	Response response = Response.executeQuery(query);
+        	Response response = QueryUtils.executeQuery(query);
         	System.out.println("After execute query");
         	System.out.println("From DBM Sending : " + response.toString());
         	// send reply string to the client
@@ -73,13 +74,13 @@ public class ResponseThread extends Thread
     private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
     {
         byte[] encRequest = readBytes();
-        System.out.println("Trying to decrypt: " + new String(encRequest, "UTF-8"));
         return cipher.decrypt(encRequest);
     }
 
     // encrypts and sends a message to the client
     private void sendReplyToClient(String reply) throws InvalidKeyException, IOException
     {
+    	
         sendBytes(cipher.encrypt(reply));
     }
 
@@ -95,7 +96,7 @@ public class ResponseThread extends Thread
             {
                 // Note: this seems to return 0 instead
                 // of throwing a SocketTimeoutException
-                msgSize = fromClient.readInt();
+                msgSize = fromClient.read();
             }
             catch(SocketTimeoutException e)
             {
@@ -111,7 +112,8 @@ public class ResponseThread extends Thread
             try
             {
                 // keep attempting to read until it is successful
-                fromClient.read(request);
+                fromClient.readFully(request);
+              
                 break;
             }
             catch(SocketTimeoutException e)
@@ -120,17 +122,19 @@ public class ResponseThread extends Thread
 
             Thread.sleep(2);
         }
-
+        System.out.println("Read Bytes Message msgSize: " + msgSize + " request length: " + request.length);
         return request;
     }
 
     // sends an array of raw bytes to the client
     private void sendBytes(byte[] bytes) throws IOException
     {
+    	toClient.flush();
         toClient.writeInt(bytes.length);
-        System.out.println("Sending these bytes from Server: " + new String(bytes, "UTF-8"));
+        toClient.flush();
         System.out.println("Sending message lengh: " + bytes.length);
         toClient.write(bytes);
+        toClient.flush();
     }
 
     // initialize encryption ciphers according to an agreed protocol

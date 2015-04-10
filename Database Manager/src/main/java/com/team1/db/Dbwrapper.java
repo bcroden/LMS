@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
-//get book objects
 import com.team1.books.Book;
 import com.team1.books.InvalidISBNException;
+//get book objects
 
 
 
@@ -462,6 +461,9 @@ public class Dbwrapper {
     	String totalBooks = "";
     		System.out.println("Key: " + books.indexOf(isbn));
     		int key = books.indexOf(isbn);
+    		if(key < 0){
+    			return;
+    		}
     		books.remove(key);
     		times.remove(key);
     		for(int j = 0; j < books.size(); j++){
