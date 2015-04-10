@@ -60,7 +60,7 @@ public class TCPClient
         // create streams for sending and
         // receiving information to/from server
         toServer = new DataOutputStream(socket.getOutputStream());
-        fromServer = (socket.getInputStream());
+        fromServer = new DataInputStream(socket.getInputStream());
 
         // initiate encryption
         setupAESCipher();
@@ -163,7 +163,7 @@ public class TCPClient
             size = fromServer.read(); // Seems to return zero even when nothing has been sent
         
         byte[] msg = new byte[size];
-        fromServer.read(msg);
+        fromServer.readFully(msg);
         System.out.println("Message: " + new String(msg) + " Size: " + msg.length);
         return msg;
     }
@@ -192,6 +192,6 @@ public class TCPClient
 
     private AESCipher cipher;
     private DataOutputStream toServer;
-    private InputStream fromServer;
+    private DataInputStream fromServer;
     private Socket socket;
 }
