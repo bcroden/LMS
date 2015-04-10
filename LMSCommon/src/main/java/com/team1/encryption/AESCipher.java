@@ -190,7 +190,6 @@ public class AESCipher {
      */
     public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
     	System.out.println("In decrypt messageLength = " + encryptedMessage.length);
-    	
         // Separate initialization vector from encrypted message
         byte[] iv = Util.getSubArray(encryptedMessage, 0, IV_SIZE);
         byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);

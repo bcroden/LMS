@@ -3,6 +3,7 @@ package com.team1.network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
@@ -74,13 +75,14 @@ public class ResponseThread extends Thread
     private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
     {
         byte[] encRequest = readBytes();
-        System.out.println("Trying to decrypt: " + new String(encRequest, "UTF-8"));
+        System.out.println("Trying to decrypt: " + new String(encRequest, "UTF-8") + "in readClientRequest Length = " + encRequest.length);
         return cipher.decrypt(encRequest);
     }
 
     // encrypts and sends a message to the client
     private void sendReplyToClient(String reply) throws InvalidKeyException, IOException
     {
+    	
         sendBytes(cipher.encrypt(reply));
     }
 
@@ -96,7 +98,7 @@ public class ResponseThread extends Thread
             {
                 // Note: this seems to return 0 instead
                 // of throwing a SocketTimeoutException
-                msgSize = fromClient.readInt();
+                msgSize = fromClient.read();
             }
             catch(SocketTimeoutException e)
             {
@@ -112,7 +114,8 @@ public class ResponseThread extends Thread
             try
             {
                 // keep attempting to read until it is successful
-                fromClient.read(request);
+                fromClient.readFully(request);
+              
                 break;
             }
             catch(SocketTimeoutException e)
@@ -121,17 +124,20 @@ public class ResponseThread extends Thread
 
             Thread.sleep(2);
         }
-
+        System.out.println("Read Bytes Message msgSize: " + msgSize + " request length: " + request.length);
         return request;
     }
 
     // sends an array of raw bytes to the client
     private void sendBytes(byte[] bytes) throws IOException
     {
+    	toClient.flush();
         toClient.writeInt(bytes.length);
+        toClient.flush();
         System.out.println("Sending these bytes from Server: " + new String(bytes, "UTF-8"));
         System.out.println("Sending message lengh: " + bytes.length);
         toClient.write(bytes);
+        toClient.flush();
     }
 
     // initialize encryption ciphers according to an agreed protocol

@@ -3,6 +3,7 @@ package com.team1.network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
@@ -59,7 +60,7 @@ public class TCPClient
         // create streams for sending and
         // receiving information to/from server
         toServer = new DataOutputStream(socket.getOutputStream());
-        fromServer = new DataInputStream(socket.getInputStream());
+        fromServer = (socket.getInputStream());
 
         // initiate encryption
         setupAESCipher();
@@ -97,6 +98,7 @@ public class TCPClient
         {
             byte[] encReply = readBytes();
             close();
+            System.out.println("In get replay: " + new String(encReply, "UTF-8"));
             return cipher.decrypt(encReply);
         }
         catch(SocketTimeoutException e)
@@ -146,8 +148,11 @@ public class TCPClient
     //send an array of raw bytes to the server
     private void sendBytes(byte[] bytes) throws IOException
     {
+    	toServer.flush();
+    	System.out.println("In TCPClient sendBytes length: " + bytes.length);
         toServer.writeInt(bytes.length);
         toServer.write(bytes);
+        toServer.flush();
     }
 
     //receive a sequence of raw bytes from the server
@@ -155,11 +160,11 @@ public class TCPClient
     {
         int size = 0;
         while(size == 0)
-            size = fromServer.readInt(); // Seems to return zero even when nothing has been sent
+            size = fromServer.read(); // Seems to return zero even when nothing has been sent
 
         byte[] msg = new byte[size];
         fromServer.read(msg);
-        System.out.println("Message: " + new String(msg));
+        System.out.println("Message: " + new String(msg) + " Size: " + msg.length);
         return msg;
     }
 
@@ -187,6 +192,6 @@ public class TCPClient
 
     private AESCipher cipher;
     private DataOutputStream toServer;
-    private DataInputStream fromServer;
+    private InputStream fromServer;
     private Socket socket;
 }

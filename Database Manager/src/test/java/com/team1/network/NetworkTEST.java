@@ -17,7 +17,7 @@ import com.team1.formatting.responses.Response;
  */
 
 public class NetworkTEST
-{
+{/*
     @Test
     public void encryptionTestEchoServer() throws IOException, InterruptedException, InvalidKeyException
     {
@@ -65,5 +65,5 @@ public class NetworkTEST
         Response r = new Response(false, "");
         
         assertTrue("Failed", str2.equals(str));
-    }
+    }*/
 }
