@@ -3,16 +3,15 @@ package com.team1.network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
+import com.team1.formatting.QueryUtils;
 import com.team1.formatting.queries.Query;
 import com.team1.formatting.responses.Response;
-import com.team1.formatting.QueryUtils;
 	
 /**
  * Represents a thread running on the server which will communicate with a

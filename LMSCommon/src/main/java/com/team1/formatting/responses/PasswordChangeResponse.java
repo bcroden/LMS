@@ -1,9 +1,5 @@
 package com.team1.formatting.responses;
 
-import java.sql.SQLException;
-
-import com.team1.formatting.queries.PasswordChangeQuery;
-
 public class PasswordChangeResponse extends Response
 {
 	public static final String HEADER = "PasswordChangeResponse";
