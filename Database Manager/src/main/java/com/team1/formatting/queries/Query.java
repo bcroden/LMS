@@ -65,6 +65,21 @@ public class Query
             PayFinesQuery request = new PayFinesQuery(str[1],str[2],Float.valueOf(str[3]));    //sessionID is not required
             return request;
         }
+        else if (queryType.equals(AddLibrarianQuery.HEADER))
+        {
+            AddLibrarianQuery request = new AddLibrarianQuery(str[1],str[2],str[3],str[4],str[5],str[6],Integer.parseInt(str[7]));    //sessionID is not required
+            return request;
+        }
+        else if (queryType.equals(RemoveLibrarianQuery.HEADER))
+        {
+            RemoveLibrarianQuery request = new RemoveLibrarianQuery(str[1],str[2]);    //sessionID is not required
+            return request;
+        }
+        else if (queryType.equals(SetFineQuery.HEADER))
+        {
+            SetFineQuery request = new SetFineQuery(str[1],Float.valueOf(str[3]));    //sessionID is not required
+            return request;
+        }
         return new Query("0");
     }
     
