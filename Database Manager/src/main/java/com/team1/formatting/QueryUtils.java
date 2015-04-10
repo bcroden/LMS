@@ -145,13 +145,13 @@ public class QueryUtils {
                 response.userName = query.userID;
                 response.fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
             	System.out.println("Fines: " + response.fines);
-//            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
-//            	String[] str = msg.split(",");
-//            	for(int i = 0; i < str.length; i++)
-//            	{
-//            		books.add(BookFinder.getBookFromGoogle(str[i]));
-//            	}
-//            	
+            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
+            	String[] str = msg.split(",");
+            	for(int i = 0; i < str.length; i++)
+            	{
+            		response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            	}
+            	
             	response.wasSuccessful = true;
             }
             catch(SQLException | InvalidISBNException e)
@@ -190,12 +190,12 @@ public class QueryUtils {
                 response.userName = query.userID;
                 response.fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
             	
-//            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
-//            	String[] str = msg.split(",");
-//            	for(int i = 0; i < str.length; i++)
-//            	{
-//            		books.add(BookFinder.getBookFromGoogle(str[i]));
-//            	}
+            	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
+            	String[] str = msg.split(",");
+            	for(int i = 0; i < str.length; i++)
+            	{
+            		response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            	}
             	
                 response.wasSuccessful = true;
                 System.out.println("Post call");

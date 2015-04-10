@@ -461,6 +461,9 @@ public class Dbwrapper {
     	String totalBooks = "";
     		System.out.println("Key: " + books.indexOf(isbn));
     		int key = books.indexOf(isbn);
+    		if(key < 0){
+    			return;
+    		}
     		books.remove(key);
     		times.remove(key);
     		for(int j = 0; j < books.size(); j++){
