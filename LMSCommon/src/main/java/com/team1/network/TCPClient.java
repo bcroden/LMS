@@ -97,7 +97,6 @@ public class TCPClient
         {
             byte[] encReply = readBytes();
             close();
-            System.out.println("In get replay: " + new String(encReply, "UTF-8"));
             return cipher.decrypt(encReply);
         }
         catch(SocketTimeoutException e)
@@ -163,7 +162,6 @@ public class TCPClient
         
         byte[] msg = new byte[size];
         fromServer.readFully(msg);
-        System.out.println("Message: " + new String(msg) + " Size: " + msg.length);
         return msg;
     }
 
@@ -175,7 +173,6 @@ public class TCPClient
         System.out.println("building new cipher");
         byte[] publicKey = publicCipher.getPublicKey().getEncoded();
 
-        System.out.println("received publicKey"+ new String(publicKey));
         //send server public key
         sendBytes(publicKey);
 
@@ -183,7 +180,6 @@ public class TCPClient
         //decrypt private key sent by server
         byte[] privateKey = publicCipher.decrypt(readBytes());
 
-        System.out.println("received privateKey" + new String(privateKey));
         //return cipher based on server's key
         cipher = new AESCipher(privateKey);
         System.out.println("built new Cipher");

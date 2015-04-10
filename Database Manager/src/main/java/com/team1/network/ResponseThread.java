@@ -74,7 +74,6 @@ public class ResponseThread extends Thread
     private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
     {
         byte[] encRequest = readBytes();
-        System.out.println("Trying to decrypt: " + new String(encRequest, "UTF-8") + "in readClientRequest Length = " + encRequest.length);
         return cipher.decrypt(encRequest);
     }
 
@@ -133,7 +132,6 @@ public class ResponseThread extends Thread
     	toClient.flush();
         toClient.writeInt(bytes.length);
         toClient.flush();
-        System.out.println("Sending these bytes from Server: " + new String(bytes, "UTF-8"));
         System.out.println("Sending message lengh: " + bytes.length);
         toClient.write(bytes);
         toClient.flush();
