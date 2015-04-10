@@ -6,8 +6,8 @@
    };
 
    include "DBwrapper.php";
-   error_reporting(E_ALL);
-   ini_set('display_errors', 'On');
+//   error_reporting(E_ALL);
+//   ini_set('display_errors', 'On');
 
    connect();
 
@@ -135,10 +135,11 @@
 <html>
    <head>
       <title>LMS</title>
+      <script src="view_account.js"></script>
    </head>
    <body>
       <h3>Personal and Contact Information</h3>
-      <table>
+      <table id="ContactTable" hidden="true">
          <tr>
             <th>First Name</th>
             <th>Last Name</th>
@@ -156,9 +157,10 @@
             <td><?php if($_SESSION["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
          </tr>
       </table>
+      <button id="ContactButton" onclick="toggleContact()">View</button>
 
       <h3>Books Currently Checked-Out</h3>
-      <table>
+      <table id="BookOutTable" hidden="true">
          <tr>
             <th>ISBN</th>
             <th>Title</th>
@@ -176,6 +178,7 @@
              }
           ?>
       </table>
+      <button id="BookOutButton" onclick="toggleBookOut()">View</button>
 
       <form action="view_account.php" method="post">
            <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/>
