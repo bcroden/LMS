@@ -1,6 +1,6 @@
 package com.team1.encryption;
 
-public class Util {
+public class EncryptionUtils {
     public static byte[] concatenateArrays(byte[] a, byte[] b) {
         if (a == null || a.length == 0)
             return b;
@@ -8,13 +8,11 @@ public class Util {
             return a;
 
         byte[] total = new byte[a.length + b.length];
-        for (int i = 0; i < a.length; i++)
-            total[i] = a[i];
-        for (int i = 0; i < b.length; i++)
-            total[i + a.length] = b[i];
+        System.arraycopy(a, 0, total, 0, a.length);
+        System.arraycopy(b, 0, total, a.length, b.length);
         return total;
     }
-
+    
     public static byte[] getSubArray(byte[] a, int start, int amount) {
         if (start > a.length)
             return null;

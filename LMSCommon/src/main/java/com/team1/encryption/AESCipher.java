@@ -171,7 +171,7 @@ public class AESCipher {
         }
 
         // Append encryptedBytes to iv for transmission
-        byte[] encryptedMessage = Util.concatenateArrays(iv, encryptedBytes);
+        byte[] encryptedMessage = EncryptionUtils.concatenateArrays(iv, encryptedBytes);
 
         // Transmit
         System.out.println("In encryption, Encrypted bytes length = " + encryptedMessage.length);
@@ -191,8 +191,8 @@ public class AESCipher {
     public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
     	System.out.println("In decrypt messageLength = " + encryptedMessage.length);
         // Separate initialization vector from encrypted message
-        byte[] iv = Util.getSubArray(encryptedMessage, 0, IV_SIZE);
-        byte[] encryptedBytes = Util.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);
+        byte[] iv = EncryptionUtils.getSubArray(encryptedMessage, 0, IV_SIZE);
+        byte[] encryptedBytes = EncryptionUtils.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);
 
         
         

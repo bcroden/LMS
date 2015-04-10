@@ -178,11 +178,11 @@ public class RSACipher {
         byte[] encryptedBytes = null;
         for (int i = 0; i < passes; i++) {
             // Get current message bytes to encrypt
-            byte[] temp = Util.getSubArray(message, i * BLOCK_SIZE, BLOCK_SIZE);
+            byte[] temp = EncryptionUtils.getSubArray(message, i * BLOCK_SIZE, BLOCK_SIZE);
             try {
                 // Add newly encrypted bytes to total
                 synchronized (this.cipher) {
-                    encryptedBytes = Util.concatenateArrays(encryptedBytes, this.cipher.doFinal(temp));
+                    encryptedBytes = EncryptionUtils.concatenateArrays(encryptedBytes, this.cipher.doFinal(temp));
                 }
             }
             catch (IllegalBlockSizeException e) {
@@ -225,11 +225,11 @@ public class RSACipher {
         byte[] message = null;
         for (int i = 0; i < passes; i++) {
             // Get current encrypted bytes to decrypt
-            byte[] temp = Util.getSubArray(encryptedBytes, i * ENCRYPTED_BLOCK_LENGTH, ENCRYPTED_BLOCK_LENGTH);
+            byte[] temp = EncryptionUtils.getSubArray(encryptedBytes, i * ENCRYPTED_BLOCK_LENGTH, ENCRYPTED_BLOCK_LENGTH);
             try {
                 // Add newly decrypted bytes to total
                 synchronized (this.cipher) {
-                    message = Util.concatenateArrays(message, this.cipher.doFinal(temp));
+                    message = EncryptionUtils.concatenateArrays(message, this.cipher.doFinal(temp));
                 }
             }
             catch (IllegalBlockSizeException e) {
