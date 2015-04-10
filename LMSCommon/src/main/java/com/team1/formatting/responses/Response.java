@@ -64,6 +64,21 @@ public class Response
             PayFinesResponse response = new PayFinesResponse(success, str[2], str[3]);
             return response;
         }
+        else if (responseType.equals(AddLibrarianResponse.HEADER))
+        {
+            AddLibrarianResponse response = new AddLibrarianResponse(success, str[2], str[3], str[4], str[5]);
+            return response;
+        }
+        else if (responseType.equals(RemoveLibrarianResponse.HEADER))
+        {
+        	RemoveLibrarianResponse response = new RemoveLibrarianResponse(success, str[2], str[3], str[4], str[5]);
+            return response;
+        }
+        else if (responseType.equals(SetFineResponse.HEADER))
+        {
+            SetFineResponse response = new SetFineResponse(success, str[2], str[3]);
+            return response;
+        }
         return new Response(false, "0");
     }
 
