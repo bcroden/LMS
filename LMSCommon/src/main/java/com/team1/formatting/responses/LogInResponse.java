@@ -1,7 +1,5 @@
 package com.team1.formatting.responses;
 
-import com.team1.formatting.queries.LoginQuery;
-
 public class LogInResponse extends Response
 {
 	public static final String HEADER = "LogInResponse";

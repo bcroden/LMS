@@ -1,10 +1,8 @@
 package com.team1.formatting.responses;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.team1.books.Book;
-import com.team1.formatting.queries.BookInfoQuery;
 
 public class BookInfoResponse extends Response
 {
@@ -33,12 +31,6 @@ public class BookInfoResponse extends Response
             books.add(new Book(bookList[i]));
         }
         
-    }
-    
-    
-    private static boolean isValid(String string)
-    {
-        return string != null && !string.equals("");
     }
     
     //Override of toString. Method to return the object information in the form of a string.
