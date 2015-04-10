@@ -1,0 +1,34 @@
+
+table {
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 10px;
+   width: 40%
+}
+
+table, th, td {
+   border-collapse: collapse;
+   border: 1px solid black;
+}
+
+th, td {
+   text-align: center;
+   padding: 5px;
+}
+
+form {
+   text-align: center;
+   width: 480px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 50px;
+}
+
+#tglBtn {
+   text-align: center;
+   margin: auto;
+}
+
+h3 {
+   text-align: center;
+}
