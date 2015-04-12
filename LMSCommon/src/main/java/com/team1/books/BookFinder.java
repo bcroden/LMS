@@ -68,7 +68,7 @@ public class BookFinder {
         System.out.println("Image URL = " + imageURL);
         
         // Return the book
-        return new Book(isbn, title, author, publisher, datePublished, genre);
+        return new Book(isbn, title, author, publisher, datePublished, genre, imageURL);
     }
 
     private static JSONObject getJSONObjectFromGoogle(String isbn) throws IOException {

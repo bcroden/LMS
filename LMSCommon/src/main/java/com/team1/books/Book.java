@@ -19,17 +19,19 @@ public class Book {
     public final String publisher;
     public final String datePublished;
     public final String genre;
+    public final String url;
 
     /**
      * Creates a book.
      */
-    public Book(String isbn, String title, String author, String publisher, String datePublished, String genre) {
+    public Book(String isbn, String title, String author, String publisher, String datePublished, String genre, String url) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.datePublished = datePublished;
         this.genre = genre;
+        this.url = url;
     }
 
     /**
@@ -50,6 +52,7 @@ public class Book {
         this.publisher = data[4];
         this.datePublished = data[5];
         this.genre = data[6];
+        this.url = data[7];
     }
 
     /**
@@ -60,7 +63,7 @@ public class Book {
      */
     public String getSerialized() {
         return HEADER + DELIMITER + isbn + DELIMITER + title + DELIMITER + author + DELIMITER + publisher + DELIMITER + datePublished
-                + DELIMITER + genre;
+                + DELIMITER + genre + DELIMITER + url;
     }
 
     @Override
@@ -68,7 +71,7 @@ public class Book {
         return "Book data:" + "\nISBN: " + isbn + "\nTitle: " + title + "\nAuthor: " + author + "\nPublisher: " + publisher
                 + "\nPublish Date: " + datePublished + "\nGenre: " + genre;
     }
-
+    
     // Basic main for testing purposes
     public static void main(String[] args) throws InvalidISBNException {
         Book book = BookFinder.getBookFromGoogle("054792822X");
