@@ -23,12 +23,12 @@ public class CheckOutBookResponse extends Response
         this.fines = fines;
         
         books = new ArrayList<Book>();
-//        
-//        String[] bookList = strBooks.split(bookBreak);
-//        for (int i = 0; i < numBooks; i++)
-//        {
-//            books.add(new Book(bookList[i]));
-//        }
+        
+        String[] bookList = strBooks.split(bookBreak);
+        for (int i = 0; i < bookList.length; i++)
+        {
+            books.add(new Book(bookList[i]));
+        }
         
 //        books = Util.deserializeBookArrayList(strBooks);
         
@@ -52,11 +52,11 @@ public class CheckOutBookResponse extends Response
         else s = "false";
         String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + userName + DELIMITER + fines + DELIMITER + numBooks + DELIMITER + " ";
         
-//        for (int i = 0; i < numBooks; i++)
-//        {
-//            msg = msg.concat(books.get(i).getSerialized());
-//            msg = msg.concat(bookBreak);
-//        }
+        for (int i = 0; i < numBooks; i++)
+        {
+            msg = msg.concat(books.get(i).getSerialized());
+            msg = msg.concat(bookBreak);
+        }
         
 //        msg = msg.concat(Util.serializeBookArrayList(books));
         

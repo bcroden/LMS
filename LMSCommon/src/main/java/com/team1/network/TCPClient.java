@@ -160,7 +160,7 @@ public class TCPClient
     {
         int size = 0;
         while(size == 0)
-            size = fromServer.read(); // Seems to return zero even when nothing has been sent
+            size = fromServer.readInt(); // Seems to return zero even when nothing has been sent
         
         byte[] msg = new byte[size];
         fromServer.readFully(msg);
