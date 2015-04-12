@@ -1,17 +1,5 @@
 package com.team1.formatting.responses;
 
-import java.sql.SQLException;
-
-import com.team1.books.InvalidISBNException;
-import com.team1.formatting.queries.AddBookQuery;
-import com.team1.formatting.queries.BookInfoQuery;
-import com.team1.formatting.queries.CheckInBookQuery;
-import com.team1.formatting.queries.CheckOutBookQuery;
-import com.team1.formatting.queries.LoginQuery;
-import com.team1.formatting.queries.PasswordChangeQuery;
-import com.team1.formatting.queries.PayFinesQuery;
-import com.team1.formatting.queries.Query;
-
 public class Response
 {
     public boolean wasSuccessful;
@@ -74,6 +62,21 @@ public class Response
         else if (responseType.equals(PayFinesResponse.HEADER))
         {
             PayFinesResponse response = new PayFinesResponse(success, str[2], str[3]);
+            return response;
+        }
+        else if (responseType.equals(AddLibrarianResponse.HEADER))
+        {
+            AddLibrarianResponse response = new AddLibrarianResponse(success, str[2], str[3], str[4], str[5]);
+            return response;
+        }
+        else if (responseType.equals(RemoveLibrarianResponse.HEADER))
+        {
+        	RemoveLibrarianResponse response = new RemoveLibrarianResponse(success, str[2], str[3], str[4], str[5]);
+            return response;
+        }
+        else if (responseType.equals(SetFineResponse.HEADER))
+        {
+            SetFineResponse response = new SetFineResponse(success, str[2], str[3]);
             return response;
         }
         return new Response(false, "0");

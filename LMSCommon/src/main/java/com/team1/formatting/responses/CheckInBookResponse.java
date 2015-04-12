@@ -1,11 +1,8 @@
 package com.team1.formatting.responses;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.team1.books.Book;
-import com.team1.books.InvalidISBNException;
-import com.team1.formatting.queries.CheckInBookQuery;
 
 public class CheckInBookResponse extends Response
 {

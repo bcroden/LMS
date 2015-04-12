@@ -3,16 +3,15 @@ package com.team1.network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.InvalidKeyException;
 
 import com.team1.encryption.AESCipher;
 import com.team1.encryption.RSACipher;
+import com.team1.formatting.QueryUtils;
 import com.team1.formatting.queries.Query;
 import com.team1.formatting.responses.Response;
-import com.team1.formatting.QueryUtils;
 	
 /**
  * Represents a thread running on the server which will communicate with a
@@ -75,7 +74,6 @@ public class ResponseThread extends Thread
     private String readClientRequest() throws IOException, InterruptedException, InvalidKeyException
     {
         byte[] encRequest = readBytes();
-        System.out.println("Trying to decrypt: " + new String(encRequest, "UTF-8") + "in readClientRequest Length = " + encRequest.length);
         return cipher.decrypt(encRequest);
     }
 
@@ -134,7 +132,6 @@ public class ResponseThread extends Thread
     	toClient.flush();
         toClient.writeInt(bytes.length);
         toClient.flush();
-        System.out.println("Sending these bytes from Server: " + new String(bytes, "UTF-8"));
         System.out.println("Sending message lengh: " + bytes.length);
         toClient.write(bytes);
         toClient.flush();

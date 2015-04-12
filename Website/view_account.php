@@ -136,10 +136,12 @@
    <head>
       <title>LMS</title>
       <script src="view_account.js"></script>
+      <link rel="stylesheet" type="text/css" href="view_account.css">
    </head>
    <body>
       <h3>Personal and Contact Information</h3>
-      <table id="ContactTable" hidden="true">
+      <div id="tglBtn"><button id="ContactButton" onclick="toggleContact()">View</button></div>
+      <table id="ContactTable" hidden="false">
          <tr>
             <th>First Name</th>
             <th>Last Name</th>
@@ -157,14 +159,15 @@
             <td><?php if($_SESSION["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
          </tr>
       </table>
-      <button id="ContactButton" onclick="toggleContact()">View</button>
 
       <h3>Books Currently Checked-Out</h3>
+      <div id="tglBtn"><button id="BookOutButton" onclick="toggleBookOut()">View</button></div>
       <table id="BookOutTable" hidden="true">
          <tr>
             <th>ISBN</th>
             <th>Title</th>
             <th>Author</th>
+            <th>Time Left</th>
          </tr>
           <?php $books_out_res = mysqli_fetch_array(getBooksOut($usrnm));
              $books_out = $books_out_res["booksout"];
@@ -178,21 +181,20 @@
              }
           ?>
       </table>
-      <button id="BookOutButton" onclick="toggleBookOut()">View</button>
 
       <form action="view_account.php" method="post">
-           <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/>
+           <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/><br/>
            <input type="submit" value="Set Email"/>
       </form>
 
       <form action="view_account.php" method="post">
-           <input type="password" name="new_password" value="<?= $_SESSION['pass'] ?>"/>
+           <input type="password" name="new_password" value="<?= $_SESSION['pass'] ?>"/><br/>
            <input type="submit" value="Set Password"/>
       </form>
 
       <form action="view_account.php" method="post">
          <input type="radio" name="notify" value="1">Yes</intput>
-         <input type="radio" name="notify" value="-1">No</intput>
+         <input type="radio" name="notify" value="-1">No</intput><br/>
          <input type="submit" value="Set Email Notification"/>
       </form>
 
