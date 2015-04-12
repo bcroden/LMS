@@ -11,7 +11,7 @@ public class InvalidISBNException extends Exception {
     private static final long serialVersionUID = 0;
 
     public InvalidISBNException() {
-
+    	super();
     }
 
     public InvalidISBNException(String message) {

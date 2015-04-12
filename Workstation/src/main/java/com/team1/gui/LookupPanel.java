@@ -74,13 +74,19 @@ public class LookupPanel extends JPanel {
 				BookInfoQuery q = new BookInfoQuery(controller.model.sessionId);
 				
 				//Reflect the query and invoke the correct searchBy method
-				for(Method m : q.getClass().getMethods())
-					if (m.getName().contains("searchBy") && m.getName().contains((String)comboBox.getSelectedItem()))
+				for(Method m : q.getClass().getMethods()) {
+					if (m.getName().contains("searchBy") && m.getName().contains((String)comboBox.getSelectedItem())) {
 						try {
 							m.invoke(q, searchField.getText());
-						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
 							e.printStackTrace();
 						}
+					}
+				}
 				
 				String r = controller.sendMessage(q.toString());
 				

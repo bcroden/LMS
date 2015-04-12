@@ -1,0 +1,13 @@
+Flat UI Icons Free
+https://www.iconfinder.com/iconsets/flat-ui-icons-24-px
+
+Created by Designmodo
+http://designmodo.com
+
+Used under the terms of the Creative Commons Attribution 3.0 Unported License
+http://creativecommons.org/licenses/by/3.0/
+
+Changes Made:
+The user icon was recolored green and red.
+A minus icon was derived from the plus icon.
+The plus icon was down-scaled to 8x8 pixels.

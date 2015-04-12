@@ -18,6 +18,8 @@ import org.json.JSONObject;
  */
 public class BookFinder {
     private static final String GOOGLE_API_URL = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
+    
+    public static final String DEFAULT_VALUE = " ";
 
     /**
      * Will return a Book containing information found on Google for the given
@@ -51,15 +53,20 @@ public class BookFinder {
         JSONObject volumeInfo = (items != null && items.length() != 0) ? items.getJSONObject(0).getJSONObject("volumeInfo") : null;
         JSONArray authors = (volumeInfo != null && volumeInfo.has("authors")) ? volumeInfo.getJSONArray("authors") : null;
         JSONArray categories = (volumeInfo != null && volumeInfo.length() != 0) ? volumeInfo.getJSONArray("categories") : null;
+        JSONObject imageLinks = (volumeInfo != null && volumeInfo.length() != 0) ? volumeInfo.getJSONObject("imageLinks"): null;
 
         // Get the data from the JSON object, If an entry does not exist, return
         // ""
-        String title = (volumeInfo != null && volumeInfo.has("title")) ? volumeInfo.getString("title") : " ";
-        String author = (authors != null && authors.length() != 0) ? authors.getString(0) : "";
-        String publisher = (volumeInfo != null && volumeInfo.has("publisher")) ? volumeInfo.getString("publisher") : " ";
-        String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : " ";
-        String genre = (categories != null & categories.length() != 0) ? categories.getString(0) : " ";
-
+        String title = (volumeInfo != null && volumeInfo.has("title")) ? volumeInfo.getString("title") : DEFAULT_VALUE;
+        String author = (authors != null && authors.length() != 0) ? authors.getString(0) : DEFAULT_VALUE;
+        String publisher = (volumeInfo != null && volumeInfo.has("publisher")) ? volumeInfo.getString("publisher") : DEFAULT_VALUE;
+        String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : DEFAULT_VALUE;
+        String genre = (categories != null & categories.length() != 0) ? categories.getString(0) : DEFAULT_VALUE;
+        String imageURL = (imageLinks != null & imageLinks.has("thumbnail")) ? imageLinks.getString("thumbnail") : DEFAULT_VALUE;
+        
+        //TODO: add imageURL to Book
+        System.out.println("Image URL = " + imageURL);
+        
         // Return the book
         return new Book(isbn, title, author, publisher, datePublished, genre);
     }

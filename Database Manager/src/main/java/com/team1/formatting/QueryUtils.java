@@ -384,12 +384,12 @@ public class QueryUtils {
         else if (status == 3)
         {
         	//Remove a librarian
-        	try {
-        		
-    		} catch (SQLException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+//        	try {
+//        		
+//    		} catch (SQLException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
         }
         else
         {
@@ -414,12 +414,12 @@ public class QueryUtils {
         else if (status == 3)
         {
         	//Set the fine rate
-        	try {
-        		
-    		} catch (SQLException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+//        	try {
+//        		
+//    		} catch (SQLException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
         }
         else
         {

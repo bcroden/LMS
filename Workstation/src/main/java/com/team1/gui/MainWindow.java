@@ -6,17 +6,22 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
+import com.team1.books.Book;
+import com.team1.books.BookFinder;
+import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.PasswordChangeQuery;
 import com.team1.formatting.responses.Response;
 
@@ -34,78 +39,68 @@ public class MainWindow extends LMSWindow {
     private static final int WIDTH = 800;
     private static final boolean IS_RESIZABLE = true;
     
-    private static final String TAB_NAME_LOOKUP = 	"Book Lookup";
-    private static final String TAB_NAME_REGISTER = "Register New Book";
-    private static final String TAB_NAME_CKECKOUT = "Check Out Book";
-    private static final String TAB_NAME_CKECKIN = 	"Check In Book";
-    private static final String TAB_NAME_PAYMENT = 	"Handle Payment";
+    private static final String TAB_NAME_LOOKUP = 		"Book Lookup";
+    private static final String TAB_NAME_REGISTER = 	"Register New Book";
+    private static final String TAB_NAME_CKECKOUT = 	"Check Out Book";
+    private static final String TAB_NAME_CKECKIN = 		"Check In Book";
+    private static final String TAB_NAME_PAYMENT = 		"Handle Payment";
     
-    private static final String TOOLTIP_LOOKUP = 	null;
-    private static final String TOOLTIP_REGISTER = 	null;
-    private static final String TOOLTIP_CHECKOUT = 	null;
-    private static final String TOOLTIP_CKECKIN = 	null;
-    private static final String TOOLTIP_PAYMENT = 	null;
+    private static final String MENU_TEXT_PASSWORD = 	"Change Password";
+    private static final String MENU_TEXT_ADD_ACCOUNT = "Add Librarian Account";
+    private static final String MENU_TEXT_REM_ACCOUNT = "Remove Librarian Account";
+    private static final String MENU_TEXT_FINES = 		"Fees/Fines";
+    private static final String MENU_TEXT_LOGOUT = 		"Logout";
+    
+    private static final String ICON_PATH_OPTIONS = 	"/flat-ui-icons-free/gearicon32.png";
+    private static final String ICON_PATH_PASSWORD = 	"/flat-ui-icons-free/lockicon16.png";
+    private static final String ICON_PATH_ADD_USER = 	"/flat-ui-icons-free/usericon16g.png";
+    private static final String ICON_PATH_REM_USER = 	"/flat-ui-icons-free/usericon16r.png";
+    private static final String ICON_PATH_LOGOUT = 		"/flat-ui-icons-free/xicon16.png";
+    
+    private static final String TOOLTIP_LOOKUP = 		null;
+    private static final String TOOLTIP_REGISTER = 		null;
+    private static final String TOOLTIP_CHECKOUT = 		null;
+    private static final String TOOLTIP_CKECKIN = 		null;
+    private static final String TOOLTIP_PAYMENT = 		null;
+    private static final String TOOLTIP_OPTIONS = 		"Options";
+    
+    private LMSButton optionsButton;
+    
+    private MainWindow that;
     
     public MainWindow(final Controller controller, Model model) {
         super(controller, model);
         
+        this.that = this;
+        
         this.setSize(WIDTH, HEIGHT);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setResizable(IS_RESIZABLE);
         this.setLocationRelativeTo(null);
         
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{10, 0, 10, 0};
-        gridBagLayout.rowHeights = new int[]{50, 0, 10, 0};
+        gridBagLayout.rowHeights = new int[]{10, 50, 0, 10, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
         
         JPanel topPanel = new JPanel();
         GridBagConstraints gbc_topPanel = new GridBagConstraints();
-        gbc_topPanel.gridwidth = 3;
         gbc_topPanel.insets = new Insets(0, 0, 5, 0);
         gbc_topPanel.fill = GridBagConstraints.BOTH;
-        gbc_topPanel.gridx = 0;
-        gbc_topPanel.gridy = 0;
+        gbc_topPanel.gridx = 1;
+        gbc_topPanel.gridy = 1;
         getContentPane().add(topPanel, gbc_topPanel);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         
         Component horizontalGlue = Box.createHorizontalGlue();
         topPanel.add(horizontalGlue);
         
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				close();
-			}
-        });
-        topPanel.add(logoutButton);
+        final JPopupMenu menu = new JPopupMenu();
         
-        Component horizontalStrut = Box.createHorizontalStrut(20);
-        topPanel.add(horizontalStrut);
-        
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-        gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
-        gbc_tabbedPane.fill = GridBagConstraints.BOTH;
-        gbc_tabbedPane.gridx = 1;
-        gbc_tabbedPane.gridy = 1;
-        getContentPane().add(tabbedPane, gbc_tabbedPane);
-        
-        tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(this.controller), 	TOOLTIP_LOOKUP);
-        tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(this.controller), 	TOOLTIP_REGISTER);
-        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(this.controller), 	TOOLTIP_CHECKOUT);
-        tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(this.controller), 	TOOLTIP_CKECKIN);
-        tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(this.controller), 	TOOLTIP_PAYMENT);
-        
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
-        
-        JMenu optionsMenu = new JMenu("Options");
-        menuBar.add(optionsMenu);
-        
-        JMenuItem changePassword = new JMenuItem("Change Password");
+        JMenuItem changePassword = new JMenuItem(MENU_TEXT_PASSWORD);
+        changePassword.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_PASSWORD)));
         changePassword.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -133,30 +128,117 @@ public class MainWindow extends LMSWindow {
 					JOptionPane.showMessageDialog(null, "Failed");
 			}
         });
-        optionsMenu.add(changePassword);
+        menu.add(changePassword);
         
-        JMenuItem addLibrarianAccount = new JMenuItem("Add Librarian Account");
-        if(controller.model.status != 3)
+        JMenuItem addLibrarianAccount = new JMenuItem(MENU_TEXT_ADD_ACCOUNT);
+        addLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_ADD_USER)));
+        if(controller.model.status < 3)
         	addLibrarianAccount.setEnabled(false);
         addLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				String newName = JOptionPane.showInputDialog("New Account Name");
-				
-//				AddLibrarianQuery q = new AddLibrarianQuery(controller.model.sessionId);
+				//TODO
 			}
 		});
-        optionsMenu.add(addLibrarianAccount);
+        menu.add(addLibrarianAccount);
         
-        JMenuItem removeLibrarianAccount = new JMenuItem("Remove Librarian Account");
-        if(controller.model.status != 3)
+        JMenuItem removeLibrarianAccount = new JMenuItem(MENU_TEXT_REM_ACCOUNT);
+        removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_REM_USER)));
+        if(controller.model.status < 3)
         	removeLibrarianAccount.setEnabled(false);
-        optionsMenu.add(removeLibrarianAccount);
+        removeLibrarianAccount.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+        });
+        menu.add(removeLibrarianAccount);
         
-        JMenuItem feesFines = new JMenuItem("Fees/Fines");
-        if(controller.model.status != 3)
+        JMenuItem feesFines = new JMenuItem(MENU_TEXT_FINES);
+        if(controller.model.status < 3)
         	feesFines.setEnabled(false);
-        optionsMenu.add(feesFines);
+        feesFines.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+        });
+        menu.add(feesFines);
+        
+        JMenuItem logout = new JMenuItem(MENU_TEXT_LOGOUT);
+        logout.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_LOGOUT)));
+        logout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				close();
+			}
+        });
+        menu.add(logout);
+        
+        optionsButton = new LMSButton(new ImageIcon(getClass().getResource(ICON_PATH_OPTIONS)));
+        optionsButton.setToolTipText(TOOLTIP_OPTIONS);
+        optionsButton.setMargin(new Insets(4, 4, 4, 4));
+        optionsButton.setFocusPainted(false);
+        
+        optionsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				optionsButton.setFocusPainted(false);
+				//TODO: This is kind of a hack, fix this
+				menu.show(that, optionsButton.getX() - menu.getWidth() + 2 * optionsButton.getWidth(), optionsButton.getY() + 2 * optionsButton.getHeight());
+			}
+        });
+        topPanel.add(optionsButton);
+        
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
+        gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
+        gbc_tabbedPane.fill = GridBagConstraints.BOTH;
+        gbc_tabbedPane.gridx = 1;
+        gbc_tabbedPane.gridy = 2;
+        getContentPane().add(tabbedPane, gbc_tabbedPane);
+        
+        Book book = null;
+		try {
+			book = BookFinder.getBookFromGoogle("054792822X");
+		} catch (InvalidISBNException e1) {
+			e1.printStackTrace();
+		}
+        URL url = null;
+		try {
+			url = new URL("http://books.google.com/books/content?id=ouo2qAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api");
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+        
+        BookLabel bl1 = new BookLabel(url, book);
+        BookLabel bl2 = new BookLabel(url, book);
+        BookLabel bl3 = new BookLabel(url, book);
+        
+        JPanel testPanel = new JPanel();
+        testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.X_AXIS));
+        
+        Component horizontalGlue_1 = Box.createHorizontalGlue();
+        testPanel.add(horizontalGlue_1);
+        testPanel.add(bl1);
+        
+        Component horizontalStrut = Box.createHorizontalStrut(20);
+        testPanel.add(horizontalStrut);
+        testPanel.add(bl2);
+        
+        Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+        testPanel.add(horizontalStrut_1);
+        testPanel.add(bl3);
+        
+        Component horizontalGlue_2 = Box.createHorizontalGlue();
+        testPanel.add(horizontalGlue_2);
+        
+        tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(this.controller), 	TOOLTIP_LOOKUP);
+        tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(this.controller), 	TOOLTIP_REGISTER);
+        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(this.controller), 	TOOLTIP_CHECKOUT);
+        tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(this.controller), 	TOOLTIP_CKECKIN);
+        tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(this.controller), 	TOOLTIP_PAYMENT);
+        tabbedPane.addTab("test", testPanel);
         
         this.setVisible(true);
     }

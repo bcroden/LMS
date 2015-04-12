@@ -1,11 +1,14 @@
 package com.team1.gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -54,7 +57,7 @@ public class LoginWindow extends LMSWindow {
 		this.setLocationRelativeTo(null);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 40, 57, 113, 57, 40, 0 };
+		gridBagLayout.columnWidths = new int[] { 40, 57, 113, 0, 40, 0 };
 		gridBagLayout.rowHeights = new int[] { 36, 61, 33, 14, 20, 14, 20, 33, 23, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
@@ -108,11 +111,24 @@ public class LoginWindow extends LMSWindow {
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 6;
 		getContentPane().add(passwordField, gbc_passwordField);
-
+		
+		errorMessage = new JLabel(ERROR_MESSAGE_INITIAL_TEXT);
+		errorMessage.setForeground(Color.RED);
+		GridBagConstraints gbc_errorMessage = new GridBagConstraints();
+		gbc_errorMessage.anchor = GridBagConstraints.WEST;
+		gbc_errorMessage.gridwidth = 2;
+		gbc_errorMessage.insets = new Insets(0, 0, 5, 5);
+		gbc_errorMessage.gridx = 1;
+		gbc_errorMessage.gridy = 7;
+		getContentPane().add(errorMessage, gbc_errorMessage);
+		
+//		loginButton = new LMSButton(new ImageIcon(getClass().getResource("/flat-ui-icons-free/optionsbutton.png")));
 		loginButton = new JButton(LOGIN_BUTTON_TEXT);
+//		loginButton.setMargin(new Insets(4, 4, 4, 4));
 		loginButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent action) {
+			public void actionPerformed(ActionEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				LoginQuery query = new LoginQuery(usernameField.getText(), new String(passwordField.getPassword()));
 				
 				String r = controller.sendMessage(query.toString());
@@ -121,43 +137,56 @@ public class LoginWindow extends LMSWindow {
 				
 				if(r == null) {
 					errorMessage.setText(ERROR_MESSAGE_TEXT);
-					//controller.showMainWindow();
-					return;
-				}
-				
-				System.out.println("Before response");
-				Response response = Response.stringToResponse(r);
-				System.out.println("After response" + ((LogInResponse)response).toString());
-				
-				if(response.wasSuccessful) {
-					controller.model.sessionId = ((LogInResponse)response).sessionID;
-					System.out.println(controller.model.sessionId);
-					controller.model.status = ((LogInResponse)response).status;
-					controller.model.username = usernameField.getText();
 					controller.showMainWindow();
 				}
-				else{
-					errorMessage.setText(ERROR_MESSAGE_TEXT);
+				else {
+					System.out.println("Before response");
+					LogInResponse response = (LogInResponse)Response.stringToResponse(r);
+					System.out.println("After response" + response.toString());
+					
+					if(response.wasSuccessful) {
+						controller.model.sessionId = response.sessionID;
+						System.out.println(controller.model.sessionId);
+						controller.model.status = response.status;
+						controller.model.username = usernameField.getText();
+						controller.showMainWindow();
+					}
+					else{
+						errorMessage.setText(ERROR_MESSAGE_TEXT);
+					}
 				}
+				setCursor(Cursor.getDefaultCursor());
 			}
 		});
 		
-		errorMessage = new JLabel(ERROR_MESSAGE_INITIAL_TEXT);
-		errorMessage.setForeground(Color.RED);
-		GridBagConstraints gbc_errorMessage = new GridBagConstraints();
-		gbc_errorMessage.insets = new Insets(0, 0, 5, 5);
-		gbc_errorMessage.gridx = 2;
-		gbc_errorMessage.gridy = 7;
-		getContentPane().add(errorMessage, gbc_errorMessage);
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
 		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
-		gbc_loginButton.anchor = GridBagConstraints.NORTHWEST;
+		gbc_loginButton.anchor = GridBagConstraints.NORTHEAST;
 		gbc_loginButton.gridx = 3;
 		gbc_loginButton.gridy = 7;
 		getContentPane().add(loginButton, gbc_loginButton);
 		
-		usernameField.setText("CadeG");
-		passwordField.setText("test");
+		KeyListener keyListener = new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					loginButton.doClick();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		};
+		
+		this.usernameField.addKeyListener(keyListener);
+		this.passwordField.addKeyListener(keyListener);
+		
+		this.usernameField.setText("CadeG");
+		this.passwordField.setText("test");
 
 		this.setVisible(true);
 	}
