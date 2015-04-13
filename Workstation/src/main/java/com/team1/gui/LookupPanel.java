@@ -115,19 +115,11 @@ public class LookupPanel extends JPanel {
 					for(;i < books.size()-1; i++) {
 						System.out.println(books.get(i).toString());
 //						returnTextArea.setText(b.toString());
-						try {
-							returnPanel.add(new BookLabel(books.get(i)));
-						} catch (MalformedURLException e) {
-							e.printStackTrace();
-						}
+						returnPanel.add(new BookLabel(books.get(i)));
 						returnPanel.add(Box.createHorizontalStrut(20));
 					}
 					
-					try {
-						returnPanel.add(new BookLabel(books.get(i)));
-					} catch (MalformedURLException e) {
-						e.printStackTrace();
-					}
+					returnPanel.add(new BookLabel(books.get(i)));
 					returnPanel.add(Box.createHorizontalGlue());
 				}
 				setCursor(Cursor.getDefaultCursor());

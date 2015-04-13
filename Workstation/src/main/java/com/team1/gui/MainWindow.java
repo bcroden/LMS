@@ -205,17 +205,9 @@ public class MainWindow extends LMSWindow {
 			e1.printStackTrace();
 		}
         
-        BookLabel bl1 = null;
-        BookLabel bl2 = null;
-        BookLabel bl3 = null;
-		try {
-			bl1 = new BookLabel(book);
-			bl2 = new BookLabel(book);
-			bl3 = new BookLabel(book);
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+        BookLabel bl1 = new BookLabel(book);
+        BookLabel bl2 = new BookLabel(book);
+        BookLabel bl3 = new BookLabel(book);
 		
         JPanel testPanel = new JPanel();
         testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.X_AXIS));

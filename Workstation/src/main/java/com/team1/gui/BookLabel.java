@@ -22,8 +22,15 @@ public class BookLabel extends JLabel{
 	private JToolTip tooltip;
 	
 	//TODO: make books contain image URLs
-	public BookLabel(Book book) throws MalformedURLException {
-		super(new ImageIcon(new URL(book.url)));
+	public BookLabel(Book book) {
+		super();
+		
+		try {
+			this.setIcon(new ImageIcon(new URL(book.url)));
+		} catch (MalformedURLException e1) {
+			this.setIcon(new ImageIcon(getClass().getResource("/double-j-design/defaultbookicon.png")));
+//			e1.printStackTrace();
+		}
 		
 		this.that = this;
 		this.factory = PopupFactory.getSharedInstance();
