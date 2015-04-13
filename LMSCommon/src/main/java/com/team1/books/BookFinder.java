@@ -33,36 +33,55 @@ public class BookFinder {
      *             registered on Google
      */
     public static Book getBookFromGoogle(String isbn) throws InvalidISBNException {
+    	System.out.println("Entering getBookFromGoogle");
         if (isbn.length() != 10 && isbn.length() != 13)
             throw new InvalidISBNException("ISBN length not equal to 10 or 13.");
+        System.out.println("After if");
 
         // Get the entire JSON book object
         JSONObject jsonBook = null;
+        System.out.println("Before try");
         try {
+        	System.out.println("in try");
             jsonBook = getJSONObjectFromGoogle(isbn);
         }
         catch (IOException e) {
+        	System.out.println("In catch");
             e.printStackTrace();
         }
-
+        System.out.println("Before check");
         if (jsonBook != null && jsonBook.has("totalItems") && jsonBook.getInt("totalItems") == 0)
             throw new InvalidISBNException("ISBN " + isbn + " not found.");
+        System.out.println("After check");
 
         // Make several references to important spots in the JSON structure
+        System.out.println("Before items");
         JSONArray items = (jsonBook != null && jsonBook.has("items")) ? jsonBook.getJSONArray("items") : null;
+        System.out.println("Before volumeInfo");
         JSONObject volumeInfo = (items != null && items.length() != 0) ? items.getJSONObject(0).getJSONObject("volumeInfo") : null;
+        System.out.println("Before authors");
         JSONArray authors = (volumeInfo != null && volumeInfo.has("authors")) ? volumeInfo.getJSONArray("authors") : null;
+        System.out.println("Before categories");
         JSONArray categories = (volumeInfo != null && volumeInfo.length() != 0) ? volumeInfo.getJSONArray("categories") : null;
+        System.out.println("Before imageLinks");
         JSONObject imageLinks = (volumeInfo != null && volumeInfo.length() != 0) ? volumeInfo.getJSONObject("imageLinks"): null;
+        System.out.println("After imageLinks");
 
         // Get the data from the JSON object, If an entry does not exist, return
         // ""
+        System.out.println("Before title");
         String title = (volumeInfo != null && volumeInfo.has("title")) ? volumeInfo.getString("title") : DEFAULT_VALUE;
+        System.out.println("Before author");
         String author = (authors != null && authors.length() != 0) ? authors.getString(0) : DEFAULT_VALUE;
+        System.out.println("Before publisher");
         String publisher = (volumeInfo != null && volumeInfo.has("publisher")) ? volumeInfo.getString("publisher") : DEFAULT_VALUE;
+        System.out.println("Before dataPublished");
         String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : DEFAULT_VALUE;
+        System.out.println("Before genre");
         String genre = (categories != null & categories.length() != 0) ? categories.getString(0) : DEFAULT_VALUE;
+        System.out.println("Before imageURL");
         String imageURL = (imageLinks != null & imageLinks.has("thumbnail")) ? imageLinks.getString("thumbnail") : DEFAULT_VALUE;
+        System.out.println("After ImageURL");
         
         //TODO: add imageURL to Book
         System.out.println("Image URL = " + imageURL);
