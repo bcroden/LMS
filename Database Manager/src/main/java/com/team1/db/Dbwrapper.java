@@ -81,9 +81,6 @@ public class Dbwrapper {
 	//Function for adding a new book to the repo
 	//--------------------------------------------------------------------------
 	public synchronized void addBook(Book book, int num) throws SQLException{
-		String tempp = book.publisher;
-		String temppd = book.datePublished;
-		String tempt = book.title;
 		
 		System.out.println("No null");
 		Statement stmt;
@@ -91,10 +88,10 @@ public class Dbwrapper {
 			stmt = con.createStatement();
 			// TODO Auto-generated catch block
 		String sql = "INSERT INTO book " +
-					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout) " + 
+					 "(isbn, title, author, genre, publisher, publishdate, likes, dislikes, copiesin, copiesout, picURL) " + 
 					 "VALUES ('" + book.isbn + "', '" + encode(book.title) + "', '" + encode(book.author) +
 					 "', '" + encode(book.genre) + "', '" + encode(book.publisher) + "', '" + book.datePublished + 
-					 "', '" + 0 + "', '" + 0 + "', '" + num + "', '" + 0 +"')";
+					 "', '" + 0 + "', '" + 0 + "', '" + num + "', '" + 0 + "', '" + book.url + "')";
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -115,7 +112,6 @@ public class Dbwrapper {
 			else
 				throw e;
 		}
-	//}
 	}
 	//Functions for updating book info (likes dislikes and copies)
 	
@@ -137,7 +133,8 @@ public class Dbwrapper {
     			result.getString("author"),
     			result.getString("publisher"),
     			result.getString("publishdate"),
-    			result.getString("genre"));
+    			result.getString("genre"),
+    			result.getString("picURL"));
     			
     		list.add(book);
     	}
@@ -157,7 +154,8 @@ public class Dbwrapper {
     			result.getString("author"),
     			result.getString("publisher"),
     			result.getString("publishdate"),
-    			result.getString("genre"));
+    			result.getString("genre"),
+    			result.getString("picURL"));
     			
     		list.add(book);
     	}
@@ -177,7 +175,8 @@ public class Dbwrapper {
     			result.getString("author"),
     			result.getString("publisher"),
     			result.getString("publishdate"),
-    			result.getString("genre"));
+    			result.getString("genre"),
+    			result.getString("picURL"));
     			
     		list.add(book);
     	}
@@ -185,12 +184,12 @@ public class Dbwrapper {
     }
 	//date 1 is an earlier date than date2, its possible to error check here
 	//but we can fix this on input
-    public ArrayList<Book> SearchDate(String date, String date2)throws SQLException
+    public ArrayList<Book> SearchDate(String date)throws SQLException
     {
     	Statement stmt = con.createStatement();
     	//date has to be in the format yyyy
     	//This can be handled on front end of searches though
-    	String sql = "SELECT * FROM book WHERE publishdate between '" + date + "' and '" + date2 + "'";
+    	String sql = "SELECT * FROM book WHERE publishdate = '" + date + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
@@ -200,7 +199,8 @@ public class Dbwrapper {
     			result.getString("author"),
     			result.getString("publisher"),
     			result.getString("publishdate"),
-    			result.getString("genre"));
+    			result.getString("genre"),
+    			result.getString("picURL"));
     			
     		list.add(book);
     	}
@@ -220,8 +220,8 @@ public class Dbwrapper {
     			result.getString("author"),
     			result.getString("publisher"),
     			result.getString("publishdate"),
-    			result.getString("genre"));
-    			
+    			result.getString("genre"),
+    			result.getString("picURL"));
     		list.add(book);
     	}
     	return list;
@@ -241,6 +241,7 @@ public class Dbwrapper {
     	String publisher = "";
     	String date = "";
     	String genre = "";
+    	String url = "";
     	while(result.next()){
     			isbn = result.getString("ISBN");
     			title = result.getString("title");
@@ -248,8 +249,9 @@ public class Dbwrapper {
     			publisher = result.getString("publisher");
     			date = result.getString("publishdate");
     			genre = result.getString("genre");
+    			url = result.getString("picURL");
     		}
-    	Book book = new Book(isbn, title, author, publisher, date, genre);
+    	Book book = new Book(isbn, title, author, publisher, date, genre, url);
     	return book;
     }
     
@@ -265,6 +267,7 @@ public class Dbwrapper {
     	String publisher = "";
     	String date = "";
     	String genre = "";
+    	String url = "";
     	while(result.next()){
     			isbn = result.getString("ISBN");
     			title = result.getString("title");
@@ -273,7 +276,7 @@ public class Dbwrapper {
     			date = result.getString("publishdate");
     			genre = result.getString("genre");
     		}
-    	Book book = new Book(isbn, title, author, publisher, date, genre);
+    	Book book = new Book(isbn, title, author, publisher, date, genre, url);
     	return book;
     }
     //end of single returning book queries

@@ -182,4 +182,40 @@
 		$sql = "UPDATE user SET email = '" . $email . "' WHERE username = '" . $user . "'";
 		$connection->query($sql); 
 	}
+
+	function reserver($user, $isbn){
+		global $connection;
+		//find the values of the copies of books available
+		$sql == "SELECT copiesin, copiesreserved FROM book WHERE isbn = '" . $isbn . "'";
+		$result = $connection->query($sql);
+		$copiesin = 0;
+		$copiesreserved = 0;
+		if(($row = mysqli_fetch_array($result)) > 0){
+			$copiesin = $row["copiesin"];
+			$copiesreserved = $row["copiesreserved"];
+		}
+		//decrement copiesin and increment reserved
+		if($copiesin <= 0){
+			$copiesin--;
+			$copiesreserved++;
+			$sql = "UPDATE book SET copiesin = " . $copiesin . ", copiesreserved = " . $copiesreserved . " WHERE isbn = '" . $isbn . "'";
+			$connection->query($sql);
+			//Attach user to reservation list
+			$sql = "SELECT userreserved FROM book WHERE isbn = '" . $isbn . "'";
+			$result = $connection->query($sql);
+			$users = "";
+			if(($row = mysqli_fetch_array($result)) > 0){
+				$users = $row["userreserved"];
+			}
+
+			$userFinal = $users . $user . ",";
+			$sql = "UPDATE book SET userreserved = '" . $userFinal . "'";
+			$connection->query($sql);
+			return true;
+		}
+		else{
+			//unable to reserve a copy
+			return false;
+		}
+	}
 ?>
