@@ -49,8 +49,12 @@ public class LoginWindow extends LMSWindow {
 	private JButton loginButton;
 	private JLabel errorMessage;
 	
+	private LoginWindow that;
+	
 	public LoginWindow(final Controller controller, Model model) {
 		super(controller, model);
+		
+		this.that = this;
 		
 		this.setSize(WIDTH, HEIGHT);
         this.setResizable(IS_RESIZABLE);
@@ -122,9 +126,7 @@ public class LoginWindow extends LMSWindow {
 		gbc_errorMessage.gridy = 7;
 		getContentPane().add(errorMessage, gbc_errorMessage);
 		
-//		loginButton = new LMSButton(new ImageIcon(getClass().getResource("/flat-ui-icons-free/optionsbutton.png")));
 		loginButton = new JButton(LOGIN_BUTTON_TEXT);
-//		loginButton.setMargin(new Insets(4, 4, 4, 4));
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -158,6 +160,28 @@ public class LoginWindow extends LMSWindow {
 				setCursor(Cursor.getDefaultCursor());
 			}
 		});
+		
+//		loginButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				Book book = null;
+//				try {
+//					book = BookFinder.getBookFromGoogle("054792822X");
+//				} catch (InvalidISBNException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				BookLabel bl = new BookLabel(book);
+//				
+//				JOptionPane.showOptionDialog(that, 
+//						book.toString(), 
+//						book.title, 
+//						JOptionPane.DEFAULT_OPTION, 
+//						0, bl.getIcon(), 
+//						new Object[] {}, 
+//						null);
+//			}
+//		});
 		
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
 		gbc_loginButton.insets = new Insets(0, 0, 5, 5);

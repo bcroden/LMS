@@ -88,6 +88,7 @@ public class BookFinder {
         
         String date = (datePublished.length() >= 4) ? datePublished.substring(0,  4) : datePublished;
         System.out.println("Date = " + date);
+        System.out.println("Author = " + author);
         
         // Return the book
         return new Book(isbn, title, author, publisher, date, genre, imageURL);
@@ -97,7 +98,7 @@ public class BookFinder {
         URL google = new URL(GOOGLE_API_URL + isbn);
 
         URLConnection connection = google.openConnection();
-        BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
         String total = "";
         String inputLine;
 

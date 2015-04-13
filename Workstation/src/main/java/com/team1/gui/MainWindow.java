@@ -200,7 +200,7 @@ public class MainWindow extends LMSWindow {
         
         Book book = null;
 		try {
-			book = BookFinder.getBookFromGoogle("054792822X");
+			book = BookFinder.getBookFromGoogle("9780141181400");
 		} catch (InvalidISBNException e1) {
 			e1.printStackTrace();
 		}
