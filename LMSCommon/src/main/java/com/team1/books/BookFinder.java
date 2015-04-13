@@ -78,9 +78,9 @@ public class BookFinder {
         System.out.println("Before dataPublished");
         String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : DEFAULT_VALUE;
         System.out.println("Before genre");
-        String genre = (categories != null & categories.length() != 0) ? categories.getString(0) : DEFAULT_VALUE;
+        String genre = (categories != null && (categories.length() != 0)) ? categories.getString(0) : DEFAULT_VALUE;
         System.out.println("Before imageURL");
-        String imageURL = (imageLinks != null & imageLinks.has("thumbnail")) ? imageLinks.getString("thumbnail") : DEFAULT_VALUE;
+        String imageURL = (imageLinks != null && imageLinks.has("thumbnail")) ? imageLinks.getString("thumbnail") : DEFAULT_VALUE;
         System.out.println("After ImageURL");
         
         //TODO: add imageURL to Book
