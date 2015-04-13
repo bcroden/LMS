@@ -44,13 +44,13 @@ public class BookLabel extends JLabel{
 		this.factory = PopupFactory.getSharedInstance();
 		this.tooltip = this.createToolTip();
 		
-		String text = "<html>" 	+ book.title
-				    + "<br>" 	+ "Author: " 	+ book.author
-				    + "<br>" 	+ "Genre: " 	+ book.genre
-				    + "<br>" 	+ "ISBN: " 		+ book.isbn
-				    + "<br>" 	+ "Publisher: " + book.publisher
-				    + "<br>" 	+ "Date: " 		+ book.datePublished
-				    + "</html>";
+		String text = "<html>" 	+ book.title + "</html>";
+//				    + "<br>" 	+ "Author: " 	+ book.author
+//				    + "<br>" 	+ "Genre: " 	+ book.genre
+//				    + "<br>" 	+ "ISBN: " 		+ book.isbn
+//				    + "<br>" 	+ "Publisher: " + book.publisher
+//				    + "<br>" 	+ "Date: " 		+ book.datePublished
+//				    + "</html>";
 		this.tooltip.setTipText(text);
 		
 		this.addMouseListener(new MouseListener() {
@@ -58,7 +58,12 @@ public class BookLabel extends JLabel{
 			public void mouseReleased(MouseEvent e) {
 				if(that.show = true)
 					JOptionPane.showOptionDialog(that, 
-							that.book.toString(),
+							"Title: " + that.book.title +
+							"\nAuthor: " + that.book.author +
+							"\nGenre: " + that.book.genre +
+							"\nISBN: " + that.book.isbn + 
+							"\nPublisher: " + that.book.publisher +
+							"\nDate: " + that.book.datePublished,
 							that.book.title,
 							JOptionPane.DEFAULT_OPTION,
 							JOptionPane.INFORMATION_MESSAGE,
@@ -76,15 +81,17 @@ public class BookLabel extends JLabel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setCursor(Cursor.getDefaultCursor());
-//				if(popup != null)
-//					popup.hide();
+				if(popup != null)
+					popup.hide();
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 //				popup = factory.getPopup(that, tooltip, e.getXOnScreen(), e.getYOnScreen());
-//				popup.show();
+//				popup = factory.getPopup(that, tooltip, that.getLocationOnScreen().x, that.getLocationOnScreen().y + that.getIcon().getIconHeight());
+				popup = factory.getPopup(that, tooltip, that.getLocationOnScreen().x, that.getLocationOnScreen().y - tooltip.getPreferredSize().height);
+				popup.show();
 			}
 			
 			@Override

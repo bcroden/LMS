@@ -22,6 +22,8 @@ import com.team1.books.BookFinder;
 import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.PasswordChangeQuery;
 import com.team1.formatting.responses.Response;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 /**
  * The main window for the workstation. Allows a user to perform librarian activities
