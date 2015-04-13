@@ -98,7 +98,7 @@ public class Query
     //Query isValid command
     public static boolean isValid(String string)
     {
-        return string != null && !string.equals("");
+        return string != null && !string.equals(" ");
     }
 }
 

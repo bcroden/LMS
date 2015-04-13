@@ -127,8 +127,9 @@ public class Dbwrapper {
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
+    		System.out.println("Title: "+ result.getString("isbn"));
     		Book book = new Book(
-    			result.getString("ISBN"),
+    			result.getString("isbn"),
     			result.getString("title"),
     			result.getString("author"),
     			result.getString("publisher"),

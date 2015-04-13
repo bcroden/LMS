@@ -36,7 +36,7 @@ import com.team1.formatting.responses.SetFineResponse;
 public class QueryUtils {
     public static boolean isValid(String string)
     {
-        return string != null && !string.equals("");
+        return string != null && !string.equals(" ");
     }
 	
 	public static AddBookResponse executeAddBookQuery(AddBookQuery query) throws InvalidISBNException, SQLException
