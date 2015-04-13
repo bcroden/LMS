@@ -86,8 +86,11 @@ public class BookFinder {
         //TODO: add imageURL to Book
         System.out.println("Image URL = " + imageURL);
         
+        String date = (datePublished.length() >= 4) ? datePublished.substring(0,  4) : datePublished;
+        System.out.println("Date = " + date);
+        
         // Return the book
-        return new Book(isbn, title, author, publisher, datePublished, genre, imageURL);
+        return new Book(isbn, title, author, publisher, date, genre, imageURL);
     }
 
     private static JSONObject getJSONObjectFromGoogle(String isbn) throws IOException {
