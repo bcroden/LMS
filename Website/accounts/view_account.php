@@ -236,19 +236,6 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
-header("Location: login.php");
-/*echo <<< EOT
-<!DOCTYPE html>
-<html>
-   <body>
-      <p>Login Attempt Failed</p>
-      <p>User name or password are incorrect</p>
-      <form action="login.php">
-         <input type="submit" value="Try Again"/>
-      </form>
-   </body>
-</html>
-EOT;*/
       header("Location: login.php");
    } //end of login_fail
 ?>

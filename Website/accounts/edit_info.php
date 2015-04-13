@@ -2,8 +2,7 @@
    session_start();
 
    if($_POST["form_type"] === "update") {
-      include "../DBwrapper.php";
-      connect();
+      include "../bookSlider.php";
 
       $good_pass = true;
 
