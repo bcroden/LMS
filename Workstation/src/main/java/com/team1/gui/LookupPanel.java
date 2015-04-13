@@ -1,6 +1,5 @@
 package com.team1.gui;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,13 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.team1.books.Book;
@@ -33,7 +33,8 @@ public class LookupPanel extends JPanel {
 	private JComboBox<String> comboBox;
 	private JTextField searchField;
 	private JButton submitButton;
-	private JTextArea returnTextArea;
+//	private JTextArea returnTextArea;
+	private JPanel returnPanel;
 	
 	public LookupPanel(final Controller controller) {
 		super();
@@ -93,8 +94,8 @@ public class LookupPanel extends JPanel {
 				System.out.println("Response string = " + r);
 				
 				if(r == null) {
-					returnTextArea.setText("Invalid search field.");
-					returnTextArea.setForeground(Color.RED);
+//					returnTextArea.setText("Invalid search field.");
+//					returnTextArea.setForeground(Color.RED);
 				}
 				
 				Response response = Response.stringToResponse(r);
@@ -104,10 +105,25 @@ public class LookupPanel extends JPanel {
 						System.out.println("Books = null");
 					else
 						System.out.println("Books != null");
-					for(Book b : books) {
-						System.out.println(b.toString());
-						returnTextArea.setText(b.toString());
+					returnPanel.add(Box.createHorizontalGlue());
+					int i = 0;
+					for(;i < books.size()-1; i++) {
+						System.out.println(books.get(i).toString());
+//						returnTextArea.setText(b.toString());
+						try {
+							returnPanel.add(new BookLabel(books.get(i)));
+						} catch (MalformedURLException e) {
+							e.printStackTrace();
+						}
+						returnPanel.add(Box.createHorizontalStrut(20));
 					}
+					
+					try {
+						returnPanel.add(new BookLabel(books.get(i)));
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
+					returnPanel.add(Box.createHorizontalGlue());
 				}
 			}
         });
@@ -117,12 +133,15 @@ public class LookupPanel extends JPanel {
         gbc_submitButton.gridy = 1;
         this.add(submitButton, gbc_submitButton);
         
-        returnTextArea = new JTextArea();
-        returnTextArea.setEditable(false);
+//        returnTextArea = new JTextArea();
+//        returnTextArea.setEditable(false);
         
-        JScrollPane scrollPane = new JScrollPane(returnTextArea,
-        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        JScrollPane scrollPane = new JScrollPane(returnTextArea,
+//        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+//        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        returnPanel = new JPanel();
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.X_AXIS));
         
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 5;
@@ -130,6 +149,6 @@ public class LookupPanel extends JPanel {
         gbc_returnTextArea.fill = GridBagConstraints.BOTH;
         gbc_returnTextArea.gridx = 1;
         gbc_returnTextArea.gridy = 3;
-        this.add(scrollPane, gbc_returnTextArea);
+        this.add(returnPanel, gbc_returnTextArea);
 	}
 }

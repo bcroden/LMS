@@ -1,8 +1,8 @@
 package com.team1.gui;
 
-import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -22,8 +22,8 @@ public class BookLabel extends JLabel{
 	private JToolTip tooltip;
 	
 	//TODO: make books contain image URLs
-	public BookLabel(URL url, Book book) {
-		super(new ImageIcon(url));
+	public BookLabel(Book book) throws MalformedURLException {
+		super(new ImageIcon(new URL(book.url)));
 		
 		this.that = this;
 		this.factory = PopupFactory.getSharedInstance();
@@ -49,14 +49,14 @@ public class BookLabel extends JLabel{
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				setCursor(Cursor.getDefaultCursor());
+//				setCursor(Cursor.getDefaultCursor());
 				if(popup != null)
 					popup.hide();
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				popup = factory.getPopup(that, tooltip, e.getXOnScreen(), e.getYOnScreen());
 				popup.show();
 			}

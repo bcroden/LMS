@@ -198,47 +198,49 @@ public class MainWindow extends LMSWindow {
         gbc_tabbedPane.gridy = 2;
         getContentPane().add(tabbedPane, gbc_tabbedPane);
         
-//        Book book = null;
-//		try {
-//			book = BookFinder.getBookFromGoogle("054792822X");
-//		} catch (InvalidISBNException e1) {
-//			e1.printStackTrace();
-//		}
-//        URL url = null;
-//		try {
-//			url = new URL("http://books.google.com/books/content?id=ouo2qAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api");
-//		} catch (MalformedURLException e1) {
-//			e1.printStackTrace();
-//		}
-//        
-//        BookLabel bl1 = new BookLabel(url, book);
-//        BookLabel bl2 = new BookLabel(url, book);
-//        BookLabel bl3 = new BookLabel(url, book);
+        Book book = null;
+		try {
+			book = BookFinder.getBookFromGoogle("054792822X");
+		} catch (InvalidISBNException e1) {
+			e1.printStackTrace();
+		}
         
-//        JPanel testPanel = new JPanel();
-//        testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.X_AXIS));
-//        
-//        Component horizontalGlue_1 = Box.createHorizontalGlue();
-//        testPanel.add(horizontalGlue_1);
-//        testPanel.add(bl1);
-//        
-//        Component horizontalStrut = Box.createHorizontalStrut(20);
-//        testPanel.add(horizontalStrut);
-//        testPanel.add(bl2);
-//        
-//        Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-//        testPanel.add(horizontalStrut_1);
-//        testPanel.add(bl3);
-//        
-//        Component horizontalGlue_2 = Box.createHorizontalGlue();
-//        testPanel.add(horizontalGlue_2);
+        BookLabel bl1 = null;
+        BookLabel bl2 = null;
+        BookLabel bl3 = null;
+		try {
+			bl1 = new BookLabel(book);
+			bl2 = new BookLabel(book);
+			bl3 = new BookLabel(book);
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+        JPanel testPanel = new JPanel();
+        testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.X_AXIS));
+        
+        Component horizontalGlue_1 = Box.createHorizontalGlue();
+        testPanel.add(horizontalGlue_1);
+        testPanel.add(bl1);
+        
+        Component horizontalStrut = Box.createHorizontalStrut(20);
+        testPanel.add(horizontalStrut);
+        testPanel.add(bl2);
+        
+        Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+        testPanel.add(horizontalStrut_1);
+        testPanel.add(bl3);
+        
+        Component horizontalGlue_2 = Box.createHorizontalGlue();
+        testPanel.add(horizontalGlue_2);
         
         tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(this.controller), 	TOOLTIP_LOOKUP);
         tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(this.controller), 	TOOLTIP_REGISTER);
         tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(this.controller), 	TOOLTIP_CHECKOUT);
         tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(this.controller), 	TOOLTIP_CKECKIN);
         tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(this.controller), 	TOOLTIP_PAYMENT);
-//        tabbedPane.addTab("test", testPanel);
+        tabbedPane.addTab("test", testPanel);
         
         this.setVisible(true);
     }
