@@ -79,6 +79,11 @@ public class Response
             SetFineResponse response = new SetFineResponse(success, str[2], str[3]);
             return response;
         }
+        else if (responseType.equals(ManualAddBookResponse.HEADER))
+        {
+            ManualAddBookResponse response = new ManualAddBookResponse(success, str[2]);
+            return response;
+        }
         return new Response(false, "0");
     }
 

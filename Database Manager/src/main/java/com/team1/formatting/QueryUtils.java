@@ -14,6 +14,7 @@ import com.team1.formatting.queries.BookInfoQuery;
 import com.team1.formatting.queries.CheckInBookQuery;
 import com.team1.formatting.queries.CheckOutBookQuery;
 import com.team1.formatting.queries.LoginQuery;
+import com.team1.formatting.queries.ManualAddBookQuery;
 import com.team1.formatting.queries.PasswordChangeQuery;
 import com.team1.formatting.queries.PayFinesQuery;
 import com.team1.formatting.queries.Query;
@@ -25,6 +26,7 @@ import com.team1.formatting.responses.BookInfoResponse;
 import com.team1.formatting.responses.CheckInBookResponse;
 import com.team1.formatting.responses.CheckOutBookResponse;
 import com.team1.formatting.responses.LogInResponse;
+import com.team1.formatting.responses.ManualAddBookResponse;
 import com.team1.formatting.responses.PasswordChangeResponse;
 import com.team1.formatting.responses.PayFinesResponse;
 import com.team1.formatting.responses.RemoveLibrarianResponse;
@@ -434,6 +436,32 @@ public class QueryUtils {
     	return response;
     }
     
+    public static ManualAddBookResponse executeManualAddBookQuery(ManualAddBookQuery query) throws SQLException
+    {
+    	ManualAddBookResponse response = new ManualAddBookResponse();
+    	
+    	//Check users authentication
+    	int temp = Authentication.getInstance().authenticate(query);
+    	response.sessionID = Integer.toString(temp);
+		int status = Authentication.getInstance().getLevel(temp);
+        
+		if (status == 0 || status == 1) response.wasSuccessful = false;
+        else if (status == 2 || status == 3)
+        {
+            Dbwrapper.getInstance().addBook(query.book, query.numCopies);
+            
+            response.wasSuccessful = true;
+        }
+        else
+        {
+        	response.wasSuccessful = false;
+            System.out.print("unexpected return value from authenticate...\n");
+        }
+    	
+    	
+    	return response;
+    }
+    
     public static Response executeQuery(Query query)
     {
 
@@ -498,6 +526,17 @@ public class QueryUtils {
         if(query instanceof SetFineQuery)
         {
             SetFineResponse response = executeSetFineQuery((SetFineQuery)query);
+            return response;
+        }
+        if(query instanceof ManualAddBookQuery)
+        {
+            ManualAddBookResponse response = new ManualAddBookResponse();
+			try {
+				response = executeManualAddBookQuery((ManualAddBookQuery)query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             return response;
         }
         

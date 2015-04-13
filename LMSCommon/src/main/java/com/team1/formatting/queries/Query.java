@@ -77,7 +77,12 @@ public class Query
         }
         else if (queryType.equals(SetFineQuery.HEADER))
         {
-            SetFineQuery request = new SetFineQuery(str[1],Float.valueOf(str[3]));    //sessionID is not required
+            SetFineQuery request = new SetFineQuery(str[1],Float.valueOf(str[2]));    //sessionID is not required
+            return request;
+        }
+        else if (queryType.equals(ManualAddBookQuery.HEADER))
+        {
+            ManualAddBookQuery request = new ManualAddBookQuery(str[1], str[2], Integer.parseInt(str[3]));    //sessionID is not required
             return request;
         }
         return new Query("0");
