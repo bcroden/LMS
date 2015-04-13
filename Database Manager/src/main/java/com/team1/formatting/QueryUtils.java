@@ -50,8 +50,11 @@ public class QueryUtils {
         else if (status == 2 || status == 3)
         {
         	//build book object from isbn
+        	System.out.println("before get from google");
             Book book = BookFinder.getBookFromGoogle(query.isbn);
+            System.out.println("before addbook");
             Dbwrapper.getInstance().addBook(book, query.numCopies);
+            System.out.println("after addbook");
             
             response.wasSuccessful = true;
         }
@@ -467,6 +470,7 @@ public class QueryUtils {
             catch (InvalidISBNException | SQLException e) 
             {
 				// TODO Auto-generated catch block
+            	System.out.println("caught exeption");
 				e.printStackTrace();
 			}
             return response;
