@@ -1,13 +1,14 @@
 <?php
+   error_reporting(E_ALL);
+   ini_set('display_errors', 'On');
    if(!isset($_SESSION["init"])) { session_start(); }
    if(isset($_POST["logout"])) {
       session_destroy();
       header("Location: /login.php");
    };
 
-   include "../DBwrapper.php";
-//   error_reporting(E_ALL);
-//   ini_set('display_errors', 'On');
+   include "../bookSlider.php";
+//   include "../DBwrapper.php";
 
    connect();
 
@@ -158,6 +159,13 @@
             <td><?= $_SESSION["email"] ?></td>
             <td><?php if($_SESSION["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
          </tr>
+         <tr>
+            <td colspan="2">
+               <form action="edit_info.php" mehtod="post">
+                  <input type="submit" value="Edit Personl Information"/>
+               </form>
+            </td>
+         </tr>
       </table>
 
       <h3>Books Currently Checked-Out</h3>
@@ -181,28 +189,8 @@
              }
           ?>
       </table>
-<!--
-      <form action="view_account.php" method="post">
-           <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/><br/>
-           <input type="submit" value="Set Email"/>
-      </form>
-
-      <form action="view_account.php" method="post">
-           <input type="password" name="new_password" value="<?= $_SESSION['pass'] ?>"/><br/>
-           <input type="submit" value="Set Password"/>
-      </form>
-
-      <form action="view_account.php" method="post">
-         <input type="radio" name="notify" value="1">Yes</intput>
-         <input type="radio" name="notify" value="-1">No</intput><br/>
-         <input type="submit" value="Set Email Notification"/>
-      </form>
--->
-      <form action="edit_info.php" mehtod="post">
-          <input type="submit" value="Edit Personl Information"/>
-      </form>
       
-      <form action="view_account.php" method="post">
+      <form id="logout" action="view_account.php" method="post">
           <input type="hidden" name="logout" value="yes"/>
           <input type="submit" value="logout"/>
       </form>
@@ -227,6 +215,6 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
-      header("Location: /login.php");
+      header("Location: login.php");
    } //end of login_fail
 ?>

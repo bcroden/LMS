@@ -1,6 +1,6 @@
 <html>
 	<?php
-	import 'bookSlider.php';
+	include 'bookSlider.php';
 	?>
     <head>
         <title>LMS</title>
