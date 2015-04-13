@@ -1,5 +1,6 @@
 package com.team1.gui;
 
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -71,6 +72,8 @@ public class LookupPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent a) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				returnPanel.removeAll();
 				//Create new BookInfoQuery TODO: Get latest formatting packages and modify accordingly
 				BookInfoQuery q = new BookInfoQuery(controller.model.sessionId);
 				
@@ -96,6 +99,8 @@ public class LookupPanel extends JPanel {
 				if(r == null) {
 //					returnTextArea.setText("Invalid search field.");
 //					returnTextArea.setForeground(Color.RED);
+					setCursor(Cursor.getDefaultCursor());
+					return;
 				}
 				
 				Response response = Response.stringToResponse(r);
@@ -125,6 +130,7 @@ public class LookupPanel extends JPanel {
 					}
 					returnPanel.add(Box.createHorizontalGlue());
 				}
+				setCursor(Cursor.getDefaultCursor());
 			}
         });
         GridBagConstraints gbc_submitButton = new GridBagConstraints();
