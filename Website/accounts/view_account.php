@@ -189,8 +189,29 @@
              }
           ?>
       </table>
+<<<<<<< HEAD
+
+      <form action="view_account.php" method="post">
+           <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/><br/>
+           <input type="submit" value="Set Email"/>
+      </form>
+
+      <form action="view_account.php" method="post">
+           <input type="password" name="new_password" value="<?= $_SESSION['pass'] ?>"/><br/>
+           <input type="submit" value="Set Password"/>
+      </form>
+
+      <form action="view_account.php" method="post">
+         <input type="radio" name="notify" value="1">Yes</intput>
+         <input type="radio" name="notify" value="-1">No</intput><br/>
+         <input type="submit" value="Set Email Notification"/>
+      </form>
+
+      <form action="view_account.php" method="post">
+=======
       
       <form id="logout" action="view_account.php" method="post">
+>>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
           <input type="hidden" name="logout" value="yes"/>
           <input type="submit" value="logout"/>
       </form>
@@ -215,6 +236,22 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
+<<<<<<< HEAD
+header("Location: /login.php");
+/*echo <<< EOT
+<!DOCTYPE html>
+<html>
+   <body>
+      <p>Login Attempt Failed</p>
+      <p>User name or password are incorrect</p>
+      <form action="login.php">
+         <input type="submit" value="Try Again"/>
+      </form>
+   </body>
+</html>
+EOT;*/
+=======
       header("Location: login.php");
+>>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
    } //end of login_fail
 ?>

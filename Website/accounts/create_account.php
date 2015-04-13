@@ -1,6 +1,5 @@
 <html>
    <head>
-      <title>LMS</title>
       <script>
          function validate() {
             var form = document.forms[0];
