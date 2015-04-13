@@ -1,9 +1,12 @@
 <html>
 	<?php
+<<<<<<< HEAD
 	error_reporting(E_ALL);
 	ini_set('display_errors', 'On');
 
 
+=======
+>>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
 	include 'bookSlider.php';
 	?>
     <head>

@@ -1,13 +1,14 @@
 <?php
+   error_reporting(E_ALL);
+   ini_set('display_errors', 'On');
    if(!isset($_SESSION["init"])) { session_start(); }
    if(isset($_POST["logout"])) {
       session_destroy();
       header("Location: /login.php");
    };
 
-   include "../DBwrapper.php";
-//   error_reporting(E_ALL);
-//   ini_set('display_errors', 'On');
+   include "../bookSlider.php";
+//   include "../DBwrapper.php";
 
    connect();
 
@@ -158,6 +159,13 @@
             <td><?= $_SESSION["email"] ?></td>
             <td><?php if($_SESSION["notify"] == 1) echo "Yes"; else echo "No"; ?></td>
          </tr>
+         <tr>
+            <td colspan="2">
+               <form action="edit_info.php" mehtod="post">
+                  <input type="submit" value="Edit Personl Information"/>
+               </form>
+            </td>
+         </tr>
       </table>
 
       <h3>Books Currently Checked-Out</h3>
@@ -181,6 +189,7 @@
              }
           ?>
       </table>
+<<<<<<< HEAD
 
       <form action="view_account.php" method="post">
            <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/><br/>
@@ -199,6 +208,10 @@
       </form>
 
       <form action="view_account.php" method="post">
+=======
+      
+      <form id="logout" action="view_account.php" method="post">
+>>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
           <input type="hidden" name="logout" value="yes"/>
           <input type="submit" value="logout"/>
       </form>
@@ -223,6 +236,7 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
+<<<<<<< HEAD
 header("Location: /login.php");
 /*echo <<< EOT
 <!DOCTYPE html>
@@ -236,5 +250,8 @@ header("Location: /login.php");
    </body>
 </html>
 EOT;*/
+=======
+      header("Location: login.php");
+>>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
    } //end of login_fail
 ?>
