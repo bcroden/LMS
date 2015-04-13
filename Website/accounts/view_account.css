@@ -16,12 +16,10 @@ th, td {
    padding: 5px;
 }
 
-form {
-   text-align: center;
-   width: 480px;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 50px;
+#logout {
+   position: absolute;
+   top: 10px;
+   right: 30px;
 }
 
 #tglBtn {
