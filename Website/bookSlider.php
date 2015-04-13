@@ -1,5 +1,4 @@
 <html>
-
 <style>
 
 	div.side{
@@ -7,6 +6,7 @@
 		position: fixed;
 		border: solid 1px black;
 		right:5px;
+		top: 45px;
 		width:200px;
 		padding: 10px;
 		border-radius: 10px;
@@ -31,6 +31,11 @@
 			//create a sub-div with book information
 			echo "<div class=book>";
 			echo "Title: " . $row["title"] . "<br>";
+		//	if(($row["picURL"] === " ");
+		//	else{
+		//		header('Content-type: image/jpeg');
+		//		echo file_get_contents($row["picURL"]);
+		//	}
 			echo "</div>";
 		}
 		echo "</div>";

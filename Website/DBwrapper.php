@@ -1,8 +1,10 @@
 <?php
 
-//	error_reporting(E_ALL);
-//	ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
+	if(!isset($INCLUDED)){
+		$INCLUDED = true;
 	$host = "localhost";
 	$user = "root";
 	$pass = "LMS";
@@ -200,6 +202,17 @@
 			$copiesreserved++;
 			$sql = "UPDATE book SET copiesin = " . $copiesin . ", copiesreserved = " . $copiesreserved . " WHERE isbn = '" . $isbn . "'";
 			$connection->query($sql);
+
+			//add book to users reserved list
+			Ssql = "SELECT booksr FROM user WHERE username = '" . $user . "'";
+			$result = $connection-> query($sql);
+			$books;
+			while($row = mysql_fetch_array($result)){
+				$books = $row["booksr"];
+			}
+			$books = $books . "," . $isbn;
+			$sql = "UPDATE user SET booksr = '" . $books . "'";
+			$connection->query($sql);
 			//Attach user to reservation list
 			$sql = "SELECT userreserved FROM book WHERE isbn = '" . $isbn . "'";
 			$result = $connection->query($sql);
@@ -207,8 +220,7 @@
 			if(($row = mysqli_fetch_array($result)) > 0){
 				$users = $row["userreserved"];
 			}
-
-			$userFinal = $users . $user . ",";
+			$userFinal = $users . "," . $user;
 			$sql = "UPDATE book SET userreserved = '" . $userFinal . "'";
 			$connection->query($sql);
 			return true;
@@ -219,6 +231,13 @@
 		}
 	}
 
+	function getReserved($user){
+		$sql = "SELECT booksr FROM user WHERE username = '" . $user . "'";
+		$result = $connection->query($sql);
+
+		return $result;
+	}
+
 	function top(){
 		global $connection;
 
@@ -226,4 +245,6 @@
 		$result = $connection->query($sql);
 		return $result;
 	}
+
+}
 ?>
