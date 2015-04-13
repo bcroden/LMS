@@ -13,7 +13,7 @@
 	function connect(){
 		global $host, $user, $pass, $db, $port, $connection;
 		$connection = mysqli_connect($host, $user, $pass, $db, $port)or die("Error: " . $connection->connect_error);
-//		echo "<br>Connected to database<br>"; //debug line
+		//echo "<br>Connected to database<br>"; //debug line
 	}
 
 	function getUsers(){
@@ -217,5 +217,13 @@
 			//unable to reserve a copy
 			return false;
 		}
+	}
+
+	function top(){
+		global $connection;
+
+		$sql = "SELECT * FROM book ORDER BY id DESC LIMIT 3";
+		$result = $connection->query($sql);
+		return $result;
 	}
 ?>

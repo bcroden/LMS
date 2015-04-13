@@ -1,4 +1,7 @@
 <html>
+	<?php
+	import 'bookSlider.php';
+	?>
     <head>
         <title>LMS</title>
 		<style>
