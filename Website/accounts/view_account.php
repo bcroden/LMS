@@ -181,7 +181,7 @@
              }
           ?>
       </table>
-
+<!--
       <form action="view_account.php" method="post">
            <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/><br/>
            <input type="submit" value="Set Email"/>
@@ -197,7 +197,11 @@
          <input type="radio" name="notify" value="-1">No</intput><br/>
          <input type="submit" value="Set Email Notification"/>
       </form>
-
+-->
+      <form action="edit_info.php" mehtod="post">
+          <input type="submit" value="Edit Personl Information"/>
+      </form>
+      
       <form action="view_account.php" method="post">
           <input type="hidden" name="logout" value="yes"/>
           <input type="submit" value="logout"/>
@@ -223,18 +227,6 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
-header("Location: /login.php");
-/*echo <<< EOT
-<!DOCTYPE html>
-<html>
-   <body>
-      <p>Login Attempt Failed</p>
-      <p>User name or password are incorrect</p>
-      <form action="login.php">
-         <input type="submit" value="Try Again"/>
-      </form>
-   </body>
-</html>
-EOT;*/
+      header("Location: /login.php");
    } //end of login_fail
 ?>
