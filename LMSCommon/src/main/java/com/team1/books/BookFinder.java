@@ -62,9 +62,9 @@ public class BookFinder {
         System.out.println("Before authors");
         JSONArray authors = (volumeInfo != null && volumeInfo.has("authors")) ? volumeInfo.getJSONArray("authors") : null;
         System.out.println("Before categories");
-        JSONArray categories = (volumeInfo != null && volumeInfo.length() != 0) ? volumeInfo.getJSONArray("categories") : null;
+        JSONArray categories = (volumeInfo != null && volumeInfo.has("categories")) ? volumeInfo.getJSONArray("categories") : null;
         System.out.println("Before imageLinks");
-        JSONObject imageLinks = (volumeInfo != null && volumeInfo.length() != 0) ? volumeInfo.getJSONObject("imageLinks"): null;
+        JSONObject imageLinks = (volumeInfo != null && volumeInfo.has("imageLinks")) ? volumeInfo.getJSONObject("imageLinks"): null;
         System.out.println("After imageLinks");
 
         // Get the data from the JSON object, If an entry does not exist, return
