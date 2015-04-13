@@ -6,8 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -185,7 +183,9 @@ public class MainWindow extends LMSWindow {
 			public void actionPerformed(ActionEvent e) {
 				optionsButton.setFocusPainted(false);
 				//TODO: This is kind of a hack, fix this
-				menu.show(that, optionsButton.getX() - menu.getWidth() + 2 * optionsButton.getWidth(), optionsButton.getY() + 2 * optionsButton.getHeight());
+				
+				menu.show(that, 0, 0);
+				menu.setLocation(optionsButton.getLocationOnScreen().x - menu.getWidth() + optionsButton.getWidth(), optionsButton.getLocationOnScreen().y + optionsButton.getHeight());
 			}
         });
         topPanel.add(optionsButton);
