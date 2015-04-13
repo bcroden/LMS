@@ -73,7 +73,9 @@ public class LookupPanel extends JPanel {
 			public void actionPerformed(ActionEvent a) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				returnPanel.removeAll();
-				//Create new BookInfoQuery TODO: Get latest formatting packages and modify accordingly
+				//TODO: Check if this works in all circumstances.
+				returnPanel.update(getGraphics());
+				
 				BookInfoQuery q = new BookInfoQuery(controller.model.sessionId);
 				
 				//Reflect the query and invoke the correct searchBy method
