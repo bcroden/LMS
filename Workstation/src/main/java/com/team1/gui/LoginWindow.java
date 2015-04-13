@@ -49,6 +49,7 @@ public class LoginWindow extends LMSWindow {
 	private JButton loginButton;
 	private JLabel errorMessage;
 	
+	@SuppressWarnings("unused")
 	private LoginWindow that;
 	
 	public LoginWindow(final Controller controller, Model model) {

@@ -1,6 +1,8 @@
 package com.team1.gui;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
@@ -52,6 +54,12 @@ public class BookLabel extends JLabel{
 //				    + "<br>" 	+ "Date: " 		+ book.datePublished
 //				    + "</html>";
 		this.tooltip.setTipText(text);
+		
+		int iconWidth = this.getIcon().getIconWidth();
+		int tooltipWidth = tooltip.getPreferredSize().width;
+		
+		int width = (iconWidth > tooltipWidth) ? iconWidth : tooltipWidth;
+		this.setPreferredSize(new Dimension(width, this.getIcon().getIconHeight()));
 		
 		this.addMouseListener(new MouseListener() {
 			@Override

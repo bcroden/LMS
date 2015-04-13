@@ -22,8 +22,6 @@ import com.team1.books.BookFinder;
 import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.PasswordChangeQuery;
 import com.team1.formatting.responses.Response;
-import java.awt.Color;
-import java.awt.SystemColor;
 
 /**
  * The main window for the workstation. Allows a user to perform librarian activities
@@ -114,18 +112,18 @@ public class MainWindow extends LMSWindow {
 					String r = controller.sendMessage(query.toString());
 					
 					if(r == null) {
-						JOptionPane.showMessageDialog(null, "Failed");
+						JOptionPane.showMessageDialog(that, "Failed");
 						return;
 					}
 					
 					Response response = Response.stringToResponse(r);
 					if(response.wasSuccessful)
-						JOptionPane.showMessageDialog(null, "Done!");
+						JOptionPane.showMessageDialog(that, "Done!");
 					else
-						JOptionPane.showMessageDialog(null, "Failed");
+						JOptionPane.showMessageDialog(that, "Failed");
 				}
 				else
-					JOptionPane.showMessageDialog(null, "Failed");
+					JOptionPane.showMessageDialog(that, "Failed");
 			}
         });
         menu.add(changePassword);
