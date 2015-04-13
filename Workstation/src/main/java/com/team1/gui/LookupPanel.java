@@ -99,6 +99,8 @@ public class LookupPanel extends JPanel {
 				if(r == null) {
 //					returnTextArea.setText("Invalid search field.");
 //					returnTextArea.setForeground(Color.RED);
+					setCursor(Cursor.getDefaultCursor());
+					return;
 				}
 				
 				Response response = Response.stringToResponse(r);
