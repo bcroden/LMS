@@ -1,10 +1,10 @@
 <?php
-   error_reporting(E_ALL);
-   ini_set('display_errors', 'On');
+//   error_reporting(E_ALL);
+//   ini_set('display_errors', 'On');
    if(!isset($_SESSION["init"])) { session_start(); }
    if(isset($_POST["logout"])) {
       session_destroy();
-      header("Location: /login.php");
+      header("Location: login.php");
    };
 
    include "../bookSlider.php";
@@ -189,29 +189,29 @@
              }
           ?>
       </table>
-<<<<<<< HEAD
-
-      <form action="view_account.php" method="post">
-           <input type="text" name="new_email" value="<?= $_SESSION['email'] ?>"/><br/>
-           <input type="submit" value="Set Email"/>
-      </form>
-
-      <form action="view_account.php" method="post">
-           <input type="password" name="new_password" value="<?= $_SESSION['pass'] ?>"/><br/>
-           <input type="submit" value="Set Password"/>
-      </form>
-
-      <form action="view_account.php" method="post">
-         <input type="radio" name="notify" value="1">Yes</intput>
-         <input type="radio" name="notify" value="-1">No</intput><br/>
-         <input type="submit" value="Set Email Notification"/>
-      </form>
-
-      <form action="view_account.php" method="post">
-=======
       
+      <h3>Books Reserved</h3>
+      <div id="tglBtn"><button id="BookResButton" onclick="toggleBookRes()">View</button></div>
+      <table id="BookResTable" hidden="true">
+         <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+         </tr>
+          <?php $books_res_arr = mysqli_fetch_array(getReserved($usrnm));
+             $books_res = $books_res_arr["booksr"];
+             if(!empty($books_res)) {
+                $bk_res_arr = explode(",", $books_res);
+                for($i=0; $i < count($bk_res_arr); $i++) {
+                   if(empty($bk_res_arr[$i])) continue;
+                   $temp = mysqli_fetch_array(queryISBN($bk_res_arr[$i]));
+                   echo "<tr><td>" . $temp["isbn"] . "</td><td>" . $temp["title"] . "</td><td>" . $temp["author"] . "</td></tr>";
+                }
+             }
+          ?>
+      </table>
+
       <form id="logout" action="view_account.php" method="post">
->>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
           <input type="hidden" name="logout" value="yes"/>
           <input type="submit" value="logout"/>
       </form>
@@ -236,8 +236,7 @@ EOT;
    } //end of creation_fail
 
    function login_fail() {
-<<<<<<< HEAD
-header("Location: /login.php");
+header("Location: login.php");
 /*echo <<< EOT
 <!DOCTYPE html>
 <html>
@@ -250,8 +249,6 @@ header("Location: /login.php");
    </body>
 </html>
 EOT;*/
-=======
       header("Location: login.php");
->>>>>>> a84709e0558cfd2fcb2d57098f701214b6be5147
    } //end of login_fail
 ?>

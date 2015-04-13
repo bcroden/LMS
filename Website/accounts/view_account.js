@@ -18,3 +18,13 @@ function toggleBookOut() {
    else
       bkOutBtn.innerHTML = "Hide";
 }
+
+function toggleBookRes() {
+   var bkResTbl = document.getElementById("BookResTable");
+   bkResTbl.hidden = !bkResTbl.hidden;
+   var bkResBtn = document.getElementById("BookResButton");
+   if(bkResTbl.hidden)
+      bkResBtn.innerHTML = "View";
+   else
+      bkResBtn.innerHTML = "Hide";
+}

@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'On');
 
 	if(!isset($INCLUDED)){
 		$INCLUDED = true;
@@ -204,7 +204,7 @@ ini_set('display_errors', 'On');
 			$connection->query($sql);
 
 			//add book to users reserved list
-			Ssql = "SELECT booksr FROM user WHERE username = '" . $user . "'";
+			$sql = "SELECT booksr FROM user WHERE username = '" . $user . "'";
 			$result = $connection-> query($sql);
 			$books;
 			while($row = mysql_fetch_array($result)){
@@ -232,6 +232,7 @@ ini_set('display_errors', 'On');
 	}
 
 	function getReserved($user){
+                global $connection;
 		$sql = "SELECT booksr FROM user WHERE username = '" . $user . "'";
 		$result = $connection->query($sql);
 

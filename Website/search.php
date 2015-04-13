@@ -17,8 +17,8 @@ div.scroll {
 <?php
 //error_reporting(E_ALL);
 //ini_set('display_errors', 'On');
-import 'bookSlider.php';
-include 'DBwrapper.php';
+include 'bookSlider.php';
+//include 'DBwrapper.php';
 
 echo "Connecting to database <br><br>";
 connect();
