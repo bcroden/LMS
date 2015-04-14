@@ -1,7 +1,7 @@
 <?php
-   error_reporting(E_ALL);
-   ini_set('display_errors', 'On');
-   if(isset($_SESSION["init"]))
+//   error_reporting(E_ALL);
+//   ini_set('display_errors', 'On');
+//   if(isset($_SESSION["init"]))
       session_start();
 
    include 'bookSlider.php';
@@ -14,6 +14,7 @@
       }
    } else {
 
+      $isbn = "";
       if(isset($_POST["isbn"]))
          $isbn = $_POST["isbn"];
       if(isset($_SESSION["isbn"]))
