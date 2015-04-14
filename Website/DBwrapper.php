@@ -197,7 +197,7 @@
 			$copiesreserved = $row["copiesreserved"];
 		}
 		//decrement copiesin and increment reserved
-		if($copiesin <= 0){
+//		if($copiesin <= 0){
 			$copiesin--;
 			$copiesreserved++;
 			$sql = "UPDATE book SET copiesin = " . $copiesin . ", copiesreserved = " . $copiesreserved . " WHERE isbn = '" . $isbn . "'";
@@ -224,11 +224,11 @@
 			$sql = "UPDATE book SET userreserved = '" . $userFinal . "'";
 			$connection->query($sql);
 			return true;
-		}
-		else{
-			//unable to reserve a copy
-			return false;
-		}
+		//}
+//		else{
+//			//unable to reserve a copy
+//			return false;
+//		}
 	}
 
 	function getReserved($user){
