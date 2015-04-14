@@ -15,9 +15,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.team1.books.Book;
+import com.team1.books.BookFinder;
+import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.BookInfoQuery;
 import com.team1.formatting.responses.BookInfoResponse;
 import com.team1.formatting.responses.Response;
@@ -33,16 +36,14 @@ public class LookupPanel extends JPanel {
 	private JComboBox<String> comboBox;
 	private JTextField searchField;
 	private JButton submitButton;
-//	private JTextArea returnTextArea;
 	private JPanel returnPanel;
 	
 	public LookupPanel(final Controller controller) {
 		super();
 		
 		this.controller = controller;
-//		this.setPreferredSize(new Dimension(800, 600));
 		
-        GridBagLayout gbl_lookupPanel = new GridBagLayout();
+		GridBagLayout gbl_lookupPanel = new GridBagLayout();
         gbl_lookupPanel.columnWidths = new int[]{10, 10, 0, 0, 0, 0, 10, 0};
         gbl_lookupPanel.rowHeights = new int[]{10, 0, 10, 0, 10, 0};
         gbl_lookupPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
@@ -74,7 +75,6 @@ public class LookupPanel extends JPanel {
 			public void actionPerformed(ActionEvent a) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				returnPanel.removeAll();
-				//TODO: Check if this works in all circumstances.
 				returnPanel.revalidate();
 				returnPanel.repaint();
 				
@@ -104,27 +104,18 @@ public class LookupPanel extends JPanel {
 					BookInfoResponse bookInfoResponse = (BookInfoResponse)response;
 					if(bookInfoResponse.wasSuccessful) {
 						ArrayList<Book> books = bookInfoResponse.books;
+						
 						if(books == null)
 							System.out.println("Books = null");
-						else
+						else {
 							System.out.println("Books != null");
-						returnPanel.add(Box.createHorizontalGlue());
-						int i = 0;
-						for(;i < books.size()-1; i++) {
-							System.out.println(books.get(i).toString());
-	//						returnTextArea.setText(b.toString());
-							returnPanel.add(new BookLabel(books.get(i)));
-							returnPanel.add(Box.createHorizontalStrut(20));
+							showBooks(books);
 						}
-						returnPanel.add(new BookLabel(books.get(i)));
-						returnPanel.add(Box.createHorizontalGlue());
 					}
 				}
 				else {
 					//TODO: Show error message
 				}
-				returnPanel.revalidate();
-				returnPanel.repaint();
 				setCursor(Cursor.getDefaultCursor());
 			}
         });
@@ -133,16 +124,11 @@ public class LookupPanel extends JPanel {
         gbc_submitButton.gridx = 4;
         gbc_submitButton.gridy = 1;
         this.add(submitButton, gbc_submitButton);
-        
-//        returnTextArea = new JTextArea();
-//        returnTextArea.setEditable(false);
-        
-//        JScrollPane scrollPane = new JScrollPane(returnTextArea,
-//        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-//        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
         returnPanel = new JPanel();
-        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.X_AXIS));
+        
+        JScrollPane scrollPane = new JScrollPane(returnPanel,
+        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 5;
@@ -150,6 +136,51 @@ public class LookupPanel extends JPanel {
         gbc_returnTextArea.fill = GridBagConstraints.BOTH;
         gbc_returnTextArea.gridx = 1;
         gbc_returnTextArea.gridy = 3;
-        this.add(returnPanel, gbc_returnTextArea);
+        this.add(scrollPane, gbc_returnTextArea);
+        
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.Y_AXIS));
+        
+		ArrayList<Book> books = new ArrayList<Book>();
+		Book book = null;
+		try {
+			book = BookFinder.getBookFromGoogle("054792822X");
+		} catch (InvalidISBNException e) {
+			e.printStackTrace();
+		}
+		for(int i = 0; i < 12; i++)
+			books.add(book);
+		this.showBooks(books);
+	}
+	
+	public void showBooks(ArrayList<Book> books) {
+		ArrayList<BookLabel> labels = new ArrayList<BookLabel>();
+		for(Book b : books)
+			labels.add(new BookLabel(b));
+		
+		int booksPerPanel = returnPanel.getWidth() / (labels.get(0).getWidth() + 10);
+		System.out.println("booksPerPanel = " + booksPerPanel);
+		booksPerPanel = 8;
+		int numPanels = (int)Math.ceil((double)labels.size() / (double)booksPerPanel);
+		
+		int pos = 0;
+		returnPanel.add(Box.createVerticalGlue());
+		returnPanel.add(Box.createVerticalStrut(10));
+		for(int i = 0; i < numPanels; i++) {
+			JPanel panel = new JPanel();
+		    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			for(int j = 0; j < booksPerPanel; j++) {
+				if(pos < labels.size()) {
+					panel.add(labels.get(pos));
+					panel.add(Box.createHorizontalStrut(5));
+					System.out.println("i = " + i + ", j = " + j);
+					pos++;
+				}
+			}
+			returnPanel.add(panel);
+			returnPanel.add(Box.createVerticalStrut(10));
+		}
+		returnPanel.add(Box.createVerticalGlue());
+		returnPanel.revalidate();
+		returnPanel.repaint();
 	}
 }

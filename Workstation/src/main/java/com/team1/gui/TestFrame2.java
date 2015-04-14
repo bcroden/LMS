@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.team1.books.Book;
@@ -24,7 +25,6 @@ import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.BookInfoQuery;
 import com.team1.formatting.responses.BookInfoResponse;
 import com.team1.formatting.responses.Response;
-import java.awt.Component;
 
 public class TestFrame2 extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -37,18 +37,12 @@ public class TestFrame2 extends JFrame{
 	private JComboBox<String> comboBox;
 	private JTextField searchField;
 	private JButton submitButton;
-//	private JTextArea returnTextArea;
 	private JPanel returnPanel;
-	private JPanel panel;
-	private JPanel panel2;
-	private Component horizontalStrut;
 	
 	public TestFrame2() {
 		super();
 
 		this.setSize(800, 600);
-		
-//		this.setPreferredSize(new Dimension(800, 600));
 		
         GridBagLayout gbl_lookupPanel = new GridBagLayout();
         gbl_lookupPanel.columnWidths = new int[]{10, 10, 0, 0, 0, 0, 10, 0};
@@ -117,7 +111,6 @@ public class TestFrame2 extends JFrame{
 						int i = 0;
 						for(;i < books.size()-1; i++) {
 							System.out.println(books.get(i).toString());
-	//						returnTextArea.setText(b.toString());
 							returnPanel.add(new BookLabel(books.get(i)));
 							returnPanel.add(Box.createHorizontalStrut(20));
 						}
@@ -136,15 +129,11 @@ public class TestFrame2 extends JFrame{
         gbc_submitButton.gridx = 4;
         gbc_submitButton.gridy = 1;
         getContentPane().add(submitButton, gbc_submitButton);
-        
-//        returnTextArea = new JTextArea();
-//        returnTextArea.setEditable(false);
-        
-//        JScrollPane scrollPane = new JScrollPane(returnTextArea,
-//        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-//        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
         returnPanel = new JPanel();
+        
+        JScrollPane scrollPane = new JScrollPane(returnPanel,
+        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 5;
@@ -152,42 +141,9 @@ public class TestFrame2 extends JFrame{
         gbc_returnTextArea.fill = GridBagConstraints.BOTH;
         gbc_returnTextArea.gridx = 1;
         gbc_returnTextArea.gridy = 3;
-        getContentPane().add(returnPanel, gbc_returnTextArea);
+        getContentPane().add(scrollPane, gbc_returnTextArea);
         
         returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.Y_AXIS));
-        
-//        panel = new JPanel();
-//        
-//        returnPanel.add(panel);
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-//        
-//        try {
-//			panel.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//			panel.add(Box.createHorizontalStrut(10));
-//			panel.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//			panel.add(Box.createHorizontalStrut(10));
-//			panel.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//			panel.add(Box.createHorizontalStrut(10));
-//			panel.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//		} catch (InvalidISBNException e) {
-//			e.printStackTrace();
-//		}
-//        
-//        panel2 = new JPanel();
-//        returnPanel.add(panel2);
-//        panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-//        
-//        try {
-//        	panel2.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//        	panel2.add(Box.createHorizontalStrut(10));
-//        	panel2.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//        	panel2.add(Box.createHorizontalStrut(10));
-//        	panel2.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//        	panel2.add(Box.createHorizontalStrut(10));
-//        	panel2.add(new BookLabel(BookFinder.getBookFromGoogle("054792822X")));
-//		} catch (InvalidISBNException e) {
-//			e.printStackTrace();
-//		}
         
         this.setVisible(true);
 	}
@@ -202,6 +158,7 @@ public class TestFrame2 extends JFrame{
 		int numPanels = (int)Math.ceil((double)labels.size() / (double)booksPerPanel);
 		
 		int pos = 0;
+		returnPanel.add(Box.createVerticalStrut(10));
 		for(int i = 0; i < numPanels; i++) {
 			JPanel panel = new JPanel();
 		    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -214,6 +171,7 @@ public class TestFrame2 extends JFrame{
 				}
 			}
 			returnPanel.add(panel);
+			returnPanel.add(Box.createVerticalStrut(10));
 			returnPanel.revalidate();
 			returnPanel.repaint();
 		}

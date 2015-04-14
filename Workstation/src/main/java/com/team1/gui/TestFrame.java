@@ -1,6 +1,5 @@
 package com.team1.gui;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,10 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.team1.formatting.queries.CheckOutBookQuery;
-import com.team1.formatting.responses.CheckOutBookResponse;
-import com.team1.formatting.responses.Response;
 
 public class TestFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
