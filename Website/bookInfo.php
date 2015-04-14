@@ -7,13 +7,18 @@
    include 'bookSlider.php';
 
    if(isset($_POST["resBk"])) {
+      //reserve request was submitted
       if(!isset($_SESSION["init"])) {
+         //user is not logged in
          requestLogin();
       } else {
+         //reserve book assumes reservation is successful
          reserve($_SESSION["usernm"], $_POST["isbn"]);
+         success();
       }
-   } else {
-
+   } else
+   {
+      //get book information using provided ISBN
       $isbn = "";
       if(isset($_POST["isbn"]))
          $isbn = $_POST["isbn"];
@@ -93,4 +98,19 @@
 </html>
 <?php
    } // end of requestLogin()
+
+   function success() {
+?>
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>LMS</title>
+   </head>
+   <body>
+      <p>Book Reserved Successfully</p>
+      <?php include "log_button.php"; ?>
+   </body>
+</html>
+<?php
+   }
 ?>
