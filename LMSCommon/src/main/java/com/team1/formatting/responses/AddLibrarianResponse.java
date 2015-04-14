@@ -10,6 +10,7 @@ public class AddLibrarianResponse extends AdminResponse
     	this.userName = userName;
     	this.fName = fName;
     	this.lName = lName;
+    	this.auth = "2";
     }
     
     public AddLibrarianResponse()
@@ -18,9 +19,10 @@ public class AddLibrarianResponse extends AdminResponse
     	this.userName = " ";
     	this.fName = " ";
     	this.lName = " ";
+    	this.auth = "2";
     }
     
-    public String userName, fName, lName;
+    public String userName, fName, lName, auth;
     
     @Override
     public String toString() {
