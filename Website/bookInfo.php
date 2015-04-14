@@ -89,7 +89,7 @@
    <body>
       <h1>Wait!</h1>
       <p>You must login to reserve a book.</p>
-      <form action="accounts/login.php" method="post">
+      <form action="login.php" method="post">
          <input type="submit" value="Login"/>
          <input type="hidden" name="isbn" value="<?= $_POST['isbn'] ?>"/>
          <input type="hidden" name="return" value="/bookInfo.php"/>
