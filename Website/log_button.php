@@ -14,7 +14,7 @@
 <form style="position:absolute;top:10px;right:30px;" action="/log_button.php" method="post">
    <input type="hidden" name="logout" value="yes"/>
    <input type="hidden" name="return" value="<?= $_SERVER['PHP_SELF'] ?>"/>
-   <?= $_SESSION["usernm"] ?><input type="submit" value="logout"/>
+   <a href="/accounts/view_account.php"><?= $_SESSION["usernm"] ?></a> <input type="submit" value="logout"/>
 </form>
 
 <?php

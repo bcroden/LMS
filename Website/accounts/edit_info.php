@@ -72,7 +72,7 @@
 
    <?php } ?>
 
-   <?php include "log_button.php"; ?>
+   <?php include "../log_button.php"; ?>
 
    </body>
 
