@@ -2,6 +2,7 @@ package com.team1.gui;
 
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -40,6 +41,8 @@ public class LMSWindow extends JFrame {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+		
+		this.setIconImage(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_FRAME_ICON)).getImage());
 		
         this.setTitle(WINDOW_TITLE);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

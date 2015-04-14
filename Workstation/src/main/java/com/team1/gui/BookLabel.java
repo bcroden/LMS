@@ -2,7 +2,6 @@ package com.team1.gui;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
@@ -36,8 +35,7 @@ public class BookLabel extends JLabel{
 		try {
 			this.setIcon(new ImageIcon(new URL(book.url)));
 		} catch (MalformedURLException e1) {
-			this.setIcon(new ImageIcon(getClass().getResource("/double-j-design/defaultbookicon.png")));
-//			e1.printStackTrace();
+			this.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_DEFAULT_BOOK)));
 		}
 		
 		this.that = this;
@@ -45,6 +43,7 @@ public class BookLabel extends JLabel{
 		this.book =  book;
 		this.factory = PopupFactory.getSharedInstance();
 		this.tooltip = this.createToolTip();
+		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		String text = "<html>" 	+ book.title + "</html>";
 //				    + "<br>" 	+ "Author: " 	+ book.author
@@ -88,14 +87,12 @@ public class BookLabel extends JLabel{
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				setCursor(Cursor.getDefaultCursor());
 				if(popup != null)
 					popup.hide();
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 //				popup = factory.getPopup(that, tooltip, e.getXOnScreen(), e.getYOnScreen());
 //				popup = factory.getPopup(that, tooltip, that.getLocationOnScreen().x, that.getLocationOnScreen().y + that.getIcon().getIconHeight());
 				popup = factory.getPopup(that, tooltip, that.getLocationOnScreen().x, that.getLocationOnScreen().y - tooltip.getPreferredSize().height);

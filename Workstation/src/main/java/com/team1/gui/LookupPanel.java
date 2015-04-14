@@ -40,6 +40,7 @@ public class LookupPanel extends JPanel {
 		super();
 		
 		this.controller = controller;
+//		this.setPreferredSize(new Dimension(800, 600));
 		
         GridBagLayout gbl_lookupPanel = new GridBagLayout();
         gbl_lookupPanel.columnWidths = new int[]{10, 10, 0, 0, 0, 0, 10, 0};
@@ -97,31 +98,29 @@ public class LookupPanel extends JPanel {
 				
 				System.out.println("Response string = " + r);
 				
-				if(r == null) {
-//					returnTextArea.setText("Invalid search field.");
-//					returnTextArea.setForeground(Color.RED);
-					setCursor(Cursor.getDefaultCursor());
-					return;
-				}
-				
-				Response response = Response.stringToResponse(r);
-				if(response instanceof BookInfoResponse) {
-					ArrayList<Book> books = ((BookInfoResponse)response).books;
-					if(books == null)
-						System.out.println("Books = null");
-					else
-						System.out.println("Books != null");
-					returnPanel.add(Box.createHorizontalGlue());
-					int i = 0;
-					for(;i < books.size()-1; i++) {
-						System.out.println(books.get(i).toString());
-//						returnTextArea.setText(b.toString());
+				if(r != null) {
+					Response response = Response.stringToResponse(r);
+					BookInfoResponse bookInfoResponse = (BookInfoResponse)response;
+					if(bookInfoResponse.wasSuccessful) {
+						ArrayList<Book> books = bookInfoResponse.books;
+						if(books == null)
+							System.out.println("Books = null");
+						else
+							System.out.println("Books != null");
+						returnPanel.add(Box.createHorizontalGlue());
+						int i = 0;
+						for(;i < books.size()-1; i++) {
+							System.out.println(books.get(i).toString());
+	//						returnTextArea.setText(b.toString());
+							returnPanel.add(new BookLabel(books.get(i)));
+							returnPanel.add(Box.createHorizontalStrut(20));
+						}
 						returnPanel.add(new BookLabel(books.get(i)));
-						returnPanel.add(Box.createHorizontalStrut(20));
+						returnPanel.add(Box.createHorizontalGlue());
 					}
-					
-					returnPanel.add(new BookLabel(books.get(i)));
-					returnPanel.add(Box.createHorizontalGlue());
+				}
+				else {
+					//TODO: Show error message
 				}
 				setCursor(Cursor.getDefaultCursor());
 			}

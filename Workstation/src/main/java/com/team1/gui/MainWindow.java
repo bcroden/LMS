@@ -1,5 +1,6 @@
 package com.team1.gui;
 
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,11 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTabbedPane;
+import javax.swing.border.TitledBorder;
 
-import com.team1.books.Book;
-import com.team1.books.BookFinder;
-import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.PasswordChangeQuery;
 import com.team1.formatting.responses.Response;
 
@@ -49,20 +47,19 @@ public class MainWindow extends LMSWindow {
     private static final String MENU_TEXT_FINES = 		"Fees/Fines";
     private static final String MENU_TEXT_LOGOUT = 		"Logout";
     
-    private static final String ICON_PATH_OPTIONS = 	"/flat-ui-icons-free/gearicon32.png";
-    private static final String ICON_PATH_PASSWORD = 	"/flat-ui-icons-free/lockicon16.png";
-    private static final String ICON_PATH_ADD_USER = 	"/flat-ui-icons-free/usericon16g.png";
-    private static final String ICON_PATH_REM_USER = 	"/flat-ui-icons-free/usericon16r.png";
-    private static final String ICON_PATH_LOGOUT = 		"/flat-ui-icons-free/xicon16.png";
-    
-    private static final String TOOLTIP_LOOKUP = 		null;
-    private static final String TOOLTIP_REGISTER = 		null;
-    private static final String TOOLTIP_CHECKOUT = 		null;
-    private static final String TOOLTIP_CKECKIN = 		null;
-    private static final String TOOLTIP_PAYMENT = 		null;
+    private static final String TOOLTIP_LOOKUP = 		"Lookup Books";
+    private static final String TOOLTIP_REGISTER = 		"Register New Books";
+    private static final String TOOLTIP_CHECKOUT = 		"Check Out Books";
+    private static final String TOOLTIP_CKECKIN = 		"Check In Books";
+    private static final String TOOLTIP_PAYMENT = 		"Manage Payments From Patrons";
     private static final String TOOLTIP_OPTIONS = 		"Options";
     
     private LMSButton optionsButton;
+    
+    private JPanel topPanel;
+    private JPanel mainPanel;
+    private JPanel buttonsPanel;
+    private JPanel contentPanel;
     
     private MainWindow that;
     
@@ -83,7 +80,7 @@ public class MainWindow extends LMSWindow {
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
         
-        JPanel topPanel = new JPanel();
+        topPanel = new JPanel();
         GridBagConstraints gbc_topPanel = new GridBagConstraints();
         gbc_topPanel.insets = new Insets(0, 0, 5, 0);
         gbc_topPanel.fill = GridBagConstraints.BOTH;
@@ -98,7 +95,7 @@ public class MainWindow extends LMSWindow {
         final JPopupMenu menu = new JPopupMenu();
         
         JMenuItem changePassword = new JMenuItem(MENU_TEXT_PASSWORD);
-        changePassword.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_PASSWORD)));
+        changePassword.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_PASSWORD)));
         changePassword.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -129,7 +126,7 @@ public class MainWindow extends LMSWindow {
         menu.add(changePassword);
         
         JMenuItem addLibrarianAccount = new JMenuItem(MENU_TEXT_ADD_ACCOUNT);
-        addLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_ADD_USER)));
+        addLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_ADD_USER)));
         if(controller.model.status < 3)
         	addLibrarianAccount.setEnabled(false);
         addLibrarianAccount.addActionListener(new ActionListener() {
@@ -141,7 +138,7 @@ public class MainWindow extends LMSWindow {
         menu.add(addLibrarianAccount);
         
         JMenuItem removeLibrarianAccount = new JMenuItem(MENU_TEXT_REM_ACCOUNT);
-        removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_REM_USER)));
+        removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_REM_USER)));
         if(controller.model.status < 3)
         	removeLibrarianAccount.setEnabled(false);
         removeLibrarianAccount.addActionListener(new ActionListener() {
@@ -153,6 +150,7 @@ public class MainWindow extends LMSWindow {
         menu.add(removeLibrarianAccount);
         
         JMenuItem feesFines = new JMenuItem(MENU_TEXT_FINES);
+        feesFines.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_FINES)));
         if(controller.model.status < 3)
         	feesFines.setEnabled(false);
         feesFines.addActionListener(new ActionListener() {
@@ -164,7 +162,7 @@ public class MainWindow extends LMSWindow {
         menu.add(feesFines);
         
         JMenuItem logout = new JMenuItem(MENU_TEXT_LOGOUT);
-        logout.setIcon(new ImageIcon(getClass().getResource(ICON_PATH_LOGOUT)));
+        logout.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_LOGOUT)));
         logout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -173,10 +171,9 @@ public class MainWindow extends LMSWindow {
         });
         menu.add(logout);
         
-        optionsButton = new LMSButton(new ImageIcon(getClass().getResource(ICON_PATH_OPTIONS)));
+        optionsButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_OPTIONS)));
         optionsButton.setToolTipText(TOOLTIP_OPTIONS);
         optionsButton.setMargin(new Insets(4, 4, 4, 4));
-        optionsButton.setFocusPainted(false);
         
         optionsButton.addActionListener(new ActionListener() {
 			@Override
@@ -190,49 +187,106 @@ public class MainWindow extends LMSWindow {
         });
         topPanel.add(optionsButton);
         
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-        gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
-        gbc_tabbedPane.fill = GridBagConstraints.BOTH;
-        gbc_tabbedPane.gridx = 1;
-        gbc_tabbedPane.gridy = 2;
-        getContentPane().add(tabbedPane, gbc_tabbedPane);
+        mainPanel = new JPanel();
+        getContentPane().add(mainPanel);
+        GridBagLayout gbl_mainPanel = new GridBagLayout();
+        gbl_mainPanel.columnWidths = new int[]{0, 0, 0};
+        gbl_mainPanel.rowHeights = new int[]{0, 0};
+        gbl_mainPanel.columnWeights = new double[]{0.0, 3.0, Double.MIN_VALUE};
+        gbl_mainPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+        mainPanel.setLayout(gbl_mainPanel);
         
-        Book book = null;
-		try {
-			book = BookFinder.getBookFromGoogle("9780141181400");
-		} catch (InvalidISBNException e1) {
-			e1.printStackTrace();
-		}
+        GridBagConstraints gbc_mainPanel = new GridBagConstraints();
+        gbc_mainPanel.insets = new Insets(0, 0, 5, 5);
+        gbc_mainPanel.fill = GridBagConstraints.BOTH;
+        gbc_mainPanel.gridx = 1;
+        gbc_mainPanel.gridy = 2;
+        getContentPane().add(mainPanel, gbc_mainPanel);
         
-        BookLabel bl1 = new BookLabel(book);
-        BookLabel bl2 = new BookLabel(book);
-        BookLabel bl3 = new BookLabel(book);
-		
-        JPanel testPanel = new JPanel();
-        testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.X_AXIS));
+        buttonsPanel = new JPanel();
+        GridBagConstraints gbc_buttonsPanel = new GridBagConstraints();
+        gbc_buttonsPanel.insets = new Insets(0, 0, 0, 5);
+        gbc_buttonsPanel.fill = GridBagConstraints.BOTH;
+        gbc_buttonsPanel.gridx = 0;
+        gbc_buttonsPanel.gridy = 0;
+        mainPanel.add(buttonsPanel, gbc_buttonsPanel);
         
-        Component horizontalGlue_1 = Box.createHorizontalGlue();
-        testPanel.add(horizontalGlue_1);
-        testPanel.add(bl1);
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
         
-        Component horizontalStrut = Box.createHorizontalStrut(20);
-        testPanel.add(horizontalStrut);
-        testPanel.add(bl2);
+        LMSButton lookupButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_SEARCH)));
+        lookupButton.setToolTipText(TOOLTIP_LOOKUP);
+        lookupButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout)contentPanel.getLayout()).show(contentPanel, TAB_NAME_LOOKUP);
+			}
+		});
+        buttonsPanel.add(lookupButton);
         
-        Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-        testPanel.add(horizontalStrut_1);
-        testPanel.add(bl3);
+        LMSButton checkOutButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        checkOutButton.setToolTipText(TOOLTIP_CHECKOUT);
+        checkOutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout)contentPanel.getLayout()).show(contentPanel, TAB_NAME_CKECKOUT);
+			}
+		});
+        buttonsPanel.add(checkOutButton);
         
-        Component horizontalGlue_2 = Box.createHorizontalGlue();
-        testPanel.add(horizontalGlue_2);
+        LMSButton checkInButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        checkInButton.setToolTipText(TOOLTIP_CKECKIN);
+        checkInButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout)contentPanel.getLayout()).show(contentPanel, TAB_NAME_CKECKIN);
+			}
+		});
+        buttonsPanel.add(checkInButton);
         
-        tabbedPane.addTab(TAB_NAME_LOOKUP, 	 null, new LookupPanel(this.controller), 	TOOLTIP_LOOKUP);
-        tabbedPane.addTab(TAB_NAME_REGISTER, null, new RegisterPanel(this.controller), 	TOOLTIP_REGISTER);
-        tabbedPane.addTab(TAB_NAME_CKECKOUT, null, new CheckOutPanel(this.controller), 	TOOLTIP_CHECKOUT);
-        tabbedPane.addTab(TAB_NAME_CKECKIN,  null, new CheckInPanel(this.controller), 	TOOLTIP_CKECKIN);
-        tabbedPane.addTab(TAB_NAME_PAYMENT,  null, new PaymentPanel(this.controller), 	TOOLTIP_PAYMENT);
-        tabbedPane.addTab("test", testPanel);
+        LMSButton registerButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        registerButton.setToolTipText(TOOLTIP_REGISTER);
+        registerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout)contentPanel.getLayout()).show(contentPanel, TAB_NAME_REGISTER);
+			}
+		});
+        buttonsPanel.add(registerButton);
+        
+        LMSButton paymentButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        paymentButton.setToolTipText(TOOLTIP_PAYMENT);
+        paymentButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout)contentPanel.getLayout()).show(contentPanel, TAB_NAME_PAYMENT);
+			}
+		});
+        buttonsPanel.add(paymentButton);
+        
+        contentPanel = new JPanel();
+        GridBagConstraints gbc_contentPanel = new GridBagConstraints();
+        gbc_contentPanel.fill = GridBagConstraints.BOTH;
+        gbc_contentPanel.gridx = 1;
+        gbc_contentPanel.gridy = 0;
+        mainPanel.add(contentPanel, gbc_contentPanel);
+        contentPanel.setLayout(new CardLayout(0, 0));
+        
+        LookupPanel lookupPanel = new LookupPanel(this.controller);
+        lookupPanel.setBorder(new TitledBorder(null, TAB_NAME_LOOKUP, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        RegisterPanel registerPanel = new RegisterPanel(this.controller);
+        registerPanel.setBorder(new TitledBorder(null, TAB_NAME_REGISTER, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        CheckOutPanel checkOutPanel = new CheckOutPanel(this.controller);
+        checkOutPanel.setBorder(new TitledBorder(null, TAB_NAME_CKECKOUT, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        CheckInPanel checkInPanel = new CheckInPanel(this.controller);
+        checkInPanel.setBorder(new TitledBorder(null, TAB_NAME_CKECKIN, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        PaymentPanel paymentPanel = new PaymentPanel(this.controller);
+        paymentPanel.setBorder(new TitledBorder(null, TAB_NAME_PAYMENT, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        
+        contentPanel.add(TAB_NAME_LOOKUP, lookupPanel);
+        contentPanel.add(TAB_NAME_CKECKOUT, checkOutPanel);
+        contentPanel.add(TAB_NAME_CKECKIN, checkInPanel);
+        contentPanel.add(TAB_NAME_REGISTER, registerPanel);
+        contentPanel.add(TAB_NAME_PAYMENT, paymentPanel);
         
         this.setVisible(true);
     }

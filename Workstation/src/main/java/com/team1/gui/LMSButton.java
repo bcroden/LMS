@@ -21,6 +21,7 @@ public class LMSButton extends JButton{
 	
 	private void init(){
 		this.setContentAreaFilled(false);
+		this.setFocusPainted(false);
 		
 		this.addMouseListener(new MouseListener() {
 			@Override
