@@ -54,11 +54,11 @@ public class BookLabel extends JLabel{
 //				    + "</html>";
 		this.tooltip.setTipText(text);
 		
-		int iconWidth = this.getIcon().getIconWidth();
-		int tooltipWidth = tooltip.getPreferredSize().width;
+//		int iconWidth = this.getIcon().getIconWidth();
+//		int tooltipWidth = tooltip.getPreferredSize().width;
 		
-		int width = (iconWidth > tooltipWidth) ? iconWidth : tooltipWidth;
-		this.setPreferredSize(new Dimension(width, this.getIcon().getIconHeight()));
+//		int width = (iconWidth > tooltipWidth) ? iconWidth : tooltipWidth;
+//		this.setPreferredSize(new Dimension(width, this.getIcon().getIconHeight()));
 		
 		this.addMouseListener(new MouseListener() {
 			@Override

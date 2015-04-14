@@ -59,6 +59,7 @@ public class LoginWindow extends LMSWindow {
 		
 		this.setSize(WIDTH, HEIGHT);
         this.setResizable(IS_RESIZABLE);
+//        this.setUndecorated(true);
 		this.setLocationRelativeTo(null);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
