@@ -72,6 +72,8 @@
 
    <?php } ?>
 
+   <?php include "log_button.php"; ?>
+
    </body>
 
 </html>

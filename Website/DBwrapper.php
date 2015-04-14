@@ -185,10 +185,10 @@
 		$connection->query($sql); 
 	}
 
-	function reserver($user, $isbn){
+	function reserve($user, $isbn){
 		global $connection;
 		//find the values of the copies of books available
-		$sql == "SELECT copiesin, copiesreserved FROM book WHERE isbn = '" . $isbn . "'";
+		$sql = "SELECT copiesin, copiesreserved FROM book WHERE isbn = '" . $isbn . "'";
 		$result = $connection->query($sql);
 		$copiesin = 0;
 		$copiesreserved = 0;
@@ -211,7 +211,7 @@
 				$books = $row["booksr"];
 			}
 			$books = $books . "," . $isbn;
-			$sql = "UPDATE user SET booksr = '" . $books . "'";
+			$sql = "UPDATE user SET booksr = '" . $books . "' WHERE username = '" . $user . "'";
 			$connection->query($sql);
 			//Attach user to reservation list
 			$sql = "SELECT userreserved FROM book WHERE isbn = '" . $isbn . "'";

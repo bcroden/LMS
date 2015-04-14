@@ -1,11 +1,12 @@
 <?php
+   session_start();
 //   error_reporting(E_ALL);
 //   ini_set('display_errors', 'On');
-   if(!isset($_SESSION["init"])) { session_start(); }
+   if(!isset($_SESSION["init"])) { header("Location: login.php");/*session_start();*/ }
    if(isset($_POST["logout"])) {
       session_destroy();
       header("Location: login.php");
-   };
+   }
 
    include "../bookSlider.php";
 //   include "../DBwrapper.php";
@@ -211,10 +212,8 @@
           ?>
       </table>
 
-      <form id="logout" action="view_account.php" method="post">
-          <input type="hidden" name="logout" value="yes"/>
-          <input type="submit" value="logout"/>
-      </form>
+      <?php include "../log_button.php"; ?>
+
    </body>
 </html>
 <?php

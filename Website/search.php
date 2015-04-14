@@ -1,6 +1,6 @@
 <html>
 <head>
-
+   <title>LMS</title>
 <style>
 div.scroll {
 	background-color: D6D6D6;
@@ -14,13 +14,14 @@ div.scroll {
 
 </head>
 <body>
+      <?php include "log_button.php"; ?>
 <?php
-//error_reporting(E_ALL);
-//ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 include 'bookSlider.php';
 //include 'DBwrapper.php';
 
-echo "Connecting to database <br><br>";
+//echo "Connecting to database <br><br>";
 connect();
 	$type = $_POST['type'];
 

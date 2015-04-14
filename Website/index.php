@@ -1,8 +1,8 @@
 <html>
 	<?php
 
-	error_reporting(E_ALL);
-	ini_set('display_errors', 'On');
+//	error_reporting(E_ALL);
+//	ini_set('display_errors', 'On');
 
 
 
@@ -22,10 +22,12 @@
     </head>
     <body>
         <p>Welcome to the Library Management System</p>
-		<form id="button" action="accounts/login.php">
+<!--		<form id="button" action="accounts/login.php">
 			<input type="submit" value="Go to Login">
 		</form>
-        <p>
+-->        <p>
+      <?php include "log_button.php"; ?>
+
             <form method="post" action="/search.php">
 				<select name="type">
 					<option value="isbn">ISBN</option>
