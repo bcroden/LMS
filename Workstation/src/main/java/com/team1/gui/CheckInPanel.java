@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,7 +31,7 @@ public class CheckInPanel extends JPanel {
 	private JTextField patronField;
     private JTextField isbnField;
     private JButton submitButton;
-    private JTextArea returnTextArea;
+    private LMSBookScrollPane returnPane;
     
 	public CheckInPanel(final Controller controller) {
 		super();
@@ -89,17 +90,21 @@ public class CheckInPanel extends JPanel {
 				String r = controller.sendMessage(q.toString());
 				System.out.println("R = " + r);
 				if(r == null) {
-					returnTextArea.setText("Invalid Entries.");
-					returnTextArea.setForeground(Color.RED);
 				}
 				System.out.println("Before checkin response");
 				Response response = Response.stringToResponse(r);
 				System.out.println("After checkin response");
 				if(response instanceof CheckInBookResponse) {
-					if(response.wasSuccessful)
-						returnTextArea.setText("Check in successfull");
-					else
-						returnTextArea.setText("Check in failed");
+					if(response.wasSuccessful) {
+						returnPane.showBooks(((CheckInBookResponse)response).books);
+						JOptionPane.showMessageDialog(null, "Checkin Successful");
+						
+						if(!((CheckInBookResponse)response).fines.equals("0.0"))
+							JOptionPane.showMessageDialog(null, "User has unpaid fines. Their balance is $" + ((CheckInBookResponse)response).fines);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Checkin Failed");
+					}
 				}
 			}
         });
@@ -109,12 +114,7 @@ public class CheckInPanel extends JPanel {
         gbc_submitButton.gridy = 1;
         this.add(submitButton, gbc_submitButton);
         
-        returnTextArea = new JTextArea();
-        returnTextArea.setEditable(false);
-        
-        JScrollPane scrollPane = new JScrollPane(returnTextArea,
-        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        returnPane = new LMSBookScrollPane();
         
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 7;
@@ -122,6 +122,6 @@ public class CheckInPanel extends JPanel {
         gbc_returnTextArea.fill = GridBagConstraints.BOTH;
         gbc_returnTextArea.gridx = 1;
         gbc_returnTextArea.gridy = 3;
-        this.add(scrollPane, gbc_returnTextArea);
+        this.add(returnPane, gbc_returnTextArea);
 	}
 }
