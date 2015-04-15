@@ -54,7 +54,7 @@
    </head>
 
    <body>
-      <div class="login">
+      <div class="centered">
    <?php if(!isset($_SESSION["init"])) { ?>
 
          <p>We're sorry but your session has expired.</p>
