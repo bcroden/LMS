@@ -392,7 +392,7 @@ public class QueryUtils {
         	//Remove a librarian
 //        	try {
 //        			response.wasSuccessful = true;
-//					Dbwrapper.getInstance().removeUser(query.userName, query.password, query.email, query.fName, query.lName, query.enotify, 2);
+//					Dbwrapper.getInstance().removeUser(query.userName);
 //					response.fName = query.fName;
 //	    	    	response.lName = query.lName;
 //					response.userName = query.userName;
