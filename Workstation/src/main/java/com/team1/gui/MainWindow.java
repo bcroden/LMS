@@ -18,7 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
 
+import com.team1.formatting.queries.AddLibrarianQuery;
 import com.team1.formatting.queries.PasswordChangeQuery;
+import com.team1.formatting.queries.RemoveLibrarianQuery;
+import com.team1.formatting.queries.SetFineQuery;
 import com.team1.formatting.responses.Response;
 
 /**
@@ -99,9 +102,30 @@ public class MainWindow extends LMSWindow {
         changePassword.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String password = JOptionPane.showInputDialog("Enter Current Password");
-				String newPassword = JOptionPane.showInputDialog("Enter New Password");
-				String newPassword2 = JOptionPane.showInputDialog("Re-enter New Password");
+				String password = " ";
+				String newPassword = " ";
+				String newPassword2 = " ";
+				try{
+				password = JOptionPane.showInputDialog("Enter Current Password");
+				}
+				catch(NullPointerException e2){
+					password = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Password");
+				}
+				try{
+				newPassword = JOptionPane.showInputDialog("Enter New Password");
+				}
+				catch(NullPointerException e3){
+					newPassword = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a New Password");
+				}
+				try{
+				newPassword2 = JOptionPane.showInputDialog("Re-enter New Password");
+				}
+				catch(NullPointerException e4){
+					newPassword2 = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not re-enter your New Password");
+				}
 				
 				if(newPassword.equals(newPassword2)) {
 					PasswordChangeQuery query = new PasswordChangeQuery(controller.model.sessionId, password, newPassword, controller.model.username);
@@ -109,54 +133,166 @@ public class MainWindow extends LMSWindow {
 					String r = controller.sendMessage(query.toString());
 					
 					if(r == null) {
-						JOptionPane.showMessageDialog(that, "Failed");
+						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
 						return;
 					}
 					
 					Response response = Response.stringToResponse(r);
 					if(response.wasSuccessful)
-						JOptionPane.showMessageDialog(that, "Done!");
+						JOptionPane.showMessageDialog(that, "The Password was successfully changed");
 					else
-						JOptionPane.showMessageDialog(that, "Failed");
+						JOptionPane.showMessageDialog(that, "The Database manager failed to change the password");
 				}
 				else
-					JOptionPane.showMessageDialog(that, "Failed");
+					JOptionPane.showMessageDialog(that, "The passwords did not match");
 			}
         });
         menu.add(changePassword);
         
         JMenuItem addLibrarianAccount = new JMenuItem(MENU_TEXT_ADD_ACCOUNT);
         addLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_ADD_USER)));
-        if(controller.model.status < 3)
-        	addLibrarianAccount.setEnabled(false);
+        //if(controller.model.status < 3)
+        //	addLibrarianAccount.setEnabled(false);
         addLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				String newUsername = " ";
+				String newPassword = " ";
+				String newPassword2 = " ";
+				String newEmail = " ";
+				String newFname = " ";
+				String newLname = " ";
+				try{
+				newUsername = JOptionPane.showInputDialog("Enter New Librarian Username");
+				}
+				catch(NullPointerException e2){
+					newUsername = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian Username");
+				}
+				try{
+				newPassword = JOptionPane.showInputDialog("Enter New Librarian Password");
+				}
+				catch(NullPointerException e3){
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Password");
+				}
+				try{
+				newPassword2 = JOptionPane.showInputDialog("Re-enter New Librarian Password");
+				}
+				catch(NullPointerException e4){
+					newPassword2 = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not re-enter Password");
+				}
+				try{
+				newEmail = JOptionPane.showInputDialog("Enter New Librarian Email");
+				}
+				catch(NullPointerException e5){
+					newEmail = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a valid email");			
+				}
+				try{
+				newFname = JOptionPane.showInputDialog("Enter New Librarian First Name");
+				}
+				catch(NullPointerException e6){
+					newFname = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian First Name");
+				}
+				try{
+				newLname = JOptionPane.showInputDialog("Enter new Librarian Last Name");
+				}
+				catch(NullPointerException e7){
+					newLname = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian Last Name");
+				}
+				
+				if(newPassword.equals(newPassword2)) {
+					AddLibrarianQuery query = new AddLibrarianQuery(controller.model.sessionId, newUsername, newPassword, newEmail, newFname, newLname, 0);
+					
+					String r = controller.sendMessage(query.toString());
+					
+					if(r == null) {
+						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
+						return;
+					}
+					
+					Response response = Response.stringToResponse(r);
+					if(response.wasSuccessful)
+						JOptionPane.showMessageDialog(that, "The Librarian account was successfully added");
+					else
+						JOptionPane.showMessageDialog(that, "The Database manager failed to add the Librarian account");
+				}
+				else
+					JOptionPane.showMessageDialog(that, "The passwords did not match");
 			}
 		});
         menu.add(addLibrarianAccount);
         
         JMenuItem removeLibrarianAccount = new JMenuItem(MENU_TEXT_REM_ACCOUNT);
         removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_REM_USER)));
-        if(controller.model.status < 3)
-        	removeLibrarianAccount.setEnabled(false);
+        //if(controller.model.status < 3)
+        //	removeLibrarianAccount.setEnabled(false);
         removeLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
+				String newUsername = " ";
+				try{
+				newUsername = JOptionPane.showInputDialog("Enter New Librarian Username");
+				}
+				catch(NullPointerException e2){
+					newUsername = " ";
+					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian Uswername");
+				}
+
+					RemoveLibrarianQuery query = new RemoveLibrarianQuery(controller.model.sessionId, newUsername);
+					
+					String r = controller.sendMessage(query.toString());
+					
+					if(r == null) {
+						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
+						return;
+					}
+					
+					Response response = Response.stringToResponse(r);
+					if(response.wasSuccessful)
+						JOptionPane.showMessageDialog(that, "The Librarian account was successfully removed");
+					else
+						JOptionPane.showMessageDialog(that, "The Database Manager failed to remove the Librarian account");
+				}
         });
         menu.add(removeLibrarianAccount);
         
         JMenuItem feesFines = new JMenuItem(MENU_TEXT_FINES);
         feesFines.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_FINES)));
-        if(controller.model.status < 3)
-        	feesFines.setEnabled(false);
+        //if(controller.model.status < 3)
+        //	feesFines.setEnabled(false);
         feesFines.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				String rate = JOptionPane.showInputDialog("Enter a new fine rate");
+				float newRate = 0.0f;
+				try{
+					newRate = Float.parseFloat(rate);
+				}
+				catch(NumberFormatException e2){
+					JOptionPane.showMessageDialog(that, "You did not enter a valid number");
+				}
+				catch(NullPointerException e3){
+					JOptionPane.showMessageDialog(that, "You did not enter anything");
+				}
+				
+				SetFineQuery query = new SetFineQuery(controller.model.sessionId, newRate);
+				
+				String r = controller.sendMessage(query.toString());
+				
+				if(r == null) {
+					JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
+					return;
+				}
+				
+				Response response = Response.stringToResponse(r);
+				if(response.wasSuccessful)
+					JOptionPane.showMessageDialog(that, "The new Fine rate was successfully set");
+				else
+					JOptionPane.showMessageDialog(that, "The new Fine rate was not set");
 			}
         });
         menu.add(feesFines);
