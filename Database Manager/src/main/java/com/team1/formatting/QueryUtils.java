@@ -456,6 +456,8 @@ public class QueryUtils {
 		if (status == 0 || status == 1) response.wasSuccessful = false;
         else if (status == 2 || status == 3)
         {
+        	System.out.println("Before book addition...");
+        	System.out.println("\tdate published =" +query.book.datePublished);
             Dbwrapper.getInstance().addBook(query.book, query.numCopies);
             
             response.wasSuccessful = true;

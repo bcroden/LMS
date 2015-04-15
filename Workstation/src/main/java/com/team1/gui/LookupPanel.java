@@ -14,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -29,7 +30,7 @@ public class LookupPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String SUBMIT_BUTTON_TEXT = "Search";
-	private static final String[] COMBO_BOX_OPTIONS = {	"ISBN", "Title", "Author", "Publisher", "Genre", "Date"};
+	private static final String[] COMBO_BOX_OPTIONS = {"ISBN", "Title", "Author", "Publisher", "Genre", "Date"};
 	
 	public Controller controller;
 	
@@ -105,8 +106,10 @@ public class LookupPanel extends JPanel {
 					if(bookInfoResponse.wasSuccessful) {
 						ArrayList<Book> books = bookInfoResponse.books;
 						
-						if(books == null)
+						if(books == null || books.size() == 0) {
 							System.out.println("Books = null");
+							JOptionPane.showMessageDialog(null, "No results found.");
+						}
 						else {
 							System.out.println("Books != null");
 							showBooks(books);
@@ -114,6 +117,7 @@ public class LookupPanel extends JPanel {
 					}
 				}
 				else {
+					JOptionPane.showMessageDialog(null, "No results found.");
 					//TODO: Show error message
 				}
 				setCursor(Cursor.getDefaultCursor());
@@ -129,6 +133,7 @@ public class LookupPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(returnPanel,
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(20);
         
         GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
         gbc_returnTextArea.gridwidth = 5;
@@ -156,6 +161,9 @@ public class LookupPanel extends JPanel {
 		ArrayList<BookLabel> labels = new ArrayList<BookLabel>();
 		for(Book b : books)
 			labels.add(new BookLabel(b));
+		
+		System.out.println("panel width = " + returnPanel.getPreferredSize().getWidth());
+		System.out.println("book width = " + labels.get(0).getPreferredSize().getWidth());
 		
 		int booksPerPanel = returnPanel.getWidth() / (labels.get(0).getWidth() + 10);
 		System.out.println("booksPerPanel = " + booksPerPanel);

@@ -69,11 +69,13 @@ public class MainWindow extends LMSWindow {
         this.that = this;
         
         this.setSize(WIDTH, HEIGHT);
+        //Maximize
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        this.setUndecorated(true);
         this.setResizable(IS_RESIZABLE);
+        //Start in center of screen
         this.setLocationRelativeTo(null);
         
+        //Initialize layout manager
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{10, 0, 10, 0};
         gridBagLayout.rowHeights = new int[]{10, 50, 0, 10, 0};
@@ -81,6 +83,7 @@ public class MainWindow extends LMSWindow {
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
         
+        //Create top panel w/ layout manager
         topPanel = new JPanel();
         GridBagConstraints gbc_topPanel = new GridBagConstraints();
         gbc_topPanel.insets = new Insets(0, 0, 5, 0);
@@ -90,11 +93,14 @@ public class MainWindow extends LMSWindow {
         getContentPane().add(topPanel, gbc_topPanel);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         
+        //Add glue to top panel to make option button appear at right side
         Component horizontalGlue = Box.createHorizontalGlue();
         topPanel.add(horizontalGlue);
         
+        //Create popupmenu for options button
         final JPopupMenu menu = new JPopupMenu();
         
+        //Create menu item for changing passwords
         JMenuItem changePassword = new JMenuItem(MENU_TEXT_PASSWORD);
         changePassword.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_PASSWORD)));
         changePassword.addActionListener(new ActionListener() {
@@ -126,6 +132,7 @@ public class MainWindow extends LMSWindow {
         });
         menu.add(changePassword);
         
+        //Create menu item for adding librarian accounts
         JMenuItem addLibrarianAccount = new JMenuItem(MENU_TEXT_ADD_ACCOUNT);
         addLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_ADD_USER)));
         if(controller.model.status < 3)
@@ -138,6 +145,7 @@ public class MainWindow extends LMSWindow {
 		});
         menu.add(addLibrarianAccount);
         
+        //Create menu item for removing librarian accounts
         JMenuItem removeLibrarianAccount = new JMenuItem(MENU_TEXT_REM_ACCOUNT);
         removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_REM_USER)));
         if(controller.model.status < 3)
@@ -150,6 +158,7 @@ public class MainWindow extends LMSWindow {
         });
         menu.add(removeLibrarianAccount);
         
+        //Create menu item for setting fines and fees
         JMenuItem feesFines = new JMenuItem(MENU_TEXT_FINES);
         feesFines.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_FINES)));
         if(controller.model.status < 3)
@@ -162,6 +171,7 @@ public class MainWindow extends LMSWindow {
         });
         menu.add(feesFines);
         
+        //Create menu item for logging out
         JMenuItem logout = new JMenuItem(MENU_TEXT_LOGOUT);
         logout.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_LOGOUT)));
         logout.addActionListener(new ActionListener() {
@@ -172,22 +182,22 @@ public class MainWindow extends LMSWindow {
         });
         menu.add(logout);
         
+        //Create options button to display popup menu
         optionsButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_OPTIONS)));
         optionsButton.setToolTipText(TOOLTIP_OPTIONS);
         optionsButton.setMargin(new Insets(4, 4, 4, 4));
-        
         optionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Open popup menu
 				optionsButton.setFocusPainted(false);
-				//TODO: This is kind of a hack, fix this
-				
 				menu.show(that, 0, 0);
 				menu.setLocation(optionsButton.getLocationOnScreen().x - menu.getWidth() + optionsButton.getWidth(), optionsButton.getLocationOnScreen().y + optionsButton.getHeight());
 			}
         });
         topPanel.add(optionsButton);
         
+        //Create panel to hold buttons and content panels
         mainPanel = new JPanel();
         getContentPane().add(mainPanel);
         GridBagLayout gbl_mainPanel = new GridBagLayout();
@@ -196,7 +206,7 @@ public class MainWindow extends LMSWindow {
         gbl_mainPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
         gbl_mainPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         mainPanel.setLayout(gbl_mainPanel);
-        
+
         GridBagConstraints gbc_mainPanel = new GridBagConstraints();
         gbc_mainPanel.insets = new Insets(0, 0, 5, 5);
         gbc_mainPanel.fill = GridBagConstraints.BOTH;
@@ -204,6 +214,7 @@ public class MainWindow extends LMSWindow {
         gbc_mainPanel.gridy = 2;
         getContentPane().add(mainPanel, gbc_mainPanel);
         
+        //Create panel to hold buttons
         buttonsPanel = new JPanel();
         GridBagConstraints gbc_buttonsPanel = new GridBagConstraints();
         gbc_buttonsPanel.insets = new Insets(0, 0, 0, 5);
@@ -214,6 +225,7 @@ public class MainWindow extends LMSWindow {
         
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
         
+        //Make button to set view to lookups
         LMSButton lookupButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_SEARCH)));
         lookupButton.setToolTipText(TOOLTIP_LOOKUP);
         lookupButton.addActionListener(new ActionListener() {
@@ -224,6 +236,7 @@ public class MainWindow extends LMSWindow {
 		});
         buttonsPanel.add(lookupButton);
         
+        ///Make button to set view to checkouts
         LMSButton checkOutButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
         checkOutButton.setToolTipText(TOOLTIP_CHECKOUT);
         checkOutButton.addActionListener(new ActionListener() {
@@ -234,6 +247,7 @@ public class MainWindow extends LMSWindow {
 		});
         buttonsPanel.add(checkOutButton);
         
+      //Make button to set view to checkins
         LMSButton checkInButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
         checkInButton.setToolTipText(TOOLTIP_CKECKIN);
         checkInButton.addActionListener(new ActionListener() {
@@ -244,6 +258,7 @@ public class MainWindow extends LMSWindow {
 		});
         buttonsPanel.add(checkInButton);
         
+      //Make button to set view to register
         LMSButton registerButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
         registerButton.setToolTipText(TOOLTIP_REGISTER);
         registerButton.addActionListener(new ActionListener() {
@@ -254,6 +269,7 @@ public class MainWindow extends LMSWindow {
 		});
         buttonsPanel.add(registerButton);
         
+        ////Make button to set view to payments
         LMSButton paymentButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
         paymentButton.setToolTipText(TOOLTIP_PAYMENT);
         paymentButton.addActionListener(new ActionListener() {
@@ -264,6 +280,7 @@ public class MainWindow extends LMSWindow {
 		});
         buttonsPanel.add(paymentButton);
         
+        //Create panel to hold content
         contentPanel = new JPanel();
         GridBagConstraints gbc_contentPanel = new GridBagConstraints();
         gbc_contentPanel.fill = GridBagConstraints.BOTH;
@@ -272,6 +289,7 @@ public class MainWindow extends LMSWindow {
         mainPanel.add(contentPanel, gbc_contentPanel);
         contentPanel.setLayout(new CardLayout(0, 0));
         
+        //Make panels and add borders
         LookupPanel lookupPanel = new LookupPanel(this.controller);
         lookupPanel.setBorder(new TitledBorder(null, TAB_NAME_LOOKUP, TitledBorder.LEADING, TitledBorder.TOP, null, null));
         RegisterPanel registerPanel = new RegisterPanel(this.controller);
@@ -283,6 +301,7 @@ public class MainWindow extends LMSWindow {
         PaymentPanel paymentPanel = new PaymentPanel(this.controller);
         paymentPanel.setBorder(new TitledBorder(null, TAB_NAME_PAYMENT, TitledBorder.LEADING, TitledBorder.TOP, null, null));
         
+        //Add panels to card layouts
         contentPanel.add(TAB_NAME_LOOKUP, lookupPanel);
         contentPanel.add(TAB_NAME_CKECKOUT, checkOutPanel);
         contentPanel.add(TAB_NAME_CKECKIN, checkInPanel);

@@ -45,19 +45,7 @@ public class BookLabel extends JLabel{
 		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		String text = "<html>" 	+ book.title + "</html>";
-//				    + "<br>" 	+ "Author: " 	+ book.author
-//				    + "<br>" 	+ "Genre: " 	+ book.genre
-//				    + "<br>" 	+ "ISBN: " 		+ book.isbn
-//				    + "<br>" 	+ "Publisher: " + book.publisher
-//				    + "<br>" 	+ "Date: " 		+ book.datePublished
-//				    + "</html>";
 		this.tooltip.setTipText(text);
-		
-//		int iconWidth = this.getIcon().getIconWidth();
-//		int tooltipWidth = tooltip.getPreferredSize().width;
-		
-//		int width = (iconWidth > tooltipWidth) ? iconWidth : tooltipWidth;
-//		this.setPreferredSize(new Dimension(width, this.getIcon().getIconHeight()));
 		
 		this.addMouseListener(new MouseListener() {
 			@Override
@@ -92,8 +80,6 @@ public class BookLabel extends JLabel{
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-//				popup = factory.getPopup(that, tooltip, e.getXOnScreen(), e.getYOnScreen());
-//				popup = factory.getPopup(that, tooltip, that.getLocationOnScreen().x, that.getLocationOnScreen().y + that.getIcon().getIconHeight());
 				popup = factory.getPopup(that, tooltip, that.getLocationOnScreen().x, that.getLocationOnScreen().y - tooltip.getPreferredSize().height);
 				popup.show();
 			}
