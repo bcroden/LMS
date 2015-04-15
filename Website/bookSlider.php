@@ -16,10 +16,14 @@ echo <<< EOT
 		border-top: solid 1px black;
 		padding-top: 5px;
 		padding-bottom: 5px;
+		text-align: center;
+        margin: auto;
 	}
 
 	div.image{
 		padding-top: 5px;
+		text-align: center;
+		margin: auto;
 	}
 </style>
 EOT;

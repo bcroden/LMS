@@ -33,7 +33,7 @@
 	function queryTitle($title){
 		global $connection;
 
-		$sql = "SELECT * FROM book WHERE title = '" . $title . "'";
+		$sql = "SELECT * FROM book WHERE title LIKE '%" . $title . "%'";
 		$result = $connection->query($sql);
 		//check to see if empty
 		if($result->num_rows > 0){
@@ -50,7 +50,7 @@
 
 	function queryAuthor($author){
 		global $connection;
-		$sql = "SELECT * FROM book WHERE author = '" . $author . "'";
+		$sql = "SELECT * FROM book WHERE author LIKE '%" . $author . "%'";
 		$result  = $connection->query($sql);
 		if($result->num_rows > 0){
 			return $result;
@@ -61,7 +61,7 @@
 
 	function queryGenre($genre){
 		global $connection;
-		$sql = "SELECT * FROM book WHERE genre '" . $genre . "'";
+		$sql = "SELECT * FROM book WHERE genre LIKE '%" . $genre . "%'";
 		$result = $connection->query($sql);
 		if($result->num_rows > 0){
 			return $result;
@@ -171,7 +171,7 @@
 		$row = mysqli_fetch_array($result);
 
 		$times = explode(",", $row["dateout"]);
-		$time = (time() - $times[$i])/86400000;
+		$time = ((time() - $times[$i])/86400000);
 
 		$timeleft = 90 - $time;
 
