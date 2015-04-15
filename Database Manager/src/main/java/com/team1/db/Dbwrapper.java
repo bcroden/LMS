@@ -674,8 +674,23 @@ public class Dbwrapper {
     	
     	stmt.executeUpdate(sql);
     }
+    
+    public synchronized void setBalance(String username, float amount)throws SQLException{
+    	Statement stmt = con.createStatement();
+    	String sql = "SELECT balance FROM user WHERE username = '" + username + "'";
+    	float bal = 0.0f;
+    	ResultSet result = stmt.executeQuery(sql);
+    	while(result.next()){
+    		bal = result.getFloat("balance");
+    	}
+    	bal += amount;
+    	
+    	sql = "UPDATE user SET balance = " + bal + " WHERE username = '" + username + "'";
+    	stmt.executeUpdate(sql);
+    }
     //--------------------------------------------------------------------------
     
     //Administrative queries
     //Not sure what exactly we want from here
+    
 }
