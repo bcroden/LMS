@@ -16,6 +16,9 @@
 			top:10;
 			right:10;
 		}
+   body {
+      background-color: A3CCA3;
+   }
 
 		</style>
     </head>
