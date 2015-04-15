@@ -8,8 +8,8 @@
       header("Location: login.php");
    }
 
-   include "../bookSlider.php";
-//   include "../DBwrapper.php";
+   include "bookSlider.php";
+//   include "DBwrapper.php";
 
    connect();
 
@@ -216,7 +216,7 @@
           ?>
       </table>
 
-      <?php include "../log_button.php"; ?>
+      <?php include "log_button.php"; ?>
 
    </body>
 </html>
