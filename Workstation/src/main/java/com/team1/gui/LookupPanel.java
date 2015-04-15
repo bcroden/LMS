@@ -72,9 +72,6 @@ public class LookupPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				returnArea.removeAll();
-				returnArea.revalidate();
-				returnArea.repaint();
 				
 				BookInfoQuery q = new BookInfoQuery(controller.model.sessionId);
 				

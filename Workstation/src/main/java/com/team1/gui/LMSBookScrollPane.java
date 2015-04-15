@@ -43,6 +43,10 @@ public class LMSBookScrollPane extends JScrollPane{
 		for(Book b : books)
 			labels.add(new BookLabel(b));
 		
+		this.panel.removeAll();
+		this.panel.revalidate();
+		this.panel.repaint();
+		
 //		System.out.println("panel width = " + frame.getPreferredSize().getWidth());
 //		System.out.println("book width = " + labels.get(0).getPreferredSize().getWidth());
 		
