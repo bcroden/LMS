@@ -100,7 +100,7 @@ public class CheckInPanel extends JPanel {
 					if(response.wasSuccessful) {
 						returnTextArea.setText("Check in successfull");
 						
-						if(!((CheckInBookResponse)response).fines.equals("0"))
+						if(!((CheckInBookResponse)response).fines.equals("0.0"))
 							JOptionPane.showMessageDialog(null, "User has unpaid fines. Their balance is $" + ((CheckInBookResponse)response).fines);
 					}
 					else
