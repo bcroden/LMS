@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -16,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.team1.formatting.queries.AddBookQuery;
+import com.team1.formatting.queries.ManualAddBookQuery;
 import com.team1.formatting.responses.AddBookResponse;
 import com.team1.formatting.responses.Response;
 
@@ -91,11 +93,59 @@ public class RegisterPanel extends JPanel {
 				
 				System.out.println(response.toString());
 				
+				
 				if(response instanceof AddBookResponse) {
 					if(response.wasSuccessful)
 						returnTextArea.setText("Register succeded");
-					else
+					else{
 						returnTextArea.setText("Register failed");
+						
+						// new window to manually enter the book info
+						String isbn,title,author,publisher,datePublished,genre,url,numCopies;
+						JOptionPane.showMessageDialog(null, "Enter the following information to manually add the book.");
+						isbn = JOptionPane.showInputDialog("ISBN");
+						System.out.println("isbn ="+isbn);
+						
+						title = JOptionPane.showInputDialog("Title");
+						System.out.println("title ="+title);
+						
+						author = JOptionPane.showInputDialog("Author");
+						System.out.println("author ="+author);
+						
+						publisher = JOptionPane.showInputDialog("Publisher");
+						System.out.println("publisher ="+publisher);
+						
+						datePublished = JOptionPane.showInputDialog("Date Published");
+						System.out.println("datePublished ="+datePublished);
+						
+						genre = JOptionPane.showInputDialog("Genre");
+						System.out.println("genre ="+genre);
+						
+						url = JOptionPane.showInputDialog("Image url");
+						System.out.println("url ="+url);
+						
+						numCopies = JOptionPane.showInputDialog("Number of Copies");
+						System.out.println("numCopies ="+numCopies);
+						
+						
+						//build the query
+						ManualAddBookQuery query = new ManualAddBookQuery(controller.model.sessionId,isbn,title,author,publisher,datePublished,genre,url,Integer.parseInt(numCopies));
+						
+						//send query
+						String responseMsg = controller.sendMessage(query.toString());
+						
+						//error checking
+						System.out.println("responseMsg ="+responseMsg);
+						
+						System.out.println("response failed, trying manual add book...\n\nBefore to response");
+						
+						//rebuild the response
+						Response response2 = Response.stringToResponse(responseMsg);
+						
+						//more error checking
+						System.out.println(response2.toString());
+						
+					}
 				}
 			}
         });
