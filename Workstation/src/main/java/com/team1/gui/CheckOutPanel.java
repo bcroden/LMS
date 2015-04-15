@@ -1,6 +1,5 @@
 package com.team1.gui;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,9 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import com.team1.formatting.queries.CheckOutBookQuery;
 import com.team1.formatting.responses.CheckOutBookResponse;
@@ -30,7 +28,9 @@ public class CheckOutPanel extends JPanel {
 	private JTextField patronField;
     private JTextField isbnField;
     private JButton submitButton;
-    private JTextArea returnTextArea;
+    private JPanel panel;
+    private LMSBookScrollPane bookDisplay;
+    private JLabel lblCheckoutSuccessful;
     
 	public CheckOutPanel(final Controller controller) {
 		super();
@@ -39,9 +39,9 @@ public class CheckOutPanel extends JPanel {
 		
 		GridBagLayout gbl_checkOutPanel = new GridBagLayout();
         gbl_checkOutPanel.columnWidths = new int[]{10, 0, 0, 0, 0, 0, 0, 0, 10, 0};
-        gbl_checkOutPanel.rowHeights = new int[]{10, 0, 10, 0, 10, 0};
+        gbl_checkOutPanel.rowHeights = new int[]{10, 0, 10, 0, 10, 0, 10, 0};
         gbl_checkOutPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-        gbl_checkOutPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+        gbl_checkOutPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
         this.setLayout(gbl_checkOutPanel);
         
         JLabel patronLabel = new JLabel(PATRON_LABEL_TEXT);
@@ -81,7 +81,6 @@ public class CheckOutPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				returnTextArea.setText(" ");
 				
 				CheckOutBookQuery q	= new CheckOutBookQuery(controller.model.sessionId);
 				q.userID = patronField.getText();
@@ -89,13 +88,11 @@ public class CheckOutPanel extends JPanel {
 				
 				System.out.println("Q = " + q.toString());
 				String r = controller.sendMessage(q.toString());
-				returnTextArea.setText(r);
 				
 				System.out.println("Message received: " + r);
 				
 				if(r == null) {
-					returnTextArea.setText("Invalid Entries.");
-					returnTextArea.setForeground(Color.RED);
+					
 				}
 				
 				Response response = Response.stringToResponse(r);
@@ -103,10 +100,26 @@ public class CheckOutPanel extends JPanel {
 				System.out.println("r = " + r);
 				
 				if(response instanceof CheckOutBookResponse) {
-					if(response.wasSuccessful)
-						returnTextArea.setText("Check out successfull");
-					else
-						returnTextArea.setText("Check out failed");
+					if(response.wasSuccessful){
+						lblCheckoutSuccessful.setText("Checkout Sucessfull");
+						lblCheckoutSuccessful.revalidate();
+						lblCheckoutSuccessful.repaint();
+						
+						bookDisplay.setBorder(new TitledBorder(null, "Other Books Checked out to " + patronField.getText(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						bookDisplay.revalidate();
+						bookDisplay.repaint();
+						
+						bookDisplay.showBooks(((CheckOutBookResponse)response).books);
+					}
+					else {
+						lblCheckoutSuccessful.setText("Checkout Unsucessfull");
+						lblCheckoutSuccessful.revalidate();
+						lblCheckoutSuccessful.repaint();
+						
+						bookDisplay.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						bookDisplay.revalidate();
+						bookDisplay.repaint();
+					}
 				}
 			}
         });
@@ -116,19 +129,26 @@ public class CheckOutPanel extends JPanel {
         gbc_submitButton.gridy = 1;
         this.add(submitButton, gbc_submitButton);
         
-        returnTextArea = new JTextArea();
-        returnTextArea.setEditable(false);
+        panel = new JPanel();
+        GridBagConstraints gbc_panel = new GridBagConstraints();
+        gbc_panel.gridwidth = 3;
+        gbc_panel.insets = new Insets(0, 0, 5, 5);
+        gbc_panel.fill = GridBagConstraints.BOTH;
+        gbc_panel.gridx = 3;
+        gbc_panel.gridy = 3;
+        this.add(panel, gbc_panel);
         
-        JScrollPane scrollPane = new JScrollPane(returnTextArea,
-        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        lblCheckoutSuccessful = new JLabel();
+        panel.add(lblCheckoutSuccessful);
         
-        GridBagConstraints gbc_returnTextArea = new GridBagConstraints();
-        gbc_returnTextArea.gridwidth = 7;
-        gbc_returnTextArea.insets = new Insets(0, 0, 5, 5);
-        gbc_returnTextArea.fill = GridBagConstraints.BOTH;
-        gbc_returnTextArea.gridx = 1;
-        gbc_returnTextArea.gridy = 3;
-        this.add(scrollPane, gbc_returnTextArea);
+        bookDisplay = new LMSBookScrollPane();
+        
+        GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+        gbc_panel_1.gridwidth = 7;
+        gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+        gbc_panel_1.fill = GridBagConstraints.BOTH;
+        gbc_panel_1.gridx = 1;
+        gbc_panel_1.gridy = 5;
+        this.add(bookDisplay, gbc_panel_1);
 	}
 }
