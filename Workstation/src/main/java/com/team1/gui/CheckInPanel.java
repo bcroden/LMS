@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -96,8 +97,12 @@ public class CheckInPanel extends JPanel {
 				Response response = Response.stringToResponse(r);
 				System.out.println("After checkin response");
 				if(response instanceof CheckInBookResponse) {
-					if(response.wasSuccessful)
+					if(response.wasSuccessful) {
 						returnTextArea.setText("Check in successfull");
+						
+						if(!((CheckInBookResponse)response).fines.equals("0"))
+							JOptionPane.showMessageDialog(null, "User has unpaid fines. Their balance is $" + ((CheckInBookResponse)response).fines);
+					}
 					else
 						returnTextArea.setText("Check in failed");
 				}
