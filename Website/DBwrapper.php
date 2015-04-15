@@ -171,7 +171,7 @@
 		$row = mysqli_fetch_array($result);
 
 		$times = explode(",", $row["dateout"]);
-		$time = (time() - $times[$i])/86400;
+		$time = (time() - $times[$i])/86400000;
 
 		$timeleft = 90 - $time;
 

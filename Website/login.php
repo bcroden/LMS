@@ -18,7 +18,7 @@
 </style>
 
 <?php
-	include '../bookSlider.php';
+	include 'bookSlider.php';
 
    if(!isset($_POST["return"]))
       $_POST["return"] = "view_account.php";
@@ -84,6 +84,8 @@
          <input type="submit" value="Create new account">
       </form>
    </div>
+
+   <?php include "log_button.php" ?>
 </body>
 
 </html>
