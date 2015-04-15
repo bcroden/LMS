@@ -185,7 +185,7 @@
                 for($i=0; $i < count($bk_out_arr); $i++) {
                    if(empty($bk_out_arr[$i])) continue;
                    $temp = mysqli_fetch_array(queryISBN($bk_out_arr[$i]));
-                   echo "<tr><td>" . $temp["isbn"] . "</td><td>" . $temp["title"] . "</td><td>" . $temp["author"] . "</td><td>" . calcTime($usrnm, $temp["isbn"]) . "</td></tr>";
+                   echo "<tr><td>" . $temp["isbn"] . "</td><td>" . $temp["title"] . "</td><td>" . $temp["author"] . "</td><td>" . floor(calcTime($usrnm, $temp["isbn"])) . " days</td></tr>";
                 }
              } else {
                 echo "<tr><td colspan='4'>You currently do not have any books checked out.</td></tr>";
