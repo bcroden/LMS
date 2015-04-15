@@ -118,6 +118,12 @@ public class RegisterPanel extends JPanel {
 						datePublished = JOptionPane.showInputDialog("Date Published");
 						System.out.println("datePublished ="+datePublished);
 						
+						//check that its in mysql year range (1901 -2155)
+						while( Integer.parseInt(datePublished) <1901 || Integer.parseInt(datePublished) >2155)
+						{
+							datePublished = JOptionPane.showInputDialog("Date Published");
+						}
+						
 						genre = JOptionPane.showInputDialog("Genre");
 						System.out.println("genre ="+genre);
 						
