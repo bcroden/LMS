@@ -238,7 +238,7 @@ public class MainWindow extends LMSWindow {
         JMenuItem removeLibrarianAccount = new JMenuItem(MENU_TEXT_REM_ACCOUNT);
         removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_REM_USER)));
         //if(controller.model.status < 3)
-        //	removeLibrarianAccount.setEnabled(false);
+        	removeLibrarianAccount.setEnabled(true);
         removeLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -373,7 +373,7 @@ public class MainWindow extends LMSWindow {
         buttonsPanel.add(lookupButton);
         
         ///Make button to set view to checkouts
-        LMSButton checkOutButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        LMSButton checkOutButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_PLUS)));
         checkOutButton.setToolTipText(TOOLTIP_CHECKOUT);
         checkOutButton.addActionListener(new ActionListener() {
 			@Override
@@ -384,7 +384,7 @@ public class MainWindow extends LMSWindow {
         buttonsPanel.add(checkOutButton);
         
       //Make button to set view to checkins
-        LMSButton checkInButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        LMSButton checkInButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_MINUS)));
         checkInButton.setToolTipText(TOOLTIP_CKECKIN);
         checkInButton.addActionListener(new ActionListener() {
 			@Override
@@ -395,7 +395,7 @@ public class MainWindow extends LMSWindow {
         buttonsPanel.add(checkInButton);
         
       //Make button to set view to register
-        LMSButton registerButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        LMSButton registerButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_ARROW)));
         registerButton.setToolTipText(TOOLTIP_REGISTER);
         registerButton.addActionListener(new ActionListener() {
 			@Override
@@ -406,7 +406,7 @@ public class MainWindow extends LMSWindow {
         buttonsPanel.add(registerButton);
         
         ////Make button to set view to payments
-        LMSButton paymentButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_BOOK)));
+        LMSButton paymentButton = new LMSButton(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_DOLLAR)));
         paymentButton.setToolTipText(TOOLTIP_PAYMENT);
         paymentButton.addActionListener(new ActionListener() {
 			@Override
