@@ -11,7 +11,7 @@
    if(isset($_SESSION["init"])) {
 ?>
 
-<form style="position:absolute;top:10px;right:100px;" action="/log_button.php" method="post">
+<form style="position:absolute;top:10px;right:30px;" action="/log_button.php" method="post">
    <input type="hidden" name="logout" value="yes"/>
    <input type="hidden" name="return" value="<?= $_SERVER['PHP_SELF'] ?>"/>
    <a href="/accounts/view_account.php"><?= $_SESSION["usernm"] ?></a> <input type="submit" value="logout"/>
@@ -21,14 +21,10 @@
    } else {
 ?>
 
-<form style="position:absolute;top:10px;right:100px;" action="<?= '/accounts/login.php' ?>" method="post">
+<form style="position:absolute;top:10px;right:30px;" action="<?= '/accounts/login.php' ?>" method="post">
    <input type="submit" value="Login"/>
 </form>
 
 <?php
    }
 ?>
-
-<form style="position:absolute;top:10px;right:10px;" action="/index.php" method="post">
-    <input type="submit" value="Home"/>
-</form>

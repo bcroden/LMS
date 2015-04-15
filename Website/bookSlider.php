@@ -33,7 +33,7 @@ EOT;
 		echo "<body>";
 		echo "<div class=side>";
 		echo "Our newest Selections: <br>";
-		$result = top();
+		$result = top(2);
 		$i = 0;
 		while($row = mysqli_fetch_array($result)){
 				echo "<form id=" . $i . " action=/bookInfo.php method=post>";

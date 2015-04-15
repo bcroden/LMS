@@ -1,10 +1,44 @@
 <?php
-//   error_reporting(E_ALL);
-//   ini_set('display_errors', 'On');
-//   if(isset($_SESSION["init"]))
-      session_start();
-
+   session_start();
    include 'bookSlider.php';
+
+//setting up style
+echo <<< EOT
+	<style>
+		div.info{
+			background-color: #FFFFFF;
+			position: relative;
+			border: solid 1px black;
+			border-radius: 10px;
+			padding: 5px;
+			width: 50%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		div.pic{
+			position: relative;
+			border: 1px solid black;
+			border-radius: 10px;
+			padding-left: 5px;
+			padding-right: 5px;
+			padding-top: 10px;
+			padding-bottom: 5px;
+			width: $list[width];
+			margin-left: auto;
+			margin-right: auto;
+			#background-color: #FFFFFF;
+		}
+
+		div.pic.btn{
+			posisiton: relative;
+			width: 10%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+	</style>
+EOT;
 
    if(isset($_POST["resBk"])) {
       //reserve request was submitted
@@ -38,7 +72,7 @@
    <head>
       <title>LMS</title>
    </head>
-   <body>
+   <body bgcolor="#A3CCA3">
       <div class=info>
          <p><?php
             echo "ISBN: " . $row["isbn"] . "<br>";
@@ -59,19 +93,19 @@
 					echo "Available Copies: " . $copiesAvail . "<br>";
 				}
 				echo "Location in-house: " . $row["bookloc"] . "<br>";
-				//TODO: Print the thumbnail
-
-
+				echo "</div>";
             ?>
          </p>
-      </div>
-      <div id=Btn class=reserve>
+	<div class=pic>
+		<?php include 'image.php'; ?>
+      <div class=btn>
          <form action="bookInfo.php" method="post">
             <input type="submit" value="Reserve Book"/>
             <input type="hidden" name="isbn" value="<?= $isbn ?>"/>
             <input type="hidden" name="resBk" value="yes"/>
          </form>
       </div>
+	</div>
       <?php include "log_button.php"; ?>
    </body>
 </html>
@@ -93,7 +127,7 @@
          <input type="submit" value="Login"/>
          <input type="hidden" name="isbn" value="<?= $_POST['isbn'] ?>"/>
          <input type="hidden" name="return" value="/bookInfo.php"/>
-      </form>      
+      </form>
    </body>
 </html>
 <?php
