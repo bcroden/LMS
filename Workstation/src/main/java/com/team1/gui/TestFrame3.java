@@ -11,9 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
 
 import com.team1.books.Book;
 import com.team1.books.BookFinder;
@@ -137,7 +135,6 @@ public class TestFrame3 extends JFrame {
         gbc_panel_1.fill = GridBagConstraints.BOTH;
         gbc_panel_1.gridx = 1;
         gbc_panel_1.gridy = 5;
-        
         getContentPane().add(bookDisplay, gbc_panel_1);
         
 		this.setVisible(true);
@@ -155,6 +152,6 @@ public class TestFrame3 extends JFrame {
 		}
 		for(int i = 0; i < 12; i++)
 			books.add(book);
-		tf.bookDisplay.panel.showBooks(books);
+		tf.bookDisplay.showBooks(books);
 	}
 }
