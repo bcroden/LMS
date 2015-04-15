@@ -1,7 +1,7 @@
 <?php
 		$image = imagecreatefromstring(file_get_contents($row["picURL"]));
 		$type = exif_imagetype($row["picURL"]);
-		list($width, $height, $type2, $attr) = getimagesize($row["picURL"]);
+		$width = imagesx($image);
 		if($type === 2){
 			ob_start();
 			imagejpeg($image);

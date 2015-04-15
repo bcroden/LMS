@@ -24,10 +24,11 @@ echo <<< EOT
 			padding-right: 5px;
 			padding-top: 10px;
 			padding-bottom: 5px;
-			width: $list[width];
+			width: $width;
 			margin-left: auto;
 			margin-right: auto;
-			#background-color: #FFFFFF;
+			background-color: #FFFFFF;
+			text-align: center;
 		}
 
 		div.pic.btn{

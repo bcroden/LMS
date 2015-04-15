@@ -6,10 +6,21 @@
 
 
 	include 'bookSlider.php';
+	include 'log_button.php';
+	include 'navi.php';
 	?>
     <head>
         <title>LMS</title>
 		<style>
+		div.content{
+			background-color: #FFFFFF;
+			text-align: left;
+			width: 550px;
+			padding: 10px;
+			border-radius: 10px;
+			margin-left: 165px;
+			margin-right: auto;
+		}
 
 		#button{
 			position:absolute;
@@ -23,14 +34,9 @@
 		</style>
     </head>
     <body>
+		<div class="content">
         <p>Welcome to the Library Management System</p>
-<!--		<form id="button" action="accounts/login.php">
-			<input type="submit" value="Go to Login">
-		</form>
--->        <p>
-      <?php include "log_button.php"; ?>
-
-            <form method="post" action="/search.php">
+            <form method="get" action="/search.php">
 				<select name="type">
 					<option value="isbn">ISBN</option>
 					<option value="title">Title</option>
@@ -41,6 +47,7 @@
                 <input type="submit" value="Search">
             </form>
         </p>
+		</div>
     </body>
 </html>
 

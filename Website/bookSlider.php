@@ -18,6 +18,7 @@ echo <<< EOT
 		padding-bottom: 5px;
 		text-align: center;
         margin: auto;
+		cursor: pointer;
 	}
 
 	div.image{
@@ -43,8 +44,8 @@ EOT;
 				echo "<form id=" . $i . " action=/bookInfo.php method=post>";
 				//create a sub-div with book information
 				echo "<input type=hidden name=isbn value=" . $row["isbn"] . ">";
-				echo "<div class=book onclick=document.forms['" . $i . "'].submit();>";
-				echo $row["title"] . "<br>";
+				echo "<div class=book onclck=document.getElementById($i).submit();>";
+				echo $row["title"];
 				//Add the thumbnail display
 				if(!ctype_space($row["picURL"])){
 						echo "<div class=image>";
