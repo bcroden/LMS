@@ -2,7 +2,7 @@
    session_start();
 
    if($_POST["form_type"] === "update") {
-      include "../bookSlider.php";
+      include "bookSlider.php";
 
       $good_pass = true;
 

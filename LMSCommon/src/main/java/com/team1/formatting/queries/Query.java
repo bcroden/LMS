@@ -101,6 +101,3 @@ public class Query
         return string != null && !string.equals(" ");
     }
 }
-
-
-

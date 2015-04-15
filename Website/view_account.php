@@ -187,6 +187,8 @@
                    $temp = mysqli_fetch_array(queryISBN($bk_out_arr[$i]));
                    echo "<tr><td>" . $temp["isbn"] . "</td><td>" . $temp["title"] . "</td><td>" . $temp["author"] . "</td><td>" . calcTime($usrnm, $temp["isbn"]) . "</td></tr>";
                 }
+             } else {
+                echo "<tr><td colspan='4'>You currently do not have any books checked out.</td></tr>";
              }
           ?>
       </table>
@@ -208,6 +210,8 @@
                    $temp = mysqli_fetch_array(queryISBN($bk_res_arr[$i]));
                    echo "<tr><td>" . $temp["isbn"] . "</td><td>" . $temp["title"] . "</td><td>" . $temp["author"] . "</td></tr>";
                 }
+             } else {
+               echo "<tr><td colspan='3'>You currently do not have any books reserved.</td></tr>";
              }
           ?>
       </table>

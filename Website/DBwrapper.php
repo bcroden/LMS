@@ -182,53 +182,53 @@
 	function changeEmail($user, $email){
 		global $connection;
 		$sql = "UPDATE user SET email = '" . $email . "' WHERE username = '" . $user . "'";
-		$connection->query($sql); 
+		$connection->query($sql);
 	}
 
 	function reserve($user, $isbn){
 		global $connection;
+		echo "ISBN: " . $isbn . "<br>";
 		//find the values of the copies of books available
-		$sql = "SELECT copiesin, copiesreserved FROM book WHERE isbn = '" . $isbn . "'";
+		$sql = "SELECT copiesin, copiesout, copiesreserved FROM book WHERE isbn = '" . $isbn . "'";
 		$result = $connection->query($sql);
 		$copiesin = 0;
-		$copiesreserved = 0;
-		if(($row = mysqli_fetch_array($result)) > 0){
+		$copiesout = 0;
+		$copiesr = 0;
+		while($row = mysqli_fetch_array($result)){
 			$copiesin = $row["copiesin"];
-			$copiesreserved = $row["copiesreserved"];
+			$copiesout = $row["copiesout"];
+			$copiesr = $row["copiesreserved"];
+			echo "Copiesin: " . $row["copiesin"] . "<br>";
+			echo "Direct: " . $row["copiesreserved"] . "<br>";
 		}
-		//decrement copiesin and increment reserved
-		if($copiesin <= 0){
-			$copiesin--;
-			$copiesreserved++;
-			$sql = "UPDATE book SET copiesin = " . $copiesin . ", copiesreserved = " . $copiesreserved . " WHERE isbn = '" . $isbn . "'";
-			$connection->query($sql);
+			//add a reserved copy
+			echo "reserved b: " . $copiesr . "<br>";
+			$copiesr++;
+			echo "reserved a: " . $copiesr . "<br>";
 
+			$sql = "UPDATE book SET copiesreserved = " . $copiesr . " WHERE isbn = '" . $isbn . "'";
+			$connection->query($sql);
 			//add book to users reserved list
 			$sql = "SELECT booksr FROM user WHERE username = '" . $user . "'";
-			$result = $connection-> query($sql);
-			$books;
-			while($row = mysql_fetch_array($result)){
+			$result = $connection->query($sql);
+			$books = "";
+			while($row = mysqli_fetch_array($result)){
 				$books = $row["booksr"];
 			}
-			$books = $books . "," . $isbn;
+			$temp = $books . $isbn . ",";
+			$books = $temp;
 			$sql = "UPDATE user SET booksr = '" . $books . "' WHERE username = '" . $user . "'";
 			$connection->query($sql);
 			//Attach user to reservation list
 			$sql = "SELECT userreserved FROM book WHERE isbn = '" . $isbn . "'";
 			$result = $connection->query($sql);
 			$users = "";
-			if(($row = mysqli_fetch_array($result)) > 0){
+			while($row = mysqli_fetch_array($result)){
 				$users = $row["userreserved"];
 			}
 			$userFinal = $users . "," . $user;
 			$sql = "UPDATE book SET userreserved = '" . $userFinal . "'";
 			$connection->query($sql);
-			return true;
-		}
-		else{
-			//unable to reserve a copy
-			return false;
-		}
 	}
 
 	function getReserved($user){
@@ -239,10 +239,10 @@
 		return $result;
 	}
 
-	function top(){
+	function top($amount){
 		global $connection;
 
-		$sql = "SELECT * FROM book ORDER BY id DESC LIMIT 3";
+		$sql = "SELECT * FROM book ORDER BY id DESC LIMIT " . $amount;
 		$result = $connection->query($sql);
 		return $result;
 	}

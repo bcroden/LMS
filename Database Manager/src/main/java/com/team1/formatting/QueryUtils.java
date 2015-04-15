@@ -363,6 +363,7 @@ public class QueryUtils {
     			response.userName = query.userName;
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
+    			System.out.print("SQLException caught when trying to add a librarian");
     			e.printStackTrace();
     		}
         }
@@ -390,9 +391,14 @@ public class QueryUtils {
         {
         	//Remove a librarian
 //        	try {
-//        		
+//        			response.wasSuccessful = true;
+//					Dbwrapper.getInstance().removeUser(query.userName, query.password, query.email, query.fName, query.lName, query.enotify, 2);
+//					response.fName = query.fName;
+//	    	    	response.lName = query.lName;
+//					response.userName = query.userName;
 //    		} catch (SQLException e) {
 //    			// TODO Auto-generated catch block
+//        		System.out.print("SQLException caught when trying to remove a librarian");
 //    			e.printStackTrace();
 //    		}
         }
@@ -420,9 +426,11 @@ public class QueryUtils {
         {
         	//Set the fine rate
 //        	try {
-//        		
+//					Dbwrapper.getInstance().setFine(query.rate);
+//        			response.rate = query.rate;
 //    		} catch (SQLException e) {
 //    			// TODO Auto-generated catch block
+//        		System.out.print("SQLException caught when trying to set Fine rate a librarian");
 //    			e.printStackTrace();
 //    		}
         }
@@ -448,6 +456,8 @@ public class QueryUtils {
 		if (status == 0 || status == 1) response.wasSuccessful = false;
         else if (status == 2 || status == 3)
         {
+        	System.out.println("Before book addition...");
+        	System.out.println("\tdate published =" +query.book.datePublished);
             Dbwrapper.getInstance().addBook(query.book, query.numCopies);
             
             response.wasSuccessful = true;

@@ -294,6 +294,13 @@ public class Dbwrapper {
 		stmt.executeUpdate(sql);
     	}
     	
+    	public synchronized void removeUser(String user) throws SQLException{
+    		Statement stmt = con.createStatement();
+    		String sql = "DELETE FROM user WHERE username = '" + user + "'";
+    		stmt.executeUpdate(sql);
+    		
+    	}
+    	
     	public synchronized String getPass(String user)throws SQLException{
     		Statement stmt = con.createStatement();
     		String sql = "SELECT password FROM user WHERE BINARY username = '" + user + "'";
