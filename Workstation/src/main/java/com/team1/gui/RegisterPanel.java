@@ -121,6 +121,7 @@ public class RegisterPanel extends JPanel {
 						//check that its in mysql year range (1901 -2155)
 						while( Integer.parseInt(datePublished) <1901 || Integer.parseInt(datePublished) >2155)
 						{
+							JOptionPane.showMessageDialog(null, "Invalid publish date, enter a date between 1901 and 2155");
 							datePublished = JOptionPane.showInputDialog("Date Published");
 						}
 						
