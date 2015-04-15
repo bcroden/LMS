@@ -362,18 +362,86 @@ public class Dbwrapper {
     //--------------------------------------------------------------------------
     public synchronized void CheckOut(String isbn, String username)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
-    	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
+    	String sql = "SELECT copiesin, copiesout, copiesreserved FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	int copiesin = 0;
     	int copiesout = 0;
+    	int copiesr = 0;
     	System.out.println("ISBN: " + isbn);
     	while(result.next()){
     		copiesin = result.getInt("copiesin");
     		copiesout = result.getInt("copiesout");
-    		System.out.println("ISBN: " + isbn + " copiesin: " + copiesin + " copiesout: " + copiesout);
+    		copiesr = result.getInt("copiesreserved");
+//    		System.out.println("ISBN: " + isbn + " copiesin: " + copiesin + " copiesout: " + copiesout);
     	}
-    	
-    	
+    	if((copiesin - copiesr) <= 0){
+    		//not enough copies to check one out to another user
+    		sql = "SELECT userreserved FROM book WHERE isbn = '" + isbn + "'";
+    		result = stmt.executeQuery(sql);
+    		String usercmp = "";
+    		while(result.next()){
+    			usercmp = result.getString("userreserved");
+    		}
+    		Boolean contains = false;
+    		String[] users = usercmp.split(",");
+    		for(String str: users){
+    			if(username.equals(str)){
+    				contains = true;
+    				break;
+    			}
+    			else
+    				continue;
+    		}
+    		if(contains){
+    			//check out to user
+    			if(copiesin > 0){
+    		    	copiesin--;
+    		    	copiesout++;
+    		    	copiesr--;
+    		    	sql = "UPDATE book set copiesin = '" + copiesin + "' WHERE isbn = '" + isbn + "'";
+    		    	stmt.executeUpdate(sql);
+    		    	
+    		    	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
+    		    	stmt.executeUpdate(sql);
+    		    	
+    		    	sql = "UPDATE book set copiesreserved = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
+    		    	stmt.executeUpdate(sql);
+    		    	//Here we add the ISBN to the end of the users books out
+    		    	//and the current system time to their dateout
+    		    	String temp = "";
+    		    	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
+    		    	result = stmt.executeQuery(sql);
+    		    	while(result.next()){
+    		    		temp = result.getString("booksout");
+    		    	}
+    		    	String books = temp + isbn + ",";
+    		    	String tempTimes = "";
+    		    	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
+    		    	result = stmt.executeQuery(sql);
+    		    	while(result.next()){
+    		    		tempTimes = result.getString("dateout");
+    		    	}
+    		    	long time = System.currentTimeMillis();
+    		    	String now = String.valueOf(time);
+    		    	String times = tempTimes + now + ",";
+    		    	System.out.println("Times: " + times);
+    		    	sql = "UPDATE user SET booksout = '" + books + "' WHERE username = '" + username + "'";
+    		    	stmt.executeUpdate(sql);
+    		    	sql = "UPDATE user SET dateout = '" + times + "' WHERE username = '" + username + "'";
+    		    	stmt.executeUpdate(sql);
+    		    	//might want to execute queries
+    		    	}
+    		    	else{
+    		    		System.out.println("Problem checking in");
+    		    		throw new InvalidISBNException("Error checkout");
+    		    		}
+    		}
+    		else{
+    			//book is not reserved to user
+    			//noting will happen
+    		}
+    	}
+    	else{//This is a normal check out
     	if(copiesin > 0){
     	copiesin--;
     	copiesout++;
@@ -412,6 +480,7 @@ public class Dbwrapper {
     	else{
     		System.out.println("Problem checking in");
     		throw new InvalidISBNException("Error checkout");
+    		}
     	}
     	//Book related to isbn will be added to user who checked it out
     	
