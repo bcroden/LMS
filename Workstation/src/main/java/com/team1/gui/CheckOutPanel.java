@@ -101,6 +101,10 @@ public class CheckOutPanel extends JPanel {
 				
 				if(response instanceof CheckOutBookResponse) {
 					if(response.wasSuccessful){
+						for(int i = 0; i < ((CheckOutBookResponse)response).books.size();i++)
+						{
+							System.out.println(((CheckOutBookResponse)response).books.get(i));
+						}
 						lblCheckoutSuccessful.setText("Checkout Sucessfull");
 						lblCheckoutSuccessful.revalidate();
 						lblCheckoutSuccessful.repaint();

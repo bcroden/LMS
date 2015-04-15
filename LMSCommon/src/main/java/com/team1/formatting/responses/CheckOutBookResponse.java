@@ -8,7 +8,7 @@ public class CheckOutBookResponse extends Response
 {
 	public static final String HEADER = "CheckOutBookResponse";
 	
-	public static final String bookBreak = ";$;";
+	public static final String bookBreak = ";#;";
     public String userName;
     public String fines;
     public ArrayList<Book> books = null;
@@ -19,17 +19,19 @@ public class CheckOutBookResponse extends Response
         this.userName = userName;
         this.fines = fines;
         
-        books = new ArrayList<Book>();
+        this.books = new ArrayList<Book>();
         
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < bookList.length; i++)
         {
-            books.add(new Book(bookList[i]));
+        	System.out.println("\n\nBooklist info\n"+bookList[i]);
+            this.books.add(new Book(bookList[i]));
         }
         
-//        books = Util.deserializeBookArrayList(strBooks);
-        
-//        books.add(new Book(strBooks));
+        for (int i = 0; i < books.size(); i++)
+        {
+        	System.out.println(books.get(i));
+        }
     }
     
     public CheckOutBookResponse() 
@@ -54,8 +56,6 @@ public class CheckOutBookResponse extends Response
             msg = msg.concat(books.get(i).getSerialized());
             msg = msg.concat(bookBreak);
         }
-        
-//        msg = msg.concat(Util.serializeBookArrayList(books));
         
         
         return msg;

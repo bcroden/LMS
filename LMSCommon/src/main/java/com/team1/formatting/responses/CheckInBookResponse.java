@@ -8,7 +8,7 @@ public class CheckInBookResponse extends Response
 {
 	public static final String HEADER = "CheckInBookResponse";
 	
-	public static final String bookBreak = ";$;";
+	public static final String bookBreak = ";#;";
     public String userName;
     public String fines;
     public ArrayList<Book> books = null;

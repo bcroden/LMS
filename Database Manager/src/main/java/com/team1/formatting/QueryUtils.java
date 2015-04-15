@@ -160,7 +160,7 @@ public class QueryUtils {
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
             	{
-            		response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            		response.books.add(Dbwrapper.getInstance().SearchISBN(str[i]));
             	}
             	
             	response.wasSuccessful = true;
@@ -205,12 +205,8 @@ public class QueryUtils {
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
             	{
-            		try {
-            			response.books.add(BookFinder.getBookFromGoogle(str[i]));
-            		}
-            		catch (InvalidISBNException exe) {
-            			
-            		}
+            		System.out.println("str ="+str[i]);
+            		response.books.add(Dbwrapper.getInstance().SearchISBN(str[i]));
             	}
             	
                 response.wasSuccessful = true;
