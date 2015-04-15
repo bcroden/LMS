@@ -1,13 +1,24 @@
 
 body {
-   background-color: A3CCA3;
+   background-color: #A3CCA3;
 }
+
+div.nice {
+/*   border: solid 1px black; */
+   background-color: #FFFFFF;
+   border-radius: 10px;
+   padding: 10px;
+   top: 45px;
+   width: 50%;
+   margin: auto;
+}
+
 
 table {
    margin-left: auto;
    margin-right: auto;
    margin-top: 10px;
-   width: 40%
+   width: 75%;
 }
 
 table, th, td {

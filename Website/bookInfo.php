@@ -119,15 +119,27 @@ EOT;
 <html>
    <head>
       <title>LMS</title>
+      <style>
+         body {
+            background-color: A3CCA3;
+         }
+
+         #centered {
+            text-align: center;
+            margin: auto;
+         }
+      </style>
    </head>
    <body>
-      <h1>Wait!</h1>
-      <p>You must login to reserve a book.</p>
-      <form action="login.php" method="post">
-         <input type="submit" value="Login"/>
-         <input type="hidden" name="isbn" value="<?= $_POST['isbn'] ?>"/>
-         <input type="hidden" name="return" value="/bookInfo.php"/>
-      </form>
+      <div id="centered">
+         <h1>Wait!</h1>
+         <p>You must login to reserve a book.</p>
+         <form action="login.php" method="post">
+            <input type="submit" value="Login"/>
+            <input type="hidden" name="isbn" value="<?= $_POST['isbn'] ?>"/>
+            <input type="hidden" name="return" value="/bookInfo.php"/>
+         </form>
+      </div>
    </body>
 </html>
 <?php
@@ -139,6 +151,11 @@ EOT;
 <html>
    <head>
       <title>LMS</title>
+      <style>
+         body {
+            background-color: #A3CCA3;
+         }
+      </style>
    </head>
    <body>
       <p>Book Reserved Successfully</p>

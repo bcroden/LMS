@@ -141,6 +141,7 @@
       <link rel="stylesheet" type="text/css" href="view_account.css">
    </head>
    <body>
+    <div class="nice">
       <h3>Personal and Contact Information</h3>
       <div id="tglBtn"><button id="ContactButton" onclick="toggleContact()">View</button></div>
       <table id="ContactTable" hidden="false">
@@ -215,7 +216,7 @@
              }
           ?>
       </table>
-
+    </div>
       <?php include "log_button.php"; ?>
 
    </body>

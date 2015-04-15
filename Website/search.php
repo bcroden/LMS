@@ -8,6 +8,11 @@ div.scroll {
     overflow: auto;
 }
 
+         body {
+            background-color: #A3CCA3;
+         }
+
+
 //might make another div for clicking sub items
 
 </style>
