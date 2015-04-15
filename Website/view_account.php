@@ -16,11 +16,11 @@
    if(isset($_POST["form_type"]) && !empty($_POST["form_type"])) {
       $usrnm = $_POST["user_name"];
       $pswd = $_POST["password"];
-      $okay = false;
-
+      $okay = true;
+/*
       if($_POST["form_type"] === "creation") {
          /* Attempt to create a new patron account */
-         $err = "";
+/*         $err = "";
          $err = create_account($usrnm, $pswd);
          if(!empty($err))
             creation_fail($err);
@@ -29,7 +29,7 @@
       }
       elseif($_POST["form_type"] === "login") {
          /* Attempt to log the user into an existing patron's account */
-         $result = getPass($usrnm);
+/*         $result = getPass($usrnm);
          if($result === -1){
             login_fail();
          }
@@ -44,7 +44,7 @@
             }
          }
       }
-
+*/
       if($okay) {
          display_account($usrnm, $pswd);
       }
@@ -64,7 +64,7 @@
       }
       display_account($_SESSION["usernm"], $_SESSION["pass"]);
    }
-
+/*
    function create_account(&$usrnm, &$pswd) {
       if(!empty($_POST)) {
          $fname = "";
@@ -113,10 +113,10 @@
 
       return "<p>No data was submitted. Please try again</p>";
    }//end create_account
-
+*/
    function display_account($usrnm, $pswd) {
 
-
+/*
       if(!isset($_SESSION["init"])) {
          $usr_inf = mysqli_fetch_array(getUserInfo($usrnm));
          $fn = $usr_inf["fname"];
@@ -131,7 +131,7 @@
          $_SESSION["usernm"] = $usrnm;
          $_SESSION["pass"] = $pswd;
       }
-
+*/
 ?>
 <!DOCTYPE html>
 <html>
