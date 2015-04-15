@@ -357,11 +357,11 @@ public class QueryUtils {
         {
         	//execute add user (librarian)
         	try {
-        		response.wasSuccessful = true;
     			Dbwrapper.getInstance().addUser(query.userName, query.password, query.email, query.fName, query.lName, query.enotify, 2);
     			response.fName = query.fName;
     			response.lName = query.lName;
     			response.userName = query.userName;
+        		response.wasSuccessful = true;
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
     			System.out.print("SQLException caught when trying to add a librarian");
@@ -391,17 +391,18 @@ public class QueryUtils {
         else if (status == 3)
         {
         	//Remove a librarian
-//        	try {
-//        			response.wasSuccessful = true;
-//					Dbwrapper.getInstance().removeUser(query.userName);
-//					response.fName = query.fName;
-//	    	    	response.lName = query.lName;
-//					response.userName = query.userName;
-//    		} catch (SQLException e) {
-//    			// TODO Auto-generated catch block
-//        		System.out.print("SQLException caught when trying to remove a librarian");
-//    			e.printStackTrace();
-//    		}
+        	try {
+        			
+					Dbwrapper.getInstance().removeUser(query.userName);
+					response.fName = query.fName;
+	    	    	response.lName = query.lName;
+					response.userName = query.userName;
+					response.wasSuccessful = true;
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+        		System.out.print("SQLException caught when trying to remove a librarian");
+    			e.printStackTrace();
+    		}
         }
         else
         {
