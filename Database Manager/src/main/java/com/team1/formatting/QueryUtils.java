@@ -205,7 +205,12 @@ public class QueryUtils {
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
             	{
-            		response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            		try {
+            			response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            		}
+            		catch (InvalidISBNException exe) {
+            			
+            		}
             	}
             	
                 response.wasSuccessful = true;
