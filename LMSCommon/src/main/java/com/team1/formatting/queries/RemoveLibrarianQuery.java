@@ -19,7 +19,7 @@ public class RemoveLibrarianQuery extends AdminQuery
 		super(sessionID);
 	}
 	
-	public String userName;
+	public String userName,fName,lName;
 	
 	@Override
     public String toString() {
