@@ -33,10 +33,28 @@
 
    <head>
       <title>LMS</title>
+      <style>
+         body {
+            background-color: #A3CCA3;
+         }
+
+	div.centered{
+		position: absolute;
+		border: solid 1px black;
+		border-radius: 10px;
+		padding: 10px;
+		margin-left: 45px;
+		top: 45px;
+		margin-right: auto;
+		width: 50%;
+           background-color: #FFFFFF;
+	}
+
+      </style>
    </head>
 
    <body>
-
+      <div class="login">
    <?php if(!isset($_SESSION["init"])) { ?>
 
          <p>We're sorry but your session has expired.</p>
@@ -71,7 +89,7 @@
       </form>
 
    <?php } ?>
-
+      </div>
    <?php include "log_button.php"; ?>
 
    </body>

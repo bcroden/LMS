@@ -12,6 +12,11 @@
                return false;
          }
       </script>
+      <style>
+         body {
+            background-color: #A3CCA3;
+         }
+      </style>
    </head>
    <body>
       <form action="view_account.php" method="post" onsubmit="return validate()">

@@ -15,6 +15,10 @@
 		width: 50%;
 	}
 
+   body {
+      background-color: #A3CCA3;
+   }
+
 </style>
 
 <?php

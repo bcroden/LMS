@@ -205,7 +205,12 @@ public class QueryUtils {
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
             	{
-            		response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            		try {
+            			response.books.add(BookFinder.getBookFromGoogle(str[i]));
+            		}
+            		catch (InvalidISBNException exe) {
+            			
+            		}
             	}
             	
                 response.wasSuccessful = true;
@@ -392,7 +397,7 @@ public class QueryUtils {
         	//Remove a librarian
 //        	try {
 //        			response.wasSuccessful = true;
-//					Dbwrapper.getInstance().removeUser(query.userName, query.password, query.email, query.fName, query.lName, query.enotify, 2);
+//					Dbwrapper.getInstance().removeUser(query.userName);
 //					response.fName = query.fName;
 //	    	    	response.lName = query.lName;
 //					response.userName = query.userName;

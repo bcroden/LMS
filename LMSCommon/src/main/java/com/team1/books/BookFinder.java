@@ -85,6 +85,7 @@ public class BookFinder {
         
         //TODO: add imageURL to Book
         System.out.println("Image URL = " + imageURL);
+        System.out.println("Title = " + title);
         
         String date = (datePublished.length() >= 4) ? datePublished.substring(0,  4) : datePublished;
         System.out.println("Date = " + date);
