@@ -1,39 +1,34 @@
+<!DOCTYPE html>
 <html>
-	<?php
-//	error_reporting(E_ALL);
-//	ini_set('display_errors', 'On');
-
-
-
-	include 'bookSlider.php';
-	include 'log_button.php';
-	include 'navi.php';
-	?>
     <head>
         <title>LMS</title>
 		<style>
 		div.content{
-			background-color: #FFFFFF;
-			text-align: left;
-			width: 550px;
-			padding: 10px;
-			border-radius: 10px;
-			margin-left: 165px;
-			margin-right: auto;
+			position: relative;
+        	background-color: #FFFFFF;
+        	border-radius: 10px;
+        	padding-top: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
+			padding-bottom: 1px;
+        	width: 50%;
+        	margin-left: auto;
+        	top: 45px;
+        	margin-right: auto;
 		}
-
-		#button{
-			position:absolute;
-			top:10;
-			right:10;
+		div.btn{
+			text-align: center;
+			padding-top: 10px;
 		}
-         body {
-            background-color: #A3CCA3;
-         }
-
 		</style>
+<?php
+include 'bookSlider.php';
+include 'navi.php';
+include 'log_button.php';
+?>
+
     </head>
-    <body>
+    <body bgcolor="#A3CCA3">
 		<div class="content">
         <p>Welcome to the Library Management System</p>
             <form method="get" action="/search.php">
@@ -44,7 +39,9 @@
 					<option value="genre">Genre</option>
 				</select>
                 Search for a book: <input type="text" name="search">
-                <input type="submit" value="Search">
+				<div class="btn">
+                <input  type="submit" style="width:200px;height:50px;" value="Search">
+				</div>
             </form>
         </p>
 		</div>

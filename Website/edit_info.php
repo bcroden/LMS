@@ -26,6 +26,9 @@
       if($good_pass)
          header("Location: view_account.php");
    }
+
+	include 'bookSlider.php';
+	include 'navi.php';
 ?>
 
 <!DOCTYPE html>
@@ -34,26 +37,23 @@
    <head>
       <title>LMS</title>
       <style>
-         body {
-            background-color: #A3CCA3;
-         }
 
 	div.centered{
-		position: absolute;
+		position: relative;
 		border: solid 1px black;
 		border-radius: 10px;
 		padding: 10px;
-		margin-left: 45px;
-		top: 45px;
-		margin-right: auto;
 		width: 50%;
-           background-color: #FFFFFF;
+		top: 45px;
+		margin-left: auto;
+		margin-right: auto;
+        background-color: #FFFFFF;
 	}
 
       </style>
    </head>
 
-   <body>
+   <body bgcolor="#A3CCA3">
       <div class="centered">
    <?php if(!isset($_SESSION["init"])) { ?>
 

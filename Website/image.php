@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 		$image = imagecreatefromstring(file_get_contents($row["picURL"]));
 		$type = exif_imagetype($row["picURL"]);

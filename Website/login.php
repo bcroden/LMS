@@ -5,25 +5,25 @@
 <style>
 
 	div.login{
-		position: absolute;
-		border: solid 1px black;
+		position: relative;
+		background-color: #FFFFFF;
 		border-radius: 10px;
 		padding: 10px;
-		margin-left: 45px;
+		width: 50%;
+		margin-left: auto;
 		top: 45px;
 		margin-right: auto;
-		width: 50%;
 	}
-
-   body {
-      background-color: #A3CCA3;
-   }
 
 </style>
 
 <?php
 	include 'bookSlider.php';
-
+	include 'navi.php';
+	include 'log_button'; 
+?>
+<!-- testing a thing -->
+<?php
    if(!isset($_POST["return"]))
       $_POST["return"] = "view_account.php";
 
@@ -65,7 +65,7 @@
       header("Location: " . $_POST["return"]);
 ?>
 </head>
-<body>
+<body bgcolor="#A3CCA3">
    <div class="login">
       <form action="login.php" method="post">
          User name: <input type="text" name="user_name"> <br/>
@@ -89,7 +89,6 @@
       </form>
    </div>
 
-   <?php include "log_button.php" ?>
 </body>
 
 </html>

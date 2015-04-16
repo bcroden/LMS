@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
    <title>LMS</title>
@@ -53,7 +54,7 @@ connect();
         else{
 			echo "<div class=result>";
 			echo "Searching by: " . $type . "<br>";
-			$j = 100;
+			$j = 400;
             while($row = mysqli_fetch_array($result)){
 echo <<< EOT
 <form id=$j  action=bookInfo.php method=post>
@@ -90,11 +91,11 @@ echo <<< EOT
         <div class=info onclick=document.getElementById($j).submit();>
         Title: $row[title]<br>
         Author: $row[author]<br>
-        Copies available: $row[copiesin] <br><br>  
+        Copies available: $row[copiesin] <br><br>
 EOT;
                     if(!ctype_space($row['picURL'])){
                         include 'image.php';
-                    } 
+                    }
                 echo "</div>";
                 echo "</form>";
                 $j++;
@@ -115,15 +116,15 @@ EOT;
             while($row = mysqli_fetch_array($result)){
 echo <<< EOT
 <form id=$j  action=bookInfo.php method=post>
-    <input type=hidden name=isbn value=$row[isbn]>
+    	<input type=hidden name=isbn value=$row[isbn]>
         <div class=info onclick=document.getElementById($j).submit();>
         Title: $row[title]<br>
         Author: $row[author]<br>
-        Copies available: $row[copiesin] <br><br>  
+        Copies available: $row[copiesin] <br><br>
 EOT;
                     if(!ctype_space($row['picURL'])){
                         include 'image.php';
-                    } 
+                    }
                 echo "</div>";
                 echo "</form>";
                 $j++;

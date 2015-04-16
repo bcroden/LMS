@@ -1,5 +1,6 @@
 <?php
 echo <<< EOT
+
 <style>
 	div.side{
 	 	background:lightblue;
@@ -10,6 +11,7 @@ echo <<< EOT
 		width:200px;
 		padding: 10px;
 		border-radius: 10px;
+		vertical-align: top;
 	}
 
 	div.book{
@@ -29,10 +31,6 @@ echo <<< EOT
 </style>
 EOT;
 
-//	   error_reporting(E_ALL);
-//	   ini_set('display_errors', 'On');
-
-
 		include 'DBwrapper.php';
 		connect();
 		echo "<body>";
@@ -40,23 +38,22 @@ EOT;
 		echo "Our newest Selections: <br>";
 		$result = top(2);
 		$i = 0;
-		while($row = mysqli_fetch_array($result)){
-				echo "<form id=" . $i . " action=/bookInfo.php method=post>";
-				//create a sub-div with book information
-				echo "<input type=hidden name=isbn value=" . $row["isbn"] . ">";
-				echo "<div class=book onclck=document.getElementById($i).submit();>";
-				echo $row["title"];
-				//Add the thumbnail display
-				if(!ctype_space($row["picURL"])){
+while($row = mysqli_fetch_array($result)){
+echo <<< EOT
+<form id=$i  action=bookInfo.php method=post>
+    <input type=hidden name=isbn value=$row[isbn]>
+        <div class=book onclick=document.getElementById($i).submit();>
+        $row[title]
+EOT;
+                    if(!ctype_space($row['picURL'])){
 						echo "<div class=image>";
-						include 'image.php';
+                        include 'image.php';
 						echo "</div>";
                     }
-				//echo "URL: " . $row["picURL"] . "<br>";
-				echo "</div>";
-				echo "</form>";
-				$i++;
-		}
-		echo "</div>";
+                echo "</div>";
+                echo "</form>";
+                $i++;
+            }
+            echo "</div>";
 		echo "</body>";
 ?>

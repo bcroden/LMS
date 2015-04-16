@@ -1,7 +1,10 @@
+<!DOCTYPE html>
+<html>
 <?php
    session_start();
    include 'bookSlider.php';
-
+   include 'navi.php';
+   include 'log_button.php';
 //setting up style
 echo <<< EOT
 	<style>
@@ -24,7 +27,9 @@ echo <<< EOT
 			padding-right: 5px;
 			padding-top: 10px;
 			padding-bottom: 5px;
-			width: $width;
+EOT;
+			echo "width: $width" . "px;";
+echo <<< EOT
 			margin-left: auto;
 			margin-right: auto;
 			background-color: #FFFFFF;
@@ -68,8 +73,6 @@ EOT;
       else{
          $row = $result->fetch_assoc();
 ?>
-<!DOCTYPE html>
-<html>
    <head>
       <title>LMS</title>
    </head>
@@ -98,7 +101,9 @@ EOT;
             ?>
          </p>
 	<div class=pic>
-		<?php include 'image.php'; ?>
+		<?php
+			include 'image.php';
+		?>
       <div class=btn>
          <form action="bookInfo.php" method="post">
             <input type="submit" value="Reserve Book"/>
@@ -107,7 +112,6 @@ EOT;
          </form>
       </div>
 	</div>
-      <?php include "log_button.php"; ?>
    </body>
 </html>
 <?php
@@ -116,7 +120,6 @@ EOT;
 
    function requestLogin() {
 ?>
-<!DOCTYPE html>
 <html>
    <head>
       <title>LMS</title>
@@ -148,7 +151,6 @@ EOT;
 
    function success() {
 ?>
-<!DOCTYPE html>
 <html>
    <head>
       <title>LMS</title>
@@ -160,7 +162,6 @@ EOT;
    </head>
    <body>
       <p>Book Reserved Successfully</p>
-      <?php include "log_button.php"; ?>
    </body>
 </html>
 <?php

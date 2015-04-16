@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <?php
    session_start();
 //   error_reporting(E_ALL);
@@ -8,7 +10,8 @@
       header("Location: login.php");
    }
 
-   include "bookSlider.php";
+   include 'bookSlider.php';
+   include 'navi.php';
 //   include "DBwrapper.php";
 
    connect();
@@ -17,34 +20,6 @@
       $usrnm = $_POST["user_name"];
       $pswd = $_POST["password"];
       $okay = true;
-/*
-      if($_POST["form_type"] === "creation") {
-         /* Attempt to create a new patron account */
-/*         $err = "";
-         $err = create_account($usrnm, $pswd);
-         if(!empty($err))
-            creation_fail($err);
-         else
-            $okay = true;
-      }
-      elseif($_POST["form_type"] === "login") {
-         /* Attempt to log the user into an existing patron's account */
-/*         $result = getPass($usrnm);
-         if($result === -1){
-            login_fail();
-         }
-         else {
-            while($row = mysqli_fetch_array($result)) {
-               if($pswd === $row["password"]) {
-                  display_account($usrnm, $pswd);
-               }
-               else {
-                  login_fail();
-               }
-            }
-         }
-      }
-*/
       if($okay) {
          display_account($usrnm, $pswd);
       }
@@ -64,77 +39,8 @@
       }
       display_account($_SESSION["usernm"], $_SESSION["pass"]);
    }
-/*
-   function create_account(&$usrnm, &$pswd) {
-      if(!empty($_POST)) {
-         $fname = "";
-         $lname = "";
-         $email = "";
-         $s_err = "";
-
-         //make sure that first and last names are not empty
-         $fname = $_POST["first_name"];
-         if(empty($fname))
-            $s_err = $s_err . "<p>Please enter your first name</p>";
-
-         $lname = $_POST["last_name"];
-         if(empty($lname))
-            $s_err = $s_err . "<p>Please enter your last name</p>";
-
-         $email = $_POST["email"];
-         if(empty($email))
-            $s_err = $s_err . "<p>Please enter your email address</p>";
-
-         $usrnm = $_POST["user_name"];
-         if(empty($usrnm))
-            $s_err = $s_err . "<p>Please enter a user name</p>";
-         //TODO: add code to ensure that the user name is unique with the LMS' database
-		 $result = getUsers();
-			while($row = mysqli_fetch_array($result)){
-				if($usrnm === $row["username"]){
-					//return to create due to this stuff
-					header("Location: /create_account.php");
-				}
-			}
-         //make sure that passwords are not empty and match
-         $pswd = $_POST["password"];
-         $pswd2 = $_POST["password2"];
-         if(empty($pswd) || empty($pswd2))
-            $s_err = $s_err . "<p>Please enter your password into both fields</p>";
-         elseif($pswd !== $pswd2)
-            $s_err = $s_err . "<p>The passwords entered do not match</p>";
-
-         if(empty($s_err)) {
-			addUser($_POST["user_name"], $_POST["password"], $_POST["email"], $_POST["first_name"], $_POST["last_name"], $_POST["notify"], 1);
-         }
-
-         return $s_err;
-      } //end if(!empty($_POST))
-
-      return "<p>No data was submitted. Please try again</p>";
-   }//end create_account
-*/
    function display_account($usrnm, $pswd) {
-
-/*
-      if(!isset($_SESSION["init"])) {
-         $usr_inf = mysqli_fetch_array(getUserInfo($usrnm));
-         $fn = $usr_inf["fname"];
-         $ln = $usr_inf["lname"];
-         $em = $usr_inf["email"];
-         $nt = $usr_inf["notify"];
-         $_SESSION["init"] = true;
-         $_SESSION["fname"] = $fn;
-         $_SESSION["lname"] = $ln;
-         $_SESSION["email"] = $em;
-         $_SESSION["notify"] = $nt;
-         $_SESSION["usernm"] = $usrnm;
-         $_SESSION["pass"] = $pswd;
-      }
-*/
 ?>
-<!DOCTYPE html>
-<html>
    <head>
       <title>LMS</title>
       <script src="view_account.js"></script>
@@ -193,7 +99,6 @@
              }
           ?>
       </table>
-      
       <h3>Books Reserved</h3>
       <div id="tglBtn"><button id="BookResButton" onclick="toggleBookRes()">View</button></div>
       <table id="BookResTable" hidden="true">
@@ -243,3 +148,4 @@ EOT;
       header("Location: login.php");
    } //end of login_fail
 ?>
+</html>

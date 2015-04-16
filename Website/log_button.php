@@ -11,6 +11,7 @@
    if(isset($_SESSION["init"])) {
 ?>
 
+
 <form id="log" style="position:fixed;top:10px;right:100px;" action="log_button.php" method="post">
    <input type="hidden" name="logout" value="yes"/>
    <input type="hidden" name="return" value="<?= $_SERVER['PHP_SELF'] ?>"/>
