@@ -1,3 +1,4 @@
+
 <?php
 
 //error_reporting(E_ALL);
@@ -85,16 +86,14 @@
 	//user related requests
 	function addUser($user, $pass, $email, $fname, $lname, $notify, $auth){
 		global $connection;
+		$empty = " ";
 		$sql = "INSERT INTO user (username, password, fname, lname, " .
-			   "email, notify, auth) VALUES ('" . $user . 
-			   "', '" . $pass . "', '" . $fname . "', '" . $lname . 
-               "', '" . $email . "', '" . $notify . "', '" . $auth . "')";
+			   "email, balance, notify, auth) " .
+			   "VALUES ('" . $user . "', '" . $pass . "', '" . $fname .
+               "', '" . $lname . "', '" . $email . "', '" . 0 . 
+		       "', '" . $notify . 
+               "', '" . $auth . "')";
 		$result = $connection->query($sql);
-		//if($result->num_rows > 0){
-		//	return $result;
-		//}
-		//else
-		//	return -1;
 	}
 
 	function getUserInfo($user){
@@ -152,29 +151,32 @@
 
 	function calcTime($user, $isbn){
 		global $connection;
-		$sql = "SELECT booksout FROM user WHERE username = '" + $user . "'";
+		$sql = "SELECT booksout FROM user WHERE username = '" . $user . "'";
 		$result = $connection->query($sql);
 		if($result->num_rows < 0){
 			//no times
+			echo "No things<br>";
 		}
 		else{
-        $row = mysqli_fetch_array($result);
-		$books = explode(",", $row["booksout"]);
-
+		$row = mysqli_fetch_array($result);
+		$b = explode(",", $row["booksout"]);
 		$i = 0;
-		for($i; $i < count($books); $i++){
-			if($books[$i] === $isbn) break;
+		while($i < count($b)){
+			if($b[$i] === $isbn) {
+			break;
+			}
+			else
+				$i++;
 		}
-
 		$sql = "SELECT dateout FROM user WHERE username = '" . $user . "'";
 		$result = $connection->query($sql);
 		$row = mysqli_fetch_array($result);
 
 		$times = explode(",", $row["dateout"]);
-		$time = ((time() - $times[$i])/86400000);
-
-		$timeleft = 90 - $time;
-
+		$millisecs = time()*1000;
+		$timetemp = $millisecs - $times[$i];
+		$time = ($timetemp/86400000);
+		$timeleft = 60 - $time;
 		return $timeleft;
 		}
 	}
@@ -187,7 +189,6 @@
 
 	function reserve($user, $isbn){
 		global $connection;
-		echo "ISBN: " . $isbn . "<br>";
 		//find the values of the copies of books available
 		$sql = "SELECT copiesin, copiesout, copiesreserved FROM book WHERE isbn = '" . $isbn . "'";
 		$result = $connection->query($sql);
@@ -198,13 +199,9 @@
 			$copiesin = $row["copiesin"];
 			$copiesout = $row["copiesout"];
 			$copiesr = $row["copiesreserved"];
-			echo "Copiesin: " . $row["copiesin"] . "<br>";
-			echo "Direct: " . $row["copiesreserved"] . "<br>";
 		}
 			//add a reserved copy
-			echo "reserved b: " . $copiesr . "<br>";
 			$copiesr++;
-			echo "reserved a: " . $copiesr . "<br>";
 
 			$sql = "UPDATE book SET copiesreserved = " . $copiesr . " WHERE isbn = '" . $isbn . "'";
 			$connection->query($sql);

@@ -5,6 +5,7 @@
    include 'bookSlider.php';
    include 'navi.php';
    include 'log_button.php';
+   $widthpx = $width . "px";
 //setting up style
 echo <<< EOT
 	<style>
@@ -27,9 +28,7 @@ echo <<< EOT
 			padding-right: 5px;
 			padding-top: 10px;
 			padding-bottom: 5px;
-EOT;
-			echo "width: $width" . "px;";
-echo <<< EOT
+			width: $widthpx;
 			margin-left: auto;
 			margin-right: auto;
 			background-color: #FFFFFF;
@@ -113,14 +112,12 @@ EOT;
       </div>
 	</div>
    </body>
-</html>
 <?php
       }  //end of displayInfo()
    }
 
    function requestLogin() {
 ?>
-<html>
    <head>
       <title>LMS</title>
       <style>
@@ -145,25 +142,34 @@ EOT;
          </form>
       </div>
    </body>
-</html>
 <?php
    } // end of requestLogin()
 
    function success() {
 ?>
-<html>
    <head>
       <title>LMS</title>
       <style>
          body {
             background-color: #A3CCA3;
          }
+		div.success{
+			width: 50%;
+			margin-left: auto;
+			margin-right: auto;
+			background-color: #FFFFFF;
+			border-radius: 10px;
+			padding: 10px;
+			text-align: center;
+		}
       </style>
    </head>
    <body>
-      <p>Book Reserved Successfully</p>
+		<div class="success">
+      		<p>Book Reserved Successfully</p>
+		</div>
    </body>
-</html>
 <?php
    }
 ?>
+</html>

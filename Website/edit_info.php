@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
    session_start();
 
@@ -31,7 +32,6 @@
 	include 'navi.php';
 ?>
 
-<!DOCTYPE html>
 <html>
 
    <head>

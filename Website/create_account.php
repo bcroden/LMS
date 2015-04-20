@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <?php
-
-   include "bookSlider.php";
+	include 'bookSlider.php';
+	include 'navi.php';
 
    if(isset($_POST["form_type"])) {
       $okay = false;
@@ -8,8 +9,9 @@
       $usrnm = $_POST["user_name"];
       $pswd = $_POST["password"];
       $err = create_account($usrnm, $pswd);
-      if(!empty($err))
+      if(!empty($err)){
          creation_fail($err);
+	  }
       else {
          session_start();
          $okay = true;
@@ -21,7 +23,7 @@
          $_SESSION["init"] = true;
          $_SESSION["fname"] = $fn;
          $_SESSION["lname"] = $ln;
-         $_SESSION["email"] = $em;
+         $_SESSION["ema il"] = $em;
          $_SESSION["notify"] = $nt;
          $_SESSION["usernm"] = $usrnm;
          $_SESSION["pass"] = $pswd;
@@ -104,12 +106,12 @@
             background-color: #A3CCA3;
          }
 	div.centered{
-		position: absolute;
+		position: relative;
 		border-radius: 10px;
 		padding: 10px;
-		margin-left: 45px;
 		top: 45px;
 		margin-right: auto;
+		margin-left: auto;
 		width: 50%;
            background-color: #FFFFFF;
 	}

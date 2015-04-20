@@ -20,7 +20,7 @@
 <?php
 	include 'bookSlider.php';
 	include 'navi.php';
-	include 'log_button'; 
+	include 'log_button';
 ?>
 <!-- testing a thing -->
 <?php
@@ -82,7 +82,10 @@
 
       <p style="color:red">Incorrect User name or Password</p>
 
-      <?php } ?>
+      <?php }
+			if(isset($login_okay) && $login_okay == true) { ?>
+	  <p>Successful login</p>
+	  <?php } ?>
 
       <form action="create_account.php">
          <input type="submit" value="Create new account">
