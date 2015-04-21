@@ -132,15 +132,15 @@ public class LookupPanel extends JPanel {
         gbc_returnTextArea.gridy = 3;
         this.add(returnArea, gbc_returnTextArea);
         
-		ArrayList<Book> books = new ArrayList<Book>();
-		Book book = null;
-		try {
-			book = BookFinder.getBookFromGoogle("054792822X");
-		} catch (InvalidISBNException e) {
-			e.printStackTrace();
-		}
-		for(int i = 0; i < 12; i++)
-			books.add(book);
-		returnArea.showBooks(books);
+//		ArrayList<Book> books = new ArrayList<Book>();
+//		Book book = null;
+//		try {
+//			book = BookFinder.getBookFromGoogle("054792822X");
+//		} catch (InvalidISBNException e) {
+//			e.printStackTrace();
+//		}
+//		for(int i = 0; i < 12; i++)
+//			books.add(book);
+//		returnArea.showBooks(books);
 	}
 }
