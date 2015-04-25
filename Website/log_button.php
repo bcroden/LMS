@@ -34,6 +34,7 @@
    div.acc_menu ul ul {
       display: none;
       width: 160px;
+      background-color: blanchedalmond;
    }
 
    div.acc_menu li:hover > ul {
@@ -45,7 +46,6 @@
       float: none;
       display: block;
       width: 100%;
-      border: beige;
    }
 </style>
 <div class="acc_menu" style="position:fixed;top:10px;right:100px;">
@@ -60,7 +60,7 @@
                   <input type="submit" value="logout"/>
                </form>
             </li>
-         <ul>
+         </ul>
       </li>
    </ul>
 </div>
