@@ -7,7 +7,7 @@ echo <<< EOT
 		position: fixed;
 		border: solid 1px black;
 		right:5px;
-		top: 60px;
+		top: 70px;
 		width:200px;
 		padding: 10px;
 		border-radius: 10px;

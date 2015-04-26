@@ -2,12 +2,18 @@
    session_start();
    $root = basename($_SERVER["DOCUMENT_ROOT"]);
 
-   if(isset($_POST["logout"])) {
+   if(isset($_GET["logout"])) {
+      session_unset();
+      session_destroy();
+      header("Location: " . $_GET["return"]);
+   }
+
+/*   if(isset($_POST["logout"])) {
       session_unset();
       session_destroy();
       header("Location: " . $_POST["return"]);
    }
-
+*/
    if(isset($_SESSION["init"])) {
 ?>
 
@@ -53,6 +59,12 @@
       float: none;
       display: block;
    }
+
+   div.acc_menu ul ul li {
+      background-color: #FFF;
+      border-radius: 10px;
+      border-top: 1px solid;
+   }
 </style>
 <div class="acc_menu">
    <ul>
@@ -60,11 +72,12 @@
          <a href="view_account.php"><?= $_SESSION["usernm"] ?></a>
          <ul>
             <li>
-               <form id="log" action="log_button.php" method="post">
+               <a href="view_account.php?logout=yes&return=<?= $_SERVER['PHP_SELF'] ?>">Log out</a>
+               <!--<form id="log" action="log_button.php" method="post">
                   <input type="hidden" name="logout" value="yes"/>
                   <input type="hidden" name="return" value="<?= $_SERVER['PHP_SELF'] ?>"/>
                   <input type="submit" value="logout"/>
-               </form>
+               </form>-->
             </li>
          </ul>
       </li>
