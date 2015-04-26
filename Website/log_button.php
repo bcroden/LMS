@@ -13,7 +13,14 @@
 
 <style>
    div.acc_menu {
-      position: relative;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      height: 15px;
+      width: 120px;
+      padding: 5px;
+      border-radius: 10px;
+      background-color: #FFF;
    }
 
    div.acc_menu ul {
@@ -21,6 +28,7 @@
       padding: 0;
       position: absolute;
       height: 100%;
+      width: 100%;
       list-style-type: none;
    }
 
@@ -33,8 +41,7 @@
 
    div.acc_menu ul ul {
       display: none;
-      width: 160px;
-      background-color: blanchedalmond;
+      text-align: center;
    }
 
    div.acc_menu li:hover > ul {
@@ -45,10 +52,9 @@
       position: relative;
       float: none;
       display: block;
-      width: 100%;
    }
 </style>
-<div class="acc_menu" style="position:fixed;top:10px;right:100px;">
+<div class="acc_menu">
    <ul>
       <li>
          <a href="view_account.php"><?= $_SESSION["usernm"] ?></a>
