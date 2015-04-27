@@ -2,13 +2,13 @@
    session_start();
    $root = basename($_SERVER["DOCUMENT_ROOT"]);
 
-   if(isset($_POST["logout"])) {
+   if(isset($_POST["logout"])){
       session_unset();
       session_destroy();
       header("Location: " . $_POST["return"]);
    }
 
-   if(isset($_SESSION["init"])) {
+   if(isset($_SESSION["init"])){
 ?>
 
 

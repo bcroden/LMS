@@ -50,6 +50,10 @@ EOT;
                         include 'image.php';
 						echo "</div>";
                     }
+					else{
+						//default to book image
+						echo "<img src=book128.png>";
+					}
                 echo "</div>";
                 echo "</form>";
                 $i++;

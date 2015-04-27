@@ -96,6 +96,9 @@ EOT;
                     if(!ctype_space($row['picURL'])){
                         include 'image.php';
                     }
+					else{
+						echo "<img src=book128.png>";
+					}
                 echo "</div>";
                 echo "</form>";
                 $j++;
