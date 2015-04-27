@@ -12,10 +12,13 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import com.team1.formatting.queries.AddLibrarianQuery;
@@ -112,8 +115,53 @@ public class MainWindow extends LMSWindow {
 				String password = " ";
 				String newPassword = " ";
 				String newPassword2 = " ";
-				try{
+				JPasswordField currentPass = new JPasswordField(16);
+				JPasswordField newPass = new JPasswordField(16);
+				JPasswordField newPass2 = new JPasswordField(16);
+				
+				JPanel passPanel = new JPanel();
+				passPanel.setLayout(new BoxLayout(passPanel, BoxLayout.Y_AXIS));
+				passPanel.add(Box.createVerticalStrut(5));
+				passPanel.add(new JLabel("Enter Current Password"));
+				passPanel.add(currentPass);
+				passPanel.add(new JLabel("Enter New Password"));
+				passPanel.add(newPass);
+				passPanel.add(new JLabel("Re-Enter New Password:"));
+				passPanel.add(newPass2);
+				
+				
+				
+				int result = JOptionPane.showConfirmDialog(null, passPanel,  "Change Password",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				
+				//This was the test
+			     /* if (result == JOptionPane.OK_OPTION && !(password.equals("")) && !(newPassword.equals("") 
+			    		  && !(newPassword2.equals("")))) {
+			         System.out.println("Current Password is: " + password);
+			         System.out.println("New Password is: " + newPassword);
+			         System.out.println("Re-Entered Password is: " + newPassword2);
+			      } */
+			      
+			      password = currentPass.getText();
+			      newPassword = newPass.getText();
+			      newPassword2 = newPass2.getText();
+					
+			      System.out.println("Password is : " + password);
+			      if(password.equals("")){
+			    	 password = " ";
+			    	 JOptionPane.showMessageDialog(that, "Warning, you did not enter a Password.");
+			      }
+			      if(newPassword.equals("")){
+			    	  newPassword = " ";
+			    	  JOptionPane.showMessageDialog(that, "Warning, you did not enter a new Password");
+			      }
+			      if(newPassword2.equals("")){
+			    	  newPassword2.equals("");
+			    	  JOptionPane.showMessageDialog(that, "Warning you did not enter the new Password again.");
+			      }
+			/*	try{
 				password = JOptionPane.showInputDialog("Enter Current Password");
+				
 				}
 				catch(NullPointerException e2){
 					password = " ";
@@ -134,6 +182,7 @@ public class MainWindow extends LMSWindow {
 					JOptionPane.showMessageDialog(that, "Warning, you did not re-enter your New Password");
 				}
 				
+				*/
 				if(newPassword.equals(newPassword2)) {
 					PasswordChangeQuery query = new PasswordChangeQuery(controller.model.sessionId, password, newPassword, controller.model.username);
 					
@@ -152,8 +201,9 @@ public class MainWindow extends LMSWindow {
 				}
 				else
 					JOptionPane.showMessageDialog(that, "The passwords did not match");
-			}
-        });
+			 
+			} 
+        }); 
         menu.add(changePassword);
         
         //Create menu item for adding librarian accounts
