@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -114,24 +115,24 @@ public class MainWindow extends LMSWindow {
 				String password = " ";
 				String newPassword = " ";
 				String newPassword2 = " ";
-				JTextField currentPass = new JTextField(16);
-				JTextField newPass = new JTextField(16);
-				JTextField newPass2 = new JTextField(16);
+				JPasswordField currentPass = new JPasswordField(16);
+				JPasswordField newPass = new JPasswordField(16);
+				JPasswordField newPass2 = new JPasswordField(16);
 				
-				JPanel myPanel = new JPanel();
-				myPanel.add(Box.createVerticalStrut(5));
-				myPanel.add(new JLabel("Enter Current Password"));
-				myPanel.add(currentPass);
-				//myPanel.add(Box.createVerticalBox());
-				myPanel.add(new JLabel("Enter New Password"));
-				myPanel.add(newPass);
-				myPanel.add(new JLabel("Re-Enter New Password:"));
-				myPanel.add(newPass2);
+				JPanel passPanel = new JPanel();
+				passPanel.setLayout(new BoxLayout(passPanel, BoxLayout.Y_AXIS));
+				passPanel.add(Box.createVerticalStrut(5));
+				passPanel.add(new JLabel("Enter Current Password"));
+				passPanel.add(currentPass);
+				passPanel.add(new JLabel("Enter New Password"));
+				passPanel.add(newPass);
+				passPanel.add(new JLabel("Re-Enter New Password:"));
+				passPanel.add(newPass2);
 				
 				
 				
-				int result = JOptionPane.showConfirmDialog(null, myPanel, 
-		               "Change Password", JOptionPane.OK_CANCEL_OPTION);
+				int result = JOptionPane.showConfirmDialog(null, passPanel,  "Change Password",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				
 				//This was the test
 			     /* if (result == JOptionPane.OK_OPTION && !(password.equals("")) && !(newPassword.equals("") 
