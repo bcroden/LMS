@@ -141,6 +141,7 @@ public class LoginWindow extends LMSWindow {
 				
 				if(r == null) {
 					errorMessage.setText(ERROR_MESSAGE_TEXT);
+					controller.showMainWindow();
 				}
 				else {
 					System.out.println("Before response");
