@@ -7,7 +7,7 @@ echo <<< EOT
 		position: fixed;
 		border: solid 1px black;
 		right:5px;
-		top: 70px;
+		top: 45px;
 		width:200px;
 		padding: 10px;
 		border-radius: 10px;
@@ -50,6 +50,10 @@ EOT;
                         include 'image.php';
 						echo "</div>";
                     }
+					else{
+						//default to book image
+						echo "<img src=book128.png>";
+					}
                 echo "</div>";
                 echo "</form>";
                 $i++;

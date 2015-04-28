@@ -1,5 +1,18 @@
 <?php
 
+   session_start();
+   $root = basename($_SERVER["DOCUMENT_ROOT"]);
+
+   if(isset($_POST["logout"])){
+	$message = "should logout";
+	echo "<script type='text/javascript'>alert('$message');</script>";
+
+      session_unset();
+      session_destroy();
+      header("Location: " . $_POST["return"]);
+   }
+
+
 echo <<< EOT
 <style>
 	div.pane{
@@ -45,9 +58,30 @@ echo <<< EOT
             <div class=part onclick=document.getElementById('goedit').submit();>EDIT INFO</div>
         </form>
 		<div class=placeholder></div>
-	</div>
 
 EOT;
 
+//logic for the login button
+	if(isset($_SESSION["init"])){
+?>
+
+<form id="golog" action="navi.php" method="post">
+   	<input type="hidden" name="logout" value="yes"/>
+   	<input type="hidden" name="return" value="<?= $_SERVER['PHP_SELF'] ?>"/>
+	<div class="part" onclick="document.getElementById('golog').submit();">LOGOUT</div>
+</form>
+	<div class=placeholder></div>
+</div>
+<?php
+	}
+	else{
+?>
+		<form id="golog" action="login.php" method="post">
+		<div class="part" onclick="document.getElementById('golog').submit();">LOGIN</div>
+		</form>
+		<div class=placeholder></div>
+	</div>
+<?php	}
 echo "</body>";
+
 ?>

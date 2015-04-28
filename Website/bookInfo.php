@@ -101,7 +101,12 @@ EOT;
          </p>
 	<div class=pic>
 		<?php
+			if(!ctype_space($row['picURL'])){
 			include 'image.php';
+			}
+			else{
+				echo "<img src=book128.png>";
+			}
 		?>
       <div class=btn>
          <form action="bookInfo.php" method="post">
