@@ -119,6 +119,7 @@ public class MainWindow extends LMSWindow {
 				JPasswordField newPass = new JPasswordField(16);
 				JPasswordField newPass2 = new JPasswordField(16);
 				
+				//Create Jpanel for password
 				JPanel passPanel = new JPanel();
 				passPanel.setLayout(new BoxLayout(passPanel, BoxLayout.Y_AXIS));
 				passPanel.add(Box.createVerticalStrut(5));
@@ -130,7 +131,7 @@ public class MainWindow extends LMSWindow {
 				passPanel.add(newPass2);
 				
 				
-				
+				//Display the JPanel
 				int result = JOptionPane.showConfirmDialog(null, passPanel,  "Change Password",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);								
 
@@ -139,7 +140,8 @@ public class MainWindow extends LMSWindow {
 			      newPassword = new String(newPass.getPassword());
 			      newPassword2 = new String(newPass2.getPassword());
 				  int passFlag = 0;
-			      		
+			      
+				  //if any field is blank, set flag and send error. Do not check database.
 			      if(password.equals("") || newPassword.equals("") || newPassword2.equals("")){
 			    	 password = " ";
 			    	 newPassword = " ";
@@ -147,6 +149,7 @@ public class MainWindow extends LMSWindow {
 			    	 passFlag = 1;
 			      }
 			
+			    //If the passwords equal each other and they were not blank, send to database.
 				if(newPassword.equals(newPassword2) && passFlag != 1) {
 					PasswordChangeQuery query = new PasswordChangeQuery(controller.model.sessionId, password, newPassword, controller.model.username);
 					
@@ -165,6 +168,7 @@ public class MainWindow extends LMSWindow {
 				}
 				else if(passFlag != 1)
 					JOptionPane.showMessageDialog(that, "The passwords did not match");
+				//An else statement for if both passwords are blank
 				else{}
 			} 
         }); 
@@ -173,8 +177,6 @@ public class MainWindow extends LMSWindow {
         //Create menu item for adding librarian accounts
         JMenuItem addLibrarianAccount = new JMenuItem(MENU_TEXT_ADD_ACCOUNT);
         addLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_ADD_USER)));
-        //if(controller.model.status < 3)
-        //	addLibrarianAccount.setEnabled(false);
         addLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,7 +193,7 @@ public class MainWindow extends LMSWindow {
 				JPasswordField newPass = new JPasswordField(16);
 				JPasswordField newPass2 = new JPasswordField(16);
 				
-
+				//Make JPanel for adding a new Librarian
 				JPanel newLibrarianPanel = new JPanel();
 				newLibrarianPanel.setLayout(new BoxLayout(newLibrarianPanel, BoxLayout.Y_AXIS));
 				newLibrarianPanel.add(Box.createVerticalStrut(5));
@@ -208,7 +210,7 @@ public class MainWindow extends LMSWindow {
 				newLibrarianPanel.add(new JLabel("Re-Enter New Librarian Password:"));
 				newLibrarianPanel.add(newPass2);
 				
-
+				//Display the Jpanel
 				int result = JOptionPane.showConfirmDialog(null, newLibrarianPanel,  "Change Password",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);	
 				
@@ -220,6 +222,7 @@ public class MainWindow extends LMSWindow {
 			      newPassword2 = new String(newPass2.getPassword());			     
 				  int passFlag = 0;
 				  
+				  //If any of the text fields are blank, set flag so that the database will not be called
 			      if(newUsername.equals("") || newEmail.equals("") || newFname.equals("") || 
 			    		  newLname.equals("") ||newPassword.equals("") || newPassword2.equals("")){
 			    	 newPassword = " ";
@@ -227,24 +230,26 @@ public class MainWindow extends LMSWindow {
 			    	 passFlag = 1;
 			      }
 				
+			    //If the two passwords match and they are not blank, send to database.
 				if(newPassword.equals(newPassword2) && passFlag != 1) {
 					AddLibrarianQuery query = new AddLibrarianQuery(controller.model.sessionId, newUsername, newPassword, newEmail, newFname, newLname, 0);
 					
 					String r = controller.sendMessage(query.toString());
 					
 					if(r == null) {
-						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
+						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running.");
 						return;
 					}
 					
 					Response response = Response.stringToResponse(r);
 					if(response.wasSuccessful)
-						JOptionPane.showMessageDialog(that, "The Librarian account was successfully added");
+						JOptionPane.showMessageDialog(that, "The Librarian account was successfully added.");
 					else
-						JOptionPane.showMessageDialog(that, "The Database manager failed to add the Librarian account");
+						JOptionPane.showMessageDialog(that, "The Database manager failed to add the Librarian account.");
 				}
 				else if(passFlag != 1)
-					JOptionPane.showMessageDialog(that, "The passwords did not match");
+					JOptionPane.showMessageDialog(that, "The passwords did not match.");
+				//If the passwords were both blank
 				else{}
 			}
 		});
@@ -253,72 +258,86 @@ public class MainWindow extends LMSWindow {
         //Create menu item for removing librarian accounts
         JMenuItem removeLibrarianAccount = new JMenuItem(MENU_TEXT_REM_ACCOUNT);
         removeLibrarianAccount.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_REM_USER)));
-        //if(controller.model.status < 3)
-        	removeLibrarianAccount.setEnabled(true);
+        removeLibrarianAccount.setEnabled(true);
         removeLibrarianAccount.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String newUsername = " ";
-				try{
-				newUsername = JOptionPane.showInputDialog("Enter New Librarian Username");
-				}
-				catch(NullPointerException e2){
-					newUsername = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian Uswername");
-				}
+				int blankFlag = 0;
+				
+				//Create a dialog for entering the Librarian Username
+				newUsername = JOptionPane.showInputDialog("Enter Librarian Username that you wish to Remove:");
 
+				//If it is blank set a flag and print an error
+				if(newUsername.equals("")){
+					newUsername = " ";
+					JOptionPane.showMessageDialog(that, "Invalid input. The text field was blank.");
+					blankFlag = 1;
+				}
+				
+				//If the username is not blank, send to database.
+				if(blankFlag != 1){
 					RemoveLibrarianQuery query = new RemoveLibrarianQuery(controller.model.sessionId, newUsername);
 					
 					String r = controller.sendMessage(query.toString());
 					
 					if(r == null) {
-						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
+						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running.");
 						return;
 					}
 					
 					Response response = Response.stringToResponse(r);
 					if(response.wasSuccessful)
-						JOptionPane.showMessageDialog(that, "The Librarian account was successfully removed");
+						JOptionPane.showMessageDialog(that, "The Librarian account was successfully removed.");
 					else
-						JOptionPane.showMessageDialog(that, "The Database Manager failed to remove the Librarian account");
+						JOptionPane.showMessageDialog(that, "The Database Manager failed to remove the Librarian account.");
 				}
+				//If the username was blank
+				else{}
+			}
         });
         menu.add(removeLibrarianAccount);
         
         //Create menu item for setting fines and fees
         JMenuItem feesFines = new JMenuItem(MENU_TEXT_FINES);
         feesFines.setIcon(new ImageIcon(getClass().getResource(ResourceHelper.ICON_PATH_FINES)));
-        //if(controller.model.status < 3)
-        //	feesFines.setEnabled(false);
         feesFines.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String rate = JOptionPane.showInputDialog("Enter a new fine rate");
+				String rate = JOptionPane.showInputDialog("Enter a new fine rate:");
 				float newRate = 0.0f;
+				int validFlag = 0;
+				int blankFlag = 0;	
 				try{
 					newRate = Float.parseFloat(rate);
 				}
-				catch(NumberFormatException e2){
-					JOptionPane.showMessageDialog(that, "You did not enter a valid number");
+				catch(NullPointerException e2){
+					JOptionPane.showMessageDialog(that, "Invalid input. Text field was blank.");
+					blankFlag = 1;
 				}
-				catch(NullPointerException e3){
-					JOptionPane.showMessageDialog(that, "You did not enter anything");
-				}
-				
-				SetFineQuery query = new SetFineQuery(controller.model.sessionId, newRate);
-				
-				String r = controller.sendMessage(query.toString());
-				
-				if(r == null) {
-					JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
-					return;
+				catch(NumberFormatException e3){
+					JOptionPane.showMessageDialog(that, "You did not enter a valid fine rate.");
+					validFlag = 1;
 				}
 				
-				Response response = Response.stringToResponse(r);
-				if(response.wasSuccessful)
-					JOptionPane.showMessageDialog(that, "The new Fine rate was successfully set");
-				else
-					JOptionPane.showMessageDialog(that, "The new Fine rate was not set");
+				//If the field was valid and not blank, send to database.
+				if(blankFlag != 1 && validFlag !=1){
+					SetFineQuery query = new SetFineQuery(controller.model.sessionId, newRate);
+				
+					String r = controller.sendMessage(query.toString());
+				
+					if(r == null) {
+						JOptionPane.showMessageDialog(that, "Database failed to message back. Database may not be running");
+						return;
+					}
+				
+					Response response = Response.stringToResponse(r);
+					if(response.wasSuccessful)
+						JOptionPane.showMessageDialog(that, "The new Fine rate was successfully set");
+					else
+						JOptionPane.showMessageDialog(that, "The new Fine rate was not set");
+					}
+				else{}
 			}
         });
         menu.add(feesFines);
