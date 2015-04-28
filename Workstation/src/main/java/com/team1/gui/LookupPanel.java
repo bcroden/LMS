@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.team1.books.Book;
-import com.team1.books.BookFinder;
-import com.team1.books.InvalidISBNException;
 import com.team1.formatting.queries.BookInfoQuery;
 import com.team1.formatting.responses.BookInfoResponse;
 import com.team1.formatting.responses.Response;
