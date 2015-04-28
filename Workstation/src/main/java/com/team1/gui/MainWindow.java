@@ -349,6 +349,7 @@ public class MainWindow extends LMSWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				close();
+				new Controller();
 			}
         });
         menu.add(logout);
