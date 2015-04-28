@@ -122,9 +122,9 @@ public class MainWindow extends LMSWindow {
 				JPanel passPanel = new JPanel();
 				passPanel.setLayout(new BoxLayout(passPanel, BoxLayout.Y_AXIS));
 				passPanel.add(Box.createVerticalStrut(5));
-				passPanel.add(new JLabel("Enter Current Password"));
+				passPanel.add(new JLabel("Enter Current Password:"));
 				passPanel.add(currentPass);
-				passPanel.add(new JLabel("Enter New Password"));
+				passPanel.add(new JLabel("Enter New Password:"));
 				passPanel.add(newPass);
 				passPanel.add(new JLabel("Re-Enter New Password:"));
 				passPanel.add(newPass2);
@@ -132,58 +132,22 @@ public class MainWindow extends LMSWindow {
 				
 				
 				int result = JOptionPane.showConfirmDialog(null, passPanel,  "Change Password",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);								
+
 				
-				//This was the test
-			     /* if (result == JOptionPane.OK_OPTION && !(password.equals("")) && !(newPassword.equals("") 
-			    		  && !(newPassword2.equals("")))) {
-			         System.out.println("Current Password is: " + password);
-			         System.out.println("New Password is: " + newPassword);
-			         System.out.println("Re-Entered Password is: " + newPassword2);
-			      } */
-			      
-			      password = currentPass.getText();
-			      newPassword = newPass.getText();
-			      newPassword2 = newPass2.getText();
-					
-			      System.out.println("Password is : " + password);
-			      if(password.equals("")){
+			      password = new String(currentPass.getPassword());
+			      newPassword = new String(newPass.getPassword());
+			      newPassword2 = new String(newPass2.getPassword());
+				  int passFlag = 0;
+			      		
+			      if(password.equals("") || newPassword.equals("") || newPassword2.equals("")){
 			    	 password = " ";
-			    	 JOptionPane.showMessageDialog(that, "Warning, you did not enter a Password.");
+			    	 newPassword = " ";
+			    	 JOptionPane.showMessageDialog(that, "Invalid input. A text field was blank.");
+			    	 passFlag = 1;
 			      }
-			      if(newPassword.equals("")){
-			    	  newPassword = " ";
-			    	  JOptionPane.showMessageDialog(that, "Warning, you did not enter a new Password");
-			      }
-			      if(newPassword2.equals("")){
-			    	  newPassword2.equals("");
-			    	  JOptionPane.showMessageDialog(that, "Warning you did not enter the new Password again.");
-			      }
-			/*	try{
-				password = JOptionPane.showInputDialog("Enter Current Password");
-				
-				}
-				catch(NullPointerException e2){
-					password = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Password");
-				}
-				try{
-				newPassword = JOptionPane.showInputDialog("Enter New Password");
-				}
-				catch(NullPointerException e3){
-					newPassword = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a New Password");
-				}
-				try{
-				newPassword2 = JOptionPane.showInputDialog("Re-enter New Password");
-				}
-				catch(NullPointerException e4){
-					newPassword2 = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not re-enter your New Password");
-				}
-				
-				*/
-				if(newPassword.equals(newPassword2)) {
+			
+				if(newPassword.equals(newPassword2) && passFlag != 1) {
 					PasswordChangeQuery query = new PasswordChangeQuery(controller.model.sessionId, password, newPassword, controller.model.username);
 					
 					String r = controller.sendMessage(query.toString());
@@ -199,9 +163,9 @@ public class MainWindow extends LMSWindow {
 					else
 						JOptionPane.showMessageDialog(that, "The Database manager failed to change the password");
 				}
-				else
+				else if(passFlag != 1)
 					JOptionPane.showMessageDialog(that, "The passwords did not match");
-			 
+				else{}
 			} 
         }); 
         menu.add(changePassword);
@@ -220,49 +184,50 @@ public class MainWindow extends LMSWindow {
 				String newEmail = " ";
 				String newFname = " ";
 				String newLname = " ";
-				try{
-				newUsername = JOptionPane.showInputDialog("Enter New Librarian Username");
-				}
-				catch(NullPointerException e2){
-					newUsername = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian Username");
-				}
-				try{
-				newPassword = JOptionPane.showInputDialog("Enter New Librarian Password");
-				}
-				catch(NullPointerException e3){
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Password");
-				}
-				try{
-				newPassword2 = JOptionPane.showInputDialog("Re-enter New Librarian Password");
-				}
-				catch(NullPointerException e4){
-					newPassword2 = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not re-enter Password");
-				}
-				try{
-				newEmail = JOptionPane.showInputDialog("Enter New Librarian Email");
-				}
-				catch(NullPointerException e5){
-					newEmail = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a valid email");			
-				}
-				try{
-				newFname = JOptionPane.showInputDialog("Enter New Librarian First Name");
-				}
-				catch(NullPointerException e6){
-					newFname = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian First Name");
-				}
-				try{
-				newLname = JOptionPane.showInputDialog("Enter new Librarian Last Name");
-				}
-				catch(NullPointerException e7){
-					newLname = " ";
-					JOptionPane.showMessageDialog(that, "Warning, you did not enter a Librarian Last Name");
-				}
+				JTextField newUser = new JTextField(16);				
+				JTextField newMail = new JTextField(32);
+				JTextField newFirst = new JTextField(16);
+				JTextField newLast = new JTextField(16);
+				JPasswordField newPass = new JPasswordField(16);
+				JPasswordField newPass2 = new JPasswordField(16);
 				
-				if(newPassword.equals(newPassword2)) {
+
+				JPanel newLibrarianPanel = new JPanel();
+				newLibrarianPanel.setLayout(new BoxLayout(newLibrarianPanel, BoxLayout.Y_AXIS));
+				newLibrarianPanel.add(Box.createVerticalStrut(5));
+				newLibrarianPanel.add(new JLabel("Enter New Librarian Username:"));
+				newLibrarianPanel.add(newUser);			
+				newLibrarianPanel.add(new JLabel("Enter New Librarian Email:"));
+				newLibrarianPanel.add(newMail);
+				newLibrarianPanel.add(new JLabel("Enter New Librarian First Name"));
+				newLibrarianPanel.add(newFirst);
+				newLibrarianPanel.add(new JLabel("Enter New Librarian Last Name"));
+				newLibrarianPanel.add(newLast);
+				newLibrarianPanel.add(new JLabel("Enter New Librarian Password:"));
+				newLibrarianPanel.add(newPass);
+				newLibrarianPanel.add(new JLabel("Re-Enter New Librarian Password:"));
+				newLibrarianPanel.add(newPass2);
+				
+
+				int result = JOptionPane.showConfirmDialog(null, newLibrarianPanel,  "Change Password",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);	
+				
+				  newUsername = new String(newUser.getText());
+				  newEmail = new String(newMail.getText());
+				  newFname = new String(newFirst.getText());
+				  newLname = new String(newLast.getText());
+			      newPassword = new String(newPass.getPassword());
+			      newPassword2 = new String(newPass2.getPassword());			     
+				  int passFlag = 0;
+				  
+			      if(newUsername.equals("") || newEmail.equals("") || newFname.equals("") || 
+			    		  newLname.equals("") ||newPassword.equals("") || newPassword2.equals("")){
+			    	 newPassword = " ";
+			    	 JOptionPane.showMessageDialog(that, "Invalid input. A text field was blank.");
+			    	 passFlag = 1;
+			      }
+				
+				if(newPassword.equals(newPassword2) && passFlag != 1) {
 					AddLibrarianQuery query = new AddLibrarianQuery(controller.model.sessionId, newUsername, newPassword, newEmail, newFname, newLname, 0);
 					
 					String r = controller.sendMessage(query.toString());
@@ -278,8 +243,9 @@ public class MainWindow extends LMSWindow {
 					else
 						JOptionPane.showMessageDialog(that, "The Database manager failed to add the Librarian account");
 				}
-				else
+				else if(passFlag != 1)
 					JOptionPane.showMessageDialog(that, "The passwords did not match");
+				else{}
 			}
 		});
         menu.add(addLibrarianAccount);
