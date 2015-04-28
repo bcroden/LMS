@@ -72,7 +72,7 @@
          <a href="view_account.php"><?= $_SESSION["usernm"] ?></a>
          <ul>
             <li>
-               <a href="view_account.php?logout=yes&return=<?= $_SERVER['PHP_SELF'] ?>">Log out</a>
+               <a href="log_button.php?logout=yes&return=<?= $_SERVER['PHP_SELF'] ?>">Log out</a>
                <!--<form id="log" action="log_button.php" method="post">
                   <input type="hidden" name="logout" value="yes"/>
                   <input type="hidden" name="return" value="<?= $_SERVER['PHP_SELF'] ?>"/>
