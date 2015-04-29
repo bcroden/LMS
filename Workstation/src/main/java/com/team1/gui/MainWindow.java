@@ -278,7 +278,7 @@ public class MainWindow extends LMSWindow {
 				//If the username is not blank, send to database.
 				if(blankFlag != 1){
 					RemoveLibrarianQuery query = new RemoveLibrarianQuery(controller.model.sessionId, newUsername);
-					
+					System.out.println("Username : " + newUsername);
 					String r = controller.sendMessage(query.toString());
 					
 					if(r == null) {

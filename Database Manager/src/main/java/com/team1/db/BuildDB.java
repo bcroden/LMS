@@ -67,6 +67,9 @@ public class BuildDB {
 						+ "dateout VARCHAR(1000), history VARCHAR(3000), auth INT, booksr VARCHAR(1000), PRIMARY KEY(id))";
 			stmt.executeUpdate(sql);
 			
+			sql = "CREATE TABLE IF NOT EXISTS settings "
+					+ "(rate INT NOT NULL, days INT NOT NULL)";
+			stmt.executeUpdate(sql);
 		}
 
 		public static void main(String args[]) throws SQLException

@@ -236,13 +236,13 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE isbn = '" + ISBN + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	String isbn = "";
-    	String title = "";
-    	String author = "";
-    	String publisher = "";
-    	String date = "";
-    	String genre = "";
-    	String url = "";
+    	String isbn = " ";
+    	String title = " ";
+    	String author = " ";
+    	String publisher = " ";
+    	String date = " ";
+    	String genre = " ";
+    	String url = " ";
     	while(result.next()){
     			isbn = result.getString("ISBN");
     			title = result.getString("title");
@@ -253,7 +253,12 @@ public class Dbwrapper {
     			url = result.getString("picURL");
     		}
     	Book book = new Book(isbn, title, author, publisher, date, genre, url);
+    	if(isbn.equals(" ")){
+    		return null;
+    	}
+    	else{
     	return book;
+    	}
     }
     
     //data for our purposes
@@ -262,13 +267,13 @@ public class Dbwrapper {
     	Statement stmt = con.createStatement();
     	String sql = "SELECT * FROM book WHERE id = '" + id + "'";
     	ResultSet result = stmt.executeQuery(sql);
-    	String isbn = "";
-    	String title = "";
-    	String author = "";
-    	String publisher = "";
-    	String date = "";
-    	String genre = "";
-    	String url = "";
+    	String isbn = " ";
+    	String title = " ";
+    	String author = " ";
+    	String publisher = " ";
+    	String date = " ";
+    	String genre = " ";
+    	String url = " ";
     	while(result.next()){
     			isbn = result.getString("ISBN");
     			title = result.getString("title");
@@ -298,7 +303,6 @@ public class Dbwrapper {
     		Statement stmt = con.createStatement();
     		String sql = "DELETE FROM user WHERE username = '" + user + "'";
     		stmt.executeUpdate(sql);
-    		
     	}
     	
     	public synchronized String getPass(String user)throws SQLException{
@@ -554,12 +558,8 @@ public class Dbwrapper {
     			totalTimes = totalTimes.concat(times.get(l) + ",");
     		}
     		System.out.println(totalBooks);
-    	//put back whats out and the times
-    		sql = "UPDATE user SET booksout = '" + totalBooks + "' WHERE username = '" + username + "'";
-    		stmt.executeUpdate(sql);
-    		sql = "UPDATE user SET dateout = '" + totalTimes + "' WHERE username = '" + username + "'";
-    		stmt.executeUpdate(sql);
-    		System.out.println("Updates 2");
+    	
+    		//System.out.println("Updates 2");
     	//update history
     		String hist = "";
         	sql = "SELECT history FROM user WHERE username = '" + username + "'";
@@ -568,11 +568,19 @@ public class Dbwrapper {
         		hist = result.getString("history");
         	}
         	String history = hist + isbn + ",";
-        	sql = "UPDATE user SET history = '" + history + "'";
+        	sql = "UPDATE user SET history = '" + history + "' WHERE username = '" + username + "'";
+        	stmt.executeUpdate(sql);
         	System.out.println("Updateing Balance");
+        	//update the balance
         	updateBalance(username);
         	System.out.println("Updated Balance");
 
+        	//update the books now that everything is done
+        	//put back whats out and the times
+    		sql = "UPDATE user SET booksout = '" + totalBooks + "' WHERE username = '" + username + "'";
+    		stmt.executeUpdate(sql);
+    		sql = "UPDATE user SET dateout = '" + totalTimes + "' WHERE username = '" + username + "'";
+    		stmt.executeUpdate(sql);
     	}
     	else{
     		System.out.println("Problem on checkin");
@@ -628,6 +636,7 @@ public class Dbwrapper {
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
+    		System.out.println(result.getString("dateout"));
     		String[] dates = result.getString("dateout").split(",");
     		System.out.println("Calculate Costs");
     		costs = calculateCost(dates);
@@ -637,8 +646,36 @@ public class Dbwrapper {
     	stmt.executeUpdate(sql);
     }
     
+    public synchronized void setRate(float rate) throws SQLException{
+    	
+    	Statement stmt = con.createStatement();
+    	String sql = "UPDATE settings SET rate = " + rate + "";
+    	stmt.executeUpdate(sql);
+    	
+    }
+    
+    public synchronized void setDays(int days) throws SQLException{
+    	
+    	Statement stmt = con.createStatement();
+    	String sql = "UPDATE settings SET days = " + days + "";
+    	stmt.executeUpdate(sql);
+    	
+    }
+    
     //Check for any late fees of the user
-    public synchronized float calculateCost(String[] dates){
+    public synchronized float calculateCost(String[] dates) throws SQLException{
+    	
+    	//get the days late and rate values
+    	Statement stmt = con.createStatement();
+    	String sql = "SELECT rate, days FROM settings";
+    	ResultSet result = stmt.executeQuery(sql);
+    	float rate = 0;
+    	int days = 0;
+    	while(result.next()){
+    		rate = result.getFloat("rate");
+    		days = result.getInt("days");
+    	}
+    	
     	float cost = 0;
     	long time = System.currentTimeMillis();
     	for(int i = 0; i < dates.length; i++){
@@ -647,9 +684,9 @@ public class Dbwrapper {
     		System.out.println("Now: " + time + " Then: " + then);
     	    float elapsed = ((time - then)/86400000f);
     		System.out.println("Time out: " + elapsed);
-    		if(elapsed > 90f){
-    			elapsed -= 90f;
-    			cost += (elapsed * 0.05f);
+    		if(elapsed > (float) days){
+    			elapsed -= (float) days;
+    			cost += (elapsed * rate);
     		}
     		else{
     			//nothing to do

@@ -22,8 +22,10 @@ public class CheckInBookResponse extends Response
         books = new ArrayList<Book>();
         
         String[] bookList = strBooks.split(bookBreak);
-        for (int i = 0; i < bookList.length; i++)
+        System.out.println("The list thinks there are: " + bookList.length);
+        for (int i = 0; i < numBooks; i++)
         {
+        	System.out.println("YOU SHOULDN'T BE HERE");
             books.add(new Book(bookList[i]));
         }
     }

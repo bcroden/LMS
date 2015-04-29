@@ -17,6 +17,7 @@ public class RemoveLibrarianQuery extends AdminQuery
 	public RemoveLibrarianQuery (String sessionID, String userName)
 	{
 		super(sessionID);
+		this.userName = userName;
 	}
 	
 	public String userName,fName,lName;

@@ -160,7 +160,10 @@ public class QueryUtils {
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
             	{
-            		response.books.add(Dbwrapper.getInstance().SearchISBN(str[i]));
+            		Book b = Dbwrapper.getInstance().SearchISBN(str[i]);
+            		if(b != null){
+            		response.books.add(b);
+            		}
             	}
             	
             	response.wasSuccessful = true;
@@ -390,6 +393,7 @@ public class QueryUtils {
         if (status == 0 || status == 1 || status == 2) response.wasSuccessful = false;
         else if (status == 3)
         {
+        	System.out.println("Username: " + query.userName);
         	//Remove a librarian
         	try {
         			
@@ -427,14 +431,16 @@ public class QueryUtils {
         else if (status == 3)
         {
         	//Set the fine rate
-//        	try {
-//					Dbwrapper.getInstance().setFine(query.rate);
-//        			response.rate = query.rate;
-//    		} catch (SQLException e) {
-//    			// TODO Auto-generated catch block
-//        		System.out.print("SQLException caught when trying to set Fine rate a librarian");
-//    			e.printStackTrace();
-//    		}
+        	try {
+        			
+					Dbwrapper.getInstance().setRate(query.rate);
+        			response.rate = Float.toString(query.rate);
+        			response.wasSuccessful = true;
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+        		System.out.print("SQLException caught when trying to set Fine rate a librarian");
+    			e.printStackTrace();
+    		}
         }
         else
         {
