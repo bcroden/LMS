@@ -132,6 +132,7 @@ public class MainWindow extends LMSWindow {
 				
 				
 				//Display the JPanel
+				@SuppressWarnings("unused")
 				int result = JOptionPane.showConfirmDialog(null, passPanel,  "Change Password",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);								
 
@@ -211,6 +212,7 @@ public class MainWindow extends LMSWindow {
 				newLibrarianPanel.add(newPass2);
 				
 				//Display the Jpanel
+				@SuppressWarnings("unused")
 				int result = JOptionPane.showConfirmDialog(null, newLibrarianPanel,  "Change Password",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);	
 				

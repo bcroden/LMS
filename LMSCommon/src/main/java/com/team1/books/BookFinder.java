@@ -116,21 +116,21 @@ public class BookFinder {
 
         // Test if ISBN 10 works
         book = BookFinder.getBookFromGoogle("054792822X");
-        //System.out.println("Isbn:           " + book.isbn);
-        //System.out.println("Title:          " + book.title);
-        //System.out.println("Genre:          " + book.genre);
-        //System.out.println("Author:         " + book.author);
-        //System.out.println("Publisher:      " + book.publisher);
-        //System.out.println("Date Published: " + book.datePublished + "\n");
+        System.out.println("Isbn:           " + book.isbn);
+        System.out.println("Title:          " + book.title);
+        System.out.println("Genre:          " + book.genre);
+        System.out.println("Author:         " + book.author);
+        System.out.println("Publisher:      " + book.publisher);
+        System.out.println("Date Published: " + book.datePublished + "\n");
 
         // Test if ISBN 13 works
         book = BookFinder.getBookFromGoogle("9780345453747");
-        //System.out.println("Isbn:           " + book.isbn);
-        //System.out.println("Title:          " + book.title);
-        //System.out.println("Genre:          " + book.genre);
-        //System.out.println("Author:         " + book.author);
-        //System.out.println("Publisher:      " + book.publisher);
-        //System.out.println("Date Published: " + book.datePublished);
+        System.out.println("Isbn:           " + book.isbn);
+        System.out.println("Title:          " + book.title);
+        System.out.println("Genre:          " + book.genre);
+        System.out.println("Author:         " + book.author);
+        System.out.println("Publisher:      " + book.publisher);
+        System.out.println("Date Published: " + book.datePublished);
 
         // Test if exception is thrown for ISBNs of improper length
         try {

@@ -63,10 +63,10 @@ public class CheckOutBookQuery extends LibrarianQuery
     }
     
     public static void main(String[] args) {
-        CheckOutBookQuery query = new CheckOutBookQuery("0", "054792822X", " ", " ", " ", " ", " ", " ");
+//        CheckOutBookQuery query = new CheckOutBookQuery("0", "054792822X", " ", " ", " ", " ", " ", " ");
         //System.out.println(query);
-        String toString = query.toString();
-        Query query2 = Query.buildRequest(toString);
+//        String toString = query.toString();
+//        Query query2 = Query.buildRequest(toString);
         //System.out.println(query2);
     }
 }

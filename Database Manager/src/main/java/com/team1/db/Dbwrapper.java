@@ -71,7 +71,7 @@ public class Dbwrapper {
 		String sql = "Select * From book ISBN";
                 ResultSet result =  stmt.executeQuery(sql);
                 while(result.next()){
-                String isbn = result.getString("ISBN");
+//                String isbn = result.getString("ISBN");
                 //System.out.println(isbn);
                 }
 	}
@@ -364,7 +364,8 @@ public class Dbwrapper {
     
     //Librarian related queries
     //--------------------------------------------------------------------------
-    public synchronized void CheckOut(String isbn, String username)throws SQLException, InvalidISBNException{
+    @SuppressWarnings("resource")
+	public synchronized void CheckOut(String isbn, String username)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
     	String sql = "SELECT copiesin, copiesout, copiesreserved FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
@@ -471,6 +472,7 @@ public class Dbwrapper {
     	while(result.next()){
     		tempTimes = result.getString("dateout");
     	}
+    	
     	long time = System.currentTimeMillis();
     	String now = String.valueOf(time);
     	String times = tempTimes + now + ",";
@@ -483,11 +485,12 @@ public class Dbwrapper {
     	}
     	else{
     		//System.out.println("Problem checking in");
+    		result.close();
     		throw new InvalidISBNException("Error checkout");
     		}
     	}
     	//Book related to isbn will be added to user who checked it out
-    	
+    	result.close();
     }
     
      public synchronized void CheckIn(String isbn, String username)throws SQLException, InvalidISBNException{
