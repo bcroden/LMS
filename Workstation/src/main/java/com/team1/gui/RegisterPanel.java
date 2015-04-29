@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -98,25 +100,53 @@ public class RegisterPanel extends JPanel {
 					if(response.wasSuccessful)
 						returnTextArea.setText("Register succeded");
 					else{
-						returnTextArea.setText("Register failed");
+						
 						
 						// new window to manually enter the book info
-						String isbn,title,author,publisher,datePublished,genre,url,numCopies;
-						JOptionPane.showMessageDialog(null, "Enter the following information to manually add the book.");
-						isbn = JOptionPane.showInputDialog("ISBN");
-						System.out.println("isbn ="+isbn);
+						String isbn,title,author,publisher,datePublished,genre,url;
+						int numCopies;
 						
-						title = JOptionPane.showInputDialog("Title");
-						System.out.println("title ="+title);
+						JTextField jISBN = new JTextField(20);
+						JTextField jTITLE = new JTextField(20);
+						JTextField jAUTHOR = new JTextField(20);
+						JTextField jPUBLISHER = new JTextField(20);
+						JTextField jDATE_PUBLISHED = new JTextField(20);
+						JTextField jGENRE = new JTextField(20);
+						JTextField jURL = new JTextField(20);
+						JSpinner jNUM_COPIES = new JSpinner();
 						
-						author = JOptionPane.showInputDialog("Author");
-						System.out.println("author ="+author);
+						JPanel manualAddBookPanel = new JPanel();
 						
-						publisher = JOptionPane.showInputDialog("Publisher");
-						System.out.println("publisher ="+publisher);
+						manualAddBookPanel.setLayout(new BoxLayout(manualAddBookPanel, BoxLayout.Y_AXIS));
+						manualAddBookPanel.add(Box.createVerticalStrut(5));
+						manualAddBookPanel.add(new JLabel("ISBN:"));
+						manualAddBookPanel.add(jISBN);
+						manualAddBookPanel.add(new JLabel("Title:"));
+						manualAddBookPanel.add(jTITLE);
+						manualAddBookPanel.add(new JLabel("Author:"));
+						manualAddBookPanel.add(jAUTHOR);
+						manualAddBookPanel.add(new JLabel("Publisher:"));
+						manualAddBookPanel.add(jPUBLISHER);
+						manualAddBookPanel.add(new JLabel("Date Published:"));
+						manualAddBookPanel.add(jDATE_PUBLISHED);
+						manualAddBookPanel.add(new JLabel("Genre:"));
+						manualAddBookPanel.add(jGENRE);
+						manualAddBookPanel.add(new JLabel("URL:"));
+						manualAddBookPanel.add(jURL);
+						manualAddBookPanel.add(new JLabel("Number of Copies:"));
+						manualAddBookPanel.add(jNUM_COPIES);
 						
-						datePublished = JOptionPane.showInputDialog("Date Published");
-						System.out.println("datePublished ="+datePublished);
+						int result = JOptionPane.showConfirmDialog(null, manualAddBookPanel, "Manual Book Entry",
+								      JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+						
+						isbn = new String(jISBN.getText());
+						title = new String(jTITLE.getText());
+						author = new String(jAUTHOR.getText());
+						publisher = new String(jPUBLISHER.getText());
+						datePublished = new String(jDATE_PUBLISHED.getText());
+						genre = new String(jGENRE.getText());
+						url = new String(jURL.getText());
+						numCopies = (Integer)jNUM_COPIES.getValue();
 						
 						//check that its in mysql year range (1901 -2155)
 						while( Integer.parseInt(datePublished) <1901 || Integer.parseInt(datePublished) >2155)
@@ -125,33 +155,30 @@ public class RegisterPanel extends JPanel {
 							datePublished = JOptionPane.showInputDialog("Date Published");
 						}
 						
-						genre = JOptionPane.showInputDialog("Genre");
-						System.out.println("genre ="+genre);
 						
-						url = JOptionPane.showInputDialog("Image url");
-						System.out.println("url ="+url);
+						if(result == JOptionPane.OK_OPTION){
+							//build the query
+							ManualAddBookQuery query = new ManualAddBookQuery(controller.model.sessionId,isbn,title,author,publisher,datePublished,genre,url,numCopies);
 						
-						numCopies = JOptionPane.showInputDialog("Number of Copies");
-						System.out.println("numCopies ="+numCopies);
+							//send query
+							String responseMsg = controller.sendMessage(query.toString());
 						
+							//error checking
+							System.out.println("responseMsg ="+responseMsg);
 						
-						//build the query
-						ManualAddBookQuery query = new ManualAddBookQuery(controller.model.sessionId,isbn,title,author,publisher,datePublished,genre,url,Integer.parseInt(numCopies));
+							System.out.println("response failed, trying manual add book...\n\nBefore to response");
 						
-						//send query
-						String responseMsg = controller.sendMessage(query.toString());
+							//rebuild the response
+							Response response2 = Response.stringToResponse(responseMsg);
 						
-						//error checking
-						System.out.println("responseMsg ="+responseMsg);
-						
-						System.out.println("response failed, trying manual add book...\n\nBefore to response");
-						
-						//rebuild the response
-						Response response2 = Response.stringToResponse(responseMsg);
-						
-						//more error checking
-						System.out.println(response2.toString());
-						
+							//more error checking
+							System.out.println(response2.toString());
+							
+							if(response2.wasSuccessful)
+								returnTextArea.setText("Register succeeded");
+							else
+								returnTextArea.setText("Register failed");
+						}
 					}
 				}
 			}
