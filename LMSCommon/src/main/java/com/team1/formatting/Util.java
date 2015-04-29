@@ -46,11 +46,11 @@
 //		}
 //		
 //		String str = serializeBookArrayList(books);
-//		System.out.println(str);
+//		//System.out.println(str);
 //		
 //		ArrayList<Book> books2 = deserializeBookArrayList(str);
-//		System.out.println(books2.size());
+//		//System.out.println(books2.size());
 //		for(Book b : books2)
-//			System.out.println(b.toString());
+//			//System.out.println(b.toString());
 //	}
 //}

@@ -18,14 +18,14 @@ public class CheckInBookResponse extends Response
         super(wasSuccessful, sessionID);
         this.userName = userName;
         this.fines = fines;
-        System.out.println("The number of books: " + numBooks);
+        //System.out.println("The number of books: " + numBooks);
         books = new ArrayList<Book>();
         
         String[] bookList = strBooks.split(bookBreak);
-        System.out.println("The list thinks there are: " + bookList.length);
+        //System.out.println("The list thinks there are: " + bookList.length);
         for (int i = 0; i < numBooks; i++)
         {
-        	System.out.println("YOU SHOULDN'T BE HERE");
+        	//System.out.println("YOU SHOULDN'T BE HERE");
             books.add(new Book(bookList[i]));
         }
     }

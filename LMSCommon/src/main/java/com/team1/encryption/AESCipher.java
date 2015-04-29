@@ -174,7 +174,7 @@ public class AESCipher {
         byte[] encryptedMessage = EncryptionUtils.concatenateArrays(iv, encryptedBytes);
 
         // Transmit
-        System.out.println("In encryption, Encrypted bytes length = " + encryptedMessage.length);
+        //System.out.println("In encryption, Encrypted bytes length = " + encryptedMessage.length);
         
         return encryptedMessage;
     }
@@ -189,7 +189,7 @@ public class AESCipher {
      *             If the current key is invalid
      */
     public String decrypt(byte[] encryptedMessage) throws InvalidKeyException {
-    	System.out.println("In decrypt messageLength = " + encryptedMessage.length);
+    	//System.out.println("In decrypt messageLength = " + encryptedMessage.length);
         // Separate initialization vector from encrypted message
         byte[] iv = EncryptionUtils.getSubArray(encryptedMessage, 0, IV_SIZE);
         byte[] encryptedBytes = EncryptionUtils.getSubArray(encryptedMessage, IV_SIZE, encryptedMessage.length - IV_SIZE);

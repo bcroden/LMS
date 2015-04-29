@@ -26,7 +26,7 @@ public class BuildDB {
 	private BuildDB(){
 		//get driver and connection
 		try{
-		System.out.println("Dbwrapper");
+		//System.out.println("Dbwrapper");
 			Class.forName(JDBC_DRIVER).newInstance();
 			//connect
 			con = DriverManager.getConnection("jdbc:mysql://localhost/", "root", "LMS");

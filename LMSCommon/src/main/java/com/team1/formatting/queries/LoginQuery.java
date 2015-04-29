@@ -28,9 +28,9 @@ public class LoginQuery extends Query
     
     public static void main(String[] args) {
         LoginQuery query = new LoginQuery(" ", " ");
-        System.out.println(query);
+        //System.out.println(query);
         String toString = query.toString();
         Query query2 = Query.buildRequest(toString);
-        System.out.println(query2);
+        //System.out.println(query2);
     }
 }

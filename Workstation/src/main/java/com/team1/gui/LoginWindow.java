@@ -137,20 +137,19 @@ public class LoginWindow extends LMSWindow {
 				
 				String r = controller.sendMessage(query.toString());
 				
-				System.out.println("Recieved string from login Window: " + r);
+				//System.out.println("Recieved string from login Window: " + r);
 				
 				if(r == null) {
 					errorMessage.setText(ERROR_MESSAGE_TEXT);
-//					controller.showMainWindow();
 				}
 				else {
-					System.out.println("Before response");
+					//System.out.println("Before response");
 					LogInResponse response = (LogInResponse)Response.stringToResponse(r);
-					System.out.println("After response" + response.toString());
+					//System.out.println("After response" + response.toString());
 					
 					if(response.wasSuccessful) {
 						controller.model.sessionId = response.sessionID;
-						System.out.println(controller.model.sessionId);
+						//System.out.println(controller.model.sessionId);
 						controller.model.status = response.status;
 						controller.model.username = usernameField.getText();
 						controller.showMainWindow();

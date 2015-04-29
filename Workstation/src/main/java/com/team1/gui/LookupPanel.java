@@ -90,7 +90,7 @@ public class LookupPanel extends JPanel {
 				
 				String r = controller.sendMessage(q.toString());
 				
-				System.out.println("Response string = " + r);
+				//System.out.println("Response string = " + r);
 				
 				if(r != null) {
 					Response response = Response.stringToResponse(r);
@@ -99,11 +99,11 @@ public class LookupPanel extends JPanel {
 						ArrayList<Book> books = bookInfoResponse.books;
 						
 						if(books == null || books.size() == 0) {
-							System.out.println("Books = null");
+							//System.out.println("Books = null");
 							JOptionPane.showMessageDialog(null, "No results found.");
 						}
 						else {
-							System.out.println("Books != null");
+							//System.out.println("Books != null");
 							returnArea.showBooks(books);
 						}
 					}

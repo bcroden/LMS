@@ -33,63 +33,63 @@ public class BookFinder {
      *             registered on Google
      */
     public static Book getBookFromGoogle(String isbn) throws InvalidISBNException {
-    	System.out.println("Entering getBookFromGoogle");
+    	//System.out.println("Entering getBookFromGoogle");
         if (isbn.length() != 10 && isbn.length() != 13)
             throw new InvalidISBNException("ISBN length not equal to 10 or 13.");
-        System.out.println("After if");
+        //System.out.println("After if");
 
         // Get the entire JSON book object
         JSONObject jsonBook = null;
-        System.out.println("Before try");
+        //System.out.println("Before try");
         try {
-        	System.out.println("in try");
+        	//System.out.println("in try");
             jsonBook = getJSONObjectFromGoogle(isbn);
         }
         catch (IOException e) {
-        	System.out.println("In catch");
+        	//System.out.println("In catch");
             e.printStackTrace();
         }
-        System.out.println("Before check");
+        //System.out.println("Before check");
         if (jsonBook != null && jsonBook.has("totalItems") && jsonBook.getInt("totalItems") == 0)
             throw new InvalidISBNException("ISBN " + isbn + " not found.");
-        System.out.println("After check");
+        //System.out.println("After check");
 
         // Make several references to important spots in the JSON structure
-        System.out.println("Before items");
+        //System.out.println("Before items");
         JSONArray items = (jsonBook != null && jsonBook.has("items")) ? jsonBook.getJSONArray("items") : null;
-        System.out.println("Before volumeInfo");
+        //System.out.println("Before volumeInfo");
         JSONObject volumeInfo = (items != null && items.length() != 0) ? items.getJSONObject(0).getJSONObject("volumeInfo") : null;
-        System.out.println("Before authors");
+        //System.out.println("Before authors");
         JSONArray authors = (volumeInfo != null && volumeInfo.has("authors")) ? volumeInfo.getJSONArray("authors") : null;
-        System.out.println("Before categories");
+        //System.out.println("Before categories");
         JSONArray categories = (volumeInfo != null && volumeInfo.has("categories")) ? volumeInfo.getJSONArray("categories") : null;
-        System.out.println("Before imageLinks");
+        //System.out.println("Before imageLinks");
         JSONObject imageLinks = (volumeInfo != null && volumeInfo.has("imageLinks")) ? volumeInfo.getJSONObject("imageLinks"): null;
-        System.out.println("After imageLinks");
+        //System.out.println("After imageLinks");
 
         // Get the data from the JSON object, If an entry does not exist, return
         // ""
-        System.out.println("Before title");
+        //System.out.println("Before title");
         String title = (volumeInfo != null && volumeInfo.has("title")) ? volumeInfo.getString("title") : DEFAULT_VALUE;
-        System.out.println("Before author");
+        //System.out.println("Before author");
         String author = (authors != null && authors.length() != 0) ? authors.getString(0) : DEFAULT_VALUE;
-        System.out.println("Before publisher");
+        //System.out.println("Before publisher");
         String publisher = (volumeInfo != null && volumeInfo.has("publisher")) ? volumeInfo.getString("publisher") : DEFAULT_VALUE;
-        System.out.println("Before dataPublished");
+        //System.out.println("Before dataPublished");
         String datePublished = (volumeInfo != null && volumeInfo.has("publishedDate")) ? volumeInfo.getString("publishedDate") : DEFAULT_VALUE;
-        System.out.println("Before genre");
+        //System.out.println("Before genre");
         String genre = (categories != null && (categories.length() != 0)) ? categories.getString(0) : DEFAULT_VALUE;
-        System.out.println("Before imageURL");
+        //System.out.println("Before imageURL");
         String imageURL = (imageLinks != null && imageLinks.has("thumbnail")) ? imageLinks.getString("thumbnail") : DEFAULT_VALUE;
-        System.out.println("After ImageURL");
+        //System.out.println("After ImageURL");
         
         //TODO: add imageURL to Book
-        System.out.println("Image URL = " + imageURL);
-        System.out.println("Title = " + title);
+        //System.out.println("Image URL = " + imageURL);
+        //System.out.println("Title = " + title);
         
         String date = (datePublished.length() >= 4) ? datePublished.substring(0,  4) : datePublished;
-        System.out.println("Date = " + date);
-        System.out.println("Author = " + author);
+        //System.out.println("Date = " + date);
+        //System.out.println("Author = " + author);
         
         // Return the book
         return new Book(isbn, title, author, publisher, date, genre, imageURL);
@@ -116,21 +116,21 @@ public class BookFinder {
 
         // Test if ISBN 10 works
         book = BookFinder.getBookFromGoogle("054792822X");
-        System.out.println("Isbn:           " + book.isbn);
-        System.out.println("Title:          " + book.title);
-        System.out.println("Genre:          " + book.genre);
-        System.out.println("Author:         " + book.author);
-        System.out.println("Publisher:      " + book.publisher);
-        System.out.println("Date Published: " + book.datePublished + "\n");
+        //System.out.println("Isbn:           " + book.isbn);
+        //System.out.println("Title:          " + book.title);
+        //System.out.println("Genre:          " + book.genre);
+        //System.out.println("Author:         " + book.author);
+        //System.out.println("Publisher:      " + book.publisher);
+        //System.out.println("Date Published: " + book.datePublished + "\n");
 
         // Test if ISBN 13 works
         book = BookFinder.getBookFromGoogle("9780345453747");
-        System.out.println("Isbn:           " + book.isbn);
-        System.out.println("Title:          " + book.title);
-        System.out.println("Genre:          " + book.genre);
-        System.out.println("Author:         " + book.author);
-        System.out.println("Publisher:      " + book.publisher);
-        System.out.println("Date Published: " + book.datePublished);
+        //System.out.println("Isbn:           " + book.isbn);
+        //System.out.println("Title:          " + book.title);
+        //System.out.println("Genre:          " + book.genre);
+        //System.out.println("Author:         " + book.author);
+        //System.out.println("Publisher:      " + book.publisher);
+        //System.out.println("Date Published: " + book.datePublished);
 
         // Test if exception is thrown for ISBNs of improper length
         try {

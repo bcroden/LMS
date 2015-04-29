@@ -38,7 +38,7 @@ public class BookInfoResponse extends Response
     public String toString() {
         String s;
         int numBooks = 0;
-        if (books.isEmpty()) System.out.print("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
+        if (books.isEmpty()) //System.out.print("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
         else numBooks = books.size();
         
         if (this.wasSuccessful) s = "true";
@@ -47,16 +47,16 @@ public class BookInfoResponse extends Response
         
         String msg = HEADER + DELIMITER + s + DELIMITER + sessionID + DELIMITER + numBooks + DELIMITER;
         
-        System.out.println("numBooks = " + numBooks);
+        //System.out.println("numBooks = " + numBooks);
         
         for (int i = 0; i < numBooks; i++)
         {
             msg = msg.concat(books.get(i).getSerialized());
-            System.out.println("Book = " + books.get(i).getSerialized());
+            //System.out.println("Book = " + books.get(i).getSerialized());
             msg = msg.concat(bookBreak);
         }
         
-        System.out.println("msg = " + msg);
+        //System.out.println("msg = " + msg);
         
         return msg;
     }

@@ -88,11 +88,11 @@ public class TestFrame extends JFrame{
 //				q.userID = patronField.getText();
 //				q.isbn = isbnField.getText();
 				
-//				System.out.println("Q = " + q.toString());
+//				//System.out.println("Q = " + q.toString());
 //				String r = controller.sendMessage(q.toString());
 //				returnTextArea.setText(r);
 				
-//				System.out.println("Message received: " + r);
+//				//System.out.println("Message received: " + r);
 				
 //				if(r == null) {
 //					returnTextArea.setText("Invalid Entries.");
@@ -101,7 +101,7 @@ public class TestFrame extends JFrame{
 //				else {
 //					Response response = Response.stringToResponse(r);
 //					
-//					System.out.println("r = " + r);
+//					//System.out.println("r = " + r);
 //					
 //					if(response instanceof CheckOutBookResponse) {
 //						if(response.wasSuccessful)

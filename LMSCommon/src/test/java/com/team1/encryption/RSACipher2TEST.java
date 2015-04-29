@@ -12,7 +12,7 @@
 //	//Testing a long message with strange characters
 //	@Test
 //	public void test() throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
-//		 String message = "‡ŒË™ 	 ____ © System.out.println('«_') ڈڈڈڈڈڈڈڈڈڈ۞ڲ໇໰׉"
+//		 String message = "‡ŒË™ 	 ____ © //System.out.println('«_') ڈڈڈڈڈڈڈڈڈڈ۞ڲ໇໰׉"
 //	        		+ "Marry had a little lamb, little lamb, little lamb, marryhad"
 //	        		+ "alittlelambwhosefleecewaswhiteasnowwwwwwwwwwwwwwwwwwwwwwww"
 //	        		+ "zyxwvutsrqponlmkjihgfedcbanowiknowmyabc'snexttimewon'tyousing"

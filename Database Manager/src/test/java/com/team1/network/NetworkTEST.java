@@ -50,8 +50,8 @@ public class NetworkTEST
         thread.interrupt();
         thread.join();
         
-        System.out.println("Str = " + str);
-        System.out.println("Str2 = " + str2);
+        //System.out.println("Str = " + str);
+        //System.out.println("Str2 = " + str2);
         
         Response r = new Response(false, "");
         

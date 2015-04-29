@@ -52,18 +52,18 @@ public class QueryUtils {
         else if (status == 2 || status == 3)
         {
         	//build book object from isbn
-        	System.out.println("before get from google");
+        	//System.out.println("before get from google");
             Book book = BookFinder.getBookFromGoogle(query.isbn);
-            System.out.println("before addbook");
+            //System.out.println("before addbook");
             Dbwrapper.getInstance().addBook(book, query.numCopies);
-            System.out.println("after addbook");
+            //System.out.println("after addbook");
             
             response.wasSuccessful = true;
         }
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
 		
         return response;
@@ -77,7 +77,7 @@ public class QueryUtils {
 		int sessionId = Authentication.getInstance().authenticate(query);
 		int status = Authentication.getInstance().getLevel(sessionId);
         
-		System.out.println("status = " + status);
+		//System.out.println("status = " + status);
 		
 		response.books = new ArrayList<Book>();
 		
@@ -86,12 +86,12 @@ public class QueryUtils {
         {
 			try
 	        {
-				System.out.println("start try block");
+				//System.out.println("start try block");
 	            if(isValid(query.isbn))
 	            {
-	            	System.out.println("in isbn search");
+	            	//System.out.println("in isbn search");
 	            	response.books.add(Dbwrapper.getInstance().SearchISBN(query.isbn));
-	                System.out.println("after isbn search");
+	                //System.out.println("after isbn search");
 	            }
 	            else if(isValid(query.title))
 	            {
@@ -112,23 +112,23 @@ public class QueryUtils {
 	            
 	            if(response.books != null)
 	            	response.wasSuccessful = true;  
-	            System.out.println("end try block");
+	            //System.out.println("end try block");
 	        }
 	        catch(SQLException e)
 	        {
 	            e.printStackTrace();
 	        }
-			 System.out.println("before toString");
+			 //System.out.println("before toString");
 			 response.sessionID = Integer.toString(sessionId);
-	        System.out.println("after bookinfo");
+	        //System.out.println("after bookinfo");
         }
         else
         {
-        	 System.out.println("in else");
+        	 //System.out.println("in else");
         	response.wasSuccessful = false;
         	response.sessionID = Integer.toString(sessionId);
-            System.out.print("unexpected return value from authenticate...\n");
-            System.out.println("after else");
+            //System.out.print("unexpected return value from authenticate...\n");
+            //System.out.println("after else");
         }
         
         return response;
@@ -142,7 +142,7 @@ public class QueryUtils {
 		int temp = Authentication.getInstance().authenticate(query);
 		response.sessionID = Integer.toString(temp);
 		int status = Authentication.getInstance().getLevel(temp);
-		System.out.println("After after get level");
+		//System.out.println("After after get level");
 		response.books = new ArrayList<Book>();
         
         if (status == 0 || status == 1) response.wasSuccessful = false;
@@ -150,12 +150,12 @@ public class QueryUtils {
         {
             try
             {
-            	System.out.println("Trying really really hard");
+            	//System.out.println("Trying really really hard");
                 Dbwrapper.getInstance().CheckIn(query.isbn,query.userID);
-                System.out.println("Somehow we got through checkin");
+                //System.out.println("Somehow we got through checkin");
                 response.userName = query.userID;
                 response.fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
-            	System.out.println("Fines: " + response.fines);
+            	//System.out.println("Fines: " + response.fines);
             	String msg = Dbwrapper.getInstance().getBooksOut(query.userID);
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
@@ -177,7 +177,7 @@ public class QueryUtils {
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
         
         return response;
@@ -199,7 +199,7 @@ public class QueryUtils {
         {
             try
             {
-                System.out.println("Pre call");
+                //System.out.println("Pre call");
                 Dbwrapper.getInstance().CheckOut(query.isbn,query.userID);
                 response.userName = query.userID;
                 response.fines = ""+Dbwrapper.getInstance().getBalance(query.userID);
@@ -208,12 +208,12 @@ public class QueryUtils {
             	String[] str = msg.split(",");
             	for(int i = 0; i < str.length; i++)
             	{
-            		System.out.println("str ="+str[i]);
+            		//System.out.println("str ="+str[i]);
             		response.books.add(Dbwrapper.getInstance().SearchISBN(str[i]));
             	}
             	
                 response.wasSuccessful = true;
-                System.out.println("Post call");
+                //System.out.println("Post call");
             }
             catch(SQLException | InvalidISBNException e)
             {
@@ -224,7 +224,7 @@ public class QueryUtils {
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
         
         return response;
@@ -234,26 +234,26 @@ public class QueryUtils {
     {
     	LogInResponse response = new LogInResponse();
     	
-    	System.out.println("before authenticate");
+    	//System.out.println("before authenticate");
         //execute a login
     	Authentication auth = Authentication.getInstance();
     	
-    	System.out.println("after getInstance");
+    	//System.out.println("after getInstance");
     	
     	int temp = auth.authenticate(query);
     	
-    	System.out.println("after after setting SessionID = " + temp);
+    	//System.out.println("after after setting SessionID = " + temp);
     	
     	response.sessionID = Integer.toString(temp);
     	
-    	System.out.println("temp = " + temp);
+    	//System.out.println("temp = " + temp);
 
     	if(temp != 0)
     		response.status = auth.getLevel(temp);
     	
-    	System.out.println("after authenticate");
+    	//System.out.println("after authenticate");
         
-    	System.out.println("Status ==" + response.status);
+    	//System.out.println("Status ==" + response.status);
     	
         if (response.status == 0) response.wasSuccessful = false;
         else if (response.status >= 1 && response.status <= 3)
@@ -263,7 +263,7 @@ public class QueryUtils {
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
         
         return response;
@@ -301,13 +301,13 @@ public class QueryUtils {
         	else
         	{
         		response.wasSuccessful = false;
-        		System.out.print("Unexpected return value from setNewPass\n");
+        		//System.out.print("Unexpected return value from setNewPass\n");
         	}
         }
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
     	
 
@@ -339,7 +339,7 @@ public class QueryUtils {
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
     	
     	
@@ -367,14 +367,14 @@ public class QueryUtils {
         		response.wasSuccessful = true;
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
-    			System.out.print("SQLException caught when trying to add a librarian");
+    			//System.out.print("SQLException caught when trying to add a librarian");
     			e.printStackTrace();
     		}
         }
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
     	
     	
@@ -393,7 +393,7 @@ public class QueryUtils {
         if (status == 0 || status == 1 || status == 2) response.wasSuccessful = false;
         else if (status == 3)
         {
-        	System.out.println("Username: " + query.userName);
+        	//System.out.println("Username: " + query.userName);
         	//Remove a librarian
         	try {
         			
@@ -404,14 +404,14 @@ public class QueryUtils {
 					response.wasSuccessful = true;
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
-        		System.out.print("SQLException caught when trying to remove a librarian");
+        		//System.out.print("SQLException caught when trying to remove a librarian");
     			e.printStackTrace();
     		}
         }
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
     	
     	
@@ -438,14 +438,14 @@ public class QueryUtils {
         			response.wasSuccessful = true;
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
-        		System.out.print("SQLException caught when trying to set Fine rate a librarian");
+        		//System.out.print("SQLException caught when trying to set Fine rate a librarian");
     			e.printStackTrace();
     		}
         }
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
     	
     	
@@ -464,8 +464,8 @@ public class QueryUtils {
 		if (status == 0 || status == 1) response.wasSuccessful = false;
         else if (status == 2 || status == 3)
         {
-        	System.out.println("Before book addition...");
-        	System.out.println("\tdate published =" +query.book.datePublished);
+        	//System.out.println("Before book addition...");
+        	//System.out.println("\tdate published =" +query.book.datePublished);
             Dbwrapper.getInstance().addBook(query.book, query.numCopies);
             
             response.wasSuccessful = true;
@@ -473,7 +473,7 @@ public class QueryUtils {
         else
         {
         	response.wasSuccessful = false;
-            System.out.print("unexpected return value from authenticate...\n");
+            //System.out.print("unexpected return value from authenticate...\n");
         }
     	
     	
@@ -485,9 +485,9 @@ public class QueryUtils {
 
         if(query instanceof BookInfoQuery)
         {
-            System.out.println("Before bookinfo");
+            //System.out.println("Before bookinfo");
             BookInfoResponse response = executeBookInfoQuery((BookInfoQuery)query);
-            System.out.println("after bookinfo");
+            //System.out.println("after bookinfo");
             return response;
         }
         if(query instanceof CheckInBookQuery)
@@ -502,7 +502,7 @@ public class QueryUtils {
         }
         if(query instanceof LoginQuery)
         {
-            System.out.println("Before executeLoginQuery");
+            //System.out.println("Before executeLoginQuery");
             LogInResponse response = executeLogInQuery((LoginQuery)query);
             return response;
         }
@@ -516,7 +516,7 @@ public class QueryUtils {
             catch (InvalidISBNException | SQLException e) 
             {
 				// TODO Auto-generated catch block
-            	System.out.println("caught exeption");
+            	//System.out.println("caught exeption");
 				e.printStackTrace();
 			}
             return response;

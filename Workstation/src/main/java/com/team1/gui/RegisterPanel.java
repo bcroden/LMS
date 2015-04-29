@@ -79,21 +79,21 @@ public class RegisterPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				AddBookQuery q = new AddBookQuery(controller.model.sessionId, isbnField.getText(), (Integer)countSpinner.getValue());
 				
-				System.out.println("Spinner: " + (Integer)countSpinner.getValue());
+				//System.out.println("Spinner: " + (Integer)countSpinner.getValue());
 				
 				String r = controller.sendMessage(q.toString());
 				
-				System.out.println("r = " + r);
+				//System.out.println("r = " + r);
 				
 				if(r == null) {
 					returnTextArea.setText("Invalid ISBN");
 					returnTextArea.setForeground(Color.RED);
 				}
 				
-				System.out.println("Before to response");
+				//System.out.println("Before to response");
 				Response response = Response.stringToResponse(r);
 				
-				System.out.println(response.toString());
+				//System.out.println(response.toString());
 				
 				
 				if(response instanceof AddBookResponse) {
@@ -164,15 +164,15 @@ public class RegisterPanel extends JPanel {
 							String responseMsg = controller.sendMessage(query.toString());
 						
 							//error checking
-							System.out.println("responseMsg ="+responseMsg);
+							//System.out.println("responseMsg ="+responseMsg);
 						
-							System.out.println("response failed, trying manual add book...\n\nBefore to response");
+							//System.out.println("response failed, trying manual add book...\n\nBefore to response");
 						
 							//rebuild the response
 							Response response2 = Response.stringToResponse(responseMsg);
 						
 							//more error checking
-							System.out.println(response2.toString());
+							//System.out.println(response2.toString());
 							
 							if(response2.wasSuccessful)
 								returnTextArea.setText("Register succeeded");

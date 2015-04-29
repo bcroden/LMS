@@ -147,7 +147,7 @@ public class TCPClient
     private void sendBytes(byte[] bytes) throws IOException
     {
     	toServer.flush();
-    	System.out.println("In TCPClient sendBytes length: " + bytes.length);
+    	//System.out.println("In TCPClient sendBytes length: " + bytes.length);
         toServer.writeInt(bytes.length);
         toServer.write(bytes);
         toServer.flush();
@@ -167,22 +167,22 @@ public class TCPClient
 
     private void setupAESCipher() throws IOException, InvalidKeyException
     {
-    	System.out.println("setting up cipher");
+    	//System.out.println("setting up cipher");
         //generate public key
         RSACipher publicCipher = new RSACipher();
-        System.out.println("building new cipher");
+        //System.out.println("building new cipher");
         byte[] publicKey = publicCipher.getPublicKey().getEncoded();
 
         //send server public key
         sendBytes(publicKey);
 
-        System.out.println("sent bytes");
+        //System.out.println("sent bytes");
         //decrypt private key sent by server
         byte[] privateKey = publicCipher.decrypt(readBytes());
 
         //return cipher based on server's key
         cipher = new AESCipher(privateKey);
-        System.out.println("built new Cipher");
+        //System.out.println("built new Cipher");
     }
 
     private AESCipher cipher;

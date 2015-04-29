@@ -86,10 +86,10 @@ public class CheckOutPanel extends JPanel {
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();
 				
-				System.out.println("Q = " + q.toString());
+				//System.out.println("Q = " + q.toString());
 				String r = controller.sendMessage(q.toString());
 				
-				System.out.println("Message received: " + r);
+				//System.out.println("Message received: " + r);
 				
 				if(r == null) {
 					
@@ -97,13 +97,13 @@ public class CheckOutPanel extends JPanel {
 				
 				Response response = Response.stringToResponse(r);
 				
-				System.out.println("r = " + r);
+				//System.out.println("r = " + r);
 				
 				if(response instanceof CheckOutBookResponse) {
 					if(response.wasSuccessful){
 						for(int i = 0; i < ((CheckOutBookResponse)response).books.size();i++)
 						{
-							System.out.println(((CheckOutBookResponse)response).books.get(i));
+							//System.out.println(((CheckOutBookResponse)response).books.get(i));
 						}
 						lblCheckoutSuccessful.setText("Checkout Sucessfull");
 						lblCheckoutSuccessful.revalidate();

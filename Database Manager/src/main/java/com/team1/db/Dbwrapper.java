@@ -32,7 +32,7 @@ public class Dbwrapper {
 	private Dbwrapper(){
 		//get driver and connection
 		try{
-		System.out.println("Dbwrapper");
+		//System.out.println("Dbwrapper");
 			Class.forName(JDBC_DRIVER).newInstance();
 			//connect
 			con = DriverManager.getConnection("jdbc:mysql://localhost/LMS", "root", "LMS");
@@ -72,7 +72,7 @@ public class Dbwrapper {
                 ResultSet result =  stmt.executeQuery(sql);
                 while(result.next()){
                 String isbn = result.getString("ISBN");
-                System.out.println(isbn);
+                //System.out.println(isbn);
                 }
 	}
 	
@@ -82,7 +82,7 @@ public class Dbwrapper {
 	//--------------------------------------------------------------------------
 	public synchronized void addBook(Book book, int num) throws SQLException{
 		
-		System.out.println("No null");
+		//System.out.println("No null");
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
@@ -96,7 +96,7 @@ public class Dbwrapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
-			System.out.println("Error code: " + e.getErrorCode());
+			//System.out.println("Error code: " + e.getErrorCode());
 			if(e.getErrorCode() == 1062){
 				stmt = con.createStatement();
 				String sql = "SELECT copiesin FROM book WHERE isbn = '" + book.isbn + "'";
@@ -127,7 +127,7 @@ public class Dbwrapper {
     	ResultSet result = stmt.executeQuery(sql);
     	ArrayList<Book> list = new ArrayList<Book>();
     	while(result.next()){
-    		System.out.println("Title: "+ result.getString("isbn"));
+    		//System.out.println("Title: "+ result.getString("isbn"));
     		Book book = new Book(
     			result.getString("isbn"),
     			result.getString("title"),
@@ -349,13 +349,13 @@ public class Dbwrapper {
     		if(oldPass.equals(tempPass)){
     			//here is where we set the new pass word
     			sql = "UPDATE user SET password = '" + newPass + "' WHERE username = '" + user + "'";
-    			System.out.println("Set to new pass: " + newPass);
+    			//System.out.println("Set to new pass: " + newPass);
     			stmt.executeUpdate(sql);
     			return 1;
     		}
     		else{
     			//notify that the password
-    			System.out.println("Failed");
+    			//System.out.println("Failed");
     			return -1;
     		}
     	}
@@ -371,12 +371,12 @@ public class Dbwrapper {
     	int copiesin = 0;
     	int copiesout = 0;
     	int copiesr = 0;
-    	System.out.println("ISBN: " + isbn);
+    	//System.out.println("ISBN: " + isbn);
     	while(result.next()){
     		copiesin = result.getInt("copiesin");
     		copiesout = result.getInt("copiesout");
     		copiesr = result.getInt("copiesreserved");
-//    		System.out.println("ISBN: " + isbn + " copiesin: " + copiesin + " copiesout: " + copiesout);
+//    		//System.out.println("ISBN: " + isbn + " copiesin: " + copiesin + " copiesout: " + copiesout);
     	}
     	if((copiesin - copiesr) <= 0){
     		//not enough copies to check one out to another user
@@ -428,7 +428,7 @@ public class Dbwrapper {
     		    	long time = System.currentTimeMillis();
     		    	String now = String.valueOf(time);
     		    	String times = tempTimes + now + ",";
-    		    	System.out.println("Times: " + times);
+    		    	//System.out.println("Times: " + times);
     		    	sql = "UPDATE user SET booksout = '" + books + "' WHERE username = '" + username + "'";
     		    	stmt.executeUpdate(sql);
     		    	sql = "UPDATE user SET dateout = '" + times + "' WHERE username = '" + username + "'";
@@ -436,7 +436,7 @@ public class Dbwrapper {
     		    	//might want to execute queries
     		    	}
     		    	else{
-    		    		System.out.println("Problem checking in");
+    		    		//System.out.println("Problem checking in");
     		    		throw new InvalidISBNException("Error checkout");
     		    		}
     		}
@@ -474,7 +474,7 @@ public class Dbwrapper {
     	long time = System.currentTimeMillis();
     	String now = String.valueOf(time);
     	String times = tempTimes + now + ",";
-    	System.out.println("Times: " + times);
+    	//System.out.println("Times: " + times);
     	sql = "UPDATE user SET booksout = '" + books + "' WHERE username = '" + username + "'";
     	stmt.executeUpdate(sql);
     	sql = "UPDATE user SET dateout = '" + times + "' WHERE username = '" + username + "'";
@@ -482,7 +482,7 @@ public class Dbwrapper {
     	//might want to execute queries
     	}
     	else{
-    		System.out.println("Problem checking in");
+    		//System.out.println("Problem checking in");
     		throw new InvalidISBNException("Error checkout");
     		}
     	}
@@ -492,17 +492,17 @@ public class Dbwrapper {
     
      public synchronized void CheckIn(String isbn, String username)throws SQLException, InvalidISBNException{
     	Statement stmt = con.createStatement();
-    	System.out.println("Made it in checkin");
+    	//System.out.println("Made it in checkin");
     	String sql = "SELECT copiesin, copiesout FROM book WHERE isbn = '" + isbn + "'";
     	ResultSet result = stmt.executeQuery(sql);
     	int copiesin = 0;
     	int copiesout = 0;
     	while(result.next()){
-    		System.out.println("Getting copiesin and out");
+    		//System.out.println("Getting copiesin and out");
     		copiesin = result.getInt("copiesin");
     		copiesout = result.getInt("copiesout");
     	}
-    	System.out.println("Copiesin: " + copiesin + " Copiesout: " + copiesout);
+    	//System.out.println("Copiesin: " + copiesin + " Copiesout: " + copiesout);
     	if(copiesout > 0){
     	copiesin++;
     	copiesout--;
@@ -510,7 +510,7 @@ public class Dbwrapper {
     	stmt.executeUpdate(sql);
     	sql = "UPDATE book SET copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     	stmt.executeUpdate(sql);
-    	System.out.println("Updates copiesin: " + copiesin + " copiesout: " + copiesout);
+    	//System.out.println("Updates copiesin: " + copiesin + " copiesout: " + copiesout);
     	
     	
     	//Remove books and time from current books out and add book to history
@@ -521,29 +521,29 @@ public class Dbwrapper {
     	sql = "SELECT booksout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
-    		System.out.println("Set books out to array");
+    		//System.out.println("Set books out to array");
     		temp = result.getString("booksout").split(",");
     	}
-    	for(int i = 0; i < temp.length; i++){System.out.println("Temp[i]: " + temp[i]);}
+    	for(int i = 0; i < temp.length; i++){//System.out.println("Temp[i]: " + temp[i]);}
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
-    		System.out.println("Set dateout to array");
+    		//System.out.println("Set dateout to array");
     		tempTimes = result.getString("dateout").split(",");
     	}
     	
     	for(String s : temp){
-    		System.out.println("added " + s + " to books list");
+    		//System.out.println("added " + s + " to books list");
     		books.add(s);
-    		System.out.println("After setting");
+    		//System.out.println("After setting");
     	}
     	for(String s : tempTimes){
-    		System.out.println("added " + s + " to times list");
+    		//System.out.println("added " + s + " to times list");
     		times.add(s);
     	}
     	
     	String totalBooks = "";
-    		System.out.println("Key: " + books.indexOf(isbn));
+    		//System.out.println("Key: " + books.indexOf(isbn));
     		int key = books.indexOf(isbn);
     		if(key < 0){
     			return;
@@ -557,9 +557,9 @@ public class Dbwrapper {
     		for(int l = 0; l < books.size(); l++){
     			totalTimes = totalTimes.concat(times.get(l) + ",");
     		}
-    		System.out.println(totalBooks);
+    		//System.out.println(totalBooks);
     	
-    		//System.out.println("Updates 2");
+    		////System.out.println("Updates 2");
     	//update history
     		String hist = "";
         	sql = "SELECT history FROM user WHERE username = '" + username + "'";
@@ -570,10 +570,10 @@ public class Dbwrapper {
         	String history = hist + isbn + ",";
         	sql = "UPDATE user SET history = '" + history + "' WHERE username = '" + username + "'";
         	stmt.executeUpdate(sql);
-        	System.out.println("Updateing Balance");
+        	//System.out.println("Updateing Balance");
         	//update the balance
         	updateBalance(username);
-        	System.out.println("Updated Balance");
+        	//System.out.println("Updated Balance");
 
         	//update the books now that everything is done
         	//put back whats out and the times
@@ -583,7 +583,7 @@ public class Dbwrapper {
     		stmt.executeUpdate(sql);
     	}
     	else{
-    		System.out.println("Problem on checkin");
+    		//System.out.println("Problem on checkin");
     		throw new InvalidISBNException("Error on checkin");
     	}
     	
@@ -636,9 +636,9 @@ public class Dbwrapper {
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
-    		System.out.println(result.getString("dateout"));
+    		//System.out.println(result.getString("dateout"));
     		String[] dates = result.getString("dateout").split(",");
-    		System.out.println("Calculate Costs");
+    		//System.out.println("Calculate Costs");
     		costs = calculateCost(dates);
     	}
     	temp += costs;
@@ -679,18 +679,18 @@ public class Dbwrapper {
     	float cost = 0;
     	long time = System.currentTimeMillis();
     	for(int i = 0; i < dates.length; i++){
-    		System.out.println("Convert to long");
+    		//System.out.println("Convert to long");
     		long then = Long.parseLong(dates[i]);
-    		System.out.println("Now: " + time + " Then: " + then);
+    		//System.out.println("Now: " + time + " Then: " + then);
     	    float elapsed = ((time - then)/86400000f);
-    		System.out.println("Time out: " + elapsed);
+    		//System.out.println("Time out: " + elapsed);
     		if(elapsed > (float) days){
     			elapsed -= (float) days;
     			cost += (elapsed * rate);
     		}
     		else{
     			//nothing to do
-    			System.out.println("Book not overdue");
+    			//System.out.println("Book not overdue");
     		}
     	}
     	

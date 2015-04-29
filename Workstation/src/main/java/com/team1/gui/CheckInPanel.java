@@ -86,14 +86,14 @@ public class CheckInPanel extends JPanel {
 				
 				q.userID = patronField.getText();
 				q.isbn = isbnField.getText();
-				System.out.println("Q = " + q.toString());
+				//System.out.println("Q = " + q.toString());
 				String r = controller.sendMessage(q.toString());
-				System.out.println("R = " + r);
+				//System.out.println("R = " + r);
 				if(r == null) {
 				}
-				System.out.println("Before checkin response");
+				//System.out.println("Before checkin response");
 				Response response = Response.stringToResponse(r);
-				System.out.println("After checkin response");
+				//System.out.println("After checkin response");
 				if(response instanceof CheckInBookResponse) {
 					if(response.wasSuccessful) {
 						returnPane.showBooks(((CheckInBookResponse)response).books);

@@ -47,11 +47,11 @@ public class LMSBookScrollPane extends JScrollPane{
 		this.panel.revalidate();
 		this.panel.repaint();
 		
-//		System.out.println("panel width = " + frame.getPreferredSize().getWidth());
-//		System.out.println("book width = " + labels.get(0).getPreferredSize().getWidth());
+//		//System.out.println("panel width = " + frame.getPreferredSize().getWidth());
+//		//System.out.println("book width = " + labels.get(0).getPreferredSize().getWidth());
 		
 //		int booksPerPanel = this.getWidth() / (labels.get(0).getWidth() + 10);
-//		System.out.println("booksPerPanel = " + booksPerPanel);
+//		//System.out.println("booksPerPanel = " + booksPerPanel);
 		int booksPerPanel = 8;
 		int numPanels = (int)Math.ceil((double)labels.size() / (double)booksPerPanel);
 		
@@ -65,7 +65,7 @@ public class LMSBookScrollPane extends JScrollPane{
 				if(pos < labels.size()) {
 					panel.add(labels.get(pos));
 					panel.add(Box.createHorizontalStrut(5));
-					System.out.println("i = " + i + ", j = " + j);
+					//System.out.println("i = " + i + ", j = " + j);
 					pos++;
 				}
 			}

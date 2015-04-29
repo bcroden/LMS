@@ -42,17 +42,17 @@ public class Query
         else if (queryType.equals(LoginQuery.HEADER))
         {
         	
-        	System.out.println(str[1]);
-        	System.out.println(str[2]);
+        	//System.out.println(str[1]);
+        	//System.out.println(str[2]);
         	
             LoginQuery request = new LoginQuery(str[2], str[3]);    //sessionID is not required (included sessionID parameter)
             return request;
         }
         else if (queryType.equals(AddBookQuery.HEADER))
         {
-        	System.out.println("At add book q");
+        	//System.out.println("At add book q");
             AddBookQuery request = new AddBookQuery(str[1],str[2],Integer.parseInt(str[3]));    //sessionID is not required
-            System.out.println("after add book q");
+            //System.out.println("after add book q");
             return request;
         }
         else if (queryType.equals(PasswordChangeQuery.HEADER))

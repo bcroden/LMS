@@ -12,7 +12,7 @@ public class AESCipher2TEST {
 
 	@Test
 	public void test() throws InvalidKeyException {
-        String message = "‡ŒË™ 	 ____ © System.out.println('«_') ڈڈڈڈڈڈڈڈڈڈ۞ڲ໇໰׉"
+        String message = "‡ŒË™ 	 ____ © //System.out.println('«_') ڈڈڈڈڈڈڈڈڈڈ۞ڲ໇໰׉"
         		+ "Marry had a little lamb, little lamb, little lamb, marryhad"
         		+ "alittlelambwhosefleecewaswhiteasnowwwwwwwwwwwwwwwwwwwwwwww"
         		+ "zyxwvutsrqponlmkjihgfedcbanowiknowmyabc'snexttimewon'tyousing"

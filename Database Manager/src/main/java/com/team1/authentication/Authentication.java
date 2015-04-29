@@ -52,9 +52,9 @@ public class Authentication {
 	}
 	
 	public int getLevel(int Id) {
-		System.out.println("before getlevel");
+		//System.out.println("before getlevel");
 		int level = map.get(Id);
-		System.out.println("after getlevel: " + level);
+		//System.out.println("after getlevel: " + level);
 		return level;
 	}
 	
@@ -95,7 +95,7 @@ public class Authentication {
                       Random n = new Random();
                       LocalId = n.nextInt(89999999) + 10000000;
                       //Print testing the input to the map
-                      //System.out.println("ID and user level stored is" + LocalId + " " + userLevel);
+                      ////System.out.println("ID and user level stored is" + LocalId + " " + userLevel);
                       //Store ID and userlevel in the hash map
                       map.put(LocalId, userLevel);
                       Date date = new Date();
@@ -103,13 +103,13 @@ public class Authentication {
                       //Store the ID and the session time in hasmap2
                       map2.put(LocalId, time);
                       Return = LocalId;
-                      System.out.println("LocalId = " + LocalId);
+                      //System.out.println("LocalId = " + LocalId);
                       return Return;
 				   }
 				   else
 				   {
 				   //Error handling
-				   System.out.print("Something has gone terribly wrong with authentication");
+				   //System.out.print("Something has gone terribly wrong with authentication");
 				   return 0;
 				   }				   
 				 				
@@ -185,7 +185,7 @@ public class Authentication {
 		}
 		
 		//error handling
-		else{System.out.println("There was an error in Authentication. No case was found");
+		else{//System.out.println("There was an error in Authentication. No case was found");
 			return 0;}
 		}
 	
@@ -202,7 +202,7 @@ public class Authentication {
 			Authentication person2 = new Authentication(dummy);
 			int- temp99 = person2.authenticate(dummy);
 			temp88 = person.authenticate(login);
-			System.out.println("Log in ID is: " + temp88);
-			System.out.println("Librarian Query ID is: " + temp99);
+			//System.out.println("Log in ID is: " + temp88);
+			//System.out.println("Librarian Query ID is: " + temp99);
 		} */
 }

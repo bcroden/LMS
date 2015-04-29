@@ -21,14 +21,14 @@ public class Controller {
     
     //TODO: more fixing
     public String sendMessage(String message) {
-    	System.out.println("Entering send message");
+    	//System.out.println("Entering send message");
     	try {
 			TCPClient client = new TCPClient(Model.HOST, Model.PORT);
-			System.out.println("Received message in sendMessage: " + message);
+			//System.out.println("Received message in sendMessage: " + message);
 			client.sendRequest(message);
-			System.out.println("After request sent");
+			//System.out.println("After request sent");
 			String reply = client.getReply();
-			System.out.println("Reply: " + reply);
+			//System.out.println("Reply: " + reply);
 			client.close();
 			return reply;
 		} catch (InvalidKeyException e) {
@@ -36,7 +36,7 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	System.out.println("Returning null from sendMessage in controller");
+    	//System.out.println("Returning null from sendMessage in controller");
     	return null;
     }
 }

@@ -76,24 +76,24 @@ public class Book {
     public static void main(String[] args) throws InvalidISBNException {
         Book book = BookFinder.getBookFromGoogle("054792822X");
 
-        System.out.println("Isbn:           " + book.isbn);
-        System.out.println("Title:          " + book.title);
-        System.out.println("Genre:          " + book.genre);
-        System.out.println("Author:         " + book.author);
-        System.out.println("Publisher:      " + book.publisher);
-        System.out.println("Date Published: " + book.datePublished + "\n");
+        //System.out.println("Isbn:           " + book.isbn);
+        //System.out.println("Title:          " + book.title);
+        //System.out.println("Genre:          " + book.genre);
+        //System.out.println("Author:         " + book.author);
+        //System.out.println("Publisher:      " + book.publisher);
+        //System.out.println("Date Published: " + book.datePublished + "\n");
 
         String serializedBook = book.getSerialized();
 
-        System.out.println("Serialized Book: " + serializedBook + "\n");
+        //System.out.println("Serialized Book: " + serializedBook + "\n");
 
         Book book2 = new Book(serializedBook);
 
-        System.out.println("Isbn:           " + book2.isbn);
-        System.out.println("Title:          " + book2.title);
-        System.out.println("Genre:          " + book2.genre);
-        System.out.println("Author:         " + book2.author);
-        System.out.println("Publisher:      " + book2.publisher);
-        System.out.println("Date Published: " + book2.datePublished);
+        //System.out.println("Isbn:           " + book2.isbn);
+        //System.out.println("Title:          " + book2.title);
+        //System.out.println("Genre:          " + book2.genre);
+        //System.out.println("Author:         " + book2.author);
+        //System.out.println("Publisher:      " + book2.publisher);
+        //System.out.println("Date Published: " + book2.datePublished);
     }
 }

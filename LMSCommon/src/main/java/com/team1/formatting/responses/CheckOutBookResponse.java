@@ -24,13 +24,13 @@ public class CheckOutBookResponse extends Response
         String[] bookList = strBooks.split(bookBreak);
         for (int i = 0; i < bookList.length; i++)
         {
-        	System.out.println("\n\nBooklist info\n"+bookList[i]);
+        	//System.out.println("\n\nBooklist info\n"+bookList[i]);
             this.books.add(new Book(bookList[i]));
         }
         
         for (int i = 0; i < books.size(); i++)
         {
-        	System.out.println(books.get(i));
+        	//System.out.println(books.get(i));
         }
     }
     

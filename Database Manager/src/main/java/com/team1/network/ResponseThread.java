@@ -46,17 +46,17 @@ public class ResponseThread extends Thread
         	 // get the request string from the client
         	String cliRequest = readClientRequest();
         	
-        	System.out.println("Request string from client: " + cliRequest);
-        	System.out.println("Crash at build request");
+        	//System.out.println("Request string from client: " + cliRequest);
+        	//System.out.println("Crash at build request");
         	Query query = Query.buildRequest(cliRequest);
         	
-        	System.out.println("Got out of build");
-        	System.out.println("Result of build request: "+ query.toString());
+        	//System.out.println("Got out of build");
+        	//System.out.println("Result of build request: "+ query.toString());
         	
         	// TODO: Pass Query object to Authentication
         	Response response = QueryUtils.executeQuery(query);
-        	System.out.println("After execute query");
-        	System.out.println("From DBM Sending : " + response.toString());
+        	//System.out.println("After execute query");
+        	//System.out.println("From DBM Sending : " + response.toString());
         	// send reply string to the client
         	sendReplyToClient(response.toString()); // echo what was sent by the client
         	// clean up my mess
@@ -122,7 +122,7 @@ public class ResponseThread extends Thread
 
             Thread.sleep(2);
         }
-        System.out.println("Read Bytes Message msgSize: " + msgSize + " request length: " + request.length);
+        //System.out.println("Read Bytes Message msgSize: " + msgSize + " request length: " + request.length);
         return request;
     }
 
@@ -132,7 +132,7 @@ public class ResponseThread extends Thread
     	toClient.flush();
         toClient.writeInt(bytes.length);
         toClient.flush();
-        System.out.println("Sending message lengh: " + bytes.length);
+        //System.out.println("Sending message lengh: " + bytes.length);
         toClient.write(bytes);
         toClient.flush();
     }

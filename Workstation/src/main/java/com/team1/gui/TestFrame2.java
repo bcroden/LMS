@@ -96,7 +96,7 @@ public class TestFrame2 extends JFrame{
 				
 				String r = controller.sendMessage(q.toString());
 				
-				System.out.println("Response string = " + r);
+				//System.out.println("Response string = " + r);
 				
 				if(r != null) {
 					Response response = Response.stringToResponse(r);
@@ -104,13 +104,13 @@ public class TestFrame2 extends JFrame{
 					if(bookInfoResponse.wasSuccessful) {
 						ArrayList<Book> books = bookInfoResponse.books;
 						if(books == null)
-							System.out.println("Books = null");
+							//System.out.println("Books = null");
 						else
-							System.out.println("Books != null");
+							//System.out.println("Books != null");
 						returnPanel.add(Box.createHorizontalGlue());
 						int i = 0;
 						for(;i < books.size()-1; i++) {
-							System.out.println(books.get(i).toString());
+							//System.out.println(books.get(i).toString());
 							returnPanel.add(new BookLabel(books.get(i)));
 							returnPanel.add(Box.createHorizontalStrut(20));
 						}
@@ -166,7 +166,7 @@ public class TestFrame2 extends JFrame{
 				if(pos < labels.size()) {
 					panel.add(labels.get(pos));
 					panel.add(Box.createHorizontalStrut(5));
-					System.out.println("i = " + i + ", j = " + j);
+					//System.out.println("i = " + i + ", j = " + j);
 					pos++;
 				}
 			}
