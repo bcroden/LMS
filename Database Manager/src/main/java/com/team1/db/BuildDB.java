@@ -68,7 +68,7 @@ public class BuildDB {
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE IF NOT EXISTS settings "
-					+ "(rate INT NOT NULL, days INT NOT NULL)";
+					+ "(rate FLOAT NOT NULL, days INT NOT NULL)";
 			stmt.executeUpdate(sql);
 		}
 

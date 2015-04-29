@@ -1,4 +1,3 @@
-
 <?php
 
 //error_reporting(E_ALL);
@@ -176,7 +175,11 @@
 		$millisecs = time()*1000;
 		$timetemp = $millisecs - $times[$i];
 		$time = ($timetemp/86400000);
-		$timeleft = 60 - $time;
+
+		$sql = "SELECT days FROM settings";
+		$result = $connection->query($sql);
+		$row = mysqli_fetch_array($result);
+		$timeleft = $row["days"] - $time;
 		return $timeleft;
 		}
 	}
