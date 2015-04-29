@@ -408,7 +408,7 @@ public class Dbwrapper {
     		    	sql = "UPDATE book set copiesout = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
     		    	stmt.executeUpdate(sql);
     		    	
-    		    	sql = "UPDATE book set copiesreserved = '" + copiesout + "' WHERE isbn = '" + isbn + "'";
+    		    	sql = "UPDATE book set copiesreserved = '" + copiesr + "' WHERE isbn = '" + isbn + "'";
     		    	stmt.executeUpdate(sql);
     		    	//Here we add the ISBN to the end of the users books out
     		    	//and the current system time to their dateout
@@ -434,6 +434,35 @@ public class Dbwrapper {
     		    	sql = "UPDATE user SET dateout = '" + times + "' WHERE username = '" + username + "'";
     		    	stmt.executeUpdate(sql);
     		    	//might want to execute queries
+    		    	
+    		    	//remove the book from the users reserved list if it exists
+    		    	sql = "SELECT booksr FROM user WHERE username = '" + username + "'";
+    		    	result = stmt.executeQuery(sql);
+    		    	String[] booksr = {""};
+    		    	while(result.next()){
+    		    		booksr = result.getString("booksr").split(",");
+    		    	}
+    		    	ArrayList<String> booksR = new ArrayList<String>();
+    		    	for(String s : booksr){
+    		    		//System.out.println("added " + s + " to books list");
+    		    		booksR.add(s);
+    		    		//System.out.println("After setting");
+    		    	}
+    		    	
+    		    	String totalBooks = "";
+    	    		//System.out.println("Key: " + books.indexOf(isbn));
+    	    		int key = booksR.indexOf(isbn);
+    	    		if(key < 0){
+    	    			return;
+    	    		}
+    	    		booksR.remove(key);
+    	    		for(int j = 0; j < booksR.size(); j++){
+    	    			totalBooks = totalBooks.concat(booksR.get(j) + ",");
+    	    		}
+    		    	//give it back to reserved list
+    	    		sql = "UPDATE user SET booksr = '" + totalBooks + "' WHERE username = '" + username + "'";
+    	    		stmt.executeUpdate(sql);
+    	    		
     		    	}
     		    	else{
     		    		//System.out.println("Problem checking in");
@@ -524,14 +553,14 @@ public class Dbwrapper {
     		//System.out.println("Set books out to array");
     		temp = result.getString("booksout").split(",");
     	}
-    	for(int i = 0; i < temp.length; i++){//System.out.println("Temp[i]: " + temp[i]);}
+    	for(int i = 0; i < temp.length; i++){//System.out.println("Temp[i]: " + temp[i]);
+    	}
     	sql = "SELECT dateout FROM user WHERE username = '" + username + "'";
     	result = stmt.executeQuery(sql);
     	while(result.next()){
     		//System.out.println("Set dateout to array");
     		tempTimes = result.getString("dateout").split(",");
     	}
-    	
     	for(String s : temp){
     		//System.out.println("added " + s + " to books list");
     		books.add(s);
@@ -581,7 +610,7 @@ public class Dbwrapper {
     		stmt.executeUpdate(sql);
     		sql = "UPDATE user SET dateout = '" + totalTimes + "' WHERE username = '" + username + "'";
     		stmt.executeUpdate(sql);
-    	}}
+    	}
     	else{
     		//System.out.println("Problem on checkin");
     		throw new InvalidISBNException("Error on checkin");
