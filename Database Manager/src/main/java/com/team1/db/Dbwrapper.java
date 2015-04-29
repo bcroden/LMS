@@ -581,7 +581,7 @@ public class Dbwrapper {
     		stmt.executeUpdate(sql);
     		sql = "UPDATE user SET dateout = '" + totalTimes + "' WHERE username = '" + username + "'";
     		stmt.executeUpdate(sql);
-    	}
+    	}}
     	else{
     		//System.out.println("Problem on checkin");
     		throw new InvalidISBNException("Error on checkin");

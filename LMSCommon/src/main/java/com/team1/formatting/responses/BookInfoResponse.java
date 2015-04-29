@@ -38,7 +38,7 @@ public class BookInfoResponse extends Response
     public String toString() {
         String s;
         int numBooks = 0;
-        if (books.isEmpty()) //System.out.print("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
+        if (books.isEmpty()); //System.out.print("\nbooks is empty, execute bookInfoQuery before attempting to read Response Object");
         else numBooks = books.size();
         
         if (this.wasSuccessful) s = "true";

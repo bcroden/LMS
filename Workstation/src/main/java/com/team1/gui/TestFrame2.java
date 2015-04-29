@@ -104,6 +104,7 @@ public class TestFrame2 extends JFrame{
 					if(bookInfoResponse.wasSuccessful) {
 						ArrayList<Book> books = bookInfoResponse.books;
 						if(books == null)
+							;
 							//System.out.println("Books = null");
 						else
 							//System.out.println("Books != null");
